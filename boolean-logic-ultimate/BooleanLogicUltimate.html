@@ -57,7 +57,8 @@
 			return "Boolean Logic Ultimate";
 		},
         oneditsave: function () {
-			
+			// Delete persistent state file
+			$.get( "stateoperation_delete?nodeid=" +this.id, function( data ) {});
 		}
     });
 </script>
