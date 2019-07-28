@@ -1,32 +1,39 @@
-# node-red-contrib-boolean-logic
-[Node-RED](http://nodered.org/) nodes to easily perform boolean logic. 
+# node-red-contrib-boolean-logic-ultimate
 
-## The problem
-[Node-RED](http://nodered.org/) does not support multiple inputs on nodes, and it has been discussed at length in [this thread](https://groups.google.com/forum/#!searchin/node-red/multiple$20inputs%7Csort:relevance/node-red/Q0YLQYCUJ_E/JVNjznmx2e8J). The TL;DR - as I understand it - is that the developers of NR argue that multiple inputs makes it too complex for users without a background in electrical engineering and that it is [preferred](https://groups.google.com/d/msg/node-red/Q0YLQYCUJ_E/DTxHFcVfAwAJ) users of NR instead use other means to create the desired logic (i.e. write Javascript in function-nodes).
+## DESCRIPTION
+The node performs Boolean logic on the incoming payloads.<br/>
+The node performs 3 checks (<b>AND,OR,XOR</b>) on the incoming boolean payloads and outputs the result at the same time, as follow:<br/>
+- Output "AND": true or false<br/>
+- Output "OR": true or false<br/>
+- Output "XOR": true or false<br/>
 
-## A solution
-I really needed a simple and reusable way to perform boolean logic on multiple topics without the need to write the same code over and over. 
+The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.
 
-Could this be solved using a subflow? No, function-node within a subflow cannot be configured on an instance basis which is required as the logic must know how many inputs it is expecting when performing operations such as ```A || B``` or ```A && (B || C)```. Yes, that could be hard coded, but then it would not be reusable. Also, a subflow cannot use the status indicator which is a great help to the user.
+## CHANGELOG
+* See <a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/blob/master/CHANGELOG.md">here the changelog</a>
 
-What I came up with are the following nodes.
-* BooleanLogic: Can perform AND, OR and XOR operations on ```msg.payload``` on any number of topics.
-* Invert: Inverts the ```msg.payload```, e.g. true -> false.
-* Debug: A debug node that displays the status direcly in the editor, making it easier to see the boolean value at a specific point.
-
-All nodes attempts to convert the incoming ```msg.payload``` to a boolean value according to these rules:
-* Boolean values are taken as-is.
-* For numbers, 0 evaluates to false, all other numbers evaluates to true.
-* Strings are converted to numbers if they match the format of a decimal value, then the same rule as for numbers are applied. If it does not match, it evaluates to false. Also, the string "true" evaluates to true.
-
-### BooleanLogic
-This node must be configured with the expected number of topics. It will not output a value until it has received the configured number of topics. Also, if it receives more than the configured number of topics it will reset (but not output a value) and wait until it once again sees the configured number of topics.
-
-## Example
-![Example](http://i.imgur.com/m2s6JRl.png)
-
-## Version history
-* 0.0.1	First release
-* 0.0.2
-  * Changed status indicators from dot to rings for false-values.
-  * Reworked the conversion of input values to be consistent between numbers and strings with numeric meaning.
+## CONFIGURATION
+<p>
+The node expects a fixed number of topics (configured in the settings) on which it will operate. It will only output a value 
+when it has seen the expected number of topics. If it ever sees more than the configured number of topics it will log a message then reset its state and start over.<br/>
+Changing the topic is usually only needed when chaining multiple boolean nodes after each other becuse the topics will then all be the same when delivered to the nodes further down the chain.<br/>
+<br/>
+<b>Filter output result</b><br />
+<ol>	
+    <li>Output both 'true' and 'false' results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output.</li>
+    <li>Output only 'true' results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out.</li>
+</ol>
+<br/>
+<b>Remember latest input values after reboot</b><br />
+If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
+Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
+<br/>
+All incoming msg.payloads are converted into a boolean value according to the following rules (this applies to all boolean logic nodes):
+<ol>	
+    <li>Boolean values are taken as-is.</li>
+    <li>For numbers, 0 evaluates to false, all other numbers evaluates to true.</li>
+    <li>Strings are converted to numbers if they match the format of a decimal value, then the same rule as for numbers are applied. If it does not match, it evaluates to false. Also, the string "true" evaluates to true.</li>
+</ol>
+<br>
+The XOR operation operates in a one, and only one mode, i.e. (A ^ B) ^ C ... ^ n
+</p>

@@ -1,21 +1,26 @@
 {
-    "name": "node-red-contrib-boolean-logic",
-    "version": "0.0.3",
-    "description": "A set of Node-RED nodes for boolean logic",
-	"author": "Per Malmberg (https://github.com/PerMalmberg)",
+    "name": "node-red-contrib-boolean-logic-ultimate",
+    "version": "0.0.1",
+    "description": "A set of Node-RED enhanced boolean logic, with persisten values after reboot and more",
+    "author": "Supergiovane (https://github.com/Supergiovane)",
     "dependencies": {
+        "fs": "0.0.1-security"
     },
-    "keywords": [ "node-red", "boolean", "logic" ],
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/PerMalmberg/node-red-contrib-boolean-logic"
-	},
+    "keywords": [
+        "node-red",
+        "boolean",
+        "logic"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"
+    },
     "node-red": {
         "nodes": {
-			"BooleanLogic": "boolean-logic/BooleanLogic.js",
-			"Invert": "boolean-logic/Invert.js",
-            "BDebug": "boolean-logic/BDebug.js"
+            "BooleanLogicUltimate": "boolean-logic-ultimate/BooleanLogicUltimate.js",
+            "Invert": "boolean-logic-ultimate/Invert.js",
+            "BDebug": "boolean-logic-ultimate/BDebug.js"
         }
     }
 }

@@ -1,7 +1,5 @@
-// Licensed under the MIT license, see LICENSE file.
-// Author: Per Malmberg (https://github.com/PerMalmberg)
 module.exports = function(RED) {
-    function BDebug(config) {
+    function Invert(config) {
         RED.nodes.createNode(this,config);
 		this.config = config;
 		var node = this;
@@ -13,12 +11,13 @@ module.exports = function(RED) {
 			var payload = msg.payload;
 			
 			if( topic !== undefined && payload !== undefined ) {
-				h.DisplayStatus( h.ToBoolean( payload ) );
+				h.SetResult( !h.ToBoolean( payload ), topic );
 			}
         });
-
+		
 		h.DisplayUnkownStatus();
     }	
 	
-    RED.nodes.registerType("BDebug",BDebug);
+	
+    RED.nodes.registerType("Invert",Invert);
 }

@@ -1,6 +1,3 @@
-// Licensed under the MIT license, see LICENSE file.
-// Author: Per Malmberg (https://github.com/PerMalmberg)
-
 var NodeHelper = function( node ) {
 	var myNode = node;
 	var self = this;
@@ -46,15 +43,31 @@ var NodeHelper = function( node ) {
 			});
 	};
 			
-	this.SetResult = function( value, optionalTopic ) {
-		self.DisplayStatus( value );
+	this.SetResult = function( _valueAND, _valueOR, _valueXOR, optionalTopic ) {
+		self.DisplayStatus( "AND:" + _valueAND + " OR:" +_valueOR + " XOR:" +_valueXOR);
 		
-		var msg = { 
-			topic: optionalTopic === undefined ? "result" : optionalTopic,
-			payload: value
-		};
-
-		myNode.send(msg);
+		if (_valueAND!=null){
+			var msgAND = { 
+				topic: optionalTopic === undefined ? "result" : optionalTopic,
+				operation:"AND",
+				payload: _valueAND
+			};
+		}
+		if (_valueOR!=null){
+			var msgOR = { 
+				topic: optionalTopic === undefined ? "result" : optionalTopic,
+				operation:"OR",
+				payload: _valueOR
+			};
+		}
+		if (_valueXOR!=null){
+			var msgXOR = { 
+				topic: optionalTopic === undefined ? "result" : optionalTopic,
+				operation:"XOR",
+				payload: _valueXOR
+			};
+		}
+		myNode.send([msgAND,msgOR,msgXOR]);
 	};
 };
 module.exports = NodeHelper;
