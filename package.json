@@ -1,0 +1,21 @@
+{
+    "name": "node-red-contrib-boolean-logic",
+    "version": "0.0.3",
+    "description": "A set of Node-RED nodes for boolean logic",
+	"author": "Per Malmberg (https://github.com/PerMalmberg)",
+    "dependencies": {
+    },
+    "keywords": [ "node-red", "boolean", "logic" ],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PerMalmberg/node-red-contrib-boolean-logic"
+	},
+    "node-red": {
+        "nodes": {
+			"BooleanLogic": "boolean-logic/BooleanLogic.js",
+			"Invert": "boolean-logic/Invert.js",
+            "BDebug": "boolean-logic/BDebug.js"
+        }
+    }
+}

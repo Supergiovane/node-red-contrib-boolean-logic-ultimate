@@ -1,0 +1,37 @@
+<!-- 
+Licensed under the MIT license, see LICENSE file.
+Author: Per Malmberg (https://github.com/PerMalmberg)
+-->
+
+<script type="text/javascript">
+    RED.nodes.registerType('BDebug',{
+        category: 'boolean logic',
+        color: '#C0DEED',
+        defaults: {
+			name: { 
+				value: "Debug"
+			}			
+        },
+        inputs:1,
+        outputs:0,
+        icon: "debug.png",
+        label: 
+			function() {
+				return this.name||"Debug";
+			},
+		paletteLabel: function() {
+			return "Debug";
+		}
+    });
+</script>
+
+<script type="text/x-red" data-template-name="BDebug">
+	<div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="BDebug">
+    <p>A debug node specifically targeting boolean logic.</p>
+</script>

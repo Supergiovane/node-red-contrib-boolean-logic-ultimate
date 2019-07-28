@@ -1,0 +1,39 @@
+<!-- 
+Licensed under the MIT license, see LICENSE file.
+Author: Per Malmberg (https://github.com/PerMalmberg)
+-->
+
+<script type="text/javascript">
+    RED.nodes.registerType('Invert',{
+        category: 'boolean logic',
+        color: '#C0DEED',
+        defaults: {
+			name: { 
+				value: "Invert"
+			}			
+        },
+        inputs:1,
+        outputs:1,
+        icon: "serial.png",
+        label: 
+			function() {
+				return this.name||"Invert";
+			},
+		paletteLabel: function() {
+			return "Invert";
+		}
+    });
+</script>
+
+<script type="text/x-red" data-template-name="Invert">
+	<div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="Invert">
+    <p>A node that emits the inverted input value.<br/>
+	The status indicator represents the output value.
+	</p>
+</script>

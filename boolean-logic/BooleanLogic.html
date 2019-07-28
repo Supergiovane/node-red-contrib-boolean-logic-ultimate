@@ -1,0 +1,106 @@
+<!-- 
+Licensed under the MIT license, see LICENSE file.
+Author: Per Malmberg (https://github.com/PerMalmberg)
+-->
+
+<script type="text/javascript">
+    RED.nodes.registerType('BooleanLogic',{
+        category: 'boolean logic',
+        color: '#C0DEED',
+        defaults: {
+			name: { 
+				value: ""
+			},
+            operation: {
+				value: "AND",
+				required: true,
+				validate:
+					function(v) { 
+						return v !== undefined && v.length > 0;
+					}
+			},
+			inputCount: {
+				value: 2,
+				required: true,
+				validate: 
+					function(v) { 
+						return !isNaN( parseInt( v ) ) && parseInt( v ) >= 2;
+					}
+			},
+			topic: {
+				value: "result",
+				required: true,
+				validate:
+					function(v) { 
+						return v !== undefined && v.length > 0;
+					}
+			}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "serial.png",
+        label: 
+			function() {
+				var label = this.operation + " [" + this.inputCount + "]";
+				if( this.name !== undefined && this.name.length > 0 ) {
+					label = label + " (" + this.name + ")";
+				}
+				return label;
+			},
+		paletteLabel: function() {
+			return "Boolean logic";
+		}
+    });
+</script>
+
+<script type="text/x-red" data-template-name="BooleanLogic">
+    <div class="form-row">
+        <label for="node-input-operation"><i class="icon-tag"></i> Operation</label>
+        <select type="text" id="node-input-operation" placeholder="Operation">
+			<option value="AND">And</option>
+			<option value="OR">Or</option>
+			<option value="XOR">Exclusive Or</option>
+		</select>
+    </div>
+	<div class="form-row">
+        <label for="node-input-inputCount"><i class="icon-tag"></i> Number of topics</label>
+		<input type="text" id="node-input-inputCount" placeholder="Number of topics to consider">
+    </div>
+	<div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+	<div class="form-row">
+        <label for="node-input-topic"><i class="icon-tag"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="BooleanLogic">
+    <p>A node that performs Boolean logic on the incoming payloads.<br/>
+	Select the operation in the settings.<br/>
+	Changing the topic is usually only needed when chaining multiple boolean nodes after each other becuse the topics will then all be the same when delivered to the nodes further down the chain.<br/>
+	<br/>
+	The node expects a fixed number of topics (configured in the settings) on which it will operate. It will only output a value 
+	when it has seen the expected number of topics. If it ever sees more than the configured number of topics it will log a message then reset its state and start over.<br/>
+	<br/>
+	Example:<br/>
+	The node has been configured for two topics, with the operation OR. 
+	<br/>
+	<ol>	
+		<li>Topic 'A' with value false arrives - only one topic seen so no output.</li>
+		<li>Topic 'B' with value true arrives - two topics seen so the node evaluates the received topics and outputs true.</li>
+		<li>Topic 'C' arrives. This is the third topic which is one more than the configured number so the node resets and will not output another value until 
+		two new topics have been received. Note that when resetting it does not output any value.</li>
+	</ol>
+	<br/>
+	All incoming msg.payloads are converted into a boolean value according to the following rules (this applies to all boolean logic nodes):
+	<ol>	
+		<li>Boolean values are taken as-is.</li>
+		<li>For numbers, 0 evaluates to false, all other numbers evaluates to true.</li>
+		<li>Strings are converted to numbers if they match the format of a decimal value, then the same rule as for numbers are applied. If it does not match, it evaluates to false. Also, the string "true" evaluates to true.</li>
+	</ol>
+	<br>
+	The XOR operation operates in a one, and only one mode, i.e. (A ^ B) ^ C ... ^ n
+	</p>
+</script>
