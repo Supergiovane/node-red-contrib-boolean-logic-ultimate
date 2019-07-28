@@ -188,8 +188,8 @@ module.exports = function(RED) {
 				});
 		};
 
-		function SetResult( _valueAND, _valueOR, _valueXOR, optionalTopic ) {
-			DisplayStatus( "AND:" + _valueAND + " OR:" +_valueOR + " XOR:" +_valueXOR);
+		function SetResult(_valueAND, _valueOR, _valueXOR, optionalTopic) {
+			node.status({fill: "green",shape: "dot",text: "Sent:("+"AND:" + _valueAND + " OR:" +_valueOR + " XOR:" +_valueXOR+")"});
 			
 			if (_valueAND!=null){
 				var msgAND = { 
