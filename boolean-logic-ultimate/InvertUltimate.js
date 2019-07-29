@@ -1,5 +1,5 @@
 module.exports = function(RED) {
-    function Invert(config) {
+    function InvertUltimate(config) {
         RED.nodes.createNode(this,config);
 		this.config = config;
 		var node = this;
@@ -39,5 +39,5 @@ module.exports = function(RED) {
     }	
 	
 	
-    RED.nodes.registerType("Invert",Invert);
+    RED.nodes.registerType("InvertUltimate",InvertUltimate);
 }

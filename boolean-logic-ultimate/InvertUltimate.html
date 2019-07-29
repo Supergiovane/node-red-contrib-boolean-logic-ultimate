@@ -1,10 +1,10 @@
 <script type="text/javascript">
-    RED.nodes.registerType('Invert',{
+    RED.nodes.registerType('InvertUltimate',{
         category: 'boolean logic ultimate',
         color: '#ff8080',
         defaults: {
 			name: { 
-				value: "Invert"
+				value: "InvertUltimate"
 			}			
         },
         inputs:1,
@@ -12,22 +12,22 @@
         icon: "serial.png",
         label: 
 			function() {
-				return this.name||"Invert";
+				return this.name||"InvertUltimate";
 			},
 		paletteLabel: function() {
-			return "Invert";
+			return "InvertUltimate";
 		}
     });
 </script>
 
-<script type="text/x-red" data-template-name="Invert">
+<script type="text/x-red" data-template-name="InvertUltimate">
 	<div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="Invert">
+<script type="text/x-red" data-help-name="InvertUltimate">
     <p>A node that emits the inverted input value.<br/>
 	The status indicator represents the output value.
 	</p>

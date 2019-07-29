@@ -1,5 +1,9 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
+<b>Version 0.0.4</b><br/>
+- Fixed conflict issue if you have the old boolean logic installed<br/>
+</p>
+<p>
 <b>Version 0.0.3</b><br/>
 - Fixed status display<br/>
 </p>
