@@ -3,19 +3,19 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
 		this.config = config;
 		var node = this;
-
+		node.status( {fill:  "grey" ,shape: "dot" ,text: "waiting"});
 		
         this.on('input', function(msg) {
-			var topic = msg.topic;
+			var topic = msg.topic || "";
 			var payload = msg.payload;
-			
 			if (topic !== undefined && payload !== undefined) {
 				node.status( {fill:  "green" ,shape: "dot" ,text: !ToBoolean(payload)});
-				return({ topic: topic, payload: !ToBoolean(payload) });
+				node.send({ topic: topic, payload: !ToBoolean(payload) });
+				return;
 			}
         });
 		
-		node.status( {fill:  "grey" ,shape: "dot" ,text: payload});
+		
 
 		function ToBoolean( value ) {
 			var res = false;

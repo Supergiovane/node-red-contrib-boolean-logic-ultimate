@@ -1,10 +1,10 @@
 <script type="text/javascript">
     RED.nodes.registerType('InvertUltimate',{
-        category: 'boolean logic ultimate',
+        category: 'boolean logic',
         color: '#ff8080',
         defaults: {
 			name: { 
-				value: "InvertUltimate"
+				value: "Invert"
 			}			
         },
         inputs:1,
@@ -12,7 +12,7 @@
         icon: "serial.png",
         label: 
 			function() {
-				return this.name||"InvertUltimate";
+				return this.name||"Invert";
 			},
 		paletteLabel: function() {
 			return "InvertUltimate";

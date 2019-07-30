@@ -47,7 +47,7 @@
         icon: "serial.png",
         label: 
 			function() {
-				var label = "Logic" + " [" + this.inputCount + "]";
+				var label = "Logic" + (this.filtertrue=="both" ?  "" : " filtered" ) + " [" + this.inputCount + "]";
 				if( this.name !== undefined && this.name.length > 0 ) {
 					label = label + " (" + this.name + ")";
 				}
@@ -96,6 +96,7 @@
 	- Output "AND": true or false<br/>
 	- Output "OR": true or false<br/>
 	- Output "XOR": true or false<br/>
+	
 	<br/>
 	Changing the topic is usually only needed when chaining multiple boolean nodes after each other becuse the topics will then all be the same when delivered to the nodes further down the chain.<br/>
 	<br/>
@@ -107,6 +108,7 @@
 		<li>Output both 'true' and 'false' results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output.</li>
 		<li>Output only 'true' results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out.</li>
 	</ol>
+	<b>filtered</b>: shown on label, means that the node will pass out only <code>true</code> values (Output only 'true' results). <br/>
 	<br/><br/>
 	<b>Remember latest input values after reboot</b><br />
 	If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
