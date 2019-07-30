@@ -1,5 +1,9 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
+<b>Version 0.0.5</b><br/>
+- Bypass persistency if node-red user hasn't permissions to write to the filesystem.<br/>
+</p>
+<p>
 <b>Version 0.0.4</b><br/>
 - Fixed conflict issue if you have the old boolean logic installed<br/>
 </p>

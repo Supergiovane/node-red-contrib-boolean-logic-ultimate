@@ -24,7 +24,7 @@ module.exports = function(RED) {
 					node.status({fill: "blue",shape: "ring",text: "Loaded persistent states (" + Object.keys(node.state).length + " total)."});
 				}
 			} catch (error) {
-				node.status({fill: "grey",shape: "ring",text: "No persistent states"});
+				node.status({fill: "grey",shape: "ring",text: "No persistent states: " + error});
 			}
 			
 		} else {
@@ -45,8 +45,13 @@ module.exports = function(RED) {
 
 				// Sabe the state array to a perisistent file
 				if (this.config.persist == true) { 
-					if (!fs.existsSync("states")) fs.mkdirSync("states");
-					fs.writeFileSync("states/" + node.id.toString(),JSON.stringify(state));
+					try {
+						if (!fs.existsSync("states")) fs.mkdirSync("states");
+						fs.writeFileSync("states/" + node.id.toString(),JSON.stringify(state));
+	
+					} catch (error) {
+						node.status({fill: "red",shape: "dot",text: "Node cannot write to filesystem: " + error});
+					}
 				}
 								
 				// Do we have as many inputs as we expect?
