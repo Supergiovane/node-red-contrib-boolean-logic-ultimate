@@ -1,5 +1,12 @@
 # node-red-contrib-boolean-logic-ultimate
 
+[![NPM version][npm-version-image]][npm-url]
+[![NPM downloads per month][npm-downloads-month-image]][npm-url]
+[![NPM downloads total][npm-downloads-total-image]][npm-url]
+[![MIT License][license-image]][license-url]
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
+
 ## DESCRIPTION
 The node performs Boolean logic on the incoming payloads.<br/>
 The node performs 3 checks (<b>AND,OR,XOR</b>) on the incoming boolean payloads and outputs the result at the same time, as follow:<br/>
@@ -37,3 +44,11 @@ All incoming msg.payloads are converted into a boolean value according to the fo
 <br>
 The XOR operation operates in a one, and only one mode, i.e. (A ^ B) ^ C ... ^ n
 </p>
+
+
+[license-image]: https://img.shields.io/badge/license-MIT-blue.svg
+[license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE
+[npm-url]: https://npmjs.org/package/node-red-contrib-boolean-logic-ultimate
+[npm-version-image]: https://img.shields.io/npm/v/node-red-contrib-boolean-logic-ultimate.svg
+[npm-downloads-month-image]: https://img.shields.io/npm/dm/node-red-contrib-boolean-logic-ultimate.svg
+[npm-downloads-total-image]: https://img.shields.io/npm/dt/node-red-contrib-boolean-logic-ultimate.svg
