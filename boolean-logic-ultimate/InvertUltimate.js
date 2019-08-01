@@ -3,6 +3,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
 		this.config = config;
 		var node = this;
+		var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
 		node.status( {fill:  "grey" ,shape: "dot" ,text: "waiting"});
 		
         this.on('input', function(msg) {

@@ -1,5 +1,9 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
+<b>Version 0.0.7</b><br/>
+- Fixed decimal error in the "Invert" node.<br/>
+</p>
+<p>
 <b>Version 0.0.6</b><br/>
 - Fixed crappy "Invert" node.<br/>
 </p>
