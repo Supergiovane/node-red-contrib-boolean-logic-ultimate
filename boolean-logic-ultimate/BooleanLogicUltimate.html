@@ -64,30 +64,31 @@
 </script>
 
 <script type="text/x-red" data-template-name="BooleanLogicUltimate">
-    <div class="form-row">
-        <label for="node-input-filtertrue"><i class="icon-tag"></i> Filter output result</label>
-        <select type="text" id="node-input-filtertrue" placeholder="Filter">
-			<option value="both">Output both 'true' and 'false' results</option>
-			<option value="onlytrue">Output only 'true' results</option>
-		</select>
-	</div>
 	<div class="form-row">
-		<input type="checkbox" id="node-input-persist" style="display:inline-block; width:auto; vertical-align:top;">
-		<label style="width:auto" for="node-input-persist"> Remember latest input values after reboot</label>
-		<div id="helpallga"><i> If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.</div>
-	</div>
-	<div class="form-row">
-        <label for="node-input-inputCount"><i class="icon-tag"></i> Number of topics</label>
-		<input type="text" id="node-input-inputCount" placeholder="Number of topics to consider">
+        <label for="node-input-inputCount"><i class="fa fa-indent"></i> Number of different topics to evaluate</label>
+		<input type="text" id="node-input-inputCount" placeholder="Number of different topics to consider">
     </div>
 	<div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 	<div class="form-row">
-        <label for="node-input-topic"><i class="icon-tag"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="Topic">
-    </div>
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Node topic</label>
+        <input type="text" id="node-input-topic" placeholder="Node's own topic">
+	</div>
+    <div class="form-row">
+        <label for="node-input-filtertrue"><i class="fa fa-filter"></i> Filter output result</label>
+        <select type="text" id="node-input-filtertrue" placeholder="Filter">
+			<option value="both">Output both 'true' and 'false' results</option>
+			<option value="onlytrue">Output only 'true' results</option>
+		</select>
+	</div>
+	<div class="form-row">
+		<i class="fa fa-floppy-o"></i> 
+		<label style="width:auto" for="node-input-persist"> Remember latest input values after reboot</label> <input type="checkbox" id="node-input-persist" style="display:inline-block; width:auto; vertical-align:top;">
+		<div id="helpallga"><i> If checked, the input values are retained <br /> after a node-red reboot.<br/>If you reboot your node-red, <br />you don't need to wait all inputs <br />to arrive and initialize the node, <br />before the node can output a payload.</div>
+	</div>
+
 </script>
 
 <script type="text/x-red" data-help-name="BooleanLogicUltimate">

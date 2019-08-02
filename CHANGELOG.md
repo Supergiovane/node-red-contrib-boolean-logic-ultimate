@@ -1,5 +1,11 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
+<b>Version 0.0.8</b><br/>
+- Delete persistent states when a new unexpected topic arrrives<br/>
+- Better status representation<br/>
+- Better and clearer configuration UI <br/>
+</p>
+<p>
 <b>Version 0.0.7</b><br/>
 - Fixed decimal error in the "Invert" node.<br/>
 </p>

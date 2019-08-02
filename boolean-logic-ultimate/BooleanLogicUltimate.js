@@ -24,7 +24,7 @@ module.exports = function(RED) {
 					node.status({fill: "blue",shape: "ring",text: "Loaded persistent states (" + Object.keys(node.state).length + " total)."});
 				}
 			} catch (error) {
-				node.status({fill: "grey",shape: "ring",text: "No persistent states: " + error});
+				node.status({fill: "grey",shape: "ring",text: "No persistent states"});
 			}
 			
 		} else {
@@ -43,7 +43,7 @@ module.exports = function(RED) {
 				
 				state[topic] = value;
 
-				// Sabe the state array to a perisistent file
+				// Save the state array to a perisistent file
 				if (this.config.persist == true) { 
 					try {
 						if (!fs.existsSync("states")) fs.mkdirSync("states");
@@ -77,7 +77,10 @@ module.exports = function(RED) {
 							+ " [Logic]: More than the specified " 
 							+ node.config.inputCount + " topics received, resetting. Will not output new value until " + node.config.inputCount + " new topics have been received.");
 					node.state = {};
+					DeletePersistFile(node.id);
 					DisplayUnkownStatus();
+				} else {
+					node.status({ fill: "green", shape: "ring", text: " Arrived topic " + keyCount + " of " + node.config.inputCount});
 				}
 			}
 		});
@@ -188,13 +191,13 @@ module.exports = function(RED) {
 			node.status( 
 				{ 
 					fill: "gray", 
-					shape: "dot", 
-					text: "Unknown" 
+					shape: "ring", 
+					text: "Reset due to unexpected new topic" 
 				});
 		};
 
 		function SetResult(_valueAND, _valueOR, _valueXOR, optionalTopic) {
-			node.status({fill: "green",shape: "dot",text: "Sent:("+"AND:" + _valueAND + " OR:" +_valueOR + " XOR:" +_valueXOR+")"});
+			node.status({fill: "green",shape: "dot",text: "(AND)" + _valueAND + " (OR)" +_valueOR + " (XOR)" +_valueXOR});
 			
 			if (_valueAND!=null){
 				var msgAND = { 
