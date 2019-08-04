@@ -1,0 +1,25 @@
+{
+    "name": "node-red-contrib-boolean-logic-ultimate",
+    "version": "0.0.9",
+    "description": "A set of Node-RED enhanced boolean logic, with persisten values after reboot and more",
+    "author": "Supergiovane (https://github.com/Supergiovane)",
+    "dependencies": {
+        "fs": "0.0.1-security"
+    },
+    "keywords": [
+        "node-red",
+        "boolean",
+        "logic"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"
+    },
+    "node-red": {
+        "nodes": {
+            "BooleanLogicUltimate": "boolean-logic-ultimate/BooleanLogicUltimate.js",
+            "InvertUltimate": "boolean-logic-ultimate/InvertUltimate.js"
+        }
+    }
+}

@@ -100,7 +100,7 @@ module.exports = function(RED) {
 			// Detele the persist file
 			var _node = RED.nodes.getNode(_nodeid); // Gets node object from nodeit, because when called from the config html, the node object is not defined
 			try {
-				fs.unlinkSync("states/" + _nodeid.toString());
+				if (fs.existsSync("states/" + _nodeid.toString())) fs.unlinkSync("states/" + _nodeid.toString());
 				_node.status({fill: "red",shape: "ring",text: "Persistent states deleted ("+_nodeid.toString()+")."});
 			} catch (error) {
 				_node.status({fill: "red",shape: "ring",text: "Error deleting persistent file: " + error.toString()});
