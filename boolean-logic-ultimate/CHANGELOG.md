@@ -1,6 +1,6 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
-<b>Version 0.0.9 LTS (Long term stable)</b><br/>
+<b>Version 1.0.0 LTS (Long term stable)</b><br/>
 - For invert node, changed the category in the palette list to match the boolean logic ultimate's category<br/>
 </p>
 <p>

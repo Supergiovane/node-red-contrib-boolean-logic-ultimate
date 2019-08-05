@@ -19,7 +19,8 @@
     "node-red": {
         "nodes": {
             "BooleanLogicUltimate": "boolean-logic-ultimate/BooleanLogicUltimate.js",
-            "InvertUltimate": "boolean-logic-ultimate/InvertUltimate.js"
+            "InvertUltimate": "boolean-logic-ultimate/InvertUltimate.js",
+            "FilterUltimate": "boolean-logic-ultimate/FilterUltimate.js"
         }
     }
 }

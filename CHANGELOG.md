@@ -1,5 +1,9 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
+<b>Version 1.0.0 LTS</b><br/>
+- Added Filter node<br/>
+</p>
+<p>
 <b>Version 0.0.8</b><br/>
 - Delete persistent states when a new unexpected topic arrrives<br/>
 - Better status representation<br/>

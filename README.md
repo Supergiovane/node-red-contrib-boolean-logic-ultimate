@@ -44,7 +44,16 @@ All incoming msg.payloads are converted into a boolean value according to the fo
 <br>
 The XOR operation operates in a one, and only one mode, i.e. (A ^ B) ^ C ... ^ n
 </p>
-
+<p>
+<b>Invert Ultimate</b><br />
+Outputs the inverted input. For example true -> false
+</p>
+<p>
+<b>Filter Ultimate</b><br />
+This node has 2 outputs.<br />
+If the input payload is true, the node will send <code>true</code> on output 1 and nothing on oputput 2<br />
+If the input payload is false, the node will send nothing on output 1, and <code>false</code> on oputput 2<br />
+</p>
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE
