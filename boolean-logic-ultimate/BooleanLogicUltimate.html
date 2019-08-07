@@ -56,7 +56,8 @@
 			function() {
 				let label = "";
 				let filtered=this.filtertrue=="both" ?  "" : " |TRUE" ;
-				let trigger=this.outputtriggeredby=="all" ?  "" :  " |TRIG:" + this.triggertopic;
+				let trigger="";
+				if(typeof this.outputtriggeredby !== "undefined") trigger=this.outputtriggeredby=="all" ?  "" :  " |TRIG:" + this.triggertopic;
 				label= this.inputCount + ((filtered+trigger)==""?" Boolean Logic":(filtered+trigger));
 				if( this.name !== undefined && this.name.length > 0 ) {
 					label += " (" + this.name + ")";
