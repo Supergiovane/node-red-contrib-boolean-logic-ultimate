@@ -8,22 +8,29 @@
 			},
 			filtertrue: {value:"both"},
 			persist: {value:true},
-           inputCount: {
-				value: 2,
-				required: true,
-				validate: 
-					function(v) { 
-						return !isNaN( parseInt( v ) ) && parseInt( v ) >= 2;
-					}
+			triggertopic: {
+				value: "trigger",
+				required: false
 			},
-			topic: {
-				value: "result",
-				required: true,
-				validate:
-					function(v) { 
-						return v !== undefined && v.length > 0;
-					}
-			}
+			outputtriggeredby:{
+				value:"all",
+				required: false},
+			inputCount: {
+					value: 2,
+					required: true,
+					validate: 
+						function(v) { 
+							return !isNaN( parseInt( v ) ) && parseInt( v ) >= 2;
+						}
+				},
+				topic: {
+					value: "result",
+					required: true,
+					validate:
+						function(v) { 
+							return v !== undefined && v.length > 0;
+						}
+				}
         },
         inputs:1,
 		outputs:3,
@@ -56,11 +63,37 @@
 		paletteLabel: function() {
 			return "Boolean Logic Ultimate";
 		},
+		oneditprepare: function () {
+            // Add write and response as default for existing nodes like was default before
+			if (this.outputtriggeredby === 'all') {
+				$("#triggertopic").hide()
+ 			}else
+			{
+				$("#triggertopic").show()
+			}
+           
+            $("#node-input-outputtriggeredby").on('change',function() {
+                if ($("#node-input-outputtriggeredby").val()==="all") {
+					$("#triggertopic").hide()
+                }else{
+                    $("#triggertopic").show()
+                }
+			})
+			
+			// default
+			if(typeof this.outputtriggeredby === "undefined")
+			{
+				$("#node-input-outputtriggeredby").val("all");
+				this.outputtriggeredby="all";
+			}
+        },
         oneditsave: function () {
 			// Delete persistent state file
 			$.get( "stateoperation_delete?nodeid=" +this.id, function( data ) {});
 		}
-    });
+	});
+	
+	
 </script>
 
 <script type="text/x-red" data-template-name="BooleanLogicUltimate">
@@ -82,6 +115,17 @@
 			<option value="both">Output both 'true' and 'false' results</option>
 			<option value="onlytrue">Output only 'true' results</option>
 		</select>
+	</div>
+	<div class="form-row">
+        <label for="node-input-outputtriggeredby"><i class="fa fa-filter"></i> Trigger mode</label>
+        <select type="text" id="node-input-outputtriggeredby" placeholder="Event">
+			<option value="all">All topics</option>
+			<option value="onlyonetopic">Single topic + eval</option>
+		</select>
+	</div>
+	<div class="form-row" id="triggertopic">
+        <label for="node-input-triggertopic"><i class="fa fa-tasks"></i> Topic that start boolean logic evaluation</label>
+        <input type="text" id="node-input-triggertopic" placeholder="Input topic">
 	</div>
 	<div class="form-row">
 		<i class="fa fa-floppy-o"></i> 
@@ -111,10 +155,29 @@
 	</ol>
 	<b>filtered</b>: shown on label, means that the node will pass out only <code>true</code> values (Output only 'true' results). <br/>
 	<br/><br/>
+	
+	<b>Trigger mode</b><br />
+	The node can acts ad a standard boolean logic or as single topic triggered boolean logic.<br/>
+	As single topic triggered boolean logic, the node will evaluate the inputs (and thus will output a payload) only if a specified topic input arrives.<br/>
+	In a coding perspectives, it acts as follows:<br/>
+	<code>
+		if (msg.topic == specified topic)<br/>
+		{<br/>
+			If (all other inputs are true) -> outputs true otherwise false<br/>
+		}<br/>
+	</code>
+	<ol>	
+		<li>All topics: standard behaviour, the node will output <b>true</b> and <b>false</b> by evaluating all inputs. Each input change will trigger the node output.</li>
+		<li>Single topic + eval: <u>only whenever the node receives a msg input with the <b>specified topic</b> (having payload = true)</u>, it starts the evaluation of all other inputs as well and outputs the evaluated payload. If the node receives a msg input other than the <b>specified topic</b>), it only retains it's value for the boolean evaluation.</li>
+	</ol>
+	<br/><br/>
+
 	<b>Remember latest input values after reboot</b><br />
 	If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
 	Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
 	<br/>
+	
+
 	All incoming msg.payloads are converted into a boolean value according to the following rules (this applies to all boolean logic nodes):
 	<ol>	
 		<li>Boolean values are taken as-is.</li>

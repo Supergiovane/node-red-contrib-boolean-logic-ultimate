@@ -16,6 +16,10 @@ The node performs 3 checks (<b>AND,OR,XOR</b>) on the incoming boolean payloads 
 
 The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.
 
+## FUNCTIONS
+* Filter ouput results (outputs only true or trye/false)
+* Trigger mode selection (Can output a payload only by single input's topic trigger and after evaluation ot other inputs, or can oputput a payload by change of every input)
+
 ## CHANGELOG
 * See <a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/blob/master/CHANGELOG.md">here the changelog</a>
 
@@ -31,6 +35,23 @@ Changing the topic is usually only needed when chaining multiple boolean nodes a
     <li>Output only 'true' results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out.</li>
 </ol>
 <br/>
+
+<b>Trigger mode</b><br />
+	The node can acts ad a standard boolean logic or as single topic triggered boolean logic.<br/>
+	As single topic triggered boolean logic, the node will evaluate the inputs (and thus will output a payload) only if a specified topic input arrives.<br/>
+	In a coding perspectives, it acts as follows:<br/>
+	<code>
+		if (msg.topic == specified topic)<br/>
+		{<br/>
+			If (all other inputs are true) -> outputs true otherwise false<br/>
+		}<br/>
+	</code>
+	<ol>	
+		<li>All topics: standard behaviour, the node will output <b>true</b> and <b>false</b> by evaluating all inputs. Each input change will trigger the node output.</li>
+		<li>Single topic + eval: <u>only whenever the node receives a msg input with the <b>specified topic</b> (having payload = true)</u>, it starts the evaluation of all other inputs as well and outputs the evaluated payload. If the node receives a msg input other than the <b>specified topic</b>), it only retains it's value for the boolean evaluation.</li>
+	</ol>
+	<br/><br/>
+
 <b>Remember latest input values after reboot</b><br />
 If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
 Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
@@ -45,10 +66,14 @@ All incoming msg.payloads are converted into a boolean value according to the fo
 The XOR operation operates in a one, and only one mode, i.e. (A ^ B) ^ C ... ^ n
 </p>
 <p>
+
+## OTHER NODES
+
 <b>Invert Ultimate</b><br />
 Outputs the inverted input. For example true -> false
 </p>
 <p>
+
 <b>Filter Ultimate</b><br />
 This node has 2 outputs.<br />
 If the input payload is true, the node will send <code>true</code> on output 1 and nothing on oputput 2<br />
