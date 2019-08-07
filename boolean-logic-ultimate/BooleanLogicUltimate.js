@@ -4,6 +4,7 @@ module.exports = function(RED) {
 		this.config = config;
         this.state = {};
 		var node = this;
+		node.config = config;
 		var fs = require('fs');
 		var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
 	
@@ -68,7 +69,21 @@ module.exports = function(RED) {
 						if (!resOR) { resOR = null };
 						if (!resXOR) { resXOR = null };
 					}
-					SetResult(resAND,resOR,resXOR, node.config.topic);
+
+					// Operation mode evaluation
+					if (node.config.outputtriggeredby == "onlyonetopic") {
+						if (typeof node.config.triggertopic !== "undefined"
+							&& node.config.triggertopic !== ""
+							&& msg.hasOwnProperty("topic") && msg.topic !==""
+							&& node.config.triggertopic === msg.topic)
+						{
+							SetResult(resAND, resOR, resXOR, node.config.topic);
+						}
+						node.status({ fill: "grey", shape: "ring", text: " Saved " + msg.hasOwnProperty("topic") ? msg.topic : "empty input topic"});
+					} else
+					{
+						SetResult(resAND, resOR, resXOR, node.config.topic);
+					}
 				}
 				else if(keyCount > node.config.inputCount ) {
 					node.warn( 

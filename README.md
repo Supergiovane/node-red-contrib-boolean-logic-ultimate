@@ -16,7 +16,7 @@ The node performs 3 checks (<b>AND,OR,XOR</b>) on the incoming boolean payloads 
 
 The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.
 
-## FUNCTIONS
+## ADDITIONAL FUNCTIONS
 * Filter ouput results (outputs only true or trye/false)
 * Trigger mode selection (Can output a payload only by single input's topic trigger and after evaluation ot other inputs, or can oputput a payload by change of every input)
 
@@ -48,9 +48,15 @@ Changing the topic is usually only needed when chaining multiple boolean nodes a
 	</code>
 	<ol>	
 		<li>All topics: standard behaviour, the node will output <b>true</b> and <b>false</b> by evaluating all inputs. Each input change will trigger the node output.</li>
-		<li>Single topic + eval: <u>only whenever the node receives a msg input with the <b>specified topic</b> (having payload = true)</u>, it starts the evaluation of all other inputs as well and outputs the evaluated payload. If the node receives a msg input other than the <b>specified topic</b>), it only retains it's value for the boolean evaluation.</li>
+		<li>Single topic + eval other inputs: <u>only whenever the node receives a msg input with the <b>specified topic</b> (having payload = true)</u>, it starts the evaluation of all other inputs as well and outputs the evaluated payload. If the node receives a msg input other than the <b>specified topic</b>), it only retains it's value for the boolean evaluation.</li>
 	</ol>
-	<br/><br/>
+
+Example of trigger mode = Single topic + eval other inputs
+```js
+[{"id":"4d2e4d1.4a02034","type":"BooleanLogicUltimate","z":"5635003e.2d70f","name":"","filtertrue":"both","persist":true,"triggertopic":"MotionSensor","outputtriggeredby":"onlyonetopic","inputCount":"3","topic":"result","x":460,"y":580,"wires":[["a9e93fa0.99508"],[],[]]},{"id":"b3a4633e.ff06c","type":"inject","z":"5635003e.2d70f","name":"","topic":"MotionSensor","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":560,"wires":[["4d2e4d1.4a02034"]]},{"id":"150ff8fd.8110e7","type":"inject","z":"5635003e.2d70f","name":"","topic":"Dusk","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":240,"y":760,"wires":[["4d2e4d1.4a02034"]]},{"id":"6ecd73e1.9ac75c","type":"inject","z":"5635003e.2d70f","name":"","topic":"Rain","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":240,"y":660,"wires":[["4d2e4d1.4a02034"]]},{"id":"350fb477.b0d484","type":"inject","z":"5635003e.2d70f","name":"","topic":"Dusk","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":240,"y":800,"wires":[["4d2e4d1.4a02034"]]},{"id":"1118f46a.b967ac","type":"inject","z":"5635003e.2d70f","name":"","topic":"MotionSensor","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":600,"wires":[["4d2e4d1.4a02034"]]},{"id":"4e793dec.646b4c","type":"inject","z":"5635003e.2d70f","name":"","topic":"Rain","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":240,"y":700,"wires":[["4d2e4d1.4a02034"]]},{"id":"a9e93fa0.99508","type":"debug","z":"5635003e.2d70f","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","x":650,"y":580,"wires":[]},{"id":"8d44deef.e81d","type":"comment","z":"5635003e.2d70f","name":"Switch on the light only when it's raining and it's dusk. The trigger is someone entering in the Motion Sensor's area.","info":"Triggers only if someone enters \nin the motion sensor's area","x":410,"y":520,"wires":[]}]
+```
+
+<br/><br/>
 
 <b>Remember latest input values after reboot</b><br />
 If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>

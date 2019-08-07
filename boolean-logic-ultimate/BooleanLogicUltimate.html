@@ -54,9 +54,12 @@
         icon: "serial.png",
         label: 
 			function() {
-				var label = "Logic" + (this.filtertrue=="both" ?  "" : " filtered" ) + " [" + this.inputCount + "]";
+				let label = "";
+				let filtered=this.filtertrue=="both" ?  "" : " |TRUE" ;
+				let trigger=this.outputtriggeredby=="all" ?  "" :  " |TRIG:" + this.triggertopic;
+				label= this.inputCount + ((filtered+trigger)==""?" Boolean Logic":(filtered+trigger));
 				if( this.name !== undefined && this.name.length > 0 ) {
-					label = label + " (" + this.name + ")";
+					label += " (" + this.name + ")";
 				}
 				return label;
 			},
@@ -120,7 +123,7 @@
         <label for="node-input-outputtriggeredby"><i class="fa fa-filter"></i> Trigger mode</label>
         <select type="text" id="node-input-outputtriggeredby" placeholder="Event">
 			<option value="all">All topics</option>
-			<option value="onlyonetopic">Single topic + eval</option>
+			<option value="onlyonetopic">Single topic + only eval others</option>
 		</select>
 	</div>
 	<div class="form-row" id="triggertopic">
@@ -168,8 +171,9 @@
 	</code>
 	<ol>	
 		<li>All topics: standard behaviour, the node will output <b>true</b> and <b>false</b> by evaluating all inputs. Each input change will trigger the node output.</li>
-		<li>Single topic + eval: <u>only whenever the node receives a msg input with the <b>specified topic</b> (having payload = true)</u>, it starts the evaluation of all other inputs as well and outputs the evaluated payload. If the node receives a msg input other than the <b>specified topic</b>), it only retains it's value for the boolean evaluation.</li>
+		<li>Single topic + only eval others: <u>only whenever the node receives a msg input with the <b>specified topic</b> (having payload = true)</u>, it starts the evaluation of all other inputs as well and outputs the evaluated payload. If the node receives a msg input other than the <b>specified topic</b>), it only retains it's value for the boolean evaluation.</li>
 	</ol>
+	Example of trigger mode = Single topic + eval other inputs:	<b>SEE THE README FOR AN EXAMPLE</b>
 	<br/><br/>
 
 	<b>Remember latest input values after reboot</b><br />

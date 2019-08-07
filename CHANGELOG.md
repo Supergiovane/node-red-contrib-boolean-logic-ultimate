@@ -1,6 +1,10 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
-<b>Version 1.0.0 LTS</b><br/>
+<b>Version 1.0.1</b><br/>
+- Added "trigger mode" option<br/>
+</p>
+<p>
+<b>Version 1.0.0</b><br/>
 - Added Filter node<br/>
 </p>
 <p>
