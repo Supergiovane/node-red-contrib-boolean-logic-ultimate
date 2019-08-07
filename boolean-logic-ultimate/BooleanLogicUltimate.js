@@ -78,8 +78,10 @@ module.exports = function(RED) {
 							&& node.config.triggertopic === msg.topic)
 						{
 							SetResult(resAND, resOR, resXOR, node.config.topic);
+						} else
+						{
+							node.status({ fill: "grey", shape: "ring", text: "Saved (" + (msg.hasOwnProperty("topic") ? msg.topic : "empty input topic") + ") " + value});
 						}
-						node.status({ fill: "grey", shape: "ring", text: " Saved " + msg.hasOwnProperty("topic") ? msg.topic : "empty input topic"});
 					} else
 					{
 						SetResult(resAND, resOR, resXOR, node.config.topic);

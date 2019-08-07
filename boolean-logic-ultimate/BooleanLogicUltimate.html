@@ -55,9 +55,9 @@
         label: 
 			function() {
 				let label = "";
-				let filtered=this.filtertrue=="both" ?  "" : " |TRUE" ;
+				let filtered=this.filtertrue=="both" ?  "" : " |T" ;
 				let trigger="";
-				if(typeof this.outputtriggeredby !== "undefined") trigger=this.outputtriggeredby=="all" ?  "" :  " |TRIG:" + this.triggertopic;
+				if(typeof this.outputtriggeredby !== "undefined") trigger=this.outputtriggeredby=="all" ?  "" :  " |TRIG (" + this.triggertopic+")";
 				label= this.inputCount + ((filtered+trigger)==""?" Boolean Logic":(filtered+trigger));
 				if( this.name !== undefined && this.name.length > 0 ) {
 					label += " (" + this.name + ")";

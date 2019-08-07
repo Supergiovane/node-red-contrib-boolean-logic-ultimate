@@ -1,5 +1,9 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
+<b>Version 1.0.3</b><br/>
+- Node status: cosmetic adjustments<br/>
+</p>
+<p>
 <b>Version 1.0.2</b><br/>
 - Added "trigger mode" option (fixed UI glitch)<br/>
 </p>
