@@ -51,10 +51,14 @@ Changing the topic is usually only needed when chaining multiple boolean nodes a
 		<li>Single topic + eval other inputs: <u>only whenever the node receives a msg input with the <b>specified topic</b> (having payload = true)</u>, it starts the evaluation of all other inputs as well and outputs the evaluated payload. If the node receives a msg input other than the <b>specified topic</b>), it only retains it's value for the boolean evaluation.</li>
 	</ol>
 
-Example of trigger mode = Single topic + eval other inputs
-```js
-[{"id":"4d2e4d1.4a02034","type":"BooleanLogicUltimate","z":"5635003e.2d70f","name":"","filtertrue":"both","persist":true,"triggertopic":"MotionSensor","outputtriggeredby":"onlyonetopic","inputCount":"3","topic":"result","x":460,"y":580,"wires":[["a9e93fa0.99508"],[],[]]},{"id":"b3a4633e.ff06c","type":"inject","z":"5635003e.2d70f","name":"","topic":"MotionSensor","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":560,"wires":[["4d2e4d1.4a02034"]]},{"id":"150ff8fd.8110e7","type":"inject","z":"5635003e.2d70f","name":"","topic":"Dusk","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":240,"y":760,"wires":[["4d2e4d1.4a02034"]]},{"id":"6ecd73e1.9ac75c","type":"inject","z":"5635003e.2d70f","name":"","topic":"Rain","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":240,"y":660,"wires":[["4d2e4d1.4a02034"]]},{"id":"350fb477.b0d484","type":"inject","z":"5635003e.2d70f","name":"","topic":"Dusk","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":240,"y":800,"wires":[["4d2e4d1.4a02034"]]},{"id":"1118f46a.b967ac","type":"inject","z":"5635003e.2d70f","name":"","topic":"MotionSensor","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":600,"wires":[["4d2e4d1.4a02034"]]},{"id":"4e793dec.646b4c","type":"inject","z":"5635003e.2d70f","name":"","topic":"Rain","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":240,"y":700,"wires":[["4d2e4d1.4a02034"]]},{"id":"a9e93fa0.99508","type":"debug","z":"5635003e.2d70f","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","x":650,"y":580,"wires":[]},{"id":"8d44deef.e81d","type":"comment","z":"5635003e.2d70f","name":"Switch on the light only when it's raining and it's dusk. The trigger is someone entering in the Motion Sensor's area.","info":"Triggers only if someone enters \nin the motion sensor's area","x":410,"y":520,"wires":[]}]
-```
+<b>If input states are undefined</b><br />
+	Every time you create a node or modify the node, all inputs are set to undefined. This means that the node will wait the arrive of all topics (for example 3 topics, if you've selected 3 topics in the option), before it can output a payload. This can be a problem if your logic must be operative as soon as you deploy the flow. To overcome this problem, you can "initialize" all the undefined inputs with True or False.
+	<ol>	
+		<li>Leave undefined: Standard behaviour, the node will wait all the "undefined" topics to arrive, then starts a flow with the result.</li>
+		<li>True or False: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false".</li>
+	</ol>
+	<br/>
+
 
 <br/><br/>
 

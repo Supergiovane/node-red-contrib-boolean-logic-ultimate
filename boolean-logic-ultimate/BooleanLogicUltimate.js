@@ -1,14 +1,13 @@
 module.exports = function(RED) {
     function BooleanLogicUltimate(config) {
-        RED.nodes.createNode(this,config);
-		this.config = config;
-        this.state = {};
+		RED.nodes.createNode(this, config);
 		var node = this;
 		node.config = config;
+		node.jSonStates = {}; // JSON object with elements. It's not an array! Format: {"Rain":true,"Dusk":true,"MotionSensor":true}
+		node.sInitializeWith = typeof node.config.sInitializeWith === "undefined" ? "WaitForPayload" : node.config.sInitializeWith;
 		var fs = require('fs');
 		var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
 	
-		
 		// Helper for the config html, to be able to delete the peristent states file
 		RED.httpAdmin.get("/stateoperation_delete", RED.auth.needsPermission('BooleanLogicUltimate.read'), function (req, res) {
 			//node.send({ req: req });
@@ -21,8 +20,8 @@ module.exports = function(RED) {
 			try {
 				var contents = fs.readFileSync("states/" + node.id.toString()).toString();
 				if (typeof contents !== 'undefined') {
-					node.state = JSON.parse(contents);
-					node.status({fill: "blue",shape: "ring",text: "Loaded persistent states (" + Object.keys(node.state).length + " total)."});
+					node.jSonStates = JSON.parse(contents);
+					node.status({fill: "blue",shape: "ring",text: "Loaded persistent states (" + Object.keys(node.jSonStates).length + " total)."});
 				}
 			} catch (error) {
 				node.status({fill: "grey",shape: "ring",text: "No persistent states"});
@@ -32,23 +31,45 @@ module.exports = function(RED) {
 			node.status({fill: "yellow",shape: "dot",text: "Waiting for input states"});
 		}
 
+
+		// 14/08/2019 If the inputs are to be initialized, create a dummy items in the array
+		initUndefinedInputs();
+		
+
 		this.on('input', function (msg) {
 			
 			var topic = msg.topic;
 			var payload = msg.payload;
 			
 			if (topic !== undefined && payload !== undefined) {
-				
 				var value = ToBoolean( payload );
-				var state = node.state;
+			
+				// 14/08/2019 if inputs are initialized, remove a "dummy" item from the state's array, as soon as new topic arrives
+				if(node.sInitializeWith !== "WaitForPayload")
+				{
+					// Search if the current topic is in the state array
+					if (typeof node.jSonStates[topic] === "undefined")
+					{
+						// Delete one dummy 
+						for (let index = 0; index < node.config.inputCount; index++) {
+							if (node.jSonStates.hasOwnProperty("dummy" + index)) {
+								//RED.log.info(JSON.stringify(node.jSonStates))
+								delete node.jSonStates["dummy" + index];
+								//RED.log.info(JSON.stringify(node.jSonStates))
+								break;
+							} 
+						}
+					}
+				}
+			
+				// Add current attribute
+				node.jSonStates[topic] = value;
 				
-				state[topic] = value;
-
 				// Save the state array to a perisistent file
-				if (this.config.persist == true) { 
+				if (node.config.persist == true) { 
 					try {
 						if (!fs.existsSync("states")) fs.mkdirSync("states");
-						fs.writeFileSync("states/" + node.id.toString(),JSON.stringify(state));
+						fs.writeFileSync("states/" + node.id.toString(),JSON.stringify(node.jSonStates));
 	
 					} catch (error) {
 						node.status({fill: "red",shape: "dot",text: "Node cannot write to filesystem: " + error});
@@ -56,7 +77,7 @@ module.exports = function(RED) {
 				}
 								
 				// Do we have as many inputs as we expect?
-				var keyCount = Object.keys(state).length;
+				var keyCount = Object.keys(node.jSonStates).length;
 
 				if( keyCount == node.config.inputCount ) {
 					
@@ -93,7 +114,7 @@ module.exports = function(RED) {
 							? node.config.name : "BooleanLogicUltimate") 
 							+ " [Logic]: More than the specified " 
 							+ node.config.inputCount + " topics received, resetting. Will not output new value until " + node.config.inputCount + " new topics have been received.");
-					node.state = {};
+					node.jSonStates = {};
 					DeletePersistFile(node.id);
 					DisplayUnkownStatus();
 				} else {
@@ -122,6 +143,23 @@ module.exports = function(RED) {
 			} catch (error) {
 				_node.status({fill: "red",shape: "ring",text: "Error deleting persistent file: " + error.toString()});
 			}
+			node.jSonStates = {}; // Resets inputs
+			// 14/08/2019 If the inputs are to be initialized, create a dummy items in the array
+			initUndefinedInputs();
+		}
+
+		function initUndefinedInputs() {
+			if (node.sInitializeWith !== "WaitForPayload")
+			{
+				var nTotalDummyToCreate = Number(node.config.inputCount) - Object.keys(node.jSonStates).length;
+				RED.log.info("BooleanLogicUltimate: Will create " + nTotalDummyToCreate + " dummy (" + node.sInitializeWith + ") values")
+				for (let index = 0; index < nTotalDummyToCreate; index++) {
+					node.jSonStates["dummy" + index] = node.sInitializeWith === "false" ? false : true;
+				}
+				if (nTotalDummyToCreate > 0) {
+					setTimeout(() => { node.status({fill: "green",shape: "ring",text: "Initialized " + nTotalDummyToCreate + " undefined inputs with " + node.sInitializeWith});}, 4000)
+				} 
+			}
 		}
 
 		function CalculateResult(_operation) {
@@ -132,12 +170,12 @@ module.exports = function(RED) {
 			}
 			else {
 				// We need a starting value to perform AND and OR operations.				
-				var keys = Object.keys(node.state);
-				res = node.state[keys[0]];
+				var keys = Object.keys(node.jSonStates);
+				res = node.jSonStates[keys[0]];
 				
 				for( var i = 1; i < keys.length; ++i ) {
 					var key = keys[i];
-					res = PerformSimpleOperation( _operation, res, node.state[key] );
+					res = PerformSimpleOperation( _operation, res, node.jSonStates[key] );
 				}
 			}
 			
@@ -149,8 +187,8 @@ module.exports = function(RED) {
 			// XOR = exclusively one input is true. As such, we just count the number of true values and compare to 1.
 			var trueCount = 0;
 			
-			for( var key in node.state ) {
-				if( node.state[key] ) {
+			for( var key in node.jSonStates ) {
+				if( node.jSonStates[key] ) {
 					trueCount++;
 				}
 			}
@@ -194,16 +232,7 @@ module.exports = function(RED) {
 			return res;
 		};
 		
-		function DisplayStatus ( value ) {
-			node.status( 
-				{ 
-					fill: value ? "green" : "red", 
-					shape: value ? "dot" : "ring", 
-					text: value ? "true" : "false" 
-				}
-			);
-		};
-
+		
 		function DisplayUnkownStatus () {
 			node.status( 
 				{ 

@@ -1,5 +1,9 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
+<b>Version 1.0.4</b><br/>
+- Added the option to initialize the undefined inputs with true or false. Thanks to this, the node is immediately operative (will not wait until all topis arrives).<br/>
+</p>
+<p>
 <b>Version 1.0.3</b><br/>
 - Node status: cosmetic adjustments<br/>
 </p>
