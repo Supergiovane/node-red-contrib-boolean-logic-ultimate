@@ -11,7 +11,13 @@ module.exports = function(RED) {
 		// Helper for the config html, to be able to delete the peristent states file
 		RED.httpAdmin.get("/stateoperation_delete", RED.auth.needsPermission('BooleanLogicUltimate.read'), function (req, res) {
 			//node.send({ req: req });
-			DeletePersistFile(req.query.nodeid);
+			// Detele the persist file
+			//var _node = RED.nodes.getNode(req.query.nodeid); // Gets node object from nodeit, because when called from the config html, the node object is not defined
+			var _nodeid = req.query.nodeid;
+			try {
+				if (fs.existsSync("states/" + _nodeid.toString())) fs.unlinkSync("states/" + _nodeid.toString());
+			} catch (error) {
+			}
 			res.json({ status: 220 });
 		});
 
@@ -21,18 +27,18 @@ module.exports = function(RED) {
 				var contents = fs.readFileSync("states/" + node.id.toString()).toString();
 				if (typeof contents !== 'undefined') {
 					node.jSonStates = JSON.parse(contents);
-					node.status({fill: "blue",shape: "ring",text: "Loaded persistent states (" + Object.keys(node.jSonStates).length + " total)."});
+					setNodeStatus({fill: "blue",shape: "ring",text: "Loaded persistent states (" + Object.keys(node.jSonStates).length + " total)."});
 				}
 			} catch (error) {
-				node.status({fill: "grey",shape: "ring",text: "No persistent states"});
+				setNodeStatus({fill: "grey",shape: "ring",text: "No persistent states"});
 			}
 			
 		} else {
-			node.status({fill: "yellow",shape: "dot",text: "Waiting for input states"});
+			setNodeStatus({fill: "yellow",shape: "dot",text: "Waiting for input states"});
 		}
 
 
-		// 14/08/2019 If the inputs are to be initialized, create a dummy items in the array
+		// 14/08/2019 If some inputs are to be initialized, create a dummy items in the array
 		initUndefinedInputs();
 		
 
@@ -72,7 +78,7 @@ module.exports = function(RED) {
 						fs.writeFileSync("states/" + node.id.toString(),JSON.stringify(node.jSonStates));
 	
 					} catch (error) {
-						node.status({fill: "red",shape: "dot",text: "Node cannot write to filesystem: " + error});
+						setNodeStatus({fill: "red",shape: "dot",text: "Node cannot write to filesystem: " + error});
 					}
 				}
 								
@@ -101,7 +107,7 @@ module.exports = function(RED) {
 							SetResult(resAND, resOR, resXOR, node.config.topic);
 						} else
 						{
-							node.status({ fill: "grey", shape: "ring", text: "Saved (" + (msg.hasOwnProperty("topic") ? msg.topic : "empty input topic") + ") " + value});
+							setNodeStatus({ fill: "grey", shape: "ring", text: "Saved (" + (msg.hasOwnProperty("topic") ? msg.topic : "empty input topic") + ") " + value});
 						}
 					} else
 					{
@@ -109,16 +115,10 @@ module.exports = function(RED) {
 					}
 				}
 				else if(keyCount > node.config.inputCount ) {
-					node.warn( 
-						(node.config.name !== undefined && node.config.name.length > 0 
-							? node.config.name : "BooleanLogicUltimate") 
-							+ " [Logic]: More than the specified " 
-							+ node.config.inputCount + " topics received, resetting. Will not output new value until " + node.config.inputCount + " new topics have been received.");
-					node.jSonStates = {};
-					DeletePersistFile(node.id);
-					DisplayUnkownStatus();
+					setNodeStatus({ fill: "gray", shape: "ring", text: "Reset due to unexpected new topic"});
+					DeletePersistFile();
 				} else {
-					node.status({ fill: "green", shape: "ring", text: " Arrived topic " + keyCount + " of " + node.config.inputCount});
+					setNodeStatus({ fill: "green", shape: "ring", text: "Arrived topic " + keyCount + " of " + node.config.inputCount});
 				}
 			}
 		});
@@ -127,21 +127,20 @@ module.exports = function(RED) {
 			if (removed) {
 				// This node has been deleted
 				// Delete persistent states on change/deploy
-				DeletePersistFile(node.id);
+				DeletePersistFile();
 			} else {
 				// This node is being restarted
 			}
 			done();
 		});
 
-		function DeletePersistFile (_nodeid){
+		function DeletePersistFile (){
 			// Detele the persist file
-			var _node = RED.nodes.getNode(_nodeid); // Gets node object from nodeit, because when called from the config html, the node object is not defined
 			try {
-				if (fs.existsSync("states/" + _nodeid.toString())) fs.unlinkSync("states/" + _nodeid.toString());
-				_node.status({fill: "red",shape: "ring",text: "Persistent states deleted ("+_nodeid.toString()+")."});
+				if (fs.existsSync("states/" + node.id.toString())) fs.unlinkSync("states/" + node.id.toString());
+				setNodeStatus({fill: "red",shape: "ring",text: "Persistent states deleted ("+node.id.toString()+")."});
 			} catch (error) {
-				_node.status({fill: "red",shape: "ring",text: "Error deleting persistent file: " + error.toString()});
+				setNodeStatus({fill: "red",shape: "ring",text: "Error deleting persistent file: " + error.toString()});
 			}
 			node.jSonStates = {}; // Resets inputs
 			// 14/08/2019 If the inputs are to be initialized, create a dummy items in the array
@@ -152,14 +151,19 @@ module.exports = function(RED) {
 			if (node.sInitializeWith !== "WaitForPayload")
 			{
 				var nTotalDummyToCreate = Number(node.config.inputCount) - Object.keys(node.jSonStates).length;
-				RED.log.info("BooleanLogicUltimate: Will create " + nTotalDummyToCreate + " dummy (" + node.sInitializeWith + ") values")
-				for (let index = 0; index < nTotalDummyToCreate; index++) {
-					node.jSonStates["dummy" + index] = node.sInitializeWith === "false" ? false : true;
-				}
 				if (nTotalDummyToCreate > 0) {
-					setTimeout(() => { node.status({fill: "green",shape: "ring",text: "Initialized " + nTotalDummyToCreate + " undefined inputs with " + node.sInitializeWith});}, 4000)
+					RED.log.info("BooleanLogicUltimate: Will create " + nTotalDummyToCreate + " dummy (" + node.sInitializeWith + ") values")
+					for (let index = 0; index < nTotalDummyToCreate; index++) {
+						node.jSonStates["dummy" + index] = node.sInitializeWith === "false" ? false : true;
+					}
+					setTimeout(() => { setNodeStatus({fill: "green",shape: "ring",text: "Initialized " + nTotalDummyToCreate + " undefined inputs with " + node.sInitializeWith});}, 4000)
 				} 
 			}
+		}
+
+		function setNodeStatus({fill, shape, text})
+		{
+			node.status({fill: fill,shape: shape,text: text + " (Last " + new Date().toLocaleString() + ")"})
 		}
 
 		function CalculateResult(_operation) {
@@ -232,18 +236,8 @@ module.exports = function(RED) {
 			return res;
 		};
 		
-		
-		function DisplayUnkownStatus () {
-			node.status( 
-				{ 
-					fill: "gray", 
-					shape: "ring", 
-					text: "Reset due to unexpected new topic" 
-				});
-		};
-
 		function SetResult(_valueAND, _valueOR, _valueXOR, optionalTopic) {
-			node.status({fill: "green",shape: "dot",text: "(AND)" + _valueAND + " (OR)" +_valueOR + " (XOR)" +_valueXOR});
+			setNodeStatus({fill: "green",shape: "dot",text: "(AND)" + _valueAND + " (OR)" +_valueOR + " (XOR)" +_valueXOR});
 			
 			if (_valueAND!=null){
 				var msgAND = { 

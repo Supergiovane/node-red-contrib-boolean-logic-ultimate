@@ -1,5 +1,10 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
+<b>Version 1.0.5</b><br/>
+- Added the Last value change date/time in the status.<br/>
+- Correction in the in-line help<br/>
+</p>
+<p>
 <b>Version 1.0.4</b><br/>
 - Added the option to initialize the undefined inputs with true or false. Thanks to this, the node is immediately operative (will not wait until all topis arrives).<br/>
 </p>
