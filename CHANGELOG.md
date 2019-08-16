@@ -1,5 +1,9 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
+<b>Version 1.0.6</b><br/>
+- Stripped out the date/time in node status<br/>
+</p>
+<p>
 <b>Version 1.0.5</b><br/>
 - Added the Last value change date/time in the status.<br/>
 - Correction in the in-line help<br/>

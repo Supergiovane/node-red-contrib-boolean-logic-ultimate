@@ -35,7 +35,8 @@ module.exports = function(RED) {
 		
 		function setNodeStatus({fill, shape, text})
 		{
-			node.status({fill: fill,shape: shape,text: text + " (Last " + new Date().toLocaleString() + ")"})
+			var dDate = new Date();
+			node.status({fill: fill,shape: shape,text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")"})
 		}
 			
 
