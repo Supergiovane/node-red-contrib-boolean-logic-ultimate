@@ -4,13 +4,13 @@ module.exports = function(RED) {
 		this.config = config;
 		var node = this;
 		var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
-		node.status( {fill:  "grey" ,shape: "dot" ,text: "waiting"});
+		setNodeStatus( {fill:  "grey" ,shape: "dot" ,text: "Waiting"});
 		
         this.on('input', function(msg) {
 			var topic = msg.topic || "";
 			var payload = msg.payload;
 			if (topic !== undefined && payload !== undefined) {
-				node.status( {fill:  "green" ,shape: "dot" ,text: !ToBoolean(payload)});
+				setNodeStatus( {fill:  "green" ,shape: "dot" ,text: "(Send) " + !ToBoolean(payload)});
 				node.send({ topic: topic, payload: !ToBoolean(payload) });
 				return;
 			}
@@ -37,7 +37,14 @@ module.exports = function(RED) {
 			
 			return res;
 		};
-    }	
+
+		function setNodeStatus({fill, shape, text})
+		{
+			node.status({fill: fill,shape: shape,text: text + " (Last " + new Date().toLocaleString() + ")"})
+		}
+		
+	}	
+	
 	
 	
     RED.nodes.registerType("InvertUltimate",InvertUltimate);

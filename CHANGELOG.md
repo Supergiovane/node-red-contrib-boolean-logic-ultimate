@@ -3,6 +3,7 @@
 <b>Version 1.0.5</b><br/>
 - Added the Last value change date/time in the status.<br/>
 - Correction in the in-line help<br/>
+- Better format of the README.md<br/>
 </p>
 <p>
 <b>Version 1.0.4</b><br/>

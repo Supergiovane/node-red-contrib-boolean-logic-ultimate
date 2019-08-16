@@ -3,7 +3,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
 		this.config = config;
 		var node = this;
-		node.status( {fill:  "grey" ,shape: "dot" ,text: "Waiting"});
+		setNodeStatus( {fill:  "grey" ,shape: "dot" ,text: "Waiting"});
 		this.on('input', function (msg) {
 			var sTopic = node.config.name;
 			if (msg.hasOwnProperty("topic")){
@@ -22,18 +22,22 @@ module.exports = function(RED) {
 					payload: false
 				};
 				if (bRes === true) {
-					node.status( {fill:  "green" ,shape: "dot" ,text: "(Send) true,null"});
+					setNodeStatus( {fill:  "green" ,shape: "dot" ,text: "(Send) true,null"});
 					node.send([msgTrue, null]);
 				} else
 				{
-					node.status( {fill:  "green" ,shape: "dot" ,text: "(Send) null,false"});
+					setNodeStatus( {fill:  "green" ,shape: "dot" ,text: "(Send) null,false"});
 					node.send([null, msgFalse]);
 				}
 				return;
 			}
         });
 		
-		
+		function setNodeStatus({fill, shape, text})
+		{
+			node.status({fill: fill,shape: shape,text: text + " (Last " + new Date().toLocaleString() + ")"})
+		}
+			
 
 		function ToBoolean( value ) {
 			var res = false;
@@ -56,6 +60,6 @@ module.exports = function(RED) {
 		};
     }	
 	
-	
+
     RED.nodes.registerType("FilterUltimate",FilterUltimate);
 }
