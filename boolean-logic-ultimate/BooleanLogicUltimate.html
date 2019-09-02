@@ -56,7 +56,7 @@
         label: 
 			function() {
 				let label = "";
-				let filtered=this.filtertrue=="both" ?  "" : " f" ;
+				let filtered=this.filtertrue=="both" ?  "" : "f" ;
 				let trigger="";
 				if(typeof this.outputtriggeredby !== "undefined") trigger=this.outputtriggeredby=="all" ?  "" :  "t (" + this.triggertopic+")";
 				label= this.inputCount + ((filtered+trigger)==""?" Boolean Logic":(filtered+trigger));
