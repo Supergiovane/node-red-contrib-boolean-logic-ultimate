@@ -1,7 +1,7 @@
 # node-red-contrib-boolean-logic-ultimate
 <p>
 <b>Version 1.0.7</b><br/>
-- Node nale shows "f" when "filter true" is selected and "t" (triggername) when "trigger only by single topic" is selected.<br/>
+- Node node shows "f" when "filter true" is selected and "t" (triggername) when "trigger only by single topic" is selected.<br/>
 </p>
 <p>
 <b>Version 1.0.6</b><br/>
