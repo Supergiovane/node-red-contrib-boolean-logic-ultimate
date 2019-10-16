@@ -30,6 +30,11 @@ when it has seen the expected number of topics. If it ever sees more than the co
 Changing the topic is usually only needed when chaining multiple boolean nodes after each other becuse the topics will then all be the same when delivered to the nodes further down the chain.<br/>
 <br/>
 
+***Number of different topics to evaluate***
+Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of different topics arrives.<br/>
+<b> Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.</b><br/>
+
+
 ***Filter output result***
 <ol>	
     <li>Output both 'true' and 'false' results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output.</li>
