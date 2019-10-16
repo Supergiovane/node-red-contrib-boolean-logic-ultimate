@@ -31,6 +31,7 @@ Changing the topic is usually only needed when chaining multiple boolean nodes a
 <br/>
 
 ***Number of different topics to evaluate***
+
 Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of different topics arrives.<br/>
 <b> Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.</b><br/>
 
