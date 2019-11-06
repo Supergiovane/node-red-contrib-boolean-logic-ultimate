@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-boolean-logic-ultimate",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "A set of Node-RED enhanced boolean logic, with persisten values after reboot and more",
     "author": "Supergiovane (https://github.com/Supergiovane)",
     "dependencies": {
@@ -22,7 +22,9 @@
         "nodes": {
             "BooleanLogicUltimate": "boolean-logic-ultimate/BooleanLogicUltimate.js",
             "InvertUltimate": "boolean-logic-ultimate/InvertUltimate.js",
-            "FilterUltimate": "boolean-logic-ultimate/FilterUltimate.js"
+            "FilterUltimate": "boolean-logic-ultimate/FilterUltimate.js",
+            "InterruptFlowUltimate": "boolean-logic-ultimate/InterruptFlowUltimate.js"
+            
         }
     }
 }

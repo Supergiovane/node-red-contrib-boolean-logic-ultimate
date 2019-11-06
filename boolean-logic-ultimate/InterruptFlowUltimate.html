@@ -1,0 +1,58 @@
+<script type="text/javascript">
+    RED.nodes.registerType('InterruptFlowUltimate',{
+        category: 'boolean logic ultimate',
+        color: '#ff8080',
+        defaults: {
+			name: { 
+				value: "Interrupt Flow"
+			},
+			triggertopic: { 
+				value: "trigger"
+			}		
+        },
+        inputs:1,
+        outputs:1,
+        outputLabels: function(i) { 
+			var ret="";
+			switch (i) {
+				case 0:
+					return "True";
+				break;
+				case 1:
+					return "False";
+				break;
+				default:
+					break;
+			}
+		},
+        icon: "file-in.png",
+        label: 
+			function() {
+				return (this.name||"Interrupt") + " (" + this.triggertopic + ")";
+			},
+		paletteLabel: function() {
+			return "InterruptFlowUltimate";
+		}
+    });
+</script>
+
+<script type="text/x-red" data-template-name="InterruptFlowUltimate">
+	<div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	
+	<div class="form-row">
+        <label for="node-input-triggertopic"><i class="icon-tag"></i> Trigger by topic</label>
+		<input type="text" id="node-input-triggertopic" placeholder="Name">
+		<div><i>Whenever the node receives a payload = false from this topic, it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again.</i></div>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="InterruptFlowUltimate">
+	<p>The meaning of this node is to interrupt/reactivate flow messages.<br/>
+    <p>The node will stop output messages, if it receives a payload = false from the specified topic.<br/>
+	</p>
+	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
+
+</script>

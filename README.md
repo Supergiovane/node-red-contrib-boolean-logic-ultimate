@@ -84,18 +84,22 @@ The XOR operation operates in a one, and only one mode, i.e. (A ^ B) ^ C ... ^ n
 </p>
 <p>
 
-## OTHER NODES
+# OTHER USEFUL NODES
 
-<b>Invert Ultimate</b><br />
+**Interrupt Flow**
+
+Whenever this node receives a payload = false from a specific topic, it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again.
+
+**Invert Ultimate**
+
 Outputs the inverted input. For example true -> false
-</p>
-<p>
 
-<b>Filter Ultimate</b><br />
+**Filter Ultimate**
+
 This node has 2 outputs.<br />
 If the input payload is true, the node will send <code>true</code> on output 1 and nothing on oputput 2<br />
 If the input payload is false, the node will send nothing on output 1, and <code>false</code> on oputput 2<br />
-</p>
+
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE
