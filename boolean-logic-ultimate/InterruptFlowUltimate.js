@@ -7,15 +7,16 @@ module.exports = function(RED) {
         node.bInviaMessaggio = true; // Send the message or not
 		this.on('input', function (msg) {
             
-            var sTriggerTopic = node.config.triggertopic || "trigger"; // Topic controlling the bInviaMessaggio
-            
-            if (msg.hasOwnProperty("topic")) {
-                // 06/11/2019 
-                if (msg.topic==sTriggerTopic && ToBoolean(msg.payload)===true) {
+            var sTriggerTopic = node.config.triggertopic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') || "trigger"; // Topic controlling the bInviaMessaggio
+			var sIncomingTopic = "";
+			if (msg.hasOwnProperty("topic")) {
+				// 06/11/2019 
+				sIncomingTopic = msg.topic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, ''); // Cut unwanted Characters
+				if (sIncomingTopic == sTriggerTopic && ToBoolean(msg.payload) === true) {
                     node.bInviaMessaggio = true;
                     setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" });
                     return;
-                } else if (msg.topic==sTriggerTopic && ToBoolean(msg.payload)===false){
+                } else if (sIncomingTopic==sTriggerTopic && ToBoolean(msg.payload)===false){
                     node.bInviaMessaggio = false;
                     setNodeStatus({ fill: "red", shape: "dot", text: "|| stop" });
                     return;

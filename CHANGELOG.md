@@ -1,6 +1,10 @@
 # node-red-contrib-boolean-logic-ultimate
 
 <p>
+<b>Version 1.0.10</b><br/>
+- Fix a possible issue in the "Interrupt Flow", if the trigger topic contains special characters.</br>
+</p>
+<p>
 <b>Version 1.0.9</b><br/>
 - Added "Interrupt Flow" node. Whenever the node receives a payload = false from a specific topic, it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again.</br>
 </p>
