@@ -32,57 +32,36 @@ The node performs 3 checks (<b>AND,OR,XOR</b>) on the incoming boolean payloads 
 The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
 You can also set the default values of the topic inputs.
 
-## ADDITIONAL FUNCTIONS
-* Filter ouput results (outputs only true or trye/false)
-* Trigger mode selection (Can output a payload only by single input's topic trigger and after evaluation ot other inputs, or can oputput a payload by change of every input)
-
 
 ## CONFIGURATION
 
 
-***Number of different topics to evaluate***
+**Number of different topics to evaluate**
 
 Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of different topics arrives.<br/>
 *Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.*
 
 
-***Filter output result***
-<ol>	
-	<li>Output both 'true' and 'false' results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output.</li>
-	<li>Output only 'true' results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out.</li>
-</ol>
-<br/>
+**Filter output result**
+
+- Output both 'true' and 'false' results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output.
+- Output only 'true' results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out.
 
 **Trigger mode**
 
-<ol>	
-	<li>All topics: standard behaviour, the node will evaluate each input topic and ouputs the values. At each input change, it will output a msg on the flow.</li>
-	<li>Single topic + eval other inputs: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic** (having payload **true**), it  outputs a msg to the flow.</li>
-</ol>
+- All topics: standard behaviour, the node will evaluate each input topic and ouputs the values. At each input change, it will output a msg on the flow.
+- Single topic + eval other inputs: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic** (having payload **true**), it  outputs a msg to the flow.
 
 **If input states are undefined**
 
 Every time you create a node or modify the node, all inputs are set to undefined. This means that the node will wait the arrive of all topics (for example 3 topics, if you've selected 3 topics in the option), before it can output a payload. This can be a problem if your logic must be operative as soon as you deploy the flow. To overcome this problem, you can "initialize" all the undefined inputs with True or False.
-<ol>	
-	<li>Leave undefined: Standard behaviour, the node will wait all the "undefined" topics to arrive, then starts a flow with the result.</li>
-	<li>True or False: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false".</li>
-</ol>
-<br/>
+- Leave undefined: Standard behaviour, the node will wait all the "undefined" topics to arrive, then starts a flow with the result.
+- True or False: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false".
 
 **Remember latest input values after reboot**
 
 If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
 Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
-All incoming msg.payloads are converted into a boolean value according to the following rules (this applies to all boolean logic nodes):
-<ol>	
-    <li>Boolean values are taken as-is.</li>
-    <li>For numbers, 0 evaluates to false, all other numbers evaluates to true.</li>
-    <li>Strings are converted to numbers if they match the format of a decimal value, then the same rule as for numbers are applied. If it does not match, it evaluates to false. Also, the string "true" evaluates to true.</li>
-</ol>
-<br>
-The XOR operation operates in a one, and only one mode, i.e. (A ^ B) ^ C ... ^ n
-</p>
-<p>
 
 
 # INTERRUPT FLOWS
