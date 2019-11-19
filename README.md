@@ -1,5 +1,7 @@
 # node-red-contrib-boolean-logic-ultimate
 
+![Sample Node](img/logo.png) 
+
 Set of enhanced logic nodes for your flows.
 
 [![NPM version][npm-version-image]][npm-url]
