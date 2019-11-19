@@ -66,7 +66,7 @@ If checked, the input values are retained after a node-red reboot. That means, t
 Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
 
 
-# INTERRUPT FLOWS
+# INTERRUPT FLOWS ULTIMATE
 
 Whenever this node receives a payload = false from a specific topic, it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again.
 
