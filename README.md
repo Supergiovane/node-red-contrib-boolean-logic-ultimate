@@ -52,7 +52,7 @@ Set the number of different topics to be evaluated. The node will output a messa
 **Trigger mode**
 
 - All topics: standard behaviour, the node will evaluate each input topic and ouputs the values. At each input change, it will output a msg on the flow.
-- Single topic + eval other inputs: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic** (having payload **true**), it  outputs a msg to the flow.
+- Single topic + eval other inputs: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic**, it  outputs a msg to the flow.
 
 **If input states are undefined**
 
