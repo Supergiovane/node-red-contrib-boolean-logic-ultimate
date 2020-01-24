@@ -22,6 +22,23 @@ Hope you enjoy that and if you're in trouble, please ask!
 * See <a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/blob/master/CHANGELOG.md">here the changelog</a>
 
 # BOOLEAN LOGIC
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl1.png' width='40%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"1a90a718.5c0409","type":"BooleanLogicUltimate","z":"adb2ee5c.0bf6e","name":"","filtertrue":"both","persist":true,"sInitializeWith":"WaitForPayload","triggertopic":"trigger","outputtriggeredby":"all","inputCount":2,"topic":"result","x":380,"y":160,"wires":[["5f9fbfcc.d2c34"],[],[]]},{"id":"81ef6fec.5d413","type":"inject","z":"adb2ee5c.0bf6e","name":"Night","topic":"Dark","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":170,"y":180,"wires":[["1a90a718.5c0409"]]},{"id":"e0d5d620.966478","type":"inject","z":"adb2ee5c.0bf6e","name":"Daylight","topic":"Dark","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":160,"y":140,"wires":[["1a90a718.5c0409"]]},{"id":"1c2f8e73.2c22ba","type":"inject","z":"adb2ee5c.0bf6e","name":"Motion detect true","topic":"Motion","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":130,"y":240,"wires":[["1a90a718.5c0409"]]},{"id":"5f9fbfcc.d2c34","type":"debug","z":"adb2ee5c.0bf6e","name":"Garden Light","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":580,"y":160,"wires":[]},{"id":"201baa3d.7c63ae","type":"inject","z":"adb2ee5c.0bf6e","name":"Motion detect false","topic":"Motion","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":130,"y":280,"wires":[["1a90a718.5c0409"]]},{"id":"b65f4ff4.bfe2c8","type":"comment","z":"adb2ee5c.0bf6e","name":"Motion sensor turns on lights, when it's dark. The light turns off itself at day","info":"","x":290,"y":100,"wires":[]}]
+</code>
+</details>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl2.png' width='40%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"53a10a7a.cf1894","type":"BooleanLogicUltimate","z":"a76c6a12.37379","name":"","filtertrue":"onlytrue","persist":true,"sInitializeWith":"true","triggertopic":"Pushbutton","outputtriggeredby":"onlyonetopic","inputCount":2,"topic":"result","x":340,"y":220,"wires":[["cd9244ea.471b78"],[],[]]},{"id":"9318320b.670af8","type":"inject","z":"a76c6a12.37379","name":"","topic":"Pushbutton","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":120,"y":220,"wires":[["53a10a7a.cf1894"]]},{"id":"20a981b9.552b4e","type":"inject","z":"a76c6a12.37379","name":"","topic":"IsNight","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":320,"wires":[["53a10a7a.cf1894"]]},{"id":"da0dff55.d7888","type":"inject","z":"a76c6a12.37379","name":"","topic":"IsNight","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":360,"wires":[["53a10a7a.cf1894"]]},{"id":"7129d101.1fb7d8","type":"comment","z":"a76c6a12.37379","name":"Pushbutton to switch on light stairs, only if it's night.","info":"","x":210,"y":180,"wires":[]},{"id":"cd9244ea.471b78","type":"debug","z":"a76c6a12.37379","name":"Temporized Stairs Lightbulb","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","x":580,"y":220,"wires":[]},{"id":"ad5a62a1.7ad81","type":"comment","z":"a76c6a12.37379","name":"Brightness sensor","info":"","x":110,"y":280,"wires":[]}]
+</code>
+</details>
+
 The node performs Boolean logic on the incoming payloads.<br/>
 The node expects a fixed number of topics (configured in the settings) on which it will operate. It will only output a value 
 when it has seen the expected number of topics. If it ever sees more than the configured number of topics it will log a message then reset its state and start over.<br/>
