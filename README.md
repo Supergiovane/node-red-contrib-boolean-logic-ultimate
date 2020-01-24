@@ -23,7 +23,7 @@ Hope you enjoy that and if you're in trouble, please ask!
 
 # BOOLEAN LOGIC
 
-<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl1.png' width='40%'>
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl1.png' width='60%'>
 
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
 <code>
@@ -31,7 +31,7 @@ Hope you enjoy that and if you're in trouble, please ask!
 </code>
 </details>
 
-<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl2.png' width='40%'>
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl2.png' width='60%'>
 
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
 <code>
