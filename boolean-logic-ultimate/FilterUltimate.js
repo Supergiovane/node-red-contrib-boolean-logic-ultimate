@@ -13,16 +13,17 @@ module.exports = function(RED) {
 			if (typeof msg.payload !== "undefined") {
 				var bRes = ToBoolean(msg.payload);
 				if (typeof bRes === "undefined") return;
-				var msgTrue = { 
-					topic: sTopic,
-					payload: true
-				};
-				var msgFalse = { 
-					topic: sTopic,
-					payload: false
-				};
+				
+				// 24/01/2020 Clone input message and replace only relevant topics
+				var msgTrue = RED.util.cloneMessage(msg);	
+				msgTrue.topic = sTopic;
+				msgTrue.payload = true;
+				var msgFalse = RED.util.cloneMessage(msg);	
+				msgFalse.topic = sTopic;
+				msgFalse.payload = false;
+				
 				if (bRes === true) {
-					setNodeStatus( {fill:  "green" ,shape: "dot" ,text: "(Send) true,null"});
+					setNodeStatus({ fill: "green", shape: "dot", text: "(Send) true,null" });
 					node.send([msgTrue, null]);
 				} else
 				{

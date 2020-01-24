@@ -10,8 +10,14 @@ module.exports = function(RED) {
 			var topic = msg.topic || "";
 			var payload = msg.payload;
 			if (topic !== undefined && payload !== undefined) {
-				setNodeStatus( {fill:  "green" ,shape: "dot" ,text: "(Send) " + !ToBoolean(payload)});
-				node.send({ topic: topic, payload: !ToBoolean(payload) });
+				setNodeStatus({ fill: "green", shape: "dot", text: "(Send) " + !ToBoolean(payload) });
+				
+				// 24/01/2020 Clone input message and replace only relevant topics
+				var msgOUt = RED.util.cloneMessage(msg);	
+				msgOUt.topic = topic;
+				msgOUt.payload = !ToBoolean(payload);
+				
+				node.send(msgOUt);
 				return;
 			}
         });

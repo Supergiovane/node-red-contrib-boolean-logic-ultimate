@@ -104,14 +104,14 @@ module.exports = function(RED) {
 							&& msg.hasOwnProperty("topic") && msg.topic !==""
 							&& node.config.triggertopic === msg.topic)
 						{
-							SetResult(resAND, resOR, resXOR, node.config.topic);
+							SetResult(resAND, resOR, resXOR, node.config.topic,msg);
 						} else
 						{
 							setNodeStatus({ fill: "grey", shape: "ring", text: "Saved (" + (msg.hasOwnProperty("topic") ? msg.topic : "empty input topic") + ") " + value});
 						}
 					} else
 					{
-						SetResult(resAND, resOR, resXOR, node.config.topic);
+						SetResult(resAND, resOR, resXOR, node.config.topic,msg);
 					}
 				}
 				else if(keyCount > node.config.inputCount ) {
@@ -237,31 +237,53 @@ module.exports = function(RED) {
 			return res;
 		};
 		
-		function SetResult(_valueAND, _valueOR, _valueXOR, optionalTopic) {
+		function SetResult(_valueAND, _valueOR, _valueXOR, optionalTopic,_msg) {
 			setNodeStatus({fill: "green",shape: "dot",text: "(AND)" + _valueAND + " (OR)" +_valueOR + " (XOR)" +_valueXOR});
 			
-			if (_valueAND!=null){
-				var msgAND = { 
-					topic: optionalTopic === undefined ? "result" : optionalTopic,
-					operation:"AND",
-					payload: _valueAND
-				};
+			// 24/01/2020 Output the entire input msg by duplicating the input and replacing only relevant fields.
+			if (_valueAND != null) {
+				var msgAND = RED.util.cloneMessage(_msg);				
+				msgAND.topic = optionalTopic === undefined ? "result" : optionalTopic;
+				msgAND.operation = "AND";
+				msgAND.payload = _valueAND;
+				
 			}
 			if (_valueOR!=null){
-				var msgOR = { 
-					topic: optionalTopic === undefined ? "result" : optionalTopic,
-					operation:"OR",
-					payload: _valueOR
-				};
+				var msgOR = RED.util.cloneMessage(_msg); 
+				msgOR.topic = optionalTopic === undefined ? "result" : optionalTopic;
+				msgOR.operation = "OR";
+				msgOR.payload= _valueOR;
 			}
-			if (_valueXOR!=null){
-				var msgXOR = { 
-					topic: optionalTopic === undefined ? "result" : optionalTopic,
-					operation:"XOR",
-					payload: _valueXOR
-				};
+			if (_valueXOR != null) {
+				var msgXOR = RED.util.cloneMessage(_msg); 
+				msgXOR.topic = optionalTopic === undefined ? "result" : optionalTopic;
+				msgXOR.operation = "XOR";
+				msgXOR.payload= _valueXOR;
 			}
-			node.send([msgAND,msgOR,msgXOR]);
+			node.send([msgAND, msgOR, msgXOR]);
+			
+			// if (_valueAND!=null){
+			// 	var msgAND = { 
+			// 		topic: optionalTopic === undefined ? "result" : optionalTopic,
+			// 		operation:"AND",
+			// 		payload: _valueAND
+			// 	};
+			// }
+			// if (_valueOR!=null){
+			// 	var msgOR = { 
+			// 		topic: optionalTopic === undefined ? "result" : optionalTopic,
+			// 		operation:"OR",
+			// 		payload: _valueOR
+			// 	};
+			// }
+			// if (_valueXOR!=null){
+			// 	var msgXOR = { 
+			// 		topic: optionalTopic === undefined ? "result" : optionalTopic,
+			// 		operation:"XOR",
+			// 		payload: _valueXOR
+			// 	};
+			// }
+			// node.send([msgAND,msgOR,msgXOR]);
 		};
     }	
 	
