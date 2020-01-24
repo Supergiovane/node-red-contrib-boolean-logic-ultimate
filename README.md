@@ -88,7 +88,7 @@ Every time you modify the node's config, <b>the retained values are cleared</b>.
 
 Whenever this node receives a payload = false from a specific topic, it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again.
 
-<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/if1.png' width='60%'>
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/if0.png' width='60%'>
 
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
 <code>
