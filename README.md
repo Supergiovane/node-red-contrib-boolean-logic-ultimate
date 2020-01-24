@@ -25,6 +25,7 @@ Hope you enjoy that and if you're in trouble, please ask!
 The node performs Boolean logic on the incoming payloads.<br/>
 The node expects a fixed number of topics (configured in the settings) on which it will operate. It will only output a value 
 when it has seen the expected number of topics. If it ever sees more than the configured number of topics it will log a message then reset its state and start over.<br/>
+The input message is preserved and passed to the output pin, changing only the topic and the payload. 
 
 The node performs 3 checks (<b>AND,OR,XOR</b>) on the incoming boolean payloads and outputs the result at the same time, as follow:<br/>
 - Output "AND": true or false<br/>
@@ -72,13 +73,15 @@ Whenever this node receives a payload = false from a specific topic, it stops ou
 
 # INVERT ULTIMATE
 
-Outputs the inverted input. For example true -> false
+Outputs the inverted input. For example true -> false<br />
+The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.
 
 # FILTER ULTIMATE
 
 This node has 2 outputs.<br />
 If the input payload is true, the node will send <code>true</code> on output 1 and nothing on oputput 2<br />
 If the input payload is false, the node will send nothing on output 1, and <code>false</code> on oputput 2<br />
+The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.
 
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
