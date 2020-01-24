@@ -88,6 +88,14 @@ Every time you modify the node's config, <b>the retained values are cleared</b>.
 
 Whenever this node receives a payload = false from a specific topic, it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again.
 
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/if1.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"1fd91f1f.c1fae9","type":"InterruptFlowUltimate","z":"a76c6a12.37379","name":"Interrupt Flow","triggertopic":"IsNight","x":360,"y":440,"wires":[["b9844c7f.0f306"]]},{"id":"eaa32462.398808","type":"comment","z":"a76c6a12.37379","name":"Pushbutton to switch on stairs light, only if it's night, using flow interruption","info":"","x":300,"y":400,"wires":[]},{"id":"10787f38.edfe81","type":"inject","z":"a76c6a12.37379","name":"","topic":"IsNight","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":130,"y":540,"wires":[["1fd91f1f.c1fae9"]]},{"id":"a6092a15.1c592","type":"inject","z":"a76c6a12.37379","name":"","topic":"IsNight","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":130,"y":580,"wires":[["1fd91f1f.c1fae9"]]},{"id":"21ba9c30.02abbc","type":"comment","z":"a76c6a12.37379","name":"Brightness sensor","info":"","x":130,"y":500,"wires":[]},{"id":"af131ae5.a1bfb8","type":"inject","z":"a76c6a12.37379","name":"","topic":"Pushbutton","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":120,"y":440,"wires":[["1fd91f1f.c1fae9"]]},{"id":"b9844c7f.0f306","type":"debug","z":"a76c6a12.37379","name":"Temporized Stairs Lightbulb","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","x":600,"y":440,"wires":[]}]
+</code>
+</details>
+
 # INVERT ULTIMATE
 
 Outputs the inverted input. For example true -> false<br />
