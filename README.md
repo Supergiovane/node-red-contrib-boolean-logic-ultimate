@@ -111,6 +111,7 @@ The input message is preserved and passed to the output pin, changing only the t
 The pourpose of this node is to blink a led or something.<br />
 Pass <code>msg.payload = true</code> to start blinking</br>
 Pass <code>msg.payload = false</code> to stop blinking</br>
+Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/blinker.png' width='60%'>
 

@@ -20,7 +20,16 @@ module.exports = function (RED) {
 					if (node.tBlinker !== null) clearInterval(node.tBlinker);
 					setNodeStatus({ fill: "red", shape: "dot", text: "|| Off" });
 					node.send({ payload: false });
+					node.curPayload = false;
  				}
+			}
+			if (msg.hasOwnProperty("interval")) {
+				try {
+					node.blinkfrequency = msg.interval;
+				} catch (error) {
+					node.blinkfrequency = 500;
+					setNodeStatus({ fill: "red", shape: "dot", text: "Invalid interval received" });
+				}
 			}
 
 		});
