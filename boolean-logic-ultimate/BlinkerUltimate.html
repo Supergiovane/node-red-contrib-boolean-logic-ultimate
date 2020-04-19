@@ -1,0 +1,50 @@
+<script type="text/javascript">
+    RED.nodes.registerType('BlinkerUltimate',{
+        category: 'boolean logic ultimate',
+        color: '#ff8080',
+        defaults: {
+			name: { 
+				value: "Blinker"
+			},
+			blinkfrequency: { 
+				value: "500"
+			}		
+        },
+        inputs:1,
+        outputs:1,
+        icon: "light.png",
+        label: 
+			function() {
+				return (this.name||"Blinker") + " (" + this.blinkfrequency + "ms)";
+			},
+		paletteLabel: function() {
+			return "BlinkerUltimate";
+		}
+    });
+</script>
+
+<script type="text/x-red" data-template-name="BlinkerUltimate">
+	<div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	
+	<div class="form-row">
+        <label for="node-input-blinkfrequency"><i class="fa fa-clock-o"></i> Blink every (in milliseconds)</label>
+		<input type="text" id="node-input-triggertopic" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="BlinkerUltimate">
+	<p>
+        <a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
+        and
+        <a href="http://eepurl.com/gJm095" target="_blank">Subscribe to my channel</a> for news about my nodes.
+    </p>
+	<p>The meaning of this node is to blink a light or something else.<br/>
+	<p>Pass msg.payload = true to start blinking</br>
+	Pass msg.payload = false to stop blinking</br>
+	</p>
+	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
+
+</script>

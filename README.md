@@ -106,6 +106,19 @@ If the input payload is true, the node will send <code>true</code> on output 1 a
 If the input payload is false, the node will send nothing on output 1, and <code>false</code> on oputput 2<br />
 The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.
 
+# BLINKER ULTIMATE
+
+The pourpose of this node is to blink a led or something.<br />
+Pass <code>msg.payload = true</code> to start blinking</br>
+Pass <code>msg.payload = false</code> to stop blinking</br>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/blinker.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"33d76f42.58e088","type":"BlinkerUltimate","z":"c3456bd7.8ee9d8","name":"Blinker","blinkfrequency":"500","x":260,"y":340,"wires":[["ad7488b.2a1d9f8"]]},{"id":"ac0d404f.70cc","type":"inject","z":"c3456bd7.8ee9d8","name":"","topic":"","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":90,"y":320,"wires":[["33d76f42.58e088"]]},{"id":"bfdc64c6.06e2d","type":"inject","z":"c3456bd7.8ee9d8","name":"","topic":"","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":90,"y":360,"wires":[["33d76f42.58e088"]]},{"id":"ad7488b.2a1d9f8","type":"debug","z":"c3456bd7.8ee9d8","name":"Led","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","x":410,"y":340,"wires":[]},{"id":"865e29f9.4d1e98","type":"comment","z":"c3456bd7.8ee9d8","name":"Blink a signalling led","info":"","x":110,"y":280,"wires":[]}]
+</code>
+</details>
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE
