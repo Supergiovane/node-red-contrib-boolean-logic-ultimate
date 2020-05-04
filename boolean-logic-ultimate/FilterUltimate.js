@@ -23,11 +23,11 @@ module.exports = function(RED) {
 				msgFalse.payload = false;
 				
 				if (bRes === true) {
-					setNodeStatus({ fill: "green", shape: "dot", text: "(Send) true,null" });
+					setNodeStatus({ fill: "green", shape: "dot", text: "(Send) true" });
 					node.send([msgTrue, null]);
 				} else
 				{
-					setNodeStatus( {fill:  "green" ,shape: "dot" ,text: "(Send) null,false"});
+					setNodeStatus( {fill:  "green" ,shape: "dot" ,text: "(Send) false"});
 					node.send([null, msgFalse]);
 				}
 				return;
