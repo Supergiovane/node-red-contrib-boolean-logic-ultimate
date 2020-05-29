@@ -7,35 +7,44 @@ module.exports = function (RED) {
 		node.tBlinker = null;// Timer Blinker
 		node.blinkfrequency = typeof config.blinkfrequency === "undefined" ? 500 : config.blinkfrequency;
 		node.curPayload = false;
+		node.isBlinking = false; // Is the timer running?
 
 		node.on('input', function (msg) {
 
-			if (msg.hasOwnProperty("payload")) {
-				// 06/11/2019 
-				if (ToBoolean(msg.payload) === true) {
-					if (node.tBlinker !== null) clearInterval(node.tBlinker);
-					node.tBlinker = setInterval(handleTimer, node.blinkfrequency); //  Start the timer that handles the queue of telegrams
-					setNodeStatus({ fill: "green", shape: "dot", text: "-> On" });
-				} else {
-					if (node.tBlinker !== null) clearInterval(node.tBlinker);
-					setNodeStatus({ fill: "red", shape: "dot", text: "|| Off" });
-					node.send({ payload: false });
-					node.curPayload = false;
- 				}
-			}
 			if (msg.hasOwnProperty("interval")) {
 				try {
 					node.blinkfrequency = msg.interval;
+					if (node.isBlinking) // 29/05/2020 If was blinking, restart the timer with the new interval
+					{
+						if (node.tBlinker !== null) clearInterval(node.tBlinker);
+						node.tBlinker = setInterval(handleTimer, node.blinkfrequency); //  Start the timer that handles the queue of telegrams
+					}
 				} catch (error) {
 					node.blinkfrequency = 500;
 					setNodeStatus({ fill: "red", shape: "dot", text: "Invalid interval received" });
 				}
 			}
-
+			if (msg.hasOwnProperty("payload")) {
+				// 06/11/2019 
+				if (ToBoolean(msg.payload) === true) {
+					if (node.tBlinker !== null) clearInterval(node.tBlinker);
+					node.tBlinker = setInterval(handleTimer, node.blinkfrequency); //  Start the timer that handles the queue of telegrams
+					node.isBlinking = true;
+					setNodeStatus({ fill: "green", shape: "dot", text: "-> On" });
+				} else {
+					if (node.tBlinker !== null) clearInterval(node.tBlinker);
+					node.isBlinking = false;
+					setNodeStatus({ fill: "red", shape: "dot", text: "|| Off" });
+					node.send({ payload: false });
+					node.curPayload = false;
+				}
+			}
+			
 		});
 
 		node.on('close', function () {
 			if (node.tBlinker !== null) clearInterval(node.tBlinker);
+			node.isBlinking = false;
 			node.send({ payload: false });
 		});
 
