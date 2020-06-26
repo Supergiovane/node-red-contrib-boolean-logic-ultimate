@@ -94,6 +94,18 @@ Whenever this node receives a payload = false from a specific topic, it stops ou
 </code>
 </details>
 
+<br/>
+In this other example, you can see the property "play" in action. This property allow you to replay the last previously stored message.<br/>
+This allow to save the state of a node and then replay it back whenever you want.
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/if1.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"9839dd47.81b2c8","type":"InterruptFlowUltimate","z":"1b769f85.fba14","name":"Interrupt Flow","triggertopic":"trigger","x":520,"y":260,"wires":[["d371d690.1e2fe8"]]},{"id":"568deb73.394fb4","type":"comment","z":"1b769f85.fba14","name":"1) Push buttons to change values","info":"","x":130,"y":100,"wires":[]},{"id":"e1c9f10a.0ba518","type":"inject","z":"1b769f85.fba14","name":"ALLOW","topic":"trigger","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":70,"y":320,"wires":[["9839dd47.81b2c8"]]},{"id":"82ba24f9.0f0bd8","type":"inject","z":"1b769f85.fba14","name":"INTERRUPT","topic":"trigger","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":90,"y":280,"wires":[["9839dd47.81b2c8"]]},{"id":"23ba4f9c.86de9","type":"comment","z":"1b769f85.fba14","name":"2) Push INTERRUPT, then try again to change value (1)","info":"","x":200,"y":240,"wires":[]},{"id":"24671ef2.4519e2","type":"inject","z":"1b769f85.fba14","name":"","topic":"","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":70,"y":140,"wires":[["9839dd47.81b2c8"]]},{"id":"d371d690.1e2fe8","type":"debug","z":"1b769f85.fba14","name":"Debug","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","x":690,"y":260,"wires":[]},{"id":"409ec415.735d74","type":"inject","z":"1b769f85.fba14","name":"REPLAY","topic":"trigger","payload":"","payloadType":"str","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":80,"y":420,"wires":[["6653ed0.7186014"]]},{"id":"6653ed0.7186014","type":"change","z":"1b769f85.fba14","name":"Play","rules":[{"t":"set","p":"play","pt":"msg","to":"true","tot":"bool"}],"action":"","property":"","from":"","to":"","reg":false,"x":210,"y":420,"wires":[["9839dd47.81b2c8"]]},{"id":"e957a069.0ac458","type":"inject","z":"1b769f85.fba14","name":"","topic":"","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":70,"y":180,"wires":[["9839dd47.81b2c8"]]},{"id":"8f0af608.8fb45","type":"comment","z":"1b769f85.fba14","name":"3) Replay last message stored by the node","info":"","x":160,"y":380,"wires":[]},{"id":"46e6f455.0023ac","type":"comment","z":"1b769f85.fba14","name":"You can use Interruptflow, to save the state of a node, and then replay the last state as you want.","info":"","x":330,"y":60,"wires":[]}]
+</code>
+</details>
+
 # INVERT ULTIMATE
 
 Outputs the inverted input. For example true -> false<br />
