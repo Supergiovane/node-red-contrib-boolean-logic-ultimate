@@ -5,7 +5,7 @@
 
 <p>
 <b>Version 1.0.17</b> May 2020<br/>
-- Interruptflowultimete: msg.play = true sends the current payload See the README on github for an example.</br>
+- Interruptflowultimete: State save/replay. Msg.play = true sends the current payload See the README on github for an example.</br>
 </p>
 <p>
 <b>Version 1.0.16</b> May 2020<br/>
