@@ -4,7 +4,7 @@
 <a href="http://eepurl.com/gJm095" target="_blank">Subscribe to my channel.</a> Only news about my nodes, no spam, no ads. I'm a github developer, not a merchant.
 
 <p>
-<b>Version 1.0.17</b> May 2020<br/>
+<b>Version 1.0.17</b> June 2020<br/>
 - Interruptflowultimete: State save/replay. Msg.play = true sends the current payload See the README on github for an example.</br>
 </p>
 <p>
