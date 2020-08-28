@@ -136,7 +136,7 @@ Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
 
 # SIMPLE OUTPUT ULTIMATE
 
-The pourpose of this node is send a message with payload TRUE on first pin and FALSE on second pin, independently from the msg input.<br />
+The pourpose of this node is to send a message with payload TRUE on the first pin and FALSE on second pin, independently from the msg input.<br />
 This is useful if you need to simply send a true or false payload.
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/SimpleOutput.png' width='60%'>

@@ -4,6 +4,10 @@
 <a href="http://eepurl.com/gJm095" target="_blank">Subscribe to my channel.</a> Only news about my nodes, no spam, no ads. I'm a github developer, not a merchant.
 
 <p>
+<b>Version 1.0.19</b> August 2020<br/>
+- NEW: Simple Output node. The pourpose of this node is to send a message with payload TRUE on the first pin and FALSE on second pin, independently from the msg input.</br>
+</p>
+<p>
 <b>Version 1.0.18</b> August 2020<br/>
 - Boolean Logic: warn user if either topic or payload are not set. You must always set a topic and payload.</br>
 </p>
