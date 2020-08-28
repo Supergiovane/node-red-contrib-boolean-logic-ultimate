@@ -133,6 +133,20 @@ Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
 </code>
 </details>
 
+
+# SIMPLE OUTPUT ULTIMATE
+
+The pourpose of this node is send a message with payload TRUE on first pin and FALSE on second pin, independently from the msg input.<br />
+This is useful if you need to simply send a true or false payload.
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/SimpleOutput.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"e1149e22.c9b298","type":"inject","z":"81a64dae.012c18","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":100,"y":820,"wires":[["6a419c72.5a4e7c"]]},{"id":"6a419c72.5a4e7c","type":"SimpleOutputUltimate","z":"81a64dae.012c18","name":"T/F","x":290,"y":820,"wires":[["8ba3f611.26beb8"],["b469193b.950598"]]},{"id":"8ba3f611.26beb8","type":"debug","z":"81a64dae.012c18","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":530,"y":800,"wires":[]},{"id":"b469193b.950598","type":"debug","z":"81a64dae.012c18","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":530,"y":840,"wires":[]},{"id":"2451f593.04e62a","type":"comment","z":"81a64dae.012c18","name":"Whatever the input is, output msg with payload TRUE on first and FALSE on second pin.","info":"","x":330,"y":760,"wires":[]}]
+</code>
+</details>
+
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE
 [npm-url]: https://npmjs.org/package/node-red-contrib-boolean-logic-ultimate

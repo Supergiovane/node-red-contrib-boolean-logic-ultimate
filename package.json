@@ -24,7 +24,8 @@
             "InvertUltimate": "boolean-logic-ultimate/InvertUltimate.js",
             "FilterUltimate": "boolean-logic-ultimate/FilterUltimate.js",
             "InterruptFlowUltimate": "boolean-logic-ultimate/InterruptFlowUltimate.js",
-            "BlinkerUltimate": "boolean-logic-ultimate/BlinkerUltimate.js"
+            "BlinkerUltimate": "boolean-logic-ultimate/BlinkerUltimate.js",
+            "SimpleOutputUltimate": "boolean-logic-ultimate/SimpleOutputUltimate.js"
             
         }
     }

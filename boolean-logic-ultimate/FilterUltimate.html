@@ -1,36 +1,36 @@
 <script type="text/javascript">
-    RED.nodes.registerType('FilterUltimate',{
-        category: 'boolean logic ultimate',
-        color: '#ff8080',
-        defaults: {
-			name: { 
+	RED.nodes.registerType('FilterUltimate', {
+		category: 'boolean logic ultimate',
+		color: '#ff8080',
+		defaults: {
+			name: {
 				value: "Filter"
-			}			
-        },
-        inputs:1,
-        outputs:2,
-        outputLabels: function(i) { 
-			var ret="";
+			}
+		},
+		inputs: 1,
+		outputs: 2,
+		outputLabels: function (i) {
+			var ret = "";
 			switch (i) {
 				case 0:
 					return "True";
-				break;
+					break;
 				case 1:
 					return "False";
-				break;
+					break;
 				default:
 					break;
 			}
 		},
-        icon: "switch.png",
-        label: 
-			function() {
-				return this.name||"Filter";
+		icon: "switch.png",
+		label:
+			function () {
+				return this.name || "Filter";
 			},
-		paletteLabel: function() {
+		paletteLabel: function () {
 			return "FilterUltimate";
 		}
-    });
+	});
 </script>
 
 <script type="text/x-red" data-template-name="FilterUltimate">
