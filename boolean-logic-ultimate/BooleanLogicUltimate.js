@@ -44,78 +44,86 @@ module.exports = function (RED) {
 
 		this.on('input', function (msg) {
 
+			// 28/08/2020 inform user about undefined topic or payload
+			if (!msg.hasOwnProperty("topic") || typeof (msg.topic) == "undefined") {
+				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid topic!" });
+				return;
+			}
+			// 28/08/2020 inform user about undefined topic or payload
+			if (!msg.hasOwnProperty("payload") || typeof (msg.payload) == "undefined") {
+				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload!" });
+				return;
+			}
 			var topic = msg.topic;
 			var payload = msg.payload;
+			var value = ToBoolean(payload);
 
-			if (topic !== undefined && payload !== undefined) {
-				var value = ToBoolean(payload);
-
-				// 14/08/2019 if inputs are initialized, remove a "dummy" item from the state's array, as soon as new topic arrives
-				if (node.sInitializeWith !== "WaitForPayload") {
-					// Search if the current topic is in the state array
-					if (typeof node.jSonStates[topic] === "undefined") {
-						// Delete one dummy 
-						for (let index = 0; index < node.config.inputCount; index++) {
-							if (node.jSonStates.hasOwnProperty("dummy" + index)) {
-								//RED.log.info(JSON.stringify(node.jSonStates))
-								delete node.jSonStates["dummy" + index];
-								//RED.log.info(JSON.stringify(node.jSonStates))
-								break;
-							}
+			// 14/08/2019 if inputs are initialized, remove a "dummy" item from the state's array, as soon as new topic arrives
+			if (node.sInitializeWith !== "WaitForPayload") {
+				// Search if the current topic is in the state array
+				if (typeof node.jSonStates[topic] === "undefined") {
+					// Delete one dummy 
+					for (let index = 0; index < node.config.inputCount; index++) {
+						if (node.jSonStates.hasOwnProperty("dummy" + index)) {
+							//RED.log.info(JSON.stringify(node.jSonStates))
+							delete node.jSonStates["dummy" + index];
+							//RED.log.info(JSON.stringify(node.jSonStates))
+							break;
 						}
 					}
-				}
-
-				// Add current attribute
-				node.jSonStates[topic] = value;
-
-				// Save the state array to a perisistent file
-				if (node.config.persist == true) {
-					try {
-						if (!fs.existsSync("states")) fs.mkdirSync("states");
-						fs.writeFileSync("states/" + node.id.toString(), JSON.stringify(node.jSonStates));
-
-					} catch (error) {
-						setNodeStatus({ fill: "red", shape: "dot", text: "Node cannot write to filesystem: " + error });
-					}
-				}
-
-				// Do we have as many inputs as we expect?
-				var keyCount = Object.keys(node.jSonStates).length;
-
-				if (keyCount == node.config.inputCount) {
-
-					var resAND = CalculateResult("AND");
-					var resOR = CalculateResult("OR");
-					var resXOR = CalculateResult("XOR");
-
-					if (node.config.filtertrue == "onlytrue") {
-						if (!resAND) { resAND = null };
-						if (!resOR) { resOR = null };
-						if (!resXOR) { resXOR = null };
-					}
-
-					// Operation mode evaluation
-					if (node.config.outputtriggeredby == "onlyonetopic") {
-						if (typeof node.config.triggertopic !== "undefined"
-							&& node.config.triggertopic !== ""
-							&& msg.hasOwnProperty("topic") && msg.topic !== ""
-							&& node.config.triggertopic === msg.topic) {
-							SetResult(resAND, resOR, resXOR, node.config.topic, msg);
-						} else {
-							setNodeStatus({ fill: "grey", shape: "ring", text: "Saved (" + (msg.hasOwnProperty("topic") ? msg.topic : "empty input topic") + ") " + value });
-						}
-					} else {
-						SetResult(resAND, resOR, resXOR, node.config.topic, msg);
-					}
-				}
-				else if (keyCount > node.config.inputCount) {
-					setNodeStatus({ fill: "gray", shape: "ring", text: "Reset due to unexpected new topic" });
-					DeletePersistFile();
-				} else {
-					setNodeStatus({ fill: "green", shape: "ring", text: "Arrived topic " + keyCount + " of " + node.config.inputCount });
 				}
 			}
+
+			// Add current attribute
+			node.jSonStates[topic] = value;
+
+			// Save the state array to a perisistent file
+			if (node.config.persist == true) {
+				try {
+					if (!fs.existsSync("states")) fs.mkdirSync("states");
+					fs.writeFileSync("states/" + node.id.toString(), JSON.stringify(node.jSonStates));
+
+				} catch (error) {
+					setNodeStatus({ fill: "red", shape: "dot", text: "Node cannot write to filesystem: " + error });
+				}
+			}
+
+			// Do we have as many inputs as we expect?
+			var keyCount = Object.keys(node.jSonStates).length;
+
+			if (keyCount == node.config.inputCount) {
+
+				var resAND = CalculateResult("AND");
+				var resOR = CalculateResult("OR");
+				var resXOR = CalculateResult("XOR");
+
+				if (node.config.filtertrue == "onlytrue") {
+					if (!resAND) { resAND = null };
+					if (!resOR) { resOR = null };
+					if (!resXOR) { resXOR = null };
+				}
+
+				// Operation mode evaluation
+				if (node.config.outputtriggeredby == "onlyonetopic") {
+					if (typeof node.config.triggertopic !== "undefined"
+						&& node.config.triggertopic !== ""
+						&& msg.hasOwnProperty("topic") && msg.topic !== ""
+						&& node.config.triggertopic === msg.topic) {
+						SetResult(resAND, resOR, resXOR, node.config.topic, msg);
+					} else {
+						setNodeStatus({ fill: "grey", shape: "ring", text: "Saved (" + (msg.hasOwnProperty("topic") ? msg.topic : "empty input topic") + ") " + value });
+					}
+				} else {
+					SetResult(resAND, resOR, resXOR, node.config.topic, msg);
+				}
+			}
+			else if (keyCount > node.config.inputCount) {
+				setNodeStatus({ fill: "gray", shape: "ring", text: "Reset due to unexpected new topic" });
+				DeletePersistFile();
+			} else {
+				setNodeStatus({ fill: "green", shape: "ring", text: "Arrived topic " + keyCount + " of " + node.config.inputCount });
+			}
+
 		});
 
 		this.on('close', function (removed, done) {
