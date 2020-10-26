@@ -1,10 +1,9 @@
 # node-red-contrib-boolean-logic-ultimate
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
-<a href="http://eepurl.com/gJm095" target="_blank">Subscribe to my channel.</a> Only news about my nodes, no spam, no ads. I'm a github developer, not a merchant.
 
 <p>
-<b>Version 1.0.21</b> October 2020<br/>
+<b>Version 1.0.22</b> October 2020<br/>
 - Changed the way to handle the presistent states. This allow the node to correctly save the states in non standard node-red installations (docker, home-assistant plugin etc). Thanks @Botched1 for raising the issue.</br>
 - Automatic migration of persistens states from the old to the new path.</br>
 - Moved the inject node in the "common" node-red group.

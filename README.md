@@ -11,8 +11,6 @@
 
 A set of Node-RED enhanced boolean logic, with persisten values after reboot and more.
 
-<a href="http://eepurl.com/gJm095" target="_blank">Subscribe to my channel.</a> Only news about my nodes, no spam, no ads. I'm a github developer, not a merchant.
-
 > Wellcome! First of all thank you for your interest in my nodes. This is a set of logic nodes, to overcome the simplicity of the default node-red boolean logic nodes.
 Hope you enjoy that and if you're in trouble, please ask!
 
