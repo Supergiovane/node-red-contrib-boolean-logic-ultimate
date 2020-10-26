@@ -141,18 +141,19 @@
         <input type="text" id="node-input-triggertopic" placeholder="Input topic">
 	</div>
 	<div class="form-row">
-		<i class="fa fa-floppy-o"></i> 
-		<label style="width:auto" for="node-input-persist"> Remember latest input values after reboot</label> <input type="checkbox" id="node-input-persist" style="display:inline-block; width:auto; vertical-align:top;">
-		<div id="helpallga"><i> If checked, the input values are retained <br /> after a node-red reboot.<br/>If you reboot your node-red, <br />you don't need to wait all inputs <br />to arrive and initialize the node, <br />before the node can output a payload.</div>
-	</div>
-	<div class="form-row">
-        <label for="node-input-sInitializeWith"><i class="fa fa-home"></i> If input states are undefined</label>
+        <label for="node-input-sInitializeWith"><i class="fa fa-home"></i> If input states are undefined at boot</label>
         <select type="text" id="node-input-sInitializeWith" placeholder="">
 			<option value="WaitForPayload">Leave undefined</option>
 			<option value="false">Initialize all with False</option>
 			<option value="true">Initialize all with True</option>
 		</select>
 	</div>
+	<div class="form-row">
+		<i class="fa fa-floppy-o"></i> 
+		<label style="width:auto" for="node-input-persist"> Remember latest input values after reboot</label> <input type="checkbox" id="node-input-persist" style="display:inline-block; width:auto; vertical-align:top;">
+		<div class="form-tips" style="margin-top: 8px;background-color:lightgrey;text-align:center">If <b>Remember latest input values after reboot</b><br/> is checked, the input values are retained <br/> after a node-red restart, deploy or reboot.</div>
+	</div>
+	
 
 </script>
 
