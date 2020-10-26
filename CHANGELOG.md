@@ -4,6 +4,12 @@
 <a href="http://eepurl.com/gJm095" target="_blank">Subscribe to my channel.</a> Only news about my nodes, no spam, no ads. I'm a github developer, not a merchant.
 
 <p>
+<b>Version 1.0.21</b> October 2020<br/>
+- Changed the way to handle the presistent states. This allow the node to correctly save the states in non standard node-red installations (docker, home-assistant plugin etc). Thanks @Botched1 for raising the issue.</br>
+- Automatic migration of persistens states from the old to the new path.</br>
+- Moved the inject node in the "common" node-red group.
+</p>
+<p>
 <b>Version 1.0.20</b> August 2020<br/>
 - NEW: Inject Node. The pourpose of this node is to speed up the testing of you flow, by issuing true/false command by pushbutton on the node itself. This node is simpler as the default node-red inject node.</br>
 </p>

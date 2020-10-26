@@ -4,7 +4,8 @@
     "description": "A set of Node-RED enhanced boolean logic node, flow interruption node, blinker node, invert node, filter node, with persisten values after reboot and more.",
     "author": "Supergiovane (https://github.com/Supergiovane)",
     "dependencies": {
-        "fs": "0.0.1-security"
+        "fs": "0.0.1-security",
+        "path": ">=0.12.7"
     },
     "keywords": [
         "node-red",
@@ -27,7 +28,6 @@
             "BlinkerUltimate": "boolean-logic-ultimate/BlinkerUltimate.js",
             "SimpleOutputUltimate": "boolean-logic-ultimate/SimpleOutputUltimate.js",
             "InjectUltimate": "boolean-logic-ultimate/InjectUltimate.js"
-            
         }
     }
 }

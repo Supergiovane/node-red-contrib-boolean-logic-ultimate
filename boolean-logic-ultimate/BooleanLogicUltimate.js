@@ -2,11 +2,14 @@ module.exports = function (RED) {
 	function BooleanLogicUltimate(config) {
 		RED.nodes.createNode(this, config);
 		var node = this;
-		node.config = config;
-		node.jSonStates = {}; // JSON object with elements. It's not an array! Format: {"Rain":true,"Dusk":true,"MotionSensor":true}
-		node.sInitializeWith = typeof node.config.sInitializeWith === "undefined" ? "WaitForPayload" : node.config.sInitializeWith;
-		var fs = require('fs');
+		var fs = require("fs");
+		var path = require("path");
 		var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
+
+		node.config = config;
+		node.jSonStates = {}; // JSON object containing the states. 
+		node.sInitializeWith = typeof node.config.sInitializeWith === "undefined" ? "WaitForPayload" : node.config.sInitializeWith;
+		node.persistPath = path.join(RED.settings.userDir, "booleanlogicultimatepersist"); // 26/10/2020 Contains the path for the states dir.
 
 		// Helper for the config html, to be able to delete the peristent states file
 		RED.httpAdmin.get("/stateoperation_delete", RED.auth.needsPermission('BooleanLogicUltimate.read'), function (req, res) {
@@ -15,16 +18,32 @@ module.exports = function (RED) {
 			//var _node = RED.nodes.getNode(req.query.nodeid); // Gets node object from nodeit, because when called from the config html, the node object is not defined
 			var _nodeid = req.query.nodeid;
 			try {
-				if (fs.existsSync("states/" + _nodeid.toString())) fs.unlinkSync("states/" + _nodeid.toString());
+				if (fs.existsSync(path.join(node.persistPath, _nodeid.toString()))) fs.unlinkSync(path.join(node.persistPath, _nodeid.toString()));
 			} catch (error) {
 			}
 			res.json({ status: 220 });
 		});
 
+		// 26/10/2020 Check for path and create it if doens't exists
+		if (!fs.existsSync(node.persistPath)) {
+			// Create the path
+			try {
+				fs.mkdirSync(node.persistPath);
+				// Backward compatibility: Copy old states dir into the new folder
+				if (fs.existsSync("states")) {
+					var filenames = fs.readdirSync("states");
+					filenames.forEach(file => {
+						RED.log.info("BooleanLogicUltimate: migrating from old states path to the new persist " + file);
+						fs.copyFileSync("states/" + file, path.join(node.persistPath, path.basename(file)));
+					});
+				}
+			} catch (error) { }
+		}
+
 		// Populate the state array with the persisten file
 		if (node.config.persist == true) {
 			try {
-				var contents = fs.readFileSync("states/" + node.id.toString()).toString();
+				var contents = fs.readFileSync(path.join(node.persistPath, node.id.toString())).toString();
 				if (typeof contents !== 'undefined') {
 					node.jSonStates = JSON.parse(contents);
 					setNodeStatus({ fill: "blue", shape: "ring", text: "Loaded persistent states (" + Object.keys(node.jSonStates).length + " total)." });
@@ -80,9 +99,7 @@ module.exports = function (RED) {
 			// Save the state array to a perisistent file
 			if (node.config.persist == true) {
 				try {
-					if (!fs.existsSync("states")) fs.mkdirSync("states");
-					fs.writeFileSync("states/" + node.id.toString(), JSON.stringify(node.jSonStates));
-
+					fs.writeFileSync(path.join(node.persistPath, node.id.toString()), JSON.stringify(node.jSonStates));
 				} catch (error) {
 					setNodeStatus({ fill: "red", shape: "dot", text: "Node cannot write to filesystem: " + error });
 				}
@@ -140,7 +157,7 @@ module.exports = function (RED) {
 		function DeletePersistFile() {
 			// Detele the persist file
 			try {
-				if (fs.existsSync("states/" + node.id.toString())) fs.unlinkSync("states/" + node.id.toString());
+				if (fs.existsSync(path.join(node.persistPath, node.id.toString()))) fs.unlinkSync(path.join(node.persistPath, node.id.toString()));
 				setNodeStatus({ fill: "red", shape: "ring", text: "Persistent states deleted (" + node.id.toString() + ")." });
 			} catch (error) {
 				setNodeStatus({ fill: "red", shape: "ring", text: "Error deleting persistent file: " + error.toString() });
