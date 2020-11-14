@@ -25,7 +25,7 @@ module.exports = function (RED) {
 
 		// 29/08/2020 triggered by button press
 		node.buttonpressed = () => {
-			setNodeStatus({ fill: "green", shape: "dot", text: "Sent true/false/" + node.curVal.toString() + " (next " + (!node.curVal).toString() + ")" });
+			setNodeStatus({ fill: "green", shape: "dot", text: "Pin1:true, Pin2:false, Pin3:" + node.curVal.toString() + " (next " + (!node.curVal).toString() + ")" });
 			var msgTrue = { payload: true, topic: node.topic };
 			var msgFalse = { payload: false, topic: node.topic };
 			var msgToggled = { payload: node.curVal, topic: node.topic };

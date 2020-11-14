@@ -1,7 +1,11 @@
 # node-red-contrib-boolean-logic-ultimate
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
-
+<p>
+<b>Version 1.0.23</b> November 2020<br/>
+- BUGFIX: Inject Node was not retaining the topic value you set. Fixed.</br>
+- Inject Node: clearer status indication.
+</p>
 <p>
 <b>Version 1.0.22</b> October 2020<br/>
 - Changed the way to handle the presistent states. This allow the node to correctly save the states in non standard node-red installations (docker, home-assistant plugin etc). Thanks @Botched1 for raising the issue.</br>

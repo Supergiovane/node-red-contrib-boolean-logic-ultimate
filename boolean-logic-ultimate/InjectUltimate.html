@@ -6,6 +6,9 @@
             name: {
                 value: "Inject",
             },
+            topic: {
+                value: "1",
+            },
             curVal: {
                 value: true,
             }
@@ -48,7 +51,7 @@
         },
         label:
             function () {
-                return this.name || "Inject";
+                return this.name + " " + this.topic;
             },
         paletteLabel: function () {
             return "InjectUltimate";
