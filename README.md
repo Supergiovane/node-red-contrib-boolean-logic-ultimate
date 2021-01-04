@@ -45,6 +45,7 @@ The node performs some checks on the incoming boolean payloads and outputs all r
 - Output "AND": true or false<br/>
 - Output "OR": true or false<br/>
 - Output "XOR": true or false<br/>
+
 If you need ***"NAND"*** or ***"NOR"*** gate, just put an **InvertUltimate** node respectively after the "AND" or "OR" pin.
 
 The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
