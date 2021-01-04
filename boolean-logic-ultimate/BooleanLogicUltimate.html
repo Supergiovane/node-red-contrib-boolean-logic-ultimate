@@ -1,125 +1,131 @@
 <script type="text/javascript">
-    RED.nodes.registerType('BooleanLogicUltimate',{
-        category: 'boolean logic ultimate',
-        color: '#ff8080',
-        defaults: {
-			name: { 
+	RED.nodes.registerType('BooleanLogicUltimate', {
+		category: 'boolean logic ultimate',
+		color: '#ff8080',
+		defaults: {
+			name: {
 				value: ""
 			},
-			filtertrue: {value:"both"},
-			persist: {value:true},
-			sInitializeWith: {value:"WaitForPayload"},
+			filtertrue: { value: "both" },
+			persist: { value: true },
+			sInitializeWith: { value: "WaitForPayload" },
 			triggertopic: {
 				value: "trigger",
 				required: false
 			},
-			outputtriggeredby:{
-				value:"all",
-				required: false},
+			outputtriggeredby: {
+				value: "all",
+				required: false
+			},
 			inputCount: {
-					value: 2,
-					required: true,
-					validate: 
-						function(v) { 
-							return !isNaN( parseInt( v ) ) && parseInt( v ) >= 2;
-						}
-				},
-				topic: {
-					value: "result",
-					required: true,
-					validate:
-						function(v) { 
-							return v !== undefined && v.length > 0;
-						}
-				}
-        },
-        inputs:1,
-		outputs:3,
-		outputLabels: function(i) { 
-			var ret="";
+				value: 2,
+				required: true,
+				validate:
+					function (v) {
+						return !isNaN(parseInt(v)) && parseInt(v) >= 2;
+					}
+			},
+			topic: {
+				value: "result",
+				required: true,
+				validate:
+					function (v) {
+						return v !== undefined && v.length > 0;
+					}
+			}
+		},
+		inputs: 1,
+		outputs: 3,
+		outputLabels: function (i) {
+			var ret = "";
 			switch (i) {
 				case 0:
 					return "AND";
-				break;
+					break;
 				case 1:
 					return "OR";
-				break;
+					break;
 				case 2
-				:
+					:
 					return "XOR";
-				break;
+					break;
 				default:
 					break;
 			}
 		},
-        icon: "serial.png",
-        label: 
-			function() {
+		icon: "serial.png",
+		label:
+			function () {
 				let label = "";
-				let filtered=this.filtertrue=="both" ?  "" : "f" ;
-				let trigger="";
-				if(typeof this.outputtriggeredby !== "undefined") trigger=this.outputtriggeredby=="all" ?  "" :  "t (" + this.triggertopic+")";
-				label= this.inputCount + ((filtered+trigger)==""?" Boolean Logic":(filtered+trigger));
-				if( this.name !== undefined && this.name.length > 0 ) {
+				let filtered = this.filtertrue == "both" ? "" : "f";
+				let trigger = "";
+				if (typeof this.outputtriggeredby !== "undefined") trigger = this.outputtriggeredby == "all" ? "" : "t (" + this.triggertopic + ")";
+				label = this.inputCount + ((filtered + trigger) == "" ? " Boolean Logic" : (filtered + trigger));
+				if (this.name !== undefined && this.name.length > 0) {
 					label += " (" + this.name + ")";
 				}
 				return label;
 			},
-		paletteLabel: function() {
+		paletteLabel: function () {
 			return "BooleanLogicUltimate";
 		},
 		oneditprepare: function () {
-            // Add write and response as default for existing nodes like was default before
+			// Add write and response as default for existing nodes like was default before
 			if (this.outputtriggeredby === 'all') {
 				$("#triggertopic").hide()
- 			}else
-			{
+			} else {
 				$("#triggertopic").show()
 			}
-           
-            $("#node-input-outputtriggeredby").on('change',function() {
-                if ($("#node-input-outputtriggeredby").val()==="all") {
+
+			$("#node-input-outputtriggeredby").on('change', function () {
+				if ($("#node-input-outputtriggeredby").val() === "all") {
 					$("#triggertopic").hide()
-                }else{
-                    $("#triggertopic").show()
-                }
+				} else {
+					$("#triggertopic").show()
+				}
 			})
-			
+
 			// default
-			if(typeof this.outputtriggeredby === "undefined")
-			{
+			if (typeof this.outputtriggeredby === "undefined") {
 				$("#node-input-outputtriggeredby").val("all");
-				this.outputtriggeredby="all";
+				this.outputtriggeredby = "all";
 			}
 
 			// default
-			if(typeof this.sInitializeWith === "undefined")
-			{
+			if (typeof this.sInitializeWith === "undefined") {
 				$("#node-input-sInitializeWith").val("WaitForPayload");
-				this.sInitializeWith="WaitForPayload";
+				this.sInitializeWith = "WaitForPayload";
 			}
 
-        },
-        oneditsave: function () {
+		},
+		oneditsave: function () {
 			// Delete persistent state file
-			$.get( "stateoperation_delete?nodeid=" +this.id, function( data ) {});
+			$.get("stateoperation_delete?nodeid=" + this.id, function (data) { });
 		}
 	});
-	
-	
+
+
 </script>
 
 <script type="text/x-red" data-template-name="BooleanLogicUltimate">
 	<div class="form-row">
-        <label for="node-input-inputCount"><i class="fa fa-indent"></i> Number of different topics to evaluate</label>
-		<input type="text" id="node-input-inputCount" placeholder="Number of different topics to consider">
-    </div>
+	<b>Boolean Logic Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+	<br/>
+	<br/>        
+	</div>
+
+	<div class="form-row">
+        <label for="node-input-inputCount"><i class="fa fa-step-forward"></i> Inputs count</label>
+		<input type="text" id="node-input-inputCount" placeholder="Inputs count, for example: 2">
+	</div>
+	<div class="form-tips" style="margin-top: 8px;background-color:lightgrey;text-align:center">Option above: the node waits for this number of <i>different</i> msg topics before evaluating the outputs.</div>
+<br/>
 	<div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 	<div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Node topic</label>
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic" placeholder="Node's own topic">
 	</div>
     <div class="form-row">
@@ -153,7 +159,6 @@
 		<label style="width:auto" for="node-input-persist"> Remember latest input values after reboot</label> <input type="checkbox" id="node-input-persist" style="display:inline-block; width:auto; vertical-align:top;">
 		<div class="form-tips" style="margin-top: 8px;background-color:lightgrey;text-align:center">If <b>Remember latest input values after reboot</b><br/> is checked, the input values are retained <br/> after a node-red restart, deploy or reboot.</div>
 	</div>
-	
 
 </script>
 
@@ -166,12 +171,13 @@
 	<p>The node performs Boolean logic on the incoming payloads.<br/>
 	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
 	<br/><br/>
-	The node performs 3 checks (<b>AND,OR,XOR</b>) on the incoming boolean payloads and outputs the result at the same time, as follow:<br/>
+	The node performs some checks on the incoming boolean payloads and outputs results at the same time, as follow:<br/>
 	- Output "AND": true or false<br/>
 	- Output "OR": true or false<br/>
 	- Output "XOR": true or false<br/>
+	If you need ***"NAND"*** or ***"NOR"*** gate, just put an **InvertUltimate** node respectively after the "AND" or "OR" pin.
 	
-	<b>Number of different topics to evaluate</b><br />
+	<b>Inputs count</b><br />
 	Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of different topics arrives.<br/>
 	<b> Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.</b><br/>
 
@@ -180,7 +186,7 @@
 	<br/>
 	The node expects a fixed number of topics (configured in the settings) on which it will operate. It will only output a value 
 	when it has seen the expected number of topics. If it ever sees more than the configured number of topics it will log a message then reset its state and start over.<br/>
-	<b> Remember: each input topic must be different. For example, if you set "Number of different topics to evaluate" to 3, the node expects 3 different topics.</b><br/>
+	<b> Remember: each input topic must be different. For example, if you set "Inputs count" to 3, the node expects 3 different topics.</b><br/>
 	<br/><br/>
 	<b>Filter output result</b><br />
 	<ol>	

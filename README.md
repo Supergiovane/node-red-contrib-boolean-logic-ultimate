@@ -41,10 +41,11 @@ The node expects a fixed number of topics (configured in the settings) on which 
 when it has seen the expected number of topics. If it ever sees more than the configured number of topics it will log a message then reset its state and start over.<br/>
 The input message is preserved and passed to the output pin, changing only the topic and the payload. 
 
-The node performs 3 checks (<b>AND,OR,XOR</b>) on the incoming boolean payloads and outputs the result at the same time, as follow:<br/>
+The node performs some checks on the incoming boolean payloads and outputs all results at the same time, as follow:<br/>
 - Output "AND": true or false<br/>
 - Output "OR": true or false<br/>
 - Output "XOR": true or false<br/>
+If you need ***"NAND"*** or ***"NOR"*** gate, just put an **InvertUltimate** node respectively after the "AND" or "OR" pin.
 
 The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
 You can also set the default values of the topic inputs.
@@ -53,9 +54,9 @@ You can also set the default values of the topic inputs.
 ### CONFIGURATION
 
 
-**Number of different topics to evaluate**
+**Inputs count**
 
-Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of different topics arrives.<br/>
+Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of *different* topics arrives.<br/>
 *Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.*
 
 
