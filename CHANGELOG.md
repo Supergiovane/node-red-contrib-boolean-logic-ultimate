@@ -2,6 +2,10 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.24</b> January 2021<br/>
+- Maintenance release: added help links in the property windows and renamed the first property to be more clear.</br>
+</p>
+<p>
 <b>Version 1.0.23</b> November 2020<br/>
 - BUGFIX: Inject Node was not retaining the topic value you set. Fixed.</br>
 - Inject Node: clearer status indication.
