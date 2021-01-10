@@ -37,7 +37,9 @@ module.exports = function (RED) {
 						fs.copyFileSync("states/" + file, path.join(node.persistPath, path.basename(file)));
 					});
 				}
-			} catch (error) { }
+			} catch (error) { 
+				RED.log.error("BooleanLogicUltimate: error creating persistent folder. Check user permission to write to the filesystem " + error.message);
+			}
 		}
 
 		// Populate the state array with the persisten file
