@@ -101,7 +101,8 @@ module.exports = function (RED) {
 				try {
 					fs.writeFileSync(path.join(node.persistPath, node.id.toString()), JSON.stringify(node.jSonStates));
 				} catch (error) {
-					setNodeStatus({ fill: "red", shape: "dot", text: "Node cannot write to filesystem: " + error });
+					setNodeStatus({ fill: "red", shape: "dot", text: "Node cannot write to filesystem: " + error.message });
+					RED.log.error("BooleanLogicUltimate: unable to write to the filesystem. Check wether the user running node-red, has write permission to the filesysten. " + error.message);
 				}
 			}
 
