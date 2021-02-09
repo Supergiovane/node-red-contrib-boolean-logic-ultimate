@@ -1,13 +1,22 @@
 module.exports = function (RED) {
 	function BlinkerUltimate(config) {
 		RED.nodes.createNode(this, config);
-		this.config = config;
 		var node = this;
-		setNodeStatus({ fill: "grey", shape: "ring", text: "|| Off" });
 		node.tBlinker = null;// Timer Blinker
-		node.blinkfrequency = typeof config.blinkfrequency === "undefined" ? 500 : config.blinkfrequency;
+		node.blinkfrequency = config.blinkfrequency === undefined ? 500 : config.blinkfrequency;
 		node.curPayload = false;
 		node.isBlinking = false; // Is the timer running?
+		node.stopbehaviorPIN1 = config.stopbehaviorPIN1 === undefined ? 0 : config.stopbehaviorPIN1;
+		node.stopbehaviorPIN1 = node.stopbehaviorPIN1 == 0 ? false : true;
+		node.stopbehaviorPIN2 = config.stopbehaviorPIN2 === undefined ? 0 : config.stopbehaviorPIN2;
+		node.stopbehaviorPIN2 = node.stopbehaviorPIN2 == 0 ? false : true;
+
+		function setNodeStatus({ fill, shape, text }) {
+			var dDate = new Date();
+			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
+		}
+
+		setNodeStatus({ fill: "grey", shape: "ring", text: "|| Off" });
 
 		node.on('input', function (msg) {
 
@@ -35,24 +44,20 @@ module.exports = function (RED) {
 					if (node.tBlinker !== null) clearInterval(node.tBlinker);
 					node.isBlinking = false;
 					setNodeStatus({ fill: "red", shape: "dot", text: "|| Off" });
-					node.send({ payload: false });
-					node.curPayload = false;
+					node.send([{ payload: node.stopbehaviorPIN1 }, { payload: node.stopbehaviorPIN2 }]);
+					node.curPayload = node.stopbehaviorPIN1;
 				}
 			}
-			
+
 		});
 
-		node.on('close', function () {
+		node.on('close', function (removed, done) {
 			if (node.tBlinker !== null) clearInterval(node.tBlinker);
 			node.isBlinking = false;
-			node.send({ payload: false });
+			node.send([{ payload: node.stopbehaviorPIN1 }, { payload: node.stopbehaviorPIN2 }]);
+			node.curPayload = node.stopbehaviorPIN1;
+			done();
 		});
-
-
-		function setNodeStatus({ fill, shape, text }) {
-			var dDate = new Date();
-			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
-		}
 
 
 		function ToBoolean(value) {
@@ -78,7 +83,7 @@ module.exports = function (RED) {
 
 		function handleTimer() {
 			node.curPayload = !node.curPayload;
-			node.send({ payload: node.curPayload });
+			node.send([{ payload: node.curPayload }, { payload: !node.curPayload }]);
 		}
 	}
 

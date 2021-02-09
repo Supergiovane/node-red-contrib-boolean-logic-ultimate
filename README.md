@@ -122,9 +122,17 @@ The input message is preserved and passed to the output pin, changing only the t
 # BLINKER ULTIMATE
 
 The pourpose of this node is to blink a led or something.<br />
+Output PIN1 : outputs the value true/false<br/>
+Output PIN2 : outputs the inverted value false/true<br/>
+<br/>
+
 Pass <code>msg.payload = true</code> to start blinking</br>
 Pass <code>msg.payload = false</code> to stop blinking</br>
 Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
+
+- PIN1 stop behavior : when the blinker receives the stop message, you can select the behavior of the pin1<br/>
+- PIN2 stop behavior : when the blinker receives the stop message, you can select the behavior of the pin2<br/>
+
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/blinker.png' width='60%'>
 
