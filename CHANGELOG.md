@@ -2,7 +2,7 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
-<b>Version 1.0.25/b> February 2021<br/>
+<b>Version 1.0.25</b> February 2021<br/>
 - BlinkerUltimate: added second output pin that emits an inverted payload.</br>
 - BlinkerUltimate: Now you can select to send true or false on both pins once the blinker has been stopped.</br>
 </p>
