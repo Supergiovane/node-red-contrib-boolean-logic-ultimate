@@ -1,39 +1,36 @@
 <script type="text/javascript">
-    RED.nodes.registerType('InterruptFlowUltimate',{
-        category: 'boolean logic ultimate',
-        color: '#ff8080',
-        defaults: {
-			name: { 
-				value: "Interrupt Flow"
-			},
-			triggertopic: { 
-				value: "trigger"
-			}		
-        },
-        inputs:1,
-        outputs:1,
-        outputLabels: function(i) { 
-			var ret="";
+	RED.nodes.registerType('InterruptFlowUltimate', {
+		category: 'boolean logic ultimate',
+		color: '#ff8080',
+		defaults: {
+			name: { value: "Interrupt Flow" },
+			triggertopic: { value: "trigger" },
+			initializewith: { value: "1" },
+		},
+		inputs: 1,
+		outputs: 1,
+		outputLabels: function (i) {
+			var ret = "";
 			switch (i) {
 				case 0:
 					return "True";
-				break;
+					break;
 				case 1:
 					return "False";
-				break;
+					break;
 				default:
 					break;
 			}
 		},
-        icon: "file-in.png",
-        label: 
-			function() {
-				return (this.name||"Interrupt") + " (" + this.triggertopic + ")";
+		icon: "file-in.png",
+		label:
+			function () {
+				return (this.name || "Interrupt") + " (" + this.triggertopic + ")";
 			},
-		paletteLabel: function() {
+		paletteLabel: function () {
 			return "InterruptFlowUltimate";
 		}
-    });
+	});
 </script>
 
 <script type="text/x-red" data-template-name="InterruptFlowUltimate">
@@ -54,6 +51,14 @@
 		<br/>The node will output the current stored message<br/>plus an added property "isReplay = true",<br/>as soon as it receives a "play" = true from this topic.
 	</i></div>
     </div>
+
+	<div class="form-row">
+        <label for="node-input-initializewith"><i class="fa fa-home"></i> At node-red start</label>
+        <select type="text" id="node-input-initializewith" placeholder="">
+			<option value="1">Pass telegrams</option>
+			<option value="0">Block telegrams</option>
+		</select>
+	</div>
 </script>
 
 <script type="text/x-red" data-help-name="InterruptFlowUltimate">

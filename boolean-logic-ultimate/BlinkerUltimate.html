@@ -4,11 +4,10 @@
 		color: '#ff8080',
 		defaults: {
 			name: { value: "Blinker" },
-			stopbehaviorPIN1: { value: false },
-			stopbehaviorPIN2: { value: false },
-			blinkfrequency: {
-				value: 500
-			}
+			stopbehaviorPIN1: { value: "0" },
+			stopbehaviorPIN2: { value: "0" },
+			blinkfrequency: { value: "500" },
+			initializewith: { value: "0" },
 		},
 		inputs: 1,
 		outputs: 2,
@@ -53,15 +52,22 @@
 	<div class="form-row">
         <label for="node-input-stopbehaviorPIN1"><i class="fa fa-stop"></i> PIN1 stop behavior</label>
         <select type="text" id="node-input-stopbehaviorPIN1">
-			<option value=0>Send false</option>
-			<option value=1>Send true</option>
+			<option value="0">Send false</option>
+			<option value="1">Send true</option>
 		</select>
 	</div>
 	<div class="form-row">
         <label for="node-input-stopbehaviorPIN2"><i class="fa fa-stop"></i> PIN2 stop behavior</label>
         <select type="text" id="node-input-stopbehaviorPIN2">
-			<option value=0>Send false</option>
-			<option value=1>Send true</option>
+			<option value="0">Send false</option>
+			<option value="1">Send true</option>
+		</select>
+	</div>
+	<div class="form-row">
+        <label for="node-input-initializewith"><i class="fa fa-home"></i> Autostart</label>
+        <select type="text" id="node-input-initializewith" placeholder="">
+			<option value="0">Don't start the blinker automatically</option>
+			<option value="1">Start the blinker automatically</option>
 		</select>
 	</div>
 </script>
@@ -83,6 +89,7 @@
 	</p>
 	PIN1 stop behavior : when the blinker receives the stop message, you can select the behavior of the pin1<br/>
 	PIN2 stop behavior : when the blinker receives the stop message, you can select the behavior of the pin2<br/>
+	Autostart : whenever node-red starts, the node can either start blinking or not<br/>
 	<p>
 
 	</p>

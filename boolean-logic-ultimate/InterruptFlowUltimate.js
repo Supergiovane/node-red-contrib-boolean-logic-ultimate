@@ -4,9 +4,15 @@ module.exports = function (RED) {
 		this.config = config;
 		var node = this;
 		setNodeStatus({ fill: "green", shape: "ring", text: "-> pass" });
-		node.bInviaMessaggio = true; // Send the message or not
 		node.currentMsg = {}; // Stores current payload
 		node.sTriggerTopic = node.config.triggertopic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') || "trigger"; // Topic controlling the bInviaMessaggio
+		node.bInviaMessaggio = (node.config.initializewith === undefined || node.config.initializewith === "1") ? true : false; // Send the message or not
+		if (node.bInviaMessaggio) {
+			setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" });
+		} else {
+			setNodeStatus({ fill: "red", shape: "dot", text: "|| stop" });
+		}
+
 		this.on('input', function (msg) {
 			var sIncomingTopic = "";
 			if (msg.hasOwnProperty("topic")) {

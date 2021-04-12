@@ -3,20 +3,28 @@ module.exports = function (RED) {
 		RED.nodes.createNode(this, config);
 		var node = this;
 		node.tBlinker = null;// Timer Blinker
-		node.blinkfrequency = config.blinkfrequency === undefined ? 500 : config.blinkfrequency;
+		node.blinkfrequency = config.blinkfrequency === undefined ? 500 : Number(config.blinkfrequency);
 		node.curPayload = false;
 		node.isBlinking = false; // Is the timer running?
-		node.stopbehaviorPIN1 = config.stopbehaviorPIN1 === undefined ? 0 : config.stopbehaviorPIN1;
-		node.stopbehaviorPIN1 = node.stopbehaviorPIN1 == 0 ? false : true;
+		node.stopbehaviorPIN1 = config.stopbehaviorPIN1 === undefined ? "0" : config.stopbehaviorPIN1;
+		node.stopbehaviorPIN1 = node.stopbehaviorPIN1 == "0" ? false : true;
 		node.stopbehaviorPIN2 = config.stopbehaviorPIN2 === undefined ? 0 : config.stopbehaviorPIN2;
-		node.stopbehaviorPIN2 = node.stopbehaviorPIN2 == 0 ? false : true;
+		node.stopbehaviorPIN2 = node.stopbehaviorPIN2 == "0" ? false : true;
 
 		function setNodeStatus({ fill, shape, text }) {
 			var dDate = new Date();
 			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
 		}
 
-		setNodeStatus({ fill: "grey", shape: "ring", text: "|| Off" });
+		// 12/04/2021 Autostart blinker?
+		if (config.initializewith !== undefined && config.initializewith === "1") {
+
+			node.tBlinker = setInterval(handleTimer, node.blinkfrequency); //  Start the timer that handles the queue of telegrams
+			node.isBlinking = true;
+			setNodeStatus({ fill: "green", shape: "dot", text: "-> Autostarted" });
+		} else {
+			setNodeStatus({ fill: "grey", shape: "ring", text: "|| Off" });
+		}
 
 		node.on('input', function (msg) {
 
