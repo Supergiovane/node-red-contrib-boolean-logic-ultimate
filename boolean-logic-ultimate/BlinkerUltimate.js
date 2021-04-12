@@ -18,7 +18,6 @@ module.exports = function (RED) {
 
 		// 12/04/2021 Autostart blinker?
 		if (config.initializewith !== undefined && config.initializewith === "1") {
-
 			node.tBlinker = setInterval(handleTimer, node.blinkfrequency); //  Start the timer that handles the queue of telegrams
 			node.isBlinking = true;
 			setNodeStatus({ fill: "green", shape: "dot", text: "-> Autostarted" });
