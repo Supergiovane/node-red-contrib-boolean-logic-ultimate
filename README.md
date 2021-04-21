@@ -82,6 +82,18 @@ Every time you create a node or modify the node, all inputs are set to undefined
 If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
 Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
 
+**INPUT MSG TO THE NODE**
+
+<code>
+msg.reset = true;
+</code>
+Resets all inputs to undefined.
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
 # INTERRUPT FLOWS ULTIMATE
 
@@ -96,8 +108,9 @@ Whenever this node receives a payload = false from a specific topic, it stops ou
 </details>
 
 <br/>
+
 In this other example, you can see the property "play" in action. This property allow you to replay the last previously stored message.<br/>
-This allow to save the state of a node and then replay it back whenever you want.
+This allow to save the state of a node and then replay it back whenever you want.<br/>
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/if1.png' width='60%'>
 
@@ -107,10 +120,22 @@ This allow to save the state of a node and then replay it back whenever you want
 </code>
 </details>
 
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
 # INVERT ULTIMATE
 
 Outputs the inverted input. For example true -> false<br />
 The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
 # FILTER ULTIMATE
 
@@ -118,6 +143,12 @@ This node has 2 outputs.<br />
 If the input payload is true, the node will send <code>true</code> on output 1 and nothing on oputput 2<br />
 If the input payload is false, the node will send nothing on output 1, and <code>false</code> on oputput 2<br />
 The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
 # BLINKER ULTIMATE
 
@@ -142,6 +173,11 @@ Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
 </code>
 </details>
 
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
 # SIMPLE OUTPUT ULTIMATE
 
@@ -156,6 +192,11 @@ This is useful if you need to simply send a true or false payload.
 </code>
 </details>
 
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
 # INJECT ULTIMATE
 

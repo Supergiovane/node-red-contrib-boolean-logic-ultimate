@@ -2,6 +2,11 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.27</b> April 2021<br/>
+- Boolean logic ultimate: msg.reset = true now resets all inputs.</br>
+- Update the help in the README to reflect the changes.</br>
+</p>
+<p>
 <b>Version 1.0.26</b> April 2021<br/>
 - NEW: Interrupt Flow: now you can choose the default state at start, between true (allow telegrams flow) and false (block telegrams flow).</br>
 - Blinker: fixed bug in default dropdownbox selection whenever the node was dropped on the flow.</br>

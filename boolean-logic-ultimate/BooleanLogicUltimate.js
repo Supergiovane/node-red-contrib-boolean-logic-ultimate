@@ -37,7 +37,7 @@ module.exports = function (RED) {
 						fs.copyFileSync("states/" + file, path.join(node.persistPath, path.basename(file)));
 					});
 				}
-			} catch (error) { 
+			} catch (error) {
 				RED.log.error("BooleanLogicUltimate: error creating persistent folder. Check user permission to write to the filesystem " + error.message);
 			}
 		}
@@ -64,6 +64,18 @@ module.exports = function (RED) {
 
 
 		this.on('input', function (msg) {
+
+			// 21/04/2021 Msg to reset all inputs
+			if (msg.hasOwnProperty("reset")) {
+				setNodeStatus({ fill: "blue", shape: "ring", text: "All inputs have been reset." });
+				node.jSonStates = [];
+				return;
+			}
+			// 28/08/2020 inform user about undefined topic or payload
+			if (!msg.hasOwnProperty("payload") || typeof (msg.payload) == "undefined") {
+				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload!" });
+				return;
+			}
 
 			// 28/08/2020 inform user about undefined topic or payload
 			if (!msg.hasOwnProperty("topic") || typeof (msg.topic) == "undefined") {
