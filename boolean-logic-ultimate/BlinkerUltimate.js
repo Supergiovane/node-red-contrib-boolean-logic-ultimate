@@ -69,7 +69,8 @@ module.exports = function (RED) {
 
 		function ToBoolean(value) {
 			var res = false;
-
+			var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
+			
 			if (typeof value === 'boolean') {
 				res = value;
 			}

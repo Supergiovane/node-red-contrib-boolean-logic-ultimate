@@ -3,7 +3,14 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
 		this.config = config;
 		var node = this;
-		var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
+		
+
+		function setNodeStatus({fill, shape, text})
+		{
+			var dDate = new Date();
+			node.status({fill: fill,shape: shape,text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")"})
+		}
+
 		setNodeStatus( {fill:  "grey" ,shape: "dot" ,text: "Waiting"});
 		
         this.on('input', function(msg) {
@@ -26,7 +33,8 @@ module.exports = function(RED) {
 
 		function ToBoolean( value ) {
 			var res = false;
-	
+			var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
+
 			if (typeof value === 'boolean') {
 				res = value;
 			} 
@@ -44,11 +52,7 @@ module.exports = function(RED) {
 			return res;
 		};
 
-		function setNodeStatus({fill, shape, text})
-		{
-			var dDate = new Date();
-			node.status({fill: fill,shape: shape,text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")"})
-		}
+		
 		
 	}	
 	
