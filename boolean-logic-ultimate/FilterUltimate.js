@@ -3,6 +3,14 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
 		this.config = config;
 		var node = this;
+
+		function setNodeStatus({fill, shape, text})
+		{
+			var dDate = new Date();
+			node.status({fill: fill,shape: shape,text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")"})
+		}
+			
+
 		setNodeStatus( {fill:  "grey" ,shape: "dot" ,text: "Waiting"});
 		this.on('input', function (msg) {
 			var sTopic = node.config.name;
@@ -34,16 +42,12 @@ module.exports = function(RED) {
 			}
         });
 		
-		function setNodeStatus({fill, shape, text})
-		{
-			var dDate = new Date();
-			node.status({fill: fill,shape: shape,text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")"})
-		}
-			
+		
 
 		function ToBoolean( value ) {
 			var res = false;
-	
+			var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
+
 			if (typeof value === 'boolean') {
 				res = value;
 			} 

@@ -3,10 +3,17 @@ module.exports = function (RED) {
 		RED.nodes.createNode(this, config);
 		this.config = config;
 		var node = this;
-		setNodeStatus({ fill: "green", shape: "ring", text: "-> pass" });
 		node.currentMsg = {}; // Stores current payload
 		node.sTriggerTopic = node.config.triggertopic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') || "trigger"; // Topic controlling the bInviaMessaggio
 		node.bInviaMessaggio = (node.config.initializewith === undefined || node.config.initializewith === "1") ? true : false; // Send the message or not
+		
+		function setNodeStatus({ fill, shape, text }) {
+			var dDate = new Date();
+			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
+		}
+		setNodeStatus({ fill: "green", shape: "ring", text: "-> pass" });
+		
+		
 		if (node.bInviaMessaggio) {
 			setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" });
 		} else {
@@ -49,14 +56,12 @@ module.exports = function (RED) {
 			}
 		});
 
-		function setNodeStatus({ fill, shape, text }) {
-			var dDate = new Date();
-			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
-		}
+		
 
 
 		function ToBoolean(value) {
 			var res = false;
+			var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
 
 			if (typeof value === 'boolean') {
 				res = value;

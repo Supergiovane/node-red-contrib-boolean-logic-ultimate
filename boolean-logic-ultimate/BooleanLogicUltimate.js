@@ -4,12 +4,17 @@ module.exports = function (RED) {
 		var node = this;
 		var fs = require("fs");
 		var path = require("path");
-		var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
-
+		
 		node.config = config;
 		node.jSonStates = {}; // JSON object containing the states. 
 		node.sInitializeWith = typeof node.config.sInitializeWith === "undefined" ? "WaitForPayload" : node.config.sInitializeWith;
 		node.persistPath = path.join(RED.settings.userDir, "booleanlogicultimatepersist"); // 26/10/2020 Contains the path for the states dir.
+
+
+		function setNodeStatus({ fill, shape, text }) {
+			var dDate = new Date();
+			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
+		}
 
 		// Helper for the config html, to be able to delete the peristent states file
 		RED.httpAdmin.get("/stateoperation_delete", RED.auth.needsPermission('BooleanLogicUltimate.read'), function (req, res) {
@@ -195,10 +200,7 @@ module.exports = function (RED) {
 			}
 		}
 
-		function setNodeStatus({ fill, shape, text }) {
-			var dDate = new Date();
-			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
-		}
+		
 
 		function CalculateResult(_operation) {
 			var res;
@@ -251,6 +253,7 @@ module.exports = function (RED) {
 
 		function ToBoolean(value) {
 			var res = false;
+			var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
 
 			if (typeof value === 'boolean') {
 				res = value;
