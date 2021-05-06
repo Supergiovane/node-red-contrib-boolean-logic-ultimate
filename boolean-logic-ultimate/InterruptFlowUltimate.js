@@ -13,7 +13,7 @@ module.exports = function (RED) {
 		}
 		setNodeStatus({ fill: "green", shape: "ring", text: "-> pass" });
 		
-		
+
 		if (node.bInviaMessaggio) {
 			setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" });
 		} else {
@@ -62,12 +62,13 @@ module.exports = function (RED) {
 		function ToBoolean(value) {
 			var res = false;
 			var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
-
+			
 			if (typeof value === 'boolean') {
 				res = value;
 			}
 			else if (typeof value === 'number' || typeof value === 'string') {
 				// Is it formated as a decimal number?
+				
 				if (decimal.test(value)) {
 					var v = parseFloat(value);
 					res = v != 0;
