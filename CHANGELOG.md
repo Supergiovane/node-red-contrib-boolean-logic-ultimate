@@ -2,6 +2,10 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.29</b> May 2021<br/>
+- NEW: StatusUltimate node: show the status of the passing-through message.</br>
+</p>
+<p>
 <b>Version 1.0.28</b> May 2021<br/>
 - Fixed some hiccups in checking if a msg.payload is boolean.</br>
 </p>
