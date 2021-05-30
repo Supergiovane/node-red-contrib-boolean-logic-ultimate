@@ -27,7 +27,8 @@
             "InterruptFlowUltimate": "boolean-logic-ultimate/InterruptFlowUltimate.js",
             "BlinkerUltimate": "boolean-logic-ultimate/BlinkerUltimate.js",
             "SimpleOutputUltimate": "boolean-logic-ultimate/SimpleOutputUltimate.js",
-            "InjectUltimate": "boolean-logic-ultimate/InjectUltimate.js"
+            "InjectUltimate": "boolean-logic-ultimate/InjectUltimate.js",
+            "StatusUltimate": "boolean-logic-ultimate/StatusUltimate.js"
         }
     }
 }
