@@ -2,7 +2,7 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
-<b>Version 1.0.30</b> August 2021<br/>
+<b>Version 1.0.31</b> August 2021<br/>
 - NEW: Boolean-Logic-Ulimate can now strict filter for input payload, by accepting only boolean true/false values. If the option is not enabled, the node will continue to try to transform the input payload to a suitable boolean value.</br>
 </p>
 <p>

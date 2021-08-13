@@ -26,6 +26,10 @@ module.exports = function (RED) {
 				// 06/11/2019 
 				sIncomingTopic = msg.topic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, ''); // Cut unwanted Characters
 				if (sIncomingTopic == node.sTriggerTopic) {
+					if (msg.payload !== true && msg.payload !== false) {
+						setNodeStatus({ fill: "red", shape: "dot", text: "Received non boolean value from " + sIncomingTopic });
+						return;
+					}
 					if (msg.hasOwnProperty("play")) {
 						node.currentMsg.isReplay = true;
 						setNodeStatus({ fill: "yellow", shape: "dot", text: "-> replay" });
@@ -39,11 +43,11 @@ module.exports = function (RED) {
 						}, 1000)
 						node.send(node.currentMsg);
 						return;
-					} else if (ToBoolean(msg.payload) === true) {
+					} else if (msg.payload === true) {
 						node.bInviaMessaggio = true;
 						setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" });
 						return;
-					} else if (ToBoolean(msg.payload) === false) {
+					} else if (msg.payload === false) {
 						node.bInviaMessaggio = false;
 						setNodeStatus({ fill: "red", shape: "dot", text: "|| stop (stored last msg)" });
 						return;
