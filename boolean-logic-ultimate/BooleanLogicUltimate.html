@@ -32,7 +32,8 @@
 					function (v) {
 						return v !== undefined && v.length > 0;
 					}
-			}
+			},
+			restrictinputevaluation:{ value: true }
 		},
 		inputs: 1,
 		outputs: 3,
@@ -138,8 +139,8 @@
 	<div class="form-row">
         <label for="node-input-outputtriggeredby"><i class="fa fa-filter"></i> Trigger mode</label>
         <select type="text" id="node-input-outputtriggeredby" placeholder="Event">
-			<option value="all">All topics</option>
-			<option value="onlyonetopic">Single topic</option>
+			<option value="all">All topics (will output a result whenever an input msg arrives)</option>
+			<option value="onlyonetopic">Single topic (still evaluates all inputs, but will output a result only if a specified topic arrives)</option>
 		</select>
 	</div>
 	<div class="form-row" id="triggertopic">
@@ -155,9 +156,14 @@
 		</select>
 	</div>
 	<div class="form-row">
-		<i class="fa fa-floppy-o"></i> 
-		<label style="width:auto" for="node-input-persist"> Remember latest input values after reboot</label> <input type="checkbox" id="node-input-persist" style="display:inline-block; width:auto; vertical-align:top;">
-		<div class="form-tips" style="margin-top: 8px;background-color:lightgrey;text-align:center">If <b>Remember latest input values after reboot</b><br/> is checked, the input values are retained <br/> after a node-red restart, deploy or reboot.</div>
+		<i class="fa fa-floppy-o"></i> &nbsp
+		<input type="checkbox" id="node-input-persist" style="display:inline-block; width:auto; vertical-align:top;">
+		&nbsp<label style="width:auto" for="node-input-persist"> Remember latest input values after reboot</label> 
+	</div>
+	<div class="form-row">
+		<i class="fa fa-gavel"></i>&nbsp
+		<input type="checkbox" id="node-input-restrictinputevaluation" style="display:inline-block; width:auto; vertical-align:top;">
+		&nbsp<label style="width:auto" for="node-input-restrictinputevaluation"> Reject non boolean (true/false) input values</label>
 	</div>
 
 </script>
@@ -214,11 +220,6 @@
 	Example of trigger mode = Single topic + eval other inputs:	<b>SEE THE README FOR AN EXAMPLE</b>
 	<br/><br/>
 
-	<b>Remember latest input values after reboot</b><br />
-	If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
-	Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
-	<br/>
-	
 	<b>	If input states are undefined</b><br />
 	Every time you create a node or modify the node, all inputs are set to undefined. This means that the node will wait the arrive of all topics (for example 3 topics, if you've selected 3 topics in the option), before it can output a payload. This can be a problem if your logic must be operative as soon as you deploy the flow. To overcome this problem, you can "initialize" all the undefined inputs with True or False.
 	<ol>	
@@ -226,6 +227,16 @@
 		<li>True or False: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false".</li>
 	</ol>
 	<br/>
+
+	<b>Remember latest input values after reboot</b><br />
+	If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
+	Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
+	<br/>
+
+	<b>Reject non boolean (true/false) input values</b><br />
+	If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload to a logic value true/false.<br/>
+	<br/>
+	
 
 	<i>	How inputs are handled:</i><br />
 	All incoming msg.payloads are converted into a boolean value according to the following rules (this applies to all boolean logic nodes):

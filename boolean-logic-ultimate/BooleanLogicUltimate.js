@@ -4,12 +4,12 @@ module.exports = function (RED) {
 		var node = this;
 		var fs = require("fs");
 		var path = require("path");
-		
+
 		node.config = config;
 		node.jSonStates = {}; // JSON object containing the states. 
 		node.sInitializeWith = typeof node.config.sInitializeWith === "undefined" ? "WaitForPayload" : node.config.sInitializeWith;
 		node.persistPath = path.join(RED.settings.userDir, "booleanlogicultimatepersist"); // 26/10/2020 Contains the path for the states dir.
-
+		node.restrictinputevaluation = config.restrictinputevaluation === undefined ? false : config.restrictinputevaluation;
 
 		function setNodeStatus({ fill, shape, text }) {
 			var dDate = new Date();
@@ -76,11 +76,6 @@ module.exports = function (RED) {
 				node.jSonStates = [];
 				return;
 			}
-			// 28/08/2020 inform user about undefined topic or payload
-			if (!msg.hasOwnProperty("payload") || typeof (msg.payload) == "undefined") {
-				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload!" });
-				return;
-			}
 
 			// 28/08/2020 inform user about undefined topic or payload
 			if (!msg.hasOwnProperty("topic") || typeof (msg.topic) == "undefined") {
@@ -89,9 +84,18 @@ module.exports = function (RED) {
 			}
 			// 28/08/2020 inform user about undefined topic or payload
 			if (!msg.hasOwnProperty("payload") || typeof (msg.payload) == "undefined") {
-				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload!" });
+				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload from " + msg.topic });
 				return;
 			}
+
+			// 12/08/2021 Restrict only to true/false and 0/1
+			if (node.restrictinputevaluation) {
+				if (msg.payload !== true && msg.payload !== false) {
+					setNodeStatus({ fill: "red", shape: "dot", text: "Received non boolean value from " + msg.topic });
+					return;
+				}
+			}
+
 			var topic = msg.topic;
 			var payload = msg.payload;
 			var value = ToBoolean(payload);
@@ -200,7 +204,7 @@ module.exports = function (RED) {
 			}
 		}
 
-		
+
 
 		function CalculateResult(_operation) {
 			var res;
