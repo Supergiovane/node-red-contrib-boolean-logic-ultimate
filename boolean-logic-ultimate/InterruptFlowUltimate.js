@@ -24,7 +24,7 @@ module.exports = function (RED) {
 			var sIncomingTopic = "";
 			if (msg.hasOwnProperty("topic")) {
 				// 06/11/2019 
-				if (!msg.hasOwnProperty("topic") || msg.topic === undefined) sIncomingTopic = "NoTopicReceived";
+				if (!msg.hasOwnProperty("topic") || msg.topic === undefined) msg.topic = "NoTopicReceived";
 				sIncomingTopic = msg.topic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, ''); // Cut unwanted Characters
 				if (sIncomingTopic == node.sTriggerTopic) {
 					if (msg.payload !== true && msg.payload !== false) {
