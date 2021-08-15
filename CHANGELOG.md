@@ -2,6 +2,10 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.32</b> August 2021<br/>
+- Interruptflow ultimate: fixed an issue involving messages without topic.</br>
+</p>
+<p>
 <b>Version 1.0.31</b> August 2021<br/>
 - NEW: Boolean-Logic-Ulimate can now strict filter for input payload, by accepting only boolean true/false values. If the option is not enabled, the node will continue to try to transform the input payload to a suitable boolean value.</br>
 </p>
