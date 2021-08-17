@@ -36,9 +36,9 @@ module.exports = function (RED) {
 			node.isPlaying = true;
 			node.setNodeStatus({ fill: "green", shape: "ring", text: "Start" });
 
-			let msg = { topic: node.name };
 			for (let index = 0; index < node.commands.length; index++) {
 				const element = node.commands[index];
+				let msg = { topic: node.name };
 				if (!element.toString().startsWith("//")) {
 					if (node.isPlaying === false) return; // STOP called
 					try {
