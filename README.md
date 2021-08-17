@@ -242,6 +242,8 @@ The pourpose of this node is to show a status of the passingthrough message.<br 
 
 The pourpose of this node is to send a sequence of pulsed commands to for example, open a garage door or to command an appliance requiring a set of timed commands.<br />
 
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Impulse.png' width='60%'>
+
 **Avaiable Commands**<br />
 Commands are to be wrote in the format: command:value. For example ***send:200***, ***wait:2000***. Each row represents a command.<br /><br />
 <b>send</b><br />
@@ -250,14 +252,13 @@ sends a value. For example: ***send:true*** or ***send:100*** or ***send:Hello**
 wait for specified time (in milliseconds). For example ***wait:500*** waits for 500 milliseconds
 <b>//</b><br />
 comment. For example: ***// This opens the garage***. The comment are ignored, so you can write what you want.<br />
-
+<br />
 
 Pass <code>msg.payload = true</code> to the node to start the sequence</br>
 Pass <code>msg.payload = false</code> to the node to stop the running sequence</br>
+<br />
 
 - Output: the node outputs a message you specified in the command textbox<br/>
-
-<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Impulse.png' width='60%'>
 
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
 <code>
