@@ -2,6 +2,10 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.33</b> August 2021<br/>
+- NEW: Impulse node: you run issue a sequence of commands to, for example, open a garage door with a timed impulse, or switch speed of a fan requiring pulsed commands. Check the gitHub home for sample and explanation.</br>
+</p>
+<p>
 <b>Version 1.0.32</b> August 2021<br/>
 - Interruptflow ultimate: fixed an issue involving messages without topic.</br>
 </p>
