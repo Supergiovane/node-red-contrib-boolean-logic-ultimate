@@ -243,6 +243,11 @@ The pourpose of this node is to show a status of the passingthrough message.<br 
 The pourpose of this node is to send a sequence of pulsed commands to for example, open a garage door or to command an appliance requiring a set of timed commands.<br />
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Impulse.png' width='60%'>
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"6fc25e59990d5955","type":"ImpulseUltimate","z":"5ed79f4a958a1f20","name":"Turn on the fan at level 1","commandText":"// Turn on the fan (must be sent as first command ever\n// even if the fan is already off)\nsend:true\nwait:300\nsend:false\nwait:3000\n// Reset the fan\nsend:true\nwait:2000\nsend:false\nwait:3000\n// Speed 1\nsend:true\nwait:300\nsend:false","x":410,"y":140,"wires":[["7a2ea180e17e513c"]]},{"id":"0d7de5c606ecaf92","type":"InjectUltimate","z":"5ed79f4a958a1f20","name":"START THE FAN","topic":"1","curVal":true,"x":130,"y":120,"wires":[["6fc25e59990d5955"],[],[]]},{"id":"7a2ea180e17e513c","type":"debug","z":"5ed79f4a958a1f20","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","statusVal":"","statusType":"auto","x":620,"y":140,"wires":[]},{"id":"333733dffda4dc56","type":"InjectUltimate","z":"5ed79f4a958a1f20","name":"BLOCK SCRIPT","topic":"1","curVal":true,"x":130,"y":200,"wires":[[],["6fc25e59990d5955"],[]]},{"id":"cdae7e4bc0835e4f","type":"comment","z":"5ed79f4a958a1f20","name":"This example turns on a \"LucePlan Blow\" fan and set it's speed to 1","info":"","x":260,"y":60,"wires":[]}]
+</code>
+</details>
 
 **Avaiable Commands**<br />
 Commands are to be wrote in the format: command:value. For example ***send:200***, ***wait:2000***. Each row represents a command.<br />
@@ -260,11 +265,6 @@ Pass <code>msg.payload = false</code> to the node to stop the running sequence</
 
 - Output: the node outputs a message you specified in the command textbox<br/>
 
-<details><summary>CLICK HERE, copy and paste it into your flow</summary>
-<code>
-[{"id":"6fc25e59990d5955","type":"ImpulseUltimate","z":"5ed79f4a958a1f20","name":"Turn on the fan at level 1","commandText":"// Turn on the fan (must be sent as first command ever\n// even if the fan is already off)\nsend:true\nwait:300\nsend:false\nwait:3000\n// Reset the fan\nsend:true\nwait:2000\nsend:false\nwait:3000\n// Speed 1\nsend:true\nwait:300\nsend:false","x":410,"y":140,"wires":[["7a2ea180e17e513c"]]},{"id":"0d7de5c606ecaf92","type":"InjectUltimate","z":"5ed79f4a958a1f20","name":"START THE FAN","topic":"1","curVal":true,"x":130,"y":120,"wires":[["6fc25e59990d5955"],[],[]]},{"id":"7a2ea180e17e513c","type":"debug","z":"5ed79f4a958a1f20","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","statusVal":"","statusType":"auto","x":620,"y":140,"wires":[]},{"id":"333733dffda4dc56","type":"InjectUltimate","z":"5ed79f4a958a1f20","name":"BLOCK SCRIPT","topic":"1","curVal":true,"x":130,"y":200,"wires":[[],["6fc25e59990d5955"],[]]},{"id":"cdae7e4bc0835e4f","type":"comment","z":"5ed79f4a958a1f20","name":"This example turns on a \"LucePlan Blow\" fan and set it's speed to 1","info":"","x":260,"y":60,"wires":[]}]
-</code>
-</details>
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE
