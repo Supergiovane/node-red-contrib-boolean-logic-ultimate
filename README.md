@@ -245,11 +245,11 @@ The pourpose of this node is to send a sequence of pulsed commands to for exampl
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Impulse.png' width='60%'>
 
 **Avaiable Commands**<br />
-Commands are to be wrote in the format: command:value. For example ***send:200***, ***wait:2000***. Each row represents a command.<br /><br />
+Commands are to be wrote in the format: command:value. For example ***send:200***, ***wait:2000***. Each row represents a command.<br />
 <b>send</b><br />
 sends a value. For example: ***send:true*** or ***send:100*** or ***send:Hello***<br />
 <b>wait</b><br />
-wait for specified time (in milliseconds). For example ***wait:500*** waits for 500 milliseconds
+wait for specified time (in milliseconds). For example ***wait:500*** waits for 500 milliseconds<br />
 <b>//</b><br />
 comment. For example: ***// This opens the garage***. The comment are ignored, so you can write what you want.<br />
 <br />
