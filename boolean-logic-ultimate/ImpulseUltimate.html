@@ -62,7 +62,7 @@
         <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-editorcommandText"></div>
 	</div>
 	<div class="form-tips" style="margin-top:11px">
-		Avaiable commands are: send, wait (in milliseconds), //, etc... For example<br/>
+		Avaiable commands are: send, wait (in milliseconds), restart (restarts the sequence), //, etc... For example<br/>
 		// Open garage
 		send:true<br/>
 		wait:200<br/>
@@ -80,12 +80,14 @@
 	</p>
 	<p>
 		The node executes the commands you write in the JSON.<br/>
-		Avaiable commands are: send, wait (in milliseconds) and // (for comment).<br/>
+		Avaiable commands are: send, wait (in milliseconds), restart (restarts the sequence) and // (for comment).<br/>
 		For example<br/><br/>
-		// Open garage
+		// Blink a light
 		send:true<br/>
-		wait:200<br/>
+		wait:2000<br/>
 		send:false<br/>	
+		wait:2000<br/>
+		restart<br/>
 		For a complete list of avaiable commands, see the gitHub Homepage.
 	</div>		
 	</p>

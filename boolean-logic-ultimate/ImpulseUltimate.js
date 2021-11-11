@@ -43,7 +43,11 @@ module.exports = function (RED) {
 					if (node.isPlaying === false) return; // STOP called
 					try {
 						var sCommand = element.split(":")[0].toString().toLowerCase().trim();
-						var sVal = element.split(":")[1].toString().toLowerCase().trim();
+						if (sCommand !== "restart") {
+							// Get the value of the command
+							var sVal = element.split(":")[1].toString().toLowerCase().trim();
+						} else { var sVal = ""; }
+
 					} catch (error) {
 						node.isPlaying = false;
 						node.setNodeStatus({ fill: "red", shape: "dot", text: "ERROR: check the row " + element });
@@ -71,7 +75,13 @@ module.exports = function (RED) {
 							node.setNodeStatus({ fill: "red", shape: "dot", text: "ERROR: check the row " + element });
 							return;
 						}
+					}
 
+					if (sCommand === "restart") {
+						// Restart
+						node.isPlaying = false;
+						node.setNodeStatus({ fill: "green", shape: "ring", text: "Restart" });
+						await avvio();
 					}
 				}
 			}

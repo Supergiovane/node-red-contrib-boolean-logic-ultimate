@@ -255,6 +255,8 @@ Commands are to be wrote in the format: command:value. For example ***send:200**
 sends a value. For example: ***send:true*** or ***send:100*** or ***send:Hello***<br />
 <b>wait</b><br />
 wait for specified time (in milliseconds). For example ***wait:500*** waits for 500 milliseconds<br />
+<b>restart</b><br />
+Restart the sequence from the beginning. Use ***restart*** alone, without **:** and extra value. For example ***restart*** <br />
 <b>//</b><br />
 comment. For example: ***// This opens the garage***. The comment are ignored, so you can write what you want.<br />
 <br />
