@@ -2,6 +2,10 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.35</b> November 2021<br/>
+- Filterultimate and Invertultimate: added others checks to avoid processing invalid/non boolean convertible payloads and notify it in the node status.</br>
+</p>
+<p>
 <b>Version 1.0.34</b> August 2021<br/>
 - NEW: Impulse node: you run issue a sequence of commands to, for example, open a garage door with a timed impulse, or switch speed of a fan requiring pulsed commands. Check the gitHub home for sample and explanation.</br>
 </p>

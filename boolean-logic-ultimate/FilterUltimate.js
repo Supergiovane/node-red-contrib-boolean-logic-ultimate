@@ -12,40 +12,38 @@ module.exports = function (RED) {
 
 		setNodeStatus({ fill: "grey", shape: "dot", text: "Waiting" });
 		this.on('input', function (msg) {
-			var sTopic = node.config.name;
-			if (msg.hasOwnProperty("topic")) {
-				sTopic = (msg.topic === "" ? sTopic : msg.topic);
+
+			if (!msg.hasOwnProperty("topic")) {
+				msg.topic = node.config.name || "";
 			}
-			if (!msg.hasOwnProperty("payload")) {
-				setNodeStatus({ fill: "red", shape: "dot", text: "No payload property from " + sTopic });
+			if (!msg.hasOwnProperty("payload" || msg.payload === undefined)) {
+				setNodeStatus({ fill: "red", shape: "dot", text: "No payload property from " + msg.topic });
 				return;
 			}
 
-			if (msg.payload !== true && msg.payload !== false) {
-				setNodeStatus({ fill: "red", shape: "dot", text: "Received non boolean value from " + sTopic });
+			var bRes = null;
+			try {
+				bRes = ToBoolean(msg.payload);
+			} catch (error) {
+			}
+			
+			if (bRes === undefined || bRes === null) {
+				setNodeStatus({ fill: "red", shape: "dot", text: "Received non convertible boolean value " + msg.payload + " from " + msg.topic });
 				return;
 			}
 
-			var bRes = ToBoolean(msg.payload);
-			if (typeof bRes === "undefined") return;
-
-			// 24/01/2020 Clone input message and replace only relevant topics
-			var msgTrue = RED.util.cloneMessage(msg);
-			msgTrue.topic = sTopic;
-			msgTrue.payload = true;
-			var msgFalse = RED.util.cloneMessage(msg);
-			msgFalse.topic = sTopic;
-			msgFalse.payload = false;
+			// 24/01/2020 Clone input message and replace only payload
+			var msgOut = RED.util.cloneMessage(msg);
+			msgOut.payload = bRes;
 
 			if (bRes === true) {
 				setNodeStatus({ fill: "green", shape: "dot", text: "(Send) true" });
-				node.send([msgTrue, null]);
-			} else {
+				node.send([msgOut, null]);
+			} else if (bRes === false) {
 				setNodeStatus({ fill: "green", shape: "dot", text: "(Send) false" });
-				node.send([null, msgFalse]);
+				node.send([null, msgOut]);
 			}
-			return;
-
+			
 		});
 
 
