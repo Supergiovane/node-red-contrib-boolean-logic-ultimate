@@ -63,20 +63,13 @@
 
 <script type="text/x-red" data-help-name="InterruptFlowUltimate">
 	<p>
-        <a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
-       
+        SEE THE README FOR HELP CONFIGURING THE NODE
     </p>
-	<p>The meaning of this node is to interrupt/reactivate flow messages.<br/>
-	Normally, passes the input messages to the output. If you send a payload with a specific topic (you can set it on the node properties), the node stops sending output messages.<br/>
-	It can also save the last message received and play later. This is useful if you wish to restore previous state to, for example, a light actuator.<br/>
-	Please see the <a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate" target="_blank">README</a> on github for examples.
-	</p>
+
 	<p>
-	The node will stop output messages, if it receives a payload = false <b>from the specified topic</b>.<br/>
-	The node will resume output messages, if it receives a payload = true <b>from the specified topic</b>.<br/>
-	Other that that, as soon as you send payload = false <b>from the specified topic</b>, the node stores the last received payload internally
-	The node will output the current stored message plus an added property <b>isReplay</b> = true, if it receives a <b>play</b> = true from the specified topic.<br/>
+		<a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate" target="_blank">Click here to learn how to configure the node.</a>
 	</p>
+
 	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
 
 </script>
