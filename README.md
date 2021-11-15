@@ -49,7 +49,9 @@ The node performs some checks on the incoming boolean payloads and outputs all r
 If you need ***"NAND"*** or ***"NOR"*** gate, just put an **InvertUltimate** node respectively after the "AND" or "OR" pin.
 
 The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
-You can also set the default values of the topic inputs.
+You can also set the default values of the topic inputs.<br/>
+The node can convert arbitrary input values to true/false. It supports Homeassistant ***"on"*** and ***"off"*** as well. For enabling auto conversion, please be sure to disable **Reject non boolean (true/false) input values** <br/>
+
 
 
 ### CONFIGURATION
@@ -82,6 +84,11 @@ Every time you create a node or modify the node, all inputs are set to undefined
 If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
 Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
 
+**Reject non boolean (true/false) input values**
+
+If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload to a logic value true/false (including "on" and "off" values, sent, for example, from HomeAssistant).<br/>
+
+
 **INPUT MSG TO THE NODE**
 
 <code>
@@ -97,7 +104,8 @@ Resets all inputs to undefined.
 
 # INTERRUPT FLOWS ULTIMATE
 
-Whenever this node receives a payload = false from a specific topic, it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again.
+Whenever this node receives a payload = false from a specific topic, it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again.<br/>
+The node tries to convert any arbitrary input value to a valid boolean value. It converts Homeassistant ***"on"*** and ***"off"*** to true/false values as well.<br/>
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/if0.png' width='60%'>
 
@@ -129,7 +137,8 @@ This allow to save the state of a node and then replay it back whenever you want
 # INVERT ULTIMATE
 
 Outputs the inverted input. For example true -> false<br />
-The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.
+The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
+The node tries to convert any arbitrary input value to a valid boolean value. It converts Homeassistant ***"on"*** and ***"off"*** to true/false values as well.<br/>
 
 <br/>
 <br/>
@@ -142,7 +151,8 @@ The input message is preserved and passed to the output pin, changing only the t
 This node has 2 outputs.<br />
 If the input payload is true, the node will send <code>true</code> on output 1 and nothing on oputput 2<br />
 If the input payload is false, the node will send nothing on output 1, and <code>false</code> on oputput 2<br />
-The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.
+The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
+The node tries to convert any arbitrary input value to a valid boolean value. It converts Homeassistant ***"on"*** and ***"off"*** to true/false values as well.<br/>
 
 <br/>
 <br/>
@@ -251,13 +261,13 @@ The pourpose of this node is to send a sequence of pulsed commands to for exampl
 
 **Avaiable Commands**<br />
 Commands are to be wrote in the format: command:value. For example ***send:200***, ***wait:2000***. Each row represents a command.<br />
-<b>send</b><br />
+<br /><b>send</b><br />
 sends a value. For example: ***send:true*** or ***send:100*** or ***send:Hello***<br />
-<b>wait</b><br />
+<br /><b>wait</b><br />
 wait for specified time (in milliseconds). For example ***wait:500*** waits for 500 milliseconds<br />
-<b>restart</b><br />
+<br /><b>restart</b><br />
 Restart the sequence from the beginning. Use ***restart*** alone, without **:** and extra value. For example ***restart*** <br />
-<b>//</b><br />
+<br /><b>//</b><br />
 comment. For example: ***// This opens the garage***. The comment are ignored, so you can write what you want.<br />
 <br />
 

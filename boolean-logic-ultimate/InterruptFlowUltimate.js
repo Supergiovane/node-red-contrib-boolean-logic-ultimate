@@ -26,11 +26,21 @@ module.exports = function (RED) {
 				// 06/11/2019 
 				if (!msg.hasOwnProperty("topic") || msg.topic === undefined) msg.topic = "NoTopicReceived";
 				sIncomingTopic = msg.topic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, ''); // Cut unwanted Characters
-				if (sIncomingTopic == node.sTriggerTopic) {
-					if (msg.payload !== true && msg.payload !== false) {
-						setNodeStatus({ fill: "red", shape: "dot", text: "Received non boolean value from " + sIncomingTopic });
+				if (sIncomingTopic === node.sTriggerTopic) {
+
+					// 15/11/2021 inform user about undefined topic or payload
+					if (!msg.hasOwnProperty("payload") || msg.payload === undefined || msg.payload === null) {
+						setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload from " + msg.topic || "" });
 						return;
 					}
+
+					msg.payload = ToBoolean(msg.payload); // 15/11/2021 Convert input to boolean.
+
+					// if (msg.payload !== true && msg.payload !== false) {
+					// 	setNodeStatus({ fill: "red", shape: "dot", text: "Received non boolean value from " + sIncomingTopic });
+					// 	return;
+					// }
+
 					if (msg.hasOwnProperty("play")) {
 						node.currentMsg.isReplay = true;
 						setNodeStatus({ fill: "yellow", shape: "dot", text: "-> replay" });
@@ -72,8 +82,11 @@ module.exports = function (RED) {
 				res = value;
 			}
 			else if (typeof value === 'number' || typeof value === 'string') {
-				// Is it formated as a decimal number?
 
+				if (value.toLowerCase() === "on") return true;
+				if (value.toLowerCase() === "off") return false;
+
+				// Is it formated as a decimal number?
 				if (decimal.test(value)) {
 					var v = parseFloat(value);
 					res = v != 0;
