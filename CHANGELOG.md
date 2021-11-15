@@ -2,7 +2,7 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
-<b>Version 1.0.37</b> November 2021<br/>
+<b>Version 1.0.38</b> November 2021<br/>
 - All nodes does accept "on" and "off" as input, converting it in "true" and "false" values (Homeassistant friendly).</br>
 </p>
 <p>
