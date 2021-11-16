@@ -75,6 +75,11 @@ module.exports = function (RED) {
 				res = value;
 			}
 			else if (typeof value === 'number' || typeof value === 'string') {
+
+				if (typeof value === "string" && value.toLowerCase() === "on") return true;
+				if (typeof value === "string" && value.toLowerCase() === "off") return false;
+
+
 				// Is it formated as a decimal number?
 				if (decimal.test(value)) {
 					var v = parseFloat(value);
