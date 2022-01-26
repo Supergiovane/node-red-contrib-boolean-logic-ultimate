@@ -2,6 +2,10 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.40</b> Januart 2022<br/>
+- NEW: Boolean Logic Ultimate: Delay option added. See the readme on gitHub.</br>
+</p>
+<p>
 <b>Version 1.0.39</b> November 2021<br/>
 - FIX a possible issue when msg.payload is numeric.</br>
 </p>
