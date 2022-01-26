@@ -10,6 +10,9 @@ module.exports = function (RED) {
 		node.sInitializeWith = typeof node.config.sInitializeWith === "undefined" ? "WaitForPayload" : node.config.sInitializeWith;
 		node.persistPath = path.join(RED.settings.userDir, "booleanlogicultimatepersist"); // 26/10/2020 Contains the path for the states dir.
 		node.restrictinputevaluation = config.restrictinputevaluation === undefined ? false : config.restrictinputevaluation;
+		node.delayEvaluation = config.delayEvaluation === undefined ? 0 : config.delayEvaluation; // 26/01/2022 Starts evaluating the inputs only after this amount of time is elapsed, after the last msg input or trigger
+		node.timerDelayEvaluation = null;
+		node.inputMessage = {}; // 26/01/2022 input message is stored here.
 
 		function setNodeStatus({ fill, shape, text }) {
 			var dDate = new Date();
@@ -63,6 +66,13 @@ module.exports = function (RED) {
 			setNodeStatus({ fill: "yellow", shape: "dot", text: "Waiting for input states" });
 		}
 
+		// Starts the evaluation delay timer, if needed
+		node.startTimerDelayEvaluation = () => {
+			if (node.timerDelayEvaluation !== null) clearTimeout(node.timerDelayEvaluation);
+			node.timerDelayEvaluation = setTimeout(() => {
+				outputResult();
+			}, node.delayEvaluation);
+		}
 
 		// 14/08/2019 If some inputs are to be initialized, create a dummy items in the array
 		initUndefinedInputs();
@@ -128,21 +138,21 @@ module.exports = function (RED) {
 					RED.log.error("BooleanLogicUltimate: unable to write to the filesystem. Check wether the user running node-red, has write permission to the filesysten. " + error.message);
 				}
 			}
+			node.inputMessage = msg; // 26/01/2022 Store MSG to be used in the outputResult function.
 
 			// Do we have as many inputs as we expect?
 			var keyCount = Object.keys(node.jSonStates).length;
-
 			if (keyCount == node.config.inputCount) {
 
-				var resAND = CalculateResult("AND");
-				var resOR = CalculateResult("OR");
-				var resXOR = CalculateResult("XOR");
+				// var resAND = CalculateResult("AND");
+				// var resOR = CalculateResult("OR");
+				// var resXOR = CalculateResult("XOR");
 
-				if (node.config.filtertrue == "onlytrue") {
-					if (!resAND) { resAND = null };
-					if (!resOR) { resOR = null };
-					if (!resXOR) { resXOR = null };
-				}
+				// if (node.config.filtertrue == "onlytrue") {
+				// 	if (!resAND) { resAND = null };
+				// 	if (!resOR) { resOR = null };
+				// 	if (!resXOR) { resXOR = null };
+				// }
 
 				// Operation mode evaluation
 				if (node.config.outputtriggeredby == "onlyonetopic") {
@@ -150,12 +160,22 @@ module.exports = function (RED) {
 						&& node.config.triggertopic !== ""
 						&& msg.hasOwnProperty("topic") && msg.topic !== ""
 						&& node.config.triggertopic === msg.topic) {
-						SetResult(resAND, resOR, resXOR, node.config.topic, msg);
+						if (node.delayEvaluation > 0) {
+							node.startTimerDelayEvaluation();
+							setNodeStatus({ fill: "blue", shape: "ring", text: "Delay Eval " + node.delayEvaluation + "ms" });
+						} else {
+							outputResult();	
+						}						
 					} else {
 						setNodeStatus({ fill: "grey", shape: "ring", text: "Saved (" + (msg.hasOwnProperty("topic") ? msg.topic : "empty input topic") + ") " + value });
 					}
 				} else {
-					SetResult(resAND, resOR, resXOR, node.config.topic, msg);
+					if (node.delayEvaluation > 0) {
+						node.startTimerDelayEvaluation();
+						setNodeStatus({ fill: "blue", shape: "ring", text: "Delay Eval " + node.delayEvaluation + "ms" });
+					} else {
+						outputResult();	
+					}	
 				}
 			}
 			else if (keyCount > node.config.inputCount) {
@@ -280,30 +300,41 @@ module.exports = function (RED) {
 			return res;
 		};
 
-		function SetResult(_valueAND, _valueOR, _valueXOR, optionalTopic, _msg) {
-			setNodeStatus({ fill: "green", shape: "dot", text: "(AND)" + (_valueAND !== null ? _valueAND : "---") + " (OR)" + (_valueOR !== null ? _valueOR : "---") + " (XOR)" + (_valueXOR !== null ? _valueXOR : "---") });
+		function outputResult() {
+			let optionalTopic = node.config.topic;
+			let calculatedValueAND = CalculateResult("AND");
+			let calculatedValueOR = CalculateResult("OR");
+			let calculatedValueXOR = CalculateResult("XOR");
+
+			if (node.config.filtertrue == "onlytrue") {
+				if (!calculatedValueAND) { calculatedValueAND = null };
+				if (!calculatedValueOR) { calculatedValueOR = null };
+				if (!calculatedValueXOR) { calculatedValueXOR = null };
+			}
+
+			setNodeStatus({ fill: "green", shape: "dot", text: "(AND)" + (calculatedValueAND !== null ? calculatedValueAND : "---") + " (OR)" + (calculatedValueOR !== null ? calculatedValueOR : "---") + " (XOR)" + (calculatedValueXOR !== null ? calculatedValueXOR : "---") });
 
 			var msgAND = null;
-			if (_valueAND != null) {
-				msgAND = RED.util.cloneMessage(_msg);
+			if (calculatedValueAND != null) {
+				msgAND = RED.util.cloneMessage(node.inputMessage);
 				msgAND.topic = optionalTopic === undefined ? "result" : optionalTopic;
 				msgAND.operation = "AND";
-				msgAND.payload = _valueAND;
+				msgAND.payload = calculatedValueAND;
 
 			}
 			var msgOR = null;
-			if (_valueOR != null) {
-				msgOR = RED.util.cloneMessage(_msg);
+			if (calculatedValueOR != null) {
+				msgOR = RED.util.cloneMessage(node.inputMessage);
 				msgOR.topic = optionalTopic === undefined ? "result" : optionalTopic;
 				msgOR.operation = "OR";
-				msgOR.payload = _valueOR;
+				msgOR.payload = calculatedValueOR;
 			}
 			var msgXOR = null;
-			if (_valueXOR != null) {
-				msgXOR = RED.util.cloneMessage(_msg);
+			if (calculatedValueXOR != null) {
+				msgXOR = RED.util.cloneMessage(node.inputMessage);
 				msgXOR.topic = optionalTopic === undefined ? "result" : optionalTopic;
 				msgXOR.operation = "XOR";
-				msgXOR.payload = _valueXOR;
+				msgXOR.payload = calculatedValueXOR;
 			}
 			node.send([msgAND, msgOR, msgXOR]);
 

@@ -15,8 +15,14 @@ A set of Node-RED enhanced boolean logic, with persisten values after reboot and
 > Wellcome! First of all thank you for your interest in my nodes. This is a set of logic nodes, to overcome the simplicity of the default node-red boolean logic nodes.
 Hope you enjoy that and if you're in trouble, please ask!
 
+<br/>
+<br/>
+
 ## CHANGELOG
 * See <a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/blob/master/CHANGELOG.md">here the changelog</a>
+
+<br/>
+<br/>
 
 # BOOLEAN LOGIC
 
@@ -88,6 +94,12 @@ Every time you modify the node's config, <b>the retained values are cleared</b>.
 
 If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload to a logic value true/false (including "on" and "off" values, sent, for example, from HomeAssistant).<br/>
 
+**Delay evaluation (msec)**
+
+Delays the evaluation until this time (in milliseconds) is elapsed. Each time a message or "topic trigger message" (see **Trigger mode**) arrives, the delay is restarted.<br/>
+This option is useful for debouncing pourposes or simply for adding some delay.<br/>
+For example, you can turn on a light if the room is occupied for a long time, allowing people to fast transit repeatedly, without the need of turning the light on.<br/>
+Another example, if you have many sensors changing state rapidly, you can wait until these sensor reach a quiet state, then evaluate the inputs.<br/>
 
 **INPUT MSG TO THE NODE**
 

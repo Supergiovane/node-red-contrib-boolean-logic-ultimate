@@ -33,7 +33,14 @@
 						return v !== undefined && v.length > 0;
 					}
 			},
-			restrictinputevaluation:{ value: true }
+			restrictinputevaluation: { value: true },
+			delayEvaluation: {
+				value: 0,
+				validate:
+					function (v) {
+						return !isNaN(parseInt(v)) && parseInt(v) >= 0;
+					}
+			}
 		},
 		inputs: 1,
 		outputs: 3,
@@ -165,7 +172,14 @@
 		<input type="checkbox" id="node-input-restrictinputevaluation" style="display:inline-block; width:auto; vertical-align:top;">
 		&nbsp<label style="width:auto" for="node-input-restrictinputevaluation"> Reject non boolean (true/false) input values</label>
 	</div>
-
+	<div class="form-row">
+        <label for="node-input-delayEvaluation"><i class="fa fa-hourglass-o"></i> Delay evaluation (msec)</label>
+		<input style="width:100px" type="text" id="node-input-delayEvaluation" placeholder="0">
+	</div>
+	
+	<br/>
+	<br/>
+	<br/>
 </script>
 
 <script type="text/x-red" data-help-name="BooleanLogicUltimate">
