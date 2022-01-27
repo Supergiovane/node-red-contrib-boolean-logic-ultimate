@@ -35,11 +35,7 @@
 			},
 			restrictinputevaluation: { value: true },
 			delayEvaluation: {
-				value: 0,
-				validate:
-					function (v) {
-						return !isNaN(parseInt(v)) && parseInt(v) >= 0;
-					}
+				value: 0
 			}
 		},
 		inputs: 1,
@@ -124,7 +120,7 @@
 
 	<div class="form-row">
         <label for="node-input-inputCount"><i class="fa fa-step-forward"></i> Inputs count</label>
-		<input type="text" id="node-input-inputCount" placeholder="Inputs count, for example: 2">
+		<input style="width:100px" type="text" id="node-input-inputCount" placeholder="Inputs count, for example: 2">
 	</div>
 	<div class="form-tips" style="margin-top: 8px;background-color:lightgrey;text-align:center">Option above: the node waits for this number of <i>different</i> msg topics before evaluating the outputs.</div>
 <br/>
@@ -173,8 +169,8 @@
 		&nbsp<label style="width:auto" for="node-input-restrictinputevaluation"> Reject non boolean (true/false) input values</label>
 	</div>
 	<div class="form-row">
-        <label for="node-input-delayEvaluation"><i class="fa fa-hourglass-o"></i> Delay evaluation (msec)</label>
-		<input style="width:100px" type="text" id="node-input-delayEvaluation" placeholder="0">
+        <label style="width:160px" for="node-input-delayEvaluation"><i class="fa fa-hourglass-o"></i> Delay evaluation (ms)</label>
+		<input style="width:150px" type="text" id="node-input-delayEvaluation" placeholder="Set 0 for no delay">
 	</div>
 	
 	<br/>

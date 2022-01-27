@@ -2,7 +2,11 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
-<b>Version 1.0.40</b> Januart 2022<br/>
+<b>Version 1.0.41</b> January 2022<br/>
+- Boolean Logic Ultimate: UI optimization and remove warning triangle if the delay is not set.</br>
+</p>
+<p>
+<b>Version 1.0.40</b> January 2022<br/>
 - NEW: Boolean Logic Ultimate: Delay option added. See the readme on gitHub.</br>
 </p>
 <p>

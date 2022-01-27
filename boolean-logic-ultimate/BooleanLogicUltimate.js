@@ -11,6 +11,8 @@ module.exports = function (RED) {
 		node.persistPath = path.join(RED.settings.userDir, "booleanlogicultimatepersist"); // 26/10/2020 Contains the path for the states dir.
 		node.restrictinputevaluation = config.restrictinputevaluation === undefined ? false : config.restrictinputevaluation;
 		node.delayEvaluation = config.delayEvaluation === undefined ? 0 : config.delayEvaluation; // 26/01/2022 Starts evaluating the inputs only after this amount of time is elapsed, after the last msg input or trigger
+		if (isNaN(parseInt(node.delayEvaluation)) || parseInt(node.delayEvaluation) < 0) node.delayEvaluation = 0;
+		if (typeof node.delayEvaluation === "string") node.delayEvaluation = parseInt(node.delayEvaluation);
 		node.timerDelayEvaluation = null;
 		node.inputMessage = {}; // 26/01/2022 input message is stored here.
 
@@ -164,8 +166,8 @@ module.exports = function (RED) {
 							node.startTimerDelayEvaluation();
 							setNodeStatus({ fill: "blue", shape: "ring", text: "Delay Eval " + node.delayEvaluation + "ms" });
 						} else {
-							outputResult();	
-						}						
+							outputResult();
+						}
 					} else {
 						setNodeStatus({ fill: "grey", shape: "ring", text: "Saved (" + (msg.hasOwnProperty("topic") ? msg.topic : "empty input topic") + ") " + value });
 					}
@@ -174,8 +176,8 @@ module.exports = function (RED) {
 						node.startTimerDelayEvaluation();
 						setNodeStatus({ fill: "blue", shape: "ring", text: "Delay Eval " + node.delayEvaluation + "ms" });
 					} else {
-						outputResult();	
-					}	
+						outputResult();
+					}
 				}
 			}
 			else if (keyCount > node.config.inputCount) {

@@ -94,7 +94,7 @@ Every time you modify the node's config, <b>the retained values are cleared</b>.
 
 If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload to a logic value true/false (including "on" and "off" values, sent, for example, from HomeAssistant).<br/>
 
-**Delay evaluation (msec)**
+**Delay evaluation (ms)**
 
 Delays the evaluation until this time (in milliseconds) is elapsed. Each time a message or "topic trigger message" (see **Trigger mode**) arrives, the delay is restarted.<br/>
 This option is useful for debouncing pourposes or simply for adding some delay.<br/>
