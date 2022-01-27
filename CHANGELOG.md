@@ -2,6 +2,11 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.42</b> February 2022<br/>
+- Boolean Logic Ultimate: Added the "d" indication, in the node's name, when the delay option is enabled.</br>
+- Boolean Logic Ultimate: Refined the UI.</br>
+</p>
+<p>
 <b>Version 1.0.41</b> January 2022<br/>
 - Boolean Logic Ultimate: UI optimization and remove warning triangle if the delay is not set.</br>
 </p>

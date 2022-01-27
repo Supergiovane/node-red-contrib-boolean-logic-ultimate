@@ -69,7 +69,7 @@ Set the number of different topics to be evaluated. The node will output a messa
 *Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.*
 
 
-**Filter output result**
+**Filter output**
 
 - Output both 'true' and 'false' results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output.
 - Output only 'true' results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out.

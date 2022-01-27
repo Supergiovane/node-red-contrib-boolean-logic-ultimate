@@ -34,9 +34,7 @@
 					}
 			},
 			restrictinputevaluation: { value: true },
-			delayEvaluation: {
-				value: 0
-			}
+			delayEvaluation: { value: 0 }
 		},
 		inputs: 1,
 		outputs: 3,
@@ -63,8 +61,14 @@
 				let label = "";
 				let filtered = this.filtertrue == "both" ? "" : "f";
 				let trigger = "";
-				if (typeof this.outputtriggeredby !== "undefined") trigger = this.outputtriggeredby == "all" ? "" : "t (" + this.triggertopic + ")";
-				label = this.inputCount + ((filtered + trigger) == "" ? " Boolean Logic" : (filtered + trigger));
+				let delayEvaluation = "";
+				if (this.delayEvaluation === 0 || this.delayEvaluation === "" || this.delayEvaluation === undefined) {
+					delayEvaluation = "";
+				} else {
+					delayEvaluation = "d(" + this.delayEvaluation + ")";
+				}
+				if (typeof this.outputtriggeredby !== "undefined") trigger = this.outputtriggeredby === "all" ? "" : "t(" + this.triggertopic + ")";
+				label = "Gate " + this.inputCount + filtered + delayEvaluation + trigger;
 				if (this.name !== undefined && this.name.length > 0) {
 					label += " (" + this.name + ")";
 				}
@@ -122,7 +126,7 @@
         <label for="node-input-inputCount"><i class="fa fa-step-forward"></i> Inputs count</label>
 		<input style="width:100px" type="text" id="node-input-inputCount" placeholder="Inputs count, for example: 2">
 	</div>
-	<div class="form-tips" style="margin-top: 8px;background-color:lightgrey;text-align:center">Option above: the node waits for this number of <i>different</i> msg topics before evaluating the outputs.</div>
+	<div class="form-tips" style="margin-top: 8px;background-color:lightgreen;text-align:center">Inputs count: each incoming msg.topic represents one input.</div>
 <br/>
 	<div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
@@ -133,7 +137,7 @@
         <input type="text" id="node-input-topic" placeholder="Node's own topic">
 	</div>
     <div class="form-row">
-        <label for="node-input-filtertrue"><i class="fa fa-filter"></i> Filter output result</label>
+        <label for="node-input-filtertrue"><i class="fa fa-filter"></i> Filter output</label>
         <select type="text" id="node-input-filtertrue" placeholder="Filter">
 			<option value="both">Output both 'true' and 'false' results</option>
 			<option value="onlytrue">Output only 'true' results</option>
@@ -151,8 +155,8 @@
         <input type="text" id="node-input-triggertopic" placeholder="Input topic">
 	</div>
 	<div class="form-row">
-        <label for="node-input-sInitializeWith"><i class="fa fa-home"></i> If input states are undefined at boot</label>
-        <select type="text" id="node-input-sInitializeWith" placeholder="">
+        <label style="width:250px" for="node-input-sInitializeWith"><i class="fa fa-home"></i> If input states are undefined at boot</label>
+        <select style="width:170px" type="text" id="node-input-sInitializeWith" placeholder="">
 			<option value="WaitForPayload">Leave undefined</option>
 			<option value="false">Initialize all with False</option>
 			<option value="true">Initialize all with True</option>
