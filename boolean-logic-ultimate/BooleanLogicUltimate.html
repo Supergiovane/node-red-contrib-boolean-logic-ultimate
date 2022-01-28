@@ -62,7 +62,7 @@
 				let filtered = this.filtertrue == "both" ? "" : "f";
 				let trigger = "";
 				let delayEvaluation = "";
-				if (this.delayEvaluation === 0 || this.delayEvaluation === "" || this.delayEvaluation === undefined) {
+				if (this.delayEvaluation === 0 || this.delayEvaluation === "0" || this.delayEvaluation === "" || this.delayEvaluation === undefined) {
 					delayEvaluation = "";
 				} else {
 					delayEvaluation = "d(" + this.delayEvaluation + ")";
