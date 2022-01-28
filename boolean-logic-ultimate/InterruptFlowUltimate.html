@@ -6,6 +6,7 @@
 			name: { value: "Interrupt Flow" },
 			triggertopic: { value: "trigger" },
 			initializewith: { value: "1" },
+			autoToggle: { value: "0" }
 		},
 		inputs: 1,
 		outputs: 1,
@@ -53,10 +54,24 @@
     </div>
 
 	<div class="form-row">
-        <label for="node-input-initializewith"><i class="fa fa-home"></i> At node-red start</label>
+        <label style="width:160px" for="node-input-initializewith"><i class="fa fa-home"></i> At node-red start</label>
         <select type="text" id="node-input-initializewith" placeholder="">
 			<option value="1">Pass telegrams</option>
 			<option value="0">Block telegrams</option>
+		</select>	
+	</div>
+	<div class="form-row">
+		<label style="width:160px" for="node-input-autoToggle"><i class="fa fa-hourglass-o"></i> Then</label>
+		<select type="text" id="node-input-autoToggle" placeholder="">
+			<option value="0">Nothing</option>
+			<option value="10">Toggle above option after 10 seconds</option>
+			<option value="20">Toggle above option after 20 seconds</option>
+			<option value="30">Toggle above option after 30 seconds</option>
+			<option value="40">Toggle above option after 40 seconds</option>
+			<option value="50">Toggle above option after 50 seconds</option>
+			<option value="60">Toggle above option after 60 seconds</option>
+			<option value="90">Toggle above option after 90 seconds</option>
+			<option value="120">Toggle above option after 120 seconds</option>
 		</select>
 	</div>
 </script>

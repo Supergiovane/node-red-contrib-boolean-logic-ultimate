@@ -6,6 +6,8 @@ module.exports = function (RED) {
 		node.currentMsg = {}; // Stores current payload
 		node.sTriggerTopic = node.config.triggertopic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') || "trigger"; // Topic controlling the bInviaMessaggio
 		node.bInviaMessaggio = (node.config.initializewith === undefined || node.config.initializewith === "1") ? true : false; // Send the message or not
+		node.autoToggle = config.autoToggle === undefined ? 0 : parseInt(config.autoToggle); // Auto toggle the selected "initializewith" after a while (useful for homekit bridged, that sends junk after start)
+		node.timerAutoToggle = null;
 
 		function setNodeStatus({ fill, shape, text }) {
 			var dDate = new Date();
@@ -14,11 +16,24 @@ module.exports = function (RED) {
 		setNodeStatus({ fill: "green", shape: "ring", text: "-> pass" });
 
 
-		if (node.bInviaMessaggio) {
-			setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" });
-		} else {
-			setNodeStatus({ fill: "red", shape: "dot", text: "|| stop" });
+		node.alignStatus = () => {
+			let sAutoToggle = node.autoToggle > 0 ? " (Autotoggle in " + node.autoToggle + "s)" : "";
+			if (node.bInviaMessaggio) {
+				setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" + sAutoToggle });
+			} else {
+				setNodeStatus({ fill: "red", shape: "dot", text: "|| stop" + sAutoToggle });
+			}
 		}
+
+		if (node.autoToggle > 0) {
+			node.timerAutoToggle = setTimeout(() => {
+				node.autoToggle = 0;
+				node.bInviaMessaggio = !node.bInviaMessaggio;
+				node.alignStatus();
+			}, node.autoToggle * 1000);
+		}
+
+		node.alignStatus();
 
 		this.on('input', function (msg) {
 			var sIncomingTopic = "";
@@ -36,10 +51,8 @@ module.exports = function (RED) {
 
 					msg.payload = ToBoolean(msg.payload); // 15/11/2021 Convert input to boolean.
 
-					// if (msg.payload !== true && msg.payload !== false) {
-					// 	setNodeStatus({ fill: "red", shape: "dot", text: "Received non boolean value from " + sIncomingTopic });
-					// 	return;
-					// }
+					// 28/01/2022 Stop autotoggle
+					if (node.timerAutoToggle !== null) clearInterval(node.timerAutoToggle);
 
 					if (msg.hasOwnProperty("play")) {
 						node.currentMsg.isReplay = true;
