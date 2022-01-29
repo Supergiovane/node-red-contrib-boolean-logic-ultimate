@@ -2,6 +2,11 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.46</b> February 2022<br/>
+- NEW: Interrupt Flow: msg.reset will delete the stored message.</br>
+- Updated the README file with samples.</br>
+</p>
+<p>
 <b>Version 1.0.45</b> February 2022<br/>
 - NEW: Interrupt Flow: Now you can auto-toggle the startup behavior selection (to stop or to pass telegrams) after some pre-defined delays.</br>
 - Updated the README file with samples.</br>

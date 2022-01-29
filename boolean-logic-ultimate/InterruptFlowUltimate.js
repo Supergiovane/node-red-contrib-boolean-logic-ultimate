@@ -55,17 +55,25 @@ module.exports = function (RED) {
 					if (node.timerAutoToggle !== null) clearInterval(node.timerAutoToggle);
 
 					if (msg.hasOwnProperty("play")) {
-						node.currentMsg.isReplay = true;
-						setNodeStatus({ fill: "yellow", shape: "dot", text: "-> replay" });
-						// Restore previous status
-						setTimeout(() => {
-							if (node.bInviaMessaggio) {
-								setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" });
-							} else {
-								setNodeStatus({ fill: "red", shape: "dot", text: "|| stop (stored last msg)" });
-							}
-						}, 1000)
-						node.send(node.currentMsg);
+						if (node.currentMsg.payload !== undefined) {
+							node.currentMsg.isReplay = true;
+							setNodeStatus({ fill: "yellow", shape: "dot", text: "-> replay" });
+							// Restore previous status
+							setTimeout(() => {
+								if (node.bInviaMessaggio) {
+									setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" });
+								} else {
+									setNodeStatus({ fill: "red", shape: "dot", text: "|| stop (stored last msg)" });
+								}
+							}, 1000)
+							node.send(node.currentMsg);
+						} else {
+							setNodeStatus({ fill: "grey", shape: "dot", text: "Nothing to replay" });
+						}
+						return;
+					} else if (msg.hasOwnProperty("reset")) {
+						node.currentMsg = {};
+						setNodeStatus({ fill: "yellow", shape: "dot", text: "Deleted stored msg" });
 						return;
 					} else if (msg.payload === true) {
 						node.bInviaMessaggio = true;
@@ -79,7 +87,7 @@ module.exports = function (RED) {
 				}
 			}
 			if (node.bInviaMessaggio) {
-				node.currentMsg = msg;
+				node.currentMsg = RED.util.cloneMessage(msg);
 				node.send(msg);
 			}
 		});

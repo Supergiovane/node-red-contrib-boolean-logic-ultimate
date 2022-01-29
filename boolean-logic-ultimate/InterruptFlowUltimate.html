@@ -49,7 +49,8 @@
         <label for="node-input-triggertopic"><i class="icon-tag"></i> Trigger by topic</label>
 		<input type="text" id="node-input-triggertopic" placeholder="Name">
 		<div><i>Whenever the node receives a payload = false from this topic,<br/> it stops output messages to the flow.<br/>As soon it receives payload = true from this topic,<br/>the output messages start to flow out again.
-		<br/>The node will output the current stored message<br/>plus an added property "isReplay = true",<br/>as soon as it receives a "play" = true from this topic.
+		<br/>The node will output the current stored message<br/>plus an added property "isReplay = true",<br/>as soon as it receives a "play" = true from this topic.</br>
+		The node will clear the current stored message, as soon as it receives a "msg.reset = true" from this topic.
 	</i></div>
     </div>
 

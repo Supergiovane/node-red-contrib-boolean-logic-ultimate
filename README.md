@@ -116,9 +116,41 @@ Resets all inputs to undefined.
 
 # INTERRUPT FLOWS ULTIMATE
 
-Whenever this node receives a payload = false from a specific topic, it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again.<br/>
+**Trigger by topic**
+
+Whenever the node receives a payload = false from this topic,it stops output messages to the flow.<br/>
+As soon it receives payload = true from this topic, the output messages start to flow out again. <br/>
+The node will output the current stored message plus an added property "isReplay = true", as soon as it receives a ***msg.play = true*** from this topic.<br/>
+The node will clear the current stored message, as soon as it receives a ***msg.reset = true*** from this topic.<br/>
 The node tries to convert any arbitrary input value to a valid boolean value. It converts Homeassistant ***"on"*** and ***"off"*** to true/false values as well.<br/>
-The *Then* option, allow you to auto toggle the selected start state (pass or block) after a timer has elapsed. You can choose from some pre-defined delays. If you have, for example, an Homekit-Bridged nodeset with a thermostat node or security system node in your flow, once node-red restarts, these homekit nodes output a default message to the flow. Just put an InterruptFlow node with a "block at start" behaviour and a toggle delay enabled behind homekit nodes, to temporary stop the chained nodes to receive the unwanted startup message.</br>
+
+**Then** 
+This property, allow you to auto toggle the selected start state (pass or block) after a timer has elapsed. You can choose from some pre-defined delays. If you have, for example, an Homekit-Bridged nodeset with a thermostat node or security system node in your flow, once node-red restarts, these homekit nodes output a default message to the flow. Just put an InterruptFlow node with a "block at start" behaviour and a toggle delay enabled behind homekit nodes, to temporary stop the chained nodes to receive the unwanted startup message.</br>
+</br>
+
+**INPUT MSG HWITH "TRIGGER" TOPIC**
+
+Pass <code>msg.payload = true</code> to allow messages to pass through</br>
+Pass <code>msg.payload = false</code> to prevent messages from passing through</br>
+Pass <code>msg.play = true</code> from a message having the "trigger" topic, to replay the last stored message</br>
+Pass <code>msg.reset = true</code> from a message having the "trigger" topic, to clear the last stored message</br>
+
+<code>
+// Assume you set the "trigger by topic" field to "trigger" 
+// This code replays the last message and adds the property msg.isReplay = true to the output message.
+msg.topic = "trigger"
+msg.play = true;
+</code>
+
+<code>
+// Assume you set the "trigger by topic" field to "trigger" 
+// This code clears the last stored message
+msg.topic = "trigger"
+msg.reset = true;
+</code>
+
+</br>
+
 See the example below.<br/>
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/if0.png' width='60%'>
