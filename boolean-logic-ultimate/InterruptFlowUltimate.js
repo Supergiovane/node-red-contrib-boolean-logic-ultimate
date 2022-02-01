@@ -86,8 +86,8 @@ module.exports = function (RED) {
 					}
 				}
 			}
+			node.currentMsg = RED.util.cloneMessage(msg);
 			if (node.bInviaMessaggio) {
-				node.currentMsg = RED.util.cloneMessage(msg);
 				node.send(msg);
 			}
 		});

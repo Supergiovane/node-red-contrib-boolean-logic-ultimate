@@ -2,6 +2,10 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
 <p>
+<b>Version 1.0.47</b> February 2022<br/>
+- NEW: Interrupt Flow: the node now stores the last message, even if in the "stop" state.</br>
+</p>
+<p>
 <b>Version 1.0.46</b> February 2022<br/>
 - NEW: Interrupt Flow: msg.reset will delete the stored message.</br>
 - Updated the README file with samples.</br>
