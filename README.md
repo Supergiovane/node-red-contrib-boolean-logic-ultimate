@@ -323,6 +323,40 @@ Pass <code>msg.payload = false</code> to the node to stop the running sequence</
 
 - Output: the node outputs a message you specified in the command textbox<br/>
 
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+# SUM ULTIMATE
+
+The pourpose of this node is to sum the incoming values. Each incoming message MUST HAVE OWN TOPIC.<br />
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/sum.png' width='60%'>
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"05b6ce0cb476abd5","type":"SumUltimate","z":"d8fbf871e381cf2c","name":"Sum","property":"payload","x":550,"y":160,"wires":[["567aa6a9719e463e","34fbca5daf8b9fab","e3c2a45a0b77af8f"]]},{"id":"6744e01b88d820b9","type":"inject","z":"d8fbf871e381cf2c","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"Watt Table Lamp","payload":"10","payloadType":"num","x":250,"y":140,"wires":[["05b6ce0cb476abd5"]]},{"id":"75823dbc7db78c3c","type":"inject","z":"d8fbf871e381cf2c","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"Watt Washing machine","payload":"20","payloadType":"num","x":270,"y":180,"wires":[["05b6ce0cb476abd5"]]},{"id":"567aa6a9719e463e","type":"debug","z":"d8fbf871e381cf2c","name":"Sum","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":690,"y":160,"wires":[]},{"id":"1793931ba218bc1d","type":"inject","z":"d8fbf871e381cf2c","name":"Reset","props":[{"p":"reset","v":"","vt":"date"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","x":210,"y":240,"wires":[["05b6ce0cb476abd5"]]},{"id":"0b3277af03f546d4","type":"comment","z":"d8fbf871e381cf2c","name":"Getting Sum, Average etc. from the SUM node.","info":"","x":320,"y":100,"wires":[]},{"id":"34fbca5daf8b9fab","type":"debug","z":"d8fbf871e381cf2c","name":"Average","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"average","targetType":"msg","statusVal":"","statusType":"auto","x":700,"y":200,"wires":[]},{"id":"e3c2a45a0b77af8f","type":"debug","z":"d8fbf871e381cf2c","name":"Measurements","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"measurements","targetType":"msg","statusVal":"","statusType":"auto","x":720,"y":240,"wires":[]}]
+</code>
+</details>
+
+**INPUT**<br />
+
+<br /><b>msg.reset</b><br />
+resets the values to zero.
+
+<br />
+
+- Output: the node outputs a message as follows:<br/>
+
+<pre>
+{
+  "payload": 30, // This is the SUM
+  "topic": "Sum", // Node  Topic
+  "average": 15, // This is the AVERAVE
+  "measurements": 2 // This is the number of topics that have been evaluated
+}
+</pre>
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE

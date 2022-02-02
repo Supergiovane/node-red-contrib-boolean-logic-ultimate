@@ -1,0 +1,88 @@
+module.exports = function (RED) {
+	function SumUltimate(config) {
+		RED.nodes.createNode(this, config);
+		this.config = config;
+		var node = this;
+		this.topics = {};
+
+		function setNodeStatus({ fill, shape, text }) {
+			var dDate = new Date();
+			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
+		}
+
+		setNodeStatus({ fill: "grey", shape: "dot", text: "" });
+
+		function fetchFromObject(obj, prop) {
+
+			if (obj === undefined) {
+				return undefined;
+			}
+
+			var _index = prop.indexOf('.')
+			if (_index > -1) {
+				return fetchFromObject(obj[prop.substring(0, _index)], prop.substr(_index + 1));
+			}
+
+			return obj[prop];
+		}
+
+		this.on('input', function (msg) {
+
+			// handle reset
+			if (msg.hasOwnProperty("reset")) {
+				node.topics = {};
+				setNodeStatus({ fill: "grey", shape: "ring", text: "Reset" });
+				return;
+			}
+
+			if (!msg.hasOwnProperty("topic")) {
+				setNodeStatus({ fill: "red", shape: "ring", text: "Incoming msg without topic! Please set the topic." });
+				return;
+			}
+
+			try {
+				let props = [] = this.config.property.split(".");
+				let ret = fetchFromObject(msg, this.config.property);
+				if (ret !== undefined) {
+
+					ret = Number(ret);
+
+					// Sum
+					if (!isNaN(ret) && isFinite(ret)) {
+						node.topics[msg.topic.toString()] = ret;
+
+						var quantita = 0;
+						var somma = Object.keys(node.topics).reduce(function (a, b) {
+							++quantita;
+							return a + node.topics[b];
+						}, 0);
+
+						msg.payload = somma; // Sum
+						msg.average = somma / quantita; // Average
+						msg.measurements = quantita; // Topics
+
+						// overwrite topic if configured
+						if (config.name) {
+							msg.topic = config.name;
+						}
+					}
+
+					// everything else
+					else {
+						setNodeStatus({ fill: "red", shape: "ring", text: "Not a number" });
+					}
+
+				} else {
+					setNodeStatus({ fill: "red", shape: "ring", text: this.config.property + " is undefined." });
+				}
+			} catch (error) {
+				setNodeStatus({ fill: "red", shape: "ring", text: error.message });
+			}
+			setNodeStatus({ fill: "green", shape: "dot", text: "Sum " + msg.payload });
+			node.send(msg);
+		});
+
+	}
+
+	RED.nodes.registerType("SumUltimate", SumUltimate);
+}

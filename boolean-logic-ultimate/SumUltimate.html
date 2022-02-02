@@ -1,0 +1,54 @@
+<script type="text/javascript">
+    RED.nodes.registerType('SumUltimate', {
+        category: 'boolean logic ultimate',
+        color: '#ff8080',
+        defaults: {
+            name: {
+                value: "Sum"
+            },
+            property: {
+                value: "payload"
+            }
+            
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-plus",
+        label:
+            function () {
+                return this.name || "Sum";
+            },
+        paletteLabel: function () {
+            return "SumUltimate";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="SumUltimate">
+	<div class="form-row">
+		<b>Status Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+		<br/>
+		<br/>        
+	</div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-property"><i class="icon-tag"></i> Sum msg.</label>
+        <input type="text" id="node-input-property" placeholder="payload">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="SumUltimate">
+	<p>
+        SEE THE README FOR HELP CONFIGURING THE NODE
+    </p>
+
+	<p>
+		<a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate" target="_blank">Click here to learn how to configure the node.</a>
+	</p>
+
+	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
+    
+</script>
