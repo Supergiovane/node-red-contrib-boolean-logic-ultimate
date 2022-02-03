@@ -358,6 +358,23 @@ resets the values to zero.
 }
 </pre>
 
+br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+# TOGGLE ULTIMATE
+
+The pourpose of this node is to toggle between true/false the payload of every incoming message.<br />
+
+
+**INPUT**<br />
+
+Any message that arrives on input, will be passwd through to the output with the payload toggled between true and false.
+
+
+
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE
 [npm-url]: https://npmjs.org/package/node-red-contrib-boolean-logic-ultimate

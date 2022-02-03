@@ -1,0 +1,63 @@
+<script type="text/javascript">
+	RED.nodes.registerType('toggleUltimate', {
+		category: 'boolean logic ultimate',
+		color: '#ff8080',
+		defaults: {
+			name: {
+				value: "Toggle"
+			},
+			valueToToggle: { value: "true" }
+		},
+		inputs: 1,
+		outputs: 1,
+		icon: "serial.png",
+		label:
+			function () {
+				return this.name || "Toggle";
+			},
+		paletteLabel: function () {
+			return "toggleUltimate";
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name="toggleUltimate">
+	<div class="form-row">
+		<b>Toggle Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+		<br/>
+		<br/>        
+	</div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+	<div class="form-row">
+		<label style="width:160px" for="node-input-valueToToggle"><i class="fa fa-toggle-on"></i> Initial value</label>
+		<select type="text" id="node-input-valueToToggle" placeholder="">
+			<option value="true">Initialize wiht True</option>
+			<option value="false">Initialize with False</option>			
+		</select>
+	</div>
+	<!-- <div class="form-row">
+		<input type="checkbox" id="node-input-homeAssitantBoolean" style="display:inline-block; width:auto; vertical-align:top;">
+		&nbsp;		
+		<label style="width:85%" for="node-input-homeAssitantBoolean">
+			<i class="fa fa-home"></i>&nbsp;Output Home Assistant "on"/"off" instead of true/false
+		</label>
+	</div> -->
+	
+	
+</script>
+
+<script type="text/x-red" data-help-name="toggleUltimate">
+    <p>
+        SEE THE README FOR HELP CONFIGURING THE NODE
+    </p>
+
+	<p>
+		<a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate" target="_blank">Click here to learn how to configure the node.</a>
+	</p>
+
+	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
+
+</script>

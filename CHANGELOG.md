@@ -3,6 +3,10 @@
 
 <p>
 <b>Version 1.0.48</b> February 2022<br/>
+- NEW: TOGGLE node: Simple toggle node.</br>
+</p>
+<p>
+<b>Version 1.0.48</b> February 2022<br/>
 - NEW: SUM node: this new node makes sum, average and measurement count.</br>
 </p>
 <p>
