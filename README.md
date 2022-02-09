@@ -381,5 +381,5 @@ Any message that arrives on input, will be passwd through to the output with the
 [npm-version-image]: https://img.shields.io/npm/v/node-red-contrib-boolean-logic-ultimate.svg
 [npm-downloads-month-image]: https://img.shields.io/npm/dm/node-red-contrib-boolean-logic-ultimate.svg
 [npm-downloads-total-image]: https://img.shields.io/npm/dt/node-red-contrib-boolean-logic-ultimate.svg
-[youtube-image]: https://img.shields.io/badge/Visit%20me-youtube-blue
+[youtube-image]: https://img.shields.io/badge/Visit%20me-youtube-red
 [youtube-url]: https://youtube.com/playlist?list=PL9Yh1bjbLAYoRH4IyQB7EL5srHAihiKpy
