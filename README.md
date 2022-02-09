@@ -8,11 +8,11 @@
 [![MIT License][license-image]][license-url]
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
-[![Facebook][facebook-image]][facebook-url]
+[![youtube][youtube-image]][youtube-url]
 
 A set of Node-RED enhanced boolean logic, with persisten values after reboot and more.
 
-> Wellcome! First of all thank you for your interest in my nodes. This is a set of logic nodes, to overcome the simplicity of the default node-red boolean logic nodes.
+> Welcome! First of all thank you for your interest in my nodes. This is a set of logic nodes, to overcome the simplicity of the default node-red boolean logic nodes.
 Hope you enjoy that and if you're in trouble, please ask!
 
 <br/>
@@ -381,5 +381,5 @@ Any message that arrives on input, will be passwd through to the output with the
 [npm-version-image]: https://img.shields.io/npm/v/node-red-contrib-boolean-logic-ultimate.svg
 [npm-downloads-month-image]: https://img.shields.io/npm/dm/node-red-contrib-boolean-logic-ultimate.svg
 [npm-downloads-total-image]: https://img.shields.io/npm/dt/node-red-contrib-boolean-logic-ultimate.svg
-[facebook-image]: https://img.shields.io/badge/Visit%20me-Facebook-blue
-[facebook-url]: https://www.facebook.com/supergiovaneDev
+[youtube-image]: https://img.shields.io/badge/Visit%20me-youtube-blue
+[youtube-url]: https://youtube.com/playlist?list=PL9Yh1bjbLAYoRH4IyQB7EL5srHAihiKpy
