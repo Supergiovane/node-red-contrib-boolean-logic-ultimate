@@ -1,6 +1,12 @@
 # node-red-contrib-boolean-logic-ultimate
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 
+# CHANGELOG
+
+<p>
+<b>Version 1.0.51</b> February 2022<br/>
+- Blinker Ultimate: fixed minor problem with an orphan timer.</br>
+</p>
 <p>
 <b>Version 1.0.50</b> February 2022<br/>
 - NEW: Added Youtube example for each node. You can find the link in the config window of each one and hede the playlist https://youtube.com/playlist?list=PL9Yh1bjbLAYoRH4IyQB7EL5srHAihiKpy.</br>
