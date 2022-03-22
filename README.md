@@ -10,10 +10,7 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 [![youtube][youtube-image]][youtube-url]
 
-A set of Node-RED enhanced boolean logic and utility nodes, with persisten values after reboot and more.
-
-> Welcome! First of all thank you for your interest in my nodes. This is a set of logic/utility nodes with very useful functions!
-Hope you enjoy that and if you're in trouble, please ask!
+A set of Node-RED enhanced boolean logic and utility nodes, with persistent values after reboot. Compatible also with Homeassistant ON and OFF values.
 
 <br/>
 <br/>
