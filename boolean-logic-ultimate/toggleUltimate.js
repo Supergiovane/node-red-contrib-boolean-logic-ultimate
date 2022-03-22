@@ -6,7 +6,7 @@ module.exports = function (RED) {
 		node.valueToToggle = config.valueToToggle === undefined ? true : ToBoolean(config.valueToToggle);
 
 		function setNodeStatus({ fill, shape, text }) {
-			var dDate = new Date();
+			let dDate = new Date();
 			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
 		}
 
@@ -23,7 +23,7 @@ module.exports = function (RED) {
 
 			node.valueToToggle = !node.valueToToggle;
 			
-			var msgOUT = RED.util.cloneMessage(msg);
+			let msgOUT = RED.util.cloneMessage(msg);
 			try {
 				msgOUT.payload = node.valueToToggle;
 				setNodeStatus({ fill: "green", shape: "dot", text: "(Send) " + msgOUT.payload });
@@ -37,8 +37,8 @@ module.exports = function (RED) {
 
 
 		function ToBoolean(value) {
-			var res = false;
-			var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
+			let res = false;
+			let decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
 
 			if (typeof value === 'boolean') {
 				res = value;
@@ -50,8 +50,7 @@ module.exports = function (RED) {
 
 				// Is it formated as a decimal number?
 				if (decimal.test(value)) {
-					var v = parseFloat(value);
-					res = v != 0;
+					res = parseFloat(value) != 0;
 				}
 				else {
 					res = value.toLowerCase() === "true";
