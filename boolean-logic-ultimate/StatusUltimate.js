@@ -5,7 +5,7 @@ module.exports = function (RED) {
 		var node = this;
 
 		function setNodeStatus({ fill, shape, text }) {
-			var dDate = new Date();
+			let dDate = new Date();
 			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
 		}
 

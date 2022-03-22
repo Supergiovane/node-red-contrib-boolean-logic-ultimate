@@ -10,7 +10,7 @@ module.exports = function (RED) {
 		node.timerAutoToggle = null;
 
 		function setNodeStatus({ fill, shape, text }) {
-			var dDate = new Date();
+			let dDate = new Date();
 			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
 		}
 		setNodeStatus({ fill: "green", shape: "ring", text: "-> pass" });
@@ -59,7 +59,7 @@ module.exports = function (RED) {
 							node.currentMsg.isReplay = true;
 							setNodeStatus({ fill: "yellow", shape: "dot", text: "-> replay" });
 							// Restore previous status
-							setTimeout(() => {
+							let t = setTimeout(() => {
 								if (node.bInviaMessaggio) {
 									setNodeStatus({ fill: "green", shape: "dot", text: "-> pass" });
 								} else {
@@ -96,8 +96,8 @@ module.exports = function (RED) {
 
 
 		function ToBoolean(value) {
-			var res = false;
-			var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
+			let res = false;
+			let decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
 
 			if (typeof value === 'boolean') {
 				res = value;
@@ -109,8 +109,7 @@ module.exports = function (RED) {
 
 				// Is it formated as a decimal number?
 				if (decimal.test(value)) {
-					var v = parseFloat(value);
-					res = v != 0;
+					res = parseFloat(value) != 0;
 				}
 				else {
 					res = value.toLowerCase() === "true";

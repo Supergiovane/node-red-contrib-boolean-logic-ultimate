@@ -26,15 +26,15 @@ module.exports = function (RED) {
 		// 29/08/2020 triggered by button press
 		node.buttonpressed = () => {
 			setNodeStatus({ fill: "green", shape: "dot", text: "Pin1:true, Pin2:false, Pin3:" + node.curVal.toString() + " (next " + (!node.curVal).toString() + ")" });
-			var msgTrue = { payload: true, topic: node.topic };
-			var msgFalse = { payload: false, topic: node.topic };
-			var msgToggled = { payload: node.curVal, topic: node.topic };
+			let msgTrue = { payload: true, topic: node.topic };
+			let msgFalse = { payload: false, topic: node.topic };
+			let msgToggled = { payload: node.curVal, topic: node.topic };
 			node.curVal = !node.curVal;
 			node.send([msgTrue, msgFalse, msgToggled]);
 		}
 
 		function setNodeStatus({ fill, shape, text }) {
-			var dDate = new Date();
+			let dDate = new Date();
 			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
 		}
 

@@ -17,7 +17,7 @@ module.exports = function (RED) {
 		node.inputMessage = {}; // 26/01/2022 input message is stored here.
 
 		function setNodeStatus({ fill, shape, text }) {
-			var dDate = new Date();
+			let dDate = new Date();
 			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
 		}
 
@@ -221,7 +221,7 @@ module.exports = function (RED) {
 					for (let index = 0; index < nTotalDummyToCreate; index++) {
 						node.jSonStates["dummy" + index] = node.sInitializeWith === "false" ? false : true;
 					}
-					setTimeout(() => { setNodeStatus({ fill: "green", shape: "ring", text: "Initialized " + nTotalDummyToCreate + " undefined inputs with " + node.sInitializeWith }); }, 4000)
+					let t = setTimeout(() => { setNodeStatus({ fill: "green", shape: "ring", text: "Initialized " + nTotalDummyToCreate + " undefined inputs with " + node.sInitializeWith }); }, 4000)
 				}
 			}
 		}
@@ -278,8 +278,8 @@ module.exports = function (RED) {
 		}
 
 		function ToBoolean(value) {
-			var res = false;
-			var decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
+			let res = false;
+			let decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
 
 			if (typeof value === 'boolean') {
 				res = value;
@@ -291,8 +291,7 @@ module.exports = function (RED) {
 
 				// Is it formated as a decimal number?
 				if (decimal.test(value)) {
-					var v = parseFloat(value);
-					res = v != 0;
+					res = parseFloat(value) != 0;
 				}
 				else {
 					res = value.toLowerCase() === "true";

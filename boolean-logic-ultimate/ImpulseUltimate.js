@@ -12,7 +12,7 @@ module.exports = function (RED) {
 		node.isPlaying = false;
 
 		node.setNodeStatus = ({ fill, shape, text }) => {
-			var dDate = new Date();
+			let dDate = new Date();
 			node.status({ fill: fill, shape: shape, text: text + " (" + dDate.getDate() + ", " + dDate.toLocaleTimeString() + ")" })
 		}
 		async function delay(ms) {
