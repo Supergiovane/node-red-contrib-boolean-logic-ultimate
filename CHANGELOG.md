@@ -4,12 +4,9 @@
 # CHANGELOG
 
 <p>
-<b>Version 1.0.52</b> March 2022<br/>
-- Better scoping of some vars, to leave the memory garbace collector to get rid of unused references.</br>
-</p>
-<p>
 <b>Version 1.0.51</b> February 2022<br/>
 - Blinker Ultimate: fixed minor problem with an orphan timer.</br>
+- Better scoping of some vars, to leave the memory garbace collector to get rid of unused references.</br>
 </p>
 <p>
 <b>Version 1.0.50</b> February 2022<br/>
