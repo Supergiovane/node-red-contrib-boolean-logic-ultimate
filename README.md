@@ -10,9 +10,9 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 [![youtube][youtube-image]][youtube-url]
 
-A set of Node-RED enhanced boolean logic, with persisten values after reboot and more.
+A set of Node-RED enhanced boolean logic and utility nodes, with persisten values after reboot and more.
 
-> Welcome! First of all thank you for your interest in my nodes. This is a set of logic nodes, to overcome the simplicity of the default node-red boolean logic nodes.
+> Welcome! First of all thank you for your interest in my nodes. This is a set of logic/utility nodes with very useful functions!
 Hope you enjoy that and if you're in trouble, please ask!
 
 <br/>
