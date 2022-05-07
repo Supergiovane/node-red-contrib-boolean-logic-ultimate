@@ -403,11 +403,11 @@ See the example below.<br/>
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/railwaySwitch.png' width='60%'>
 
-<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+Copy and paste it into your flow
 <code>
 [{"id":"a6993d5187f05c0a","type":"RailwaySwitchUltimate","z":"e5b506b72b42922e","name":"Railway Switch","triggertopic":"trigger","initializewith":"0","autoToggle":"0","x":490,"y":180,"wires":[["51e7df8da0bd8d67"],["7f33b14e12c91744"]]},{"id":"2e3014226290f678","type":"InjectUltimate","z":"e5b506b72b42922e","name":"Sample message","topic":"Train","curVal":true,"x":180,"y":140,"wires":[["a6993d5187f05c0a"],[],[]]},{"id":"f6f80cd77a65073e","type":"InjectUltimate","z":"e5b506b72b42922e","name":"Railway switcher","topic":"trigger","curVal":true,"x":180,"y":220,"wires":[[],[],["a6993d5187f05c0a"]]},{"id":"51e7df8da0bd8d67","type":"debug","z":"e5b506b72b42922e","name":"Upper railway","active":true,"tosidebar":true,"console":false,"tostatus":true,"complete":"true","targetType":"full","statusVal":"topic","statusType":"msg","x":720,"y":140,"wires":[]},{"id":"7f33b14e12c91744","type":"debug","z":"e5b506b72b42922e","name":"Lower railway","active":true,"tosidebar":true,"console":false,"tostatus":true,"complete":"true","targetType":"full","statusVal":"topic","statusType":"msg","x":720,"y":220,"wires":[]},{"id":"8716120e94a7b6ee","type":"comment","z":"e5b506b72b42922e","name":"Switch between railways","info":"","x":190,"y":80,"wires":[]}]
 </code>
-</details>
+
 
 
 
