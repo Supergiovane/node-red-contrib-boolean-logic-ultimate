@@ -1,0 +1,92 @@
+<script type="text/javascript">
+	RED.nodes.registerType('RailwaySwitchUltimate', {
+		category: 'boolean logic ultimate',
+		color: '#ff8080',
+		defaults: {
+			name: { value: "Railway Switch" },
+			triggertopic: { value: "trigger" },
+			initializewith: { value: "0" },
+			autoToggle: { value: "0" }
+		},
+		inputs: 1,
+		outputs: 2,
+		outputLabels: function (i) {
+			var ret = "";
+			switch (i) {
+				case 0:
+					return "Upper PIN";
+					break;
+				case 1:
+					return "Lower PIN";
+					break;
+				default:
+					break;
+			}
+		},
+		icon: "font-awesome/fa-train",
+		label:
+			function () {
+				return (this.name || "Switch") + " (" + this.triggertopic + ")";
+			},
+		paletteLabel: function () {
+			return "RailwaySwitchUltimate";
+		}
+	});
+</script>
+
+<script type="text/x-red" data-template-name="RailwaySwitchUltimate">
+	<div class="form-row">
+		<b>Railway Switch Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+		&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp<a target="_blank" href="https://youtu.be/1T1g0HCeYA8"><u>Youtube Sample</u></a></span>
+		<br/>
+		<br/>        
+	</div>
+	<div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+	</div>
+	
+	<div class="form-row">
+        <label for="node-input-triggertopic"><i class="icon-tag"></i> Switcher topic</label>
+		<input type="text" id="node-input-triggertopic" placeholder="Name">
+		<div><i>An input msg having this topic and payload true or false<br/>will trigger the railway switch between the two output PINs<br/>
+			msg.payload = false switches to the upper PIN<br/>
+			msg.payload = true switches to the lower PIN<br/>
+		</i></div>
+    </div>
+
+	<div class="form-row">
+        <label style="width:160px" for="node-input-initializewith"><i class="fa fa-home"></i> At node-red start</label>
+        <select type="text" id="node-input-initializewith" placeholder="" style="width:250px">
+			<option value="0">Flow messages to the upper PIN</option>
+			<option value="1">Flow messages to the lower PIN</option>			
+		</select>	
+	</div>
+	<div class="form-row">
+		<label style="width:160px" for="node-input-autoToggle"><i class="fa fa-hourglass-o"></i> Then</label>
+		<select type="text" id="node-input-autoToggle" placeholder="" style="width:250px">
+			<option value="0">Nothing</option>
+			<option value="10">Toggle above option after 10 seconds</option>
+			<option value="20">Toggle above option after 20 seconds</option>
+			<option value="30">Toggle above option after 30 seconds</option>
+			<option value="40">Toggle above option after 40 seconds</option>
+			<option value="50">Toggle above option after 50 seconds</option>
+			<option value="60">Toggle above option after 60 seconds</option>
+			<option value="90">Toggle above option after 90 seconds</option>
+			<option value="120">Toggle above option after 120 seconds</option>
+		</select>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="RailwaySwitchUltimate">
+	<p>
+        SEE THE README FOR HELP CONFIGURING THE NODE
+    </p>
+
+	<p>
+		<a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate" target="_blank">Click here to learn how to configure the node.</a>
+	</p>
+
+	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
+
+</script>

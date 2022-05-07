@@ -113,6 +113,8 @@ Resets all inputs to undefined.
 
 # INTERRUPT FLOWS ULTIMATE
 
+The interrupt flows is able to stop the input messages to exiting the node.
+
 **Trigger by topic**
 
 Whenever the node receives a payload = false from this topic,it stops output messages to the flow.<br/>
@@ -125,7 +127,7 @@ The node tries to convert any arbitrary input value to a valid boolean value. It
 This property, allow you to auto toggle the selected start state (pass or block) after a timer has elapsed. You can choose from some pre-defined delays. If you have, for example, an Homekit-Bridged nodeset with a thermostat node or security system node in your flow, once node-red restarts, these homekit nodes output a default message to the flow. Just put an InterruptFlow node with a "block at start" behaviour and a toggle delay enabled behind homekit nodes, to temporary stop the chained nodes to receive the unwanted startup message.</br>
 </br>
 
-**INPUT MSG HWITH "TRIGGER" TOPIC**
+**INPUT MSG WITH "TRIGGER" TOPIC**
 
 Pass <code>msg.payload = true</code> to allow messages to pass through</br>
 Pass <code>msg.payload = false</code> to prevent messages from passing through</br>
@@ -369,6 +371,43 @@ The pourpose of this node is to toggle between true/false the payload of every i
 **INPUT**<br />
 
 Any message that arrives on input, will be passwd through to the output with the payload toggled between true and false.
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+# RAILWAY SWITCH ULTIMATE
+
+The railway switcher, switches the input msg flow to one ot the two output pins (upper or lower).
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/railroadSwitchScambio.png' width='80%'>
+
+**Switcher topic**
+
+Whenever the node receives a payload from this **topic**, it switches the input messages to an output PIN.<br/>
+
+**Then** 
+This property, allow you to auto toggle the selected start state after some time.</br>
+</br>
+
+**INPUT MSG WITH "TRIGGER" TOPIC**
+
+Pass <code>msg.payload = false</code> switches the msg input to the UPPER PIN</br>
+Pass <code>msg.payload = true</code> switches the msg input to the LOWER PIN</br>
+
+</br>
+
+See the example below.<br/>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/railwaySwitch.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"a6993d5187f05c0a","type":"RailwaySwitchUltimate","z":"e5b506b72b42922e","name":"Railway Switch","triggertopic":"trigger","initializewith":"0","autoToggle":"0","x":490,"y":180,"wires":[["51e7df8da0bd8d67"],["7f33b14e12c91744"]]},{"id":"2e3014226290f678","type":"InjectUltimate","z":"e5b506b72b42922e","name":"Sample message","topic":"Train","curVal":true,"x":180,"y":140,"wires":[["a6993d5187f05c0a"],[],[]]},{"id":"f6f80cd77a65073e","type":"InjectUltimate","z":"e5b506b72b42922e","name":"Railway switcher","topic":"trigger","curVal":true,"x":180,"y":220,"wires":[[],[],["a6993d5187f05c0a"]]},{"id":"51e7df8da0bd8d67","type":"debug","z":"e5b506b72b42922e","name":"Upper railway","active":true,"tosidebar":true,"console":false,"tostatus":true,"complete":"true","targetType":"full","statusVal":"topic","statusType":"msg","x":720,"y":140,"wires":[]},{"id":"7f33b14e12c91744","type":"debug","z":"e5b506b72b42922e","name":"Lower railway","active":true,"tosidebar":true,"console":false,"tostatus":true,"complete":"true","targetType":"full","statusVal":"topic","statusType":"msg","x":720,"y":220,"wires":[]},{"id":"8716120e94a7b6ee","type":"comment","z":"e5b506b72b42922e","name":"Switch between railways","info":"","x":190,"y":80,"wires":[]}]
+</code>
+</details>
 
 
 

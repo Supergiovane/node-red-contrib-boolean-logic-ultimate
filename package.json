@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-boolean-logic-ultimate",
-    "version": "1.0.51",
+    "version": "1.0.52",
     "description": "A set of Node-RED enhanced boolean logic and utility nodes, flow interruption, blinker, invert, filter, toggle etc.., with persistent values after reboot. Compatible also with Homeassistant ON and OFF values.",
     "author": "Supergiovane (https://github.com/Supergiovane)",
     "dependencies": {
@@ -31,7 +31,8 @@
             "StatusUltimate": "boolean-logic-ultimate/StatusUltimate.js",
             "ImpulseUltimate": "boolean-logic-ultimate/ImpulseUltimate.js",
             "SumUltimate": "boolean-logic-ultimate/SumUltimate.js",
-            "toggleUltimate": "boolean-logic-ultimate/toggleUltimate.js"
+            "toggleUltimate": "boolean-logic-ultimate/toggleUltimate.js",
+            "RailwaySwitchUltimate": "boolean-logic-ultimate/RailwaySwitchUltimate.js"
         }
     }
 }
