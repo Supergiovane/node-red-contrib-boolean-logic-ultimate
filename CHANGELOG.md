@@ -4,6 +4,11 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.52</b> Mai 2022<br/>
+- NEW: Railway Switcher Ultimate: new node to switch the input message to an output pin (https://youtu.be/1SjYE7d04u4).</br>
+- Updated README with samples of Railway Switch node.
+</p>
+<p>
 <b>Version 1.0.51</b> February 2022<br/>
 - Blinker Ultimate: fixed minor problem with an orphan timer.</br>
 - Better scoping of some vars, to leave the memory garbace collector to get rid of unused references.</br>
