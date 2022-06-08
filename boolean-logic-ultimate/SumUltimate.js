@@ -64,14 +64,18 @@ module.exports = function (RED) {
 							msg.measurements = quantita; // Topics	
 						} else if (node.math === "multiply") {
 							let moltiplicazione = Object.keys(node.topics).reduce(function (a, b) {
-								++quantita;
-								return (a > 0 ? a : 1) * node.topics[b]; // Avoid returning zero everytime
+								try {
+									++quantita;
+									return (a > 0 ? a : 1) * node.topics[b]; // Avoid returning zero everytime	
+								} catch (error) {
+									setNodeStatus({ fill: "red", shape: "ring", text: "Error " + error.message });
+									return 0;
+								}
 							}, 0);
 							msg.payload = moltiplicazione; // Sum
 							msg.average = undefined; // Average
 							msg.measurements = quantita; // Topics	
 						}
-
 
 						// overwrite topic if configured
 						if (config.name) {
