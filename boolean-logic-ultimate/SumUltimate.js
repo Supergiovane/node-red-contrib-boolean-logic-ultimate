@@ -3,6 +3,7 @@ module.exports = function (RED) {
 		RED.nodes.createNode(this, config);
 		this.config = config;
 		var node = this;
+		node.math = config.math === undefined ? "sum" : config.math;
 		this.topics = {};
 
 		function setNodeStatus({ fill, shape, text }) {
@@ -52,14 +53,25 @@ module.exports = function (RED) {
 						node.topics[msg.topic.toString()] = ret;
 
 						var quantita = 0;
-						var somma = Object.keys(node.topics).reduce(function (a, b) {
-							++quantita;
-							return a + node.topics[b];
-						}, 0);
 
-						msg.payload = somma; // Sum
-						msg.average = somma / quantita; // Average
-						msg.measurements = quantita; // Topics
+						if (node.math === "sum") {
+							let somma = Object.keys(node.topics).reduce(function (a, b) {
+								++quantita;
+								return a + node.topics[b];
+							}, 0);
+							msg.payload = somma; // Sum
+							msg.average = somma / quantita; // Average
+							msg.measurements = quantita; // Topics	
+						} else if (node.math === "multiply") {
+							let moltiplicazione = Object.keys(node.topics).reduce(function (a, b) {
+								++quantita;
+								return (a > 0 ? a : 1) * node.topics[b]; // Avoid returning zero everytime
+							}, 0);
+							msg.payload = moltiplicazione; // Sum
+							msg.average = undefined; // Average
+							msg.measurements = quantita; // Topics	
+						}
+
 
 						// overwrite topic if configured
 						if (config.name) {

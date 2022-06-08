@@ -4,6 +4,11 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.53</b> June 2022<br/>
+- NEW: Math Ultimate. The old "Sum" node, now has become a math node, you can peform multipication other than sum.</br>
+- Updated README with samples of Math node.
+</p>
+<p>
 <b>Version 1.0.52</b> Mai 2022<br/>
 - NEW: Railway Switcher Ultimate: new node to switch the input message to an output pin (https://youtu.be/1SjYE7d04u4).</br>
 - Updated README with samples of Railway Switch node.

@@ -4,10 +4,13 @@
         color: '#ff8080',
         defaults: {
             name: {
-                value: "Sum"
+                value: "Math"
             },
             property: {
                 value: "payload"
+            },
+            math: {
+                value: "sum"
             }
             
         },
@@ -16,29 +19,36 @@
         icon: "font-awesome/fa-plus",
         label:
             function () {
-                return this.name || "Sum";
+                return this.name || "Math";
             },
         paletteLabel: function () {
-            return "SumUltimate";
+            return "MathUltimate";
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="SumUltimate">
 	<div class="form-row">
-		<b>Status Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+		<b>Math Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
 		&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp<a target="_blank" href="https://youtu.be/jLIbQgmRzuc"><u>Youtube Sample</u></a></span>
         <br/>
 		<br/>        
 	</div>
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-name"><i class="icon-tag"></i> Topic</label>
+        <input type="text" id="node-input-name" placeholder="Topic">
     </div>
     <div class="form-row">
-        <label for="node-input-property"><i class="icon-tag"></i> Sum msg.</label>
+        <label for="node-input-property"><i class="icon-tag"></i> Use msg.</label>
         <input type="text" id="node-input-property" placeholder="payload">
     </div>
+    <div class="form-row">
+		<label for="node-input-math"><i class="icon-tag"></i> Operation</label>
+		<select type="text" id="node-input-math" placeholder="">
+			<option value="sum">Sum</option>
+			<option value="multiply">Multiply</option>
+		</select>
+	</div>
 </script>
 
 <script type="text/x-red" data-help-name="SumUltimate">
