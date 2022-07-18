@@ -15,22 +15,23 @@ module.exports = function (RED) {
 		this.on('input', function (msg) {
 
 
+			// 11/11/2021 Clone input message and replace only relevant topics
+			const utils = require("./utils.js");
+			let sPayload = utils.fetchFromObject(msg, config.payloadPropName || "payload");
+
 			// 15/11/2021 inform user about undefined topic or payload
-			if (!msg.hasOwnProperty("payload") || msg.payload === undefined || msg.payload === null) {
+			if (sPayload === undefined ) {
 				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload from " + msg.topic || "" });
 				return;
 			}
 
-
-			// 11/11/2021 Clone input message and replace only relevant topics
-			const utils = require("./utils.js");
 			var bRes = null;
 			try {
-				bRes = utils.ToBoolean(msg.payload);
+				bRes = utils.ToBoolean(sPayload);
 			} catch (error) {
 			}
 			if (bRes === undefined || bRes === null) {
-				setNodeStatus({ fill: "red", shape: "dot", text: "Received non convertible boolean value " + msg.payload + " from " + msg.topic });
+				setNodeStatus({ fill: "red", shape: "dot", text: "Received non convertible boolean value " + sPayload + " from " + msg.topic });
 				return;
 			}
 
