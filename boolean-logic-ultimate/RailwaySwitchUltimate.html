@@ -6,7 +6,8 @@
 			name: { value: "Railway Switch" },
 			triggertopic: { value: "trigger" },
 			initializewith: { value: "0" },
-			autoToggle: { value: "0" }
+			autoToggle: { value: "0" },
+			payloadPropName: { value: "payload", required: false }
 		},
 		inputs: 1,
 		outputs: 2,
@@ -30,6 +31,10 @@
 			},
 		paletteLabel: function () {
 			return "RailwaySwitchUltimate";
+		},
+		oneditprepare: function () {
+			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
+			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
 		}
 	});
 </script>
@@ -49,12 +54,16 @@
 	<div class="form-row">
         <label for="node-input-triggertopic"><i class="icon-tag"></i> Switcher topic</label>
 		<input type="text" id="node-input-triggertopic" placeholder="Name">
-		<div><i>An input msg having this topic and payload true or false<br/>will trigger the railway switch between the two output PINs<br/>
-			msg.payload = false switches to the upper PIN<br/>
-			msg.payload = true switches to the lower PIN<br/>
-		</i></div>
     </div>
-
+	<div class="form-row">
+        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
+		<input type="text" id="node-input-payloadPropName">
+    </div>
+	<div><i>An input msg having this topic and msg true or false<br/>will trigger the railway switch between the two output PINs<br/>
+		false switches to the upper PIN<br/>
+		true switches to the lower PIN<br/>
+	</i></div>
+	<br/>
 	<div class="form-row">
         <label style="width:160px" for="node-input-initializewith"><i class="fa fa-home"></i> At node-red start</label>
         <select type="text" id="node-input-initializewith" placeholder="" style="width:250px">

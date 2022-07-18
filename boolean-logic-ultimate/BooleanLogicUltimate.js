@@ -94,23 +94,27 @@ module.exports = function (RED) {
 				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid topic!" });
 				return;
 			}
-			// 15/11/2021 inform user about undefined topic or payload
-			if (!msg.hasOwnProperty("payload") || msg.payload === undefined || msg.payload === null) {
-				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload from " + msg.topic || "" });
-				return;
-			}
+
+
+			var topic = msg.topic;
+			const utils = require("./utils.js");
+			let sPayload = utils.fetchFromObject(msg, config.payloadPropName || "payload");
 
 			// 12/08/2021 Restrict only to true/false 
 			if (node.restrictinputevaluation) {
-				if (msg.payload !== true && msg.payload !== false) {
+				if (sPayload !== true && sPayload !== false) {
 					setNodeStatus({ fill: "red", shape: "dot", text: "Received non boolean value from " + msg.topic });
 					return;
 				}
 			}
 
-			var topic = msg.topic;
-			var payload = msg.payload;
-			var value = ToBoolean(payload);
+			var value = utils.ToBoolean(sPayload);
+
+			// 15/11/2021 inform user about undefined topic or payload
+			if (sPayload === undefined) {
+				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload from " + msg.topic || "" });
+				return;
+			}
 
 			// 14/08/2019 if inputs are initialized, remove a "dummy" item from the state's array, as soon as new topic arrives
 			if (node.sInitializeWith !== "WaitForPayload") {
@@ -277,29 +281,7 @@ module.exports = function (RED) {
 			return res;
 		}
 
-		function ToBoolean(value) {
-			let res = false;
-			let decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
 
-			if (typeof value === 'boolean') {
-				res = value;
-			}
-			else if (typeof value === 'number' || typeof value === 'string') {
-
-				if (typeof value === "string" && value.toLowerCase() === "on") return true;
-				if (typeof value === "string" && value.toLowerCase() === "off") return false;
-
-				// Is it formated as a decimal number?
-				if (decimal.test(value)) {
-					res = parseFloat(value) != 0;
-				}
-				else {
-					res = value.toLowerCase() === "true";
-				}
-			}
-
-			return res;
-		};
 
 		function outputResult() {
 			let optionalTopic = node.config.topic;

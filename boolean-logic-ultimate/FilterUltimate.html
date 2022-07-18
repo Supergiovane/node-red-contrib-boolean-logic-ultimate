@@ -5,7 +5,8 @@
 		defaults: {
 			name: {
 				value: "Filter"
-			}
+			},
+			payloadPropName: { value: "payload", required: false }
 		},
 		inputs: 1,
 		outputs: 2,
@@ -29,6 +30,10 @@
 			},
 		paletteLabel: function () {
 			return "FilterUltimate";
+		},
+		oneditprepare: function () {
+			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
+			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
 		}
 	});
 </script>
@@ -43,6 +48,10 @@
 	<div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+	<div class="form-row">
+        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
+		<input type="text" id="node-input-payloadPropName">
     </div>
 </script>
 

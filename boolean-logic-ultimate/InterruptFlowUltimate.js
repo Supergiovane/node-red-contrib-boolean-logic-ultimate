@@ -43,13 +43,14 @@ module.exports = function (RED) {
 				sIncomingTopic = msg.topic.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, ''); // Cut unwanted Characters
 				if (sIncomingTopic === node.sTriggerTopic) {
 
+					const utils = require("./utils.js");
+					let sPayload = utils.fetchFromObject(msg, config.payloadPropName || "payload");
 					// 15/11/2021 inform user about undefined topic or payload
-					if (!msg.hasOwnProperty("payload") || msg.payload === undefined || msg.payload === null) {
+					if (sPayload === undefined ) {
 						setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload from " + msg.topic || "" });
 						return;
 					}
-
-					msg.payload = ToBoolean(msg.payload); // 15/11/2021 Convert input to boolean.
+					msg.payload = utils.ToBoolean(sPayload); // 15/11/2021 Convert input to boolean.
 
 					// 28/01/2022 Stop autotoggle
 					if (node.timerAutoToggle !== null) clearInterval(node.timerAutoToggle);
@@ -93,31 +94,6 @@ module.exports = function (RED) {
 		});
 
 
-
-
-		function ToBoolean(value) {
-			let res = false;
-			let decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
-
-			if (typeof value === 'boolean') {
-				res = value;
-			}
-			else if (typeof value === 'number' || typeof value === 'string') {
-
-				if (typeof value === "string" && value.toLowerCase() === "on") return true;
-				if (typeof value === "string" && value.toLowerCase() === "off") return false;
-
-				// Is it formated as a decimal number?
-				if (decimal.test(value)) {
-					res = parseFloat(value) != 0;
-				}
-				else {
-					res = value.toLowerCase() === "true";
-				}
-			}
-
-			return res;
-		};
 	}
 
 

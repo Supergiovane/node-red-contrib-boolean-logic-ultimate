@@ -23,9 +23,10 @@ module.exports = function (RED) {
 
 
 			// 11/11/2021 Clone input message and replace only relevant topics
+			const utils = require("./utils.js");
 			var bRes = null;
 			try {
-				bRes = ToBoolean(msg.payload);
+				bRes = utils.ToBoolean(msg.payload);
 			} catch (error) {
 			}
 			if (bRes === undefined || bRes === null) {
@@ -43,34 +44,6 @@ module.exports = function (RED) {
 			}
 
 		});
-
-
-
-		function ToBoolean(value) {
-			let res = false;
-			let decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
-
-			if (typeof value === 'boolean') {
-				res = value;
-			}
-			else if (typeof value === 'number' || typeof value === 'string') {
-
-				if (typeof value === "string" && value.toLowerCase() === "on") return true;
-				if (typeof value === "string" && value.toLowerCase() === "off") return false;
-
-				// Is it formated as a decimal number?
-				if (decimal.test(value)) {
-					res = parseFloat(value) != 0;
-				}
-				else {
-					res = value.toLowerCase() === "true";
-				}
-			}
-
-			return res;
-		};
-
-
 
 	}
 

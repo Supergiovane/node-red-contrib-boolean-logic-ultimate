@@ -90,15 +90,18 @@ module.exports = function (RED) {
 		}
 
 		this.on('input', function (msg) {
+			
+			const utils = require("./utils.js");
+			let sPayload = utils.fetchFromObject(msg, config.payloadPropName || "payload");
 
-			if (msg.payload === true) {
+			if (sPayload === true) {
 				if (node.isPlaying) {
 					node.setNodeStatus({ fill: "yellow", shape: "ring", text: "Already running. Stop me first." });
 					return;
 				}
 				avvio();
 
-			} else if (msg.payload === false) {
+			} else if (sPayload === false) {
 				if (node.timerWait !== null) clearTimeout(node.timerWait);
 				node.isPlaying = false;
 				node.setNodeStatus({ fill: "red", shape: "dot", text: "Forced stop" });

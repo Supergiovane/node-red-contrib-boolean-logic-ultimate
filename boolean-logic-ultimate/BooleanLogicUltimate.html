@@ -6,6 +6,7 @@
 			name: {
 				value: ""
 			},
+			payloadPropName: { value: "payload", required: false },
 			filtertrue: { value: "both" },
 			persist: { value: true },
 			sInitializeWith: { value: "WaitForPayload" },
@@ -33,7 +34,7 @@
 						return v !== undefined && v.length > 0;
 					}
 			},
-			restrictinputevaluation: { value: true },
+			restrictinputevaluation: { value: false },
 			delayEvaluation: { value: 0 }
 		},
 		inputs: 1,
@@ -77,6 +78,10 @@
 			return "BooleanLogicUltimate";
 		},
 		oneditprepare: function () {
+
+			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
+			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
+
 			// Add write and response as default for existing nodes like was default before
 			if (this.outputtriggeredby === 'all') {
 				$("#triggertopic").hide()
@@ -131,6 +136,10 @@
 	<div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+	<div class="form-row">
+        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
+		<input type="text" id="node-input-payloadPropName">
     </div>
 	<div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>

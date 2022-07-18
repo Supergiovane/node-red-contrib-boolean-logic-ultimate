@@ -6,7 +6,8 @@
 			name: { value: "Interrupt Flow" },
 			triggertopic: { value: "trigger" },
 			initializewith: { value: "1" },
-			autoToggle: { value: "0" }
+			autoToggle: { value: "0" },
+			payloadPropName: { value: "payload", required: false }
 		},
 		inputs: 1,
 		outputs: 1,
@@ -30,6 +31,10 @@
 			},
 		paletteLabel: function () {
 			return "InterruptFlowUltimate";
+		},
+		oneditprepare: function () {
+			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
+			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
 		}
 	});
 </script>
@@ -45,16 +50,19 @@
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
 	</div>
-	
 	<div class="form-row">
         <label for="node-input-triggertopic"><i class="icon-tag"></i> Trigger by topic</label>
 		<input type="text" id="node-input-triggertopic" placeholder="Name">
-		<div><i>Whenever the node receives a payload = false from this topic,<br/> it stops output messages to the flow.<br/>As soon it receives payload = true from this topic,<br/>the output messages start to flow out again.
+    </div>
+	<div class="form-row">
+        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
+		<input type="text" id="node-input-payloadPropName">
+    </div>
+	<div><i>Whenever the node receives a msg with false from this topic,<br/> it stops output messages to the flow.<br/>As soon it receives a message with true from this topic,<br/>the output messages start to flow out again.
 		<br/>The node will output the current stored message<br/>plus an added property "isReplay = true",<br/>as soon as it receives a "play" = true from this topic.</br>
 		The node will clear the current stored message, as soon as it receives a "msg.reset = true" from this topic.
 	</i></div>
-    </div>
-
+<br/>
 	<div class="form-row">
         <label style="width:160px" for="node-input-initializewith"><i class="fa fa-home"></i> At node-red start</label>
         <select type="text" id="node-input-initializewith" placeholder="">

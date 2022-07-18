@@ -4,6 +4,12 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.54</b> July 2022<br/>
+- NEW: you can now specify the input property name from witch the node picks up the payload.</br>
+- NEW: added more Homeassistant string compatibility values.</br>
+- Updated the README</br>
+</p>
+<p>
 <b>Version 1.0.53</b> June 2022<br/>
 - NEW: Math Ultimate. The old "Sum" node, now has become a math node, you can peform multipication other than sum.</br>
 - Updated README with samples of Math node.

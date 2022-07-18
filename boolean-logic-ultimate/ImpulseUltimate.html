@@ -5,6 +5,7 @@
 		defaults: {
 			name: { value: "" },
 			commandText: { value: "// Open garage door\nsend:true\nwait:1000\nsend:false" },
+			payloadPropName: { value: "payload", required: false }
 		},
 		inputs: 1,
 		outputs: 1,
@@ -30,6 +31,8 @@
 				mode: 'ace/mode/text',
 				value: node.commandText
 			});
+			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
+			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
 		},
 		oneditsave: function () {
 			var node = this;
@@ -57,6 +60,10 @@
 	<div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+	<div class="form-row">
+        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
+		<input type="text" id="node-input-payloadPropName">
     </div>
 	<div class="form-row" >
         <label style="width:300px;" for="node-input-commandText"><i class="fa fa-tasks"></i> Commands (one command per row)</label>

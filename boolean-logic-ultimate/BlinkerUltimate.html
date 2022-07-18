@@ -8,6 +8,7 @@
 			stopbehaviorPIN2: { value: "0" },
 			blinkfrequency: { value: "500" },
 			initializewith: { value: "0" },
+			payloadPropName: { value: "payload", required: false }
 		},
 		inputs: 1,
 		outputs: 2,
@@ -30,6 +31,10 @@
 			},
 		paletteLabel: function () {
 			return "BlinkerUltimate";
+		},
+		oneditprepare: function () {
+			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
+			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
 		}
 	});
 </script>
@@ -45,7 +50,10 @@
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
 	</div>
-	
+	<div class="form-row">
+        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
+		<input type="text" id="node-input-payloadPropName">
+    </div>
 	<div class="form-row">
         <label for="node-input-blinkfrequency"><i class="fa fa-clock-o"></i> Blink every (in milliseconds)</label>
 		<input type="text" id="node-input-blinkfrequency" placeholder="Example: 500">

@@ -6,7 +6,8 @@
 			name: {
 				value: "Toggle"
 			},
-			valueToToggle: { value: "true" }
+			valueToToggle: { value: "true" },
+			payloadPropName: { value: "payload", required: false }
 		},
 		inputs: 1,
 		outputs: 1,
@@ -17,6 +18,10 @@
 			},
 		paletteLabel: function () {
 			return "toggleUltimate";
+		},
+		oneditprepare: function () {
+			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
+			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
 		}
 	});
 </script>
@@ -31,6 +36,10 @@
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+	<div class="form-row">
+        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
+		<input type="text" id="node-input-payloadPropName">
     </div>
 	<div class="form-row">
 		<label style="width:160px" for="node-input-valueToToggle"><i class="fa fa-toggle-on"></i> Initial value</label>

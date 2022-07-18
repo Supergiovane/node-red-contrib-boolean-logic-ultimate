@@ -41,9 +41,13 @@ module.exports = function (RED) {
 					setNodeStatus({ fill: "red", shape: "dot", text: "Invalid interval received" });
 				}
 			}
-			if (msg.hasOwnProperty("payload")) {
+
+			const utils = require("./utils.js");
+			let sPayload = utils.fetchFromObject(msg, config.payloadPropName || "payload");
+
+			if (sPayload !== undefined) {
 				// 06/11/2019 
-				if (ToBoolean(msg.payload) === true) {
+				if (utils.ToBoolean(sPayload) === true) {
 					if (node.tBlinker !== null) clearInterval(node.tBlinker);
 					node.tBlinker = setInterval(handleTimer, node.blinkfrequency); //  Start the timer that handles the queue of telegrams
 					node.isBlinking = true;
@@ -66,32 +70,6 @@ module.exports = function (RED) {
 			node.curPayload = node.stopbehaviorPIN1;
 			done();
 		});
-
-
-		function ToBoolean(value) {
-			let res = false;
-			let decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
-
-			if (typeof value === 'boolean') {
-				res = value;
-			}
-			else if (typeof value === 'number' || typeof value === 'string') {
-
-				if (typeof value === "string" && value.toLowerCase() === "on") return true;
-				if (typeof value === "string" && value.toLowerCase() === "off") return false;
-
-
-				// Is it formated as a decimal number?
-				if (decimal.test(value)) {
-					res = parseFloat(value) != 0;
-				}
-				else {
-					res = value.toLowerCase() === "true";
-				}
-			}
-
-			return res;
-		};
 
 
 		function handleTimer() {

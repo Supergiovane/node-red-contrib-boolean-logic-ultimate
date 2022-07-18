@@ -10,7 +10,7 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
 [![youtube][youtube-image]][youtube-url]
 
-A set of Node-RED enhanced boolean logic and utility nodes, with persistent values after reboot. Compatible also with Homeassistant ON and OFF values.
+A set of Node-RED enhanced boolean logic and utility nodes, with persistent values after reboot. Compatible also with Homeassistant values. 
 
 <br/>
 <br/>
@@ -20,6 +20,22 @@ A set of Node-RED enhanced boolean logic and utility nodes, with persistent valu
 
 <br/>
 <br/>
+
+### COMPATIBLES INPUT VALUES
+Other than true/false, all nodes accepts these strings and convert it to true/false. All nodes are compatible with Homeassistant output strings.
+|Input|Translated into|
+|--|--|
+| "on" | true |
+| "off" | false |
+| "active" | true |
+| "inactive" | false |
+| "open" | true |
+| "closed" | false |
+
+
+<br/>
+<br/>
+
 
 # BOOLEAN LOGIC
 
@@ -53,50 +69,24 @@ If you need ***"NAND"*** or ***"NOR"*** gate, just put an **InvertUltimate** nod
 
 The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
 You can also set the default values of the topic inputs.<br/>
-The node can convert arbitrary input values to true/false. It supports Homeassistant ***"on"*** and ***"off"*** as well. For enabling auto conversion, please be sure to disable **Reject non boolean (true/false) input values** <br/>
+The node can convert arbitrary input values to true/false. It supports Homeassistant string to boolean conversion as well. For enabling auto conversion, please be sure to disable **Reject non boolean (true/false) input values** <br/>
 
 
 
-### CONFIGURATION
+### NODE CONFIGURATION
 
+|Property|Description|
+|--|--|
+| Inputs count | Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of *different* topics arrives. *Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.* |
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Filter output | **Output both 'true' and 'false'** results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output. **Output only 'true'** results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out. |
+| Trigger mode | **All topics**: standard behaviour, the node will evaluate each input topic and ouputs the values. At each input change, it will output a msg on the flow. **Single topic + eval other inputs**: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic**, it  outputs a msg to the flow.|
+| If input states are undefined | Every time you create a node or modify the node, all inputs are set to undefined. This means that the node will wait the arrive of all topics (for example 3 topics, if you've selected 3 topics in the option), before it can output a payload. This can be a problem if your logic must be operative as soon as you deploy the flow. To overcome this problem, you can "initialize" all the undefined inputs with True or False. **Leave undefined**: Standard behaviour, the node will wait all the "undefined" topics to arrive, then starts a flow with the result. **True or False**: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false".|
+| Remember latest input values after reboot | If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload. Every time you modify the node's config, <b>the retained values are cleared</b>.|
+| Reject non boolean (true/false) input values | If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload value to a logic true/false boolean. |
+| Delay evaluation (ms) | Delays the evaluation until this time (in milliseconds) is elapsed. Each time a message or "topic trigger message" (see **Trigger mode**) arrives, the delay is restarted. This option is useful for debouncing pourposes or simply for adding some delay. For example, you can turn on a light if the room is occupied for a long time, allowing people to fast transit repeatedly, without the need of turning the light on. Another example, if you have many sensors changing state rapidly, you can wait until these sensor reach a quiet state, then evaluate the inputs.|
 
-**Inputs count**
-
-Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of *different* topics arrives.<br/>
-*Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.*
-
-
-**Filter output**
-
-- Output both 'true' and 'false' results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output.
-- Output only 'true' results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out.
-
-**Trigger mode**
-
-- All topics: standard behaviour, the node will evaluate each input topic and ouputs the values. At each input change, it will output a msg on the flow.
-- Single topic + eval other inputs: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic**, it  outputs a msg to the flow.
-
-**If input states are undefined**
-
-Every time you create a node or modify the node, all inputs are set to undefined. This means that the node will wait the arrive of all topics (for example 3 topics, if you've selected 3 topics in the option), before it can output a payload. This can be a problem if your logic must be operative as soon as you deploy the flow. To overcome this problem, you can "initialize" all the undefined inputs with True or False.
-- Leave undefined: Standard behaviour, the node will wait all the "undefined" topics to arrive, then starts a flow with the result.
-- True or False: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false".
-
-**Remember latest input values after reboot**
-
-If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
-Every time you modify the node's config, <b>the retained values are cleared</b>.<br/>
-
-**Reject non boolean (true/false) input values**
-
-If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload to a logic value true/false (including "on" and "off" values, sent, for example, from HomeAssistant).<br/>
-
-**Delay evaluation (ms)**
-
-Delays the evaluation until this time (in milliseconds) is elapsed. Each time a message or "topic trigger message" (see **Trigger mode**) arrives, the delay is restarted.<br/>
-This option is useful for debouncing pourposes or simply for adding some delay.<br/>
-For example, you can turn on a light if the room is occupied for a long time, allowing people to fast transit repeatedly, without the need of turning the light on.<br/>
-Another example, if you have many sensors changing state rapidly, you can wait until these sensor reach a quiet state, then evaluate the inputs.<br/>
+<br/>
 
 **INPUT MSG TO THE NODE**
 
@@ -115,17 +105,21 @@ Resets all inputs to undefined.
 
 The interrupt flows is able to stop the input messages to exiting the node.
 
-**Trigger by topic**
+### NODE CONFIGURATION
 
-Whenever the node receives a payload = false from this topic,it stops output messages to the flow.<br/>
-As soon it receives payload = true from this topic, the output messages start to flow out again. <br/>
-The node will output the current stored message plus an added property "isReplay = true", as soon as it receives a ***msg.play = true*** from this topic.<br/>
-The node will clear the current stored message, as soon as it receives a ***msg.reset = true*** from this topic.<br/>
-The node tries to convert any arbitrary input value to a valid boolean value. It converts Homeassistant ***"on"*** and ***"off"*** to true/false values as well.<br/>
+|Property|Description|
+|--|--|
+| Trigger by topic | Whenever the node receives a payload = false from this topic,it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again. The node will output the current stored message plus an added property "isReplay = true", as soon as it receives a ***msg.play = true*** from this topic. The node will clear the current stored message, as soon as it receives a ***msg.reset = true*** from this topic. |
+| With Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Then | This property, allow you to auto toggle the selected start state (pass or block) after a timer has elapsed. You can choose from some pre-defined delays. If you have, for example, an Homekit-Bridged nodeset with a thermostat node or security system node in your flow, once node-red restarts, these homekit nodes output a default message to the flow. Just put an InterruptFlow node with a "block at start" behaviour and a toggle delay enabled behind homekit nodes, to temporary stop the chained nodes to receive the unwanted startup message.|
 
-**Then** 
-This property, allow you to auto toggle the selected start state (pass or block) after a timer has elapsed. You can choose from some pre-defined delays. If you have, for example, an Homekit-Bridged nodeset with a thermostat node or security system node in your flow, once node-red restarts, these homekit nodes output a default message to the flow. Just put an InterruptFlow node with a "block at start" behaviour and a toggle delay enabled behind homekit nodes, to temporary stop the chained nodes to receive the unwanted startup message.</br>
-</br>
+
+<br/>
+
+
+
+
+
 
 **INPUT MSG WITH "TRIGGER" TOPIC**
 
@@ -183,7 +177,15 @@ This allow to save the state of a node and then replay it back whenever you want
 
 Outputs the inverted input. For example true -> false<br />
 The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
-The node tries to convert any arbitrary input value to a valid boolean value. It converts Homeassistant ***"on"*** and ***"off"*** to true/false values as well.<br/>
+
+### NODE CONFIGURATION
+
+|Property|Description|
+|--|--|
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
+<br/>
+
 
 <br/>
 <br/>
@@ -197,7 +199,15 @@ This node has 2 outputs.<br />
 If the input payload is true, the node will send <code>true</code> on output 1 and nothing on oputput 2<br />
 If the input payload is false, the node will send nothing on output 1, and <code>false</code> on oputput 2<br />
 The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
-The node tries to convert any arbitrary input value to a valid boolean value. It converts Homeassistant ***"on"*** and ***"off"*** to true/false values as well.<br/>
+
+### NODE CONFIGURATION
+
+|Property|Description|
+|--|--|
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
+<br/>
+
 
 <br/>
 <br/>
@@ -211,6 +221,15 @@ The pourpose of this node is to blink a led or something.<br />
 Output PIN1 : outputs the value true/false<br/>
 Output PIN2 : outputs the inverted value false/true<br/>
 <br/>
+
+### NODE CONFIGURATION
+
+|Property|Description|
+|--|--|
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
+<br/>
+
 
 Pass <code>msg.payload = true</code> to start blinking</br>
 Pass <code>msg.payload = false</code> to stop blinking</br>
@@ -238,6 +257,15 @@ Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
 
 The pourpose of this node is to send a message with payload TRUE on the first pin and FALSE on second pin, independently from the msg input.<br />
 This is useful if you need to simply send a true or false payload.
+
+### NODE CONFIGURATION
+
+|Property|Description|
+|--|--|
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
+<br/>
+
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/SimpleOutput.png' width='60%'>
 
@@ -304,6 +332,15 @@ The pourpose of this node is to send a sequence of pulsed commands to for exampl
 </code>
 </details>
 
+### NODE CONFIGURATION
+
+|Property|Description|
+|--|--|
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
+<br/>
+
+
 **Avaiable Commands**<br />
 Commands are to be wrote in the format: command:value. For example ***send:200***, ***wait:2000***. Each row represents a command.<br />
 <br /><b>send</b><br />
@@ -332,12 +369,22 @@ Pass <code>msg.payload = false</code> to the node to stop the running sequence</
 
 The pourpose of this node is to do maths on the incoming values. Each incoming message MUST HAVE OWN TOPIC.<br />
 
+
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/sum.png' width='60%'>
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
 <code>
 [{"id":"05b6ce0cb476abd5","type":"SumUltimate","z":"2bf641f4b8742755","name":"Multiply","property":"payload","math":"multiply","x":400,"y":180,"wires":[["567aa6a9719e463e"]]},{"id":"6744e01b88d820b9","type":"inject","z":"2bf641f4b8742755","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"Wh Washing machine","payload":"10","payloadType":"num","x":190,"y":180,"wires":[["05b6ce0cb476abd5"]]},{"id":"75823dbc7db78c3c","type":"inject","z":"2bf641f4b8742755","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"Cost per KWh","payload":"20","payloadType":"num","x":160,"y":220,"wires":[["05b6ce0cb476abd5"]]},{"id":"567aa6a9719e463e","type":"debug","z":"2bf641f4b8742755","name":"Result","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":530,"y":180,"wires":[]},{"id":"1793931ba218bc1d","type":"inject","z":"2bf641f4b8742755","name":"Reset","props":[{"p":"reset","v":"","vt":"date"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","x":130,"y":260,"wires":[["05b6ce0cb476abd5"]]},{"id":"0b3277af03f546d4","type":"comment","z":"2bf641f4b8742755","name":"Getting results, (Sum, Multiply etc...) from the MATH node.","info":"","x":270,"y":140,"wires":[]}]
 </code>
 </details>
+
+### NODE CONFIGURATION
+
+|Property|Description|
+|--|--|
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
+<br/>
+
 
 **INPUT**<br />
 
@@ -365,8 +412,16 @@ br/>
 
 # TOGGLE ULTIMATE
 
-The pourpose of this node is to toggle between true/false the payload of every incoming message.<br />
+The pourpose of this node is to toggle between true/false, everytime an inboud message arrives.<br />
 
+
+### NODE CONFIGURATION
+
+|Property|Description|
+|--|--|
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
+<br/>
 
 **INPUT**<br />
 
@@ -384,12 +439,17 @@ The railway switcher, switches the input msg flow to one ot the two output pins 
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/railroadSwitchScambio.png' width='80%'>
 
-**Switcher topic**
+### NODE CONFIGURATION
 
-Whenever the node receives a payload from this **topic**, it switches the input messages to an output PIN.<br/>
+|Property|Description|
+|--|--|
+| Switcher topic | Whenever the node receives a payload from this **topic**, it switches the input messages to an output PIN. |
+| With Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Then | This property, allow you to auto toggle the selected start state after some time. |
 
-**Then** 
-This property, allow you to auto toggle the selected start state after some time.</br>
+<br/>
+
+</br>
 </br>
 
 **INPUT MSG WITH "TRIGGER" TOPIC**

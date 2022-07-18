@@ -3,7 +3,8 @@ module.exports = function (RED) {
 		RED.nodes.createNode(this, config);
 		this.config = config;
 		var node = this;
-		node.valueToToggle = config.valueToToggle === undefined ? true : ToBoolean(config.valueToToggle);
+		const utils = require("./utils.js");
+		node.valueToToggle = config.valueToToggle === undefined ? true : utils.ToBoolean(config.valueToToggle);
 
 		function setNodeStatus({ fill, shape, text }) {
 			let dDate = new Date();
@@ -14,9 +15,11 @@ module.exports = function (RED) {
 
 		this.on('input', function (msg) {
 
+			const utils = require("./utils.js");
+			let sPayload = utils.fetchFromObject(msg, config.payloadPropName || "payload");
 
 			// 15/11/2021 inform user about undefined topic or payload
-			if (!msg.hasOwnProperty("payload") || msg.payload === undefined || msg.payload === null) {
+			if (sPayload === undefined ) {
 				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid payload from " + msg.topic || "" });
 				return;
 			}
@@ -33,33 +36,6 @@ module.exports = function (RED) {
 			}
 
 		});
-
-
-
-		function ToBoolean(value) {
-			let res = false;
-			let decimal = /^\s*[+-]{0,1}\s*([\d]+(\.[\d]*)*)\s*$/
-
-			if (typeof value === 'boolean') {
-				res = value;
-			}
-			else if (typeof value === 'number' || typeof value === 'string') {
-
-				if (typeof value === "string" && value.toLowerCase() === "on") return true;
-				if (typeof value === "string" && value.toLowerCase() === "off") return false;
-
-				// Is it formated as a decimal number?
-				if (decimal.test(value)) {
-					res = parseFloat(value) != 0;
-				}
-				else {
-					res = value.toLowerCase() === "true";
-				}
-			}
-
-			return res;
-		};
-
 
 
 	}
