@@ -30,7 +30,11 @@ Other than true/false, all nodes accepts these strings and convert it to true/fa
 | "active" | true |
 | "inactive" | false |
 | "open" | true |
-| "closed" | false |
+| "closed" or "close" | false |
+| "true" | true |
+| "false" | false |
+| "1" | true |
+| "0" | false |
 
 
 <br/>

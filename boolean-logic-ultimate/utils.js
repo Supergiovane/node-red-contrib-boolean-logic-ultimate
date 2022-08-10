@@ -14,6 +14,13 @@ module.exports.ToBoolean = function ToBoolean(value) {
 
         if (value.toLowerCase() === "open") return true;
         if (value.toLowerCase() === "closed") return false;
+        if (value.toLowerCase() === "close") return false;
+
+        if (value.toLowerCase() === "1") return true;
+        if (value.toLowerCase() === "0") return false;
+
+        if (value.toLowerCase() === "true") return true;
+        if (value.toLowerCase() === "false") return false;
 
     } else if (typeof value === 'number') {
         // Is it formated as a decimal number?
