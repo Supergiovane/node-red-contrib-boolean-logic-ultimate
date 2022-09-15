@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.57</b> September 2022<br/>
+- Added node help in the node-red help tab.</br>
+</p>
+<p>
 <b>Version 1.0.56</b> August 2022<br/>
 - NEW: added string conversion from "true", "false", "0", "1", "close" to boolean.</br>
 - Updated the README</br>

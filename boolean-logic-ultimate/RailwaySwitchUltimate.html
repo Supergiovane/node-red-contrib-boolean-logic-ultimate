@@ -87,15 +87,23 @@
 	</div>
 </script>
 
-<script type="text/x-red" data-help-name="RailwaySwitchUltimate">
-	<p>
-        SEE THE README FOR HELP CONFIGURING THE NODE
-    </p>
+<script type="text/markdown" data-help-name="RailwaySwitchUltimate">
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
 
-	<p>
-		<a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate" target="_blank">Click here to learn how to configure the node.</a>
-	</p>
+[Find it useful?](https://www.paypal.me/techtoday)
 
-	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
+The railway switcher, switches the input msg flow to one ot the two outputs (upper or lower).
+
+|Property|Description|
+|--|--|
+| Switcher topic | Whenever the node receives a payload from this **topic**, it switches the input messages to an output. |
+| With Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Then | This property, allow you to auto toggle the selected start state after some time. |
+
+**INPUT MSG WITH "TRIGGER" TOPIC**
+
+Pass <code>msg.payload = false</code> switches the msg input to the UPPER output</br>
+Pass <code>msg.payload = true</code> switches the msg input to the LOWER output</br>
+
 
 </script>

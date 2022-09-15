@@ -62,14 +62,14 @@ Other than true/false, all nodes accepts these strings and convert it to true/fa
 The node performs Boolean logic on the incoming payloads.<br/>
 The node expects a fixed number of topics (configured in the settings) on which it will operate. It will only output a value 
 when it has seen the expected number of topics. If it ever sees more than the configured number of topics it will log a message then reset its state and start over.<br/>
-The input message is preserved and passed to the output pin, changing only the topic and the payload. 
+The input message is preserved and passed to the output, changing only the topic and the payload. 
 
 The node performs some checks on the incoming boolean payloads and outputs all results at the same time, as follow:<br/>
 - Output "AND": true or false<br/>
 - Output "OR": true or false<br/>
 - Output "XOR": true or false<br/>
 
-If you need ***"NAND"*** or ***"NOR"*** gate, just put an **InvertUltimate** node respectively after the "AND" or "OR" pin.
+If you need ***"NAND"*** or ***"NOR"*** gate, just put an **InvertUltimate** node respectively after the "AND" or "OR" output.
 
 The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
 You can also set the default values of the topic inputs.<br/>
@@ -180,7 +180,7 @@ This allow to save the state of a node and then replay it back whenever you want
 # INVERT ULTIMATE
 
 Outputs the inverted input. For example true -> false<br />
-The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
+The input message is preserved and passed to the output, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
 
 ### NODE CONFIGURATION
 
@@ -201,8 +201,8 @@ The input message is preserved and passed to the output pin, changing only the t
 
 This node has 2 outputs.<br />
 If the input payload is true, the node will send <code>true</code> on output 1 and nothing on oputput 2<br />
-If the input payload is false, the node will send nothing on output 1, and <code>false</code> on oputput 2<br />
-The input message is preserved and passed to the output pin, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
+If the input payload is false, the node will send nothing on output 1 and <code>false</code> on oputput 2<br />
+The input message is preserved and passed to the output, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
 
 ### NODE CONFIGURATION
 
@@ -222,8 +222,8 @@ The input message is preserved and passed to the output pin, changing only the t
 # BLINKER ULTIMATE
 
 The pourpose of this node is to blink a led or something.<br />
-Output PIN1 : outputs the value true/false<br/>
-Output PIN2 : outputs the inverted value false/true<br/>
+output1 : outputs the value true/false<br/>
+output2 : outputs the inverted value false/true<br/>
 <br/>
 
 ### NODE CONFIGURATION
@@ -239,8 +239,8 @@ Pass <code>msg.payload = true</code> to start blinking</br>
 Pass <code>msg.payload = false</code> to stop blinking</br>
 Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
 
-- PIN1 stop behavior : when the blinker receives the stop message, you can select the behavior of the pin1<br/>
-- PIN2 stop behavior : when the blinker receives the stop message, you can select the behavior of the pin2<br/>
+- output1 stop behavior : when the blinker receives the stop message, you can select the behavior of the output1<br/>
+- output2 stop behavior : when the blinker receives the stop message, you can select the behavior of the output2<br/>
 
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/blinker.png' width='60%'>
@@ -259,7 +259,7 @@ Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
 
 # SIMPLE OUTPUT ULTIMATE
 
-The pourpose of this node is to send a message with payload TRUE on the first pin and FALSE on second pin, independently from the msg input.<br />
+The pourpose of this node is to send a message with payload TRUE on the first output and FALSE on second output, independently from the msg input.<br />
 This is useful if you need to simply send a true or false payload.
 
 ### NODE CONFIGURATION
@@ -275,7 +275,7 @@ This is useful if you need to simply send a true or false payload.
 
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
 <code>
-[{"id":"e1149e22.c9b298","type":"inject","z":"81a64dae.012c18","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":100,"y":820,"wires":[["6a419c72.5a4e7c"]]},{"id":"6a419c72.5a4e7c","type":"SimpleOutputUltimate","z":"81a64dae.012c18","name":"T/F","x":290,"y":820,"wires":[["8ba3f611.26beb8"],["b469193b.950598"]]},{"id":"8ba3f611.26beb8","type":"debug","z":"81a64dae.012c18","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":530,"y":800,"wires":[]},{"id":"b469193b.950598","type":"debug","z":"81a64dae.012c18","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":530,"y":840,"wires":[]},{"id":"2451f593.04e62a","type":"comment","z":"81a64dae.012c18","name":"Whatever the input is, output msg with payload TRUE on first and FALSE on second pin.","info":"","x":330,"y":760,"wires":[]}]
+[{"id":"e1149e22.c9b298","type":"inject","z":"81a64dae.012c18","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":100,"y":820,"wires":[["6a419c72.5a4e7c"]]},{"id":"6a419c72.5a4e7c","type":"SimpleOutputUltimate","z":"81a64dae.012c18","name":"T/F","x":290,"y":820,"wires":[["8ba3f611.26beb8"],["b469193b.950598"]]},{"id":"8ba3f611.26beb8","type":"debug","z":"81a64dae.012c18","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":530,"y":800,"wires":[]},{"id":"b469193b.950598","type":"debug","z":"81a64dae.012c18","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":530,"y":840,"wires":[]},{"id":"2451f593.04e62a","type":"comment","z":"81a64dae.012c18","name":"Whatever the input is, output msg with payload TRUE on first and FALSE on second output.","info":"","x":330,"y":760,"wires":[]}]
 </code>
 </details>
 
@@ -287,8 +287,8 @@ This is useful if you need to simply send a true or false payload.
 
 # INJECT ULTIMATE
 
-The pourpose of this node is to send a message with payload TRUE on the first pin, FALSE on second pin and a TOGGLE (true/false) on the third pin, by pressing the pushbutton.<br />
-This is useful if you need to simply test your flow. The node is simpler as the default node-red inject node.
+The pourpose of this node is to send a message with payload TRUE on the first output, FALSE on second output and a TOGGLE (true/false) on the third output, by pressing the pushbutton.<br />
+This is useful if you need to simply test your flow. 
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Inject.png' width='60%'>
 
@@ -439,7 +439,7 @@ Any message that arrives on input, will be passwd through to the output with the
 
 # RAILWAY SWITCH ULTIMATE
 
-The railway switcher, switches the input msg flow to one ot the two output pins (upper or lower).
+The railway switcher, switches the input msg flow to one ot the two outputs (upper or lower).
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/railroadSwitchScambio.png' width='80%'>
 
@@ -447,7 +447,7 @@ The railway switcher, switches the input msg flow to one ot the two output pins 
 
 |Property|Description|
 |--|--|
-| Switcher topic | Whenever the node receives a payload from this **topic**, it switches the input messages to an output PIN. |
+| Switcher topic | Whenever the node receives a payload from this **topic**, it switches the input messages to an output. |
 | With Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Then | This property, allow you to auto toggle the selected start state after some time. |
 
@@ -458,8 +458,8 @@ The railway switcher, switches the input msg flow to one ot the two output pins 
 
 **INPUT MSG WITH "TRIGGER" TOPIC**
 
-Pass <code>msg.payload = false</code> switches the msg input to the UPPER PIN</br>
-Pass <code>msg.payload = true</code> switches the msg input to the LOWER PIN</br>
+Pass <code>msg.payload = false</code> switches the msg input to the UPPER output</br>
+Pass <code>msg.payload = true</code> switches the msg input to the LOWER output</br>
 
 </br>
 

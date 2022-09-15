@@ -86,15 +86,26 @@
 	</div>
 </script>
 
-<script type="text/x-red" data-help-name="InterruptFlowUltimate">
-	<p>
-        SEE THE README FOR HELP CONFIGURING THE NODE
-    </p>
+<script type="text/markdown" data-help-name="InterruptFlowUltimate">
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
 
-	<p>
-		<a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate" target="_blank">Click here to learn how to configure the node.</a>
-	</p>
+[Find it useful?](https://www.paypal.me/techtoday)
 
-	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
+The interrupt flows is able to stop the input messages to exiting the node.
+
+### NODE CONFIGURATION
+
+|Property|Description|
+|--|--|
+| Trigger by topic | Whenever the node receives a payload = false from this topic,it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again. The node will output the current stored message plus an added property "isReplay = true", as soon as it receives a ***msg.play = true*** from this topic. The node will clear the current stored message, as soon as it receives a ***msg.reset = true*** from this topic. |
+| With Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Then | This property, allow you to auto toggle the selected start state (pass or block) after a timer has elapsed. You can choose from some pre-defined delays. If you have, for example, an Homekit-Bridged nodeset with a thermostat node or security system node in your flow, once node-red restarts, these homekit nodes output a default message to the flow. Just put an InterruptFlow node with a "block at start" behaviour and a toggle delay enabled behind homekit nodes, to temporary stop the chained nodes to receive the unwanted startup message.|
+
+**INPUT MSG WITH "TRIGGER" TOPIC**
+
+Pass <code>msg.payload = true</code> to allow messages to pass through</br>
+Pass <code>msg.payload = false</code> to prevent messages from passing through</br>
+Pass <code>msg.play = true</code> from a message having the "trigger" topic, to replay the last stored message</br>
+Pass <code>msg.reset = true</code> from a message having the "trigger" topic, to clear the last stored message</br>
 
 </script>

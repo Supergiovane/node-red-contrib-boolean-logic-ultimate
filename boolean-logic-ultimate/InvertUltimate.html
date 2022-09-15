@@ -42,15 +42,17 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="InvertUltimate">
-    <p>
-        SEE THE README FOR HELP CONFIGURING THE NODE
-    </p>
+<script type="text/markdown" data-help-name="InvertUltimate">
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
 
-	<p>
-		<a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate" target="_blank">Click here to learn how to configure the node.</a>
-	</p>
+[Find it useful?](https://www.paypal.me/techtoday)
 
-	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
+Outputs the inverted input. For example true -> false<br />
+The input message is preserved and passed to the output, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
+
+|Property|Description|
+|--|--|
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
 
 </script>

@@ -81,15 +81,33 @@
 
 </script>
 
-<script type="text/x-red" data-help-name="ImpulseUltimate">
-	<p>
-        SEE THE README FOR HELP CONFIGURING THE NODE
-    </p>
+<script type="text/markdown" data-help-name="ImpulseUltimate">
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
 
-	<p>
-		<a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate" target="_blank">Click here to learn how to configure the node.</a>
-	</p>
+[Find it useful?](https://www.paypal.me/techtoday)
 
-	<a href="https://www.paypal.me/techtoday" target="_blank"><img src='https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square' width='30%'></a>
-	
+The pourpose of this node is to send a sequence of pulsed commands to for example, open a garage door or to command an appliance requiring a set of timed commands.<br />
+
+|Property|Description|
+|--|--|
+| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
+**Avaiable Commands**<br />
+Commands are to be wrote in the format: command:value. For example ***send:200***, ***wait:2000***. Each row represents a command.<br />
+<br /><b>send</b><br />
+sends a value. For example: ***send:true*** or ***send:100*** or ***send:Hello***<br />
+<br /><b>wait</b><br />
+wait for specified time (in milliseconds). For example ***wait:500*** waits for 500 milliseconds<br />
+<br /><b>restart</b><br />
+Restart the sequence from the beginning. Use ***restart*** alone, without **:** and extra value. For example ***restart*** <br />
+<br /><b>//</b><br />
+comment. For example: ***// This opens the garage***. The comment are ignored, so you can write what you want.<br />
+<br />
+
+Pass <code>msg.payload = true</code> to the node to start the sequence</br>
+Pass <code>msg.payload = false</code> to the node to stop the running sequence</br>
+<br />
+
+- Output: the node outputs a message you specified in the command textbox<br/>
+
 </script>
