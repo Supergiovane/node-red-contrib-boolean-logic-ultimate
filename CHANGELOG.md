@@ -4,6 +4,11 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.57</b> December 2022<br/>
+- NEW: added string conversion from "home", "not_home" to boolean.</br>
+- Updated the README</br>
+</p>
+<p>
 <b>Version 1.0.57</b> September 2022<br/>
 - Added node help in the node-red help tab.</br>
 </p>
