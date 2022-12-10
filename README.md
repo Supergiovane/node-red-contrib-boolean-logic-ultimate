@@ -35,6 +35,8 @@ Other than true/false, all nodes accepts these strings and convert it to true/fa
 | "false" | false |
 | "1" | true |
 | "0" | false |
+| "home" | true |
+| "not_home" | false |
 
 
 <br/>

@@ -22,6 +22,9 @@ module.exports.ToBoolean = function ToBoolean(value) {
         if (value.toLowerCase() === "true") return true;
         if (value.toLowerCase() === "false") return false;
 
+        if (value.toLowerCase() === "home") return true;
+        if (value.toLowerCase() === "not_home") return false;
+
     } else if (typeof value === 'number') {
         // Is it formated as a decimal number?
         if (decimal.test(value)) {
