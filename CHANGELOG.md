@@ -4,7 +4,7 @@
 # CHANGELOG
 
 <p>
-<b>Version 1.0.57</b> December 2022<br/>
+<b>Version 1.0.58</b> December 2022<br/>
 - NEW: added string conversion from "home", "not_home" to boolean.</br>
 - Updated the README</br>
 </p>
