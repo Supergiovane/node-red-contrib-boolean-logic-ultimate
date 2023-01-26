@@ -96,10 +96,12 @@ The node can convert arbitrary input values to true/false. It supports Homeassis
 
 **INPUT MSG TO THE NODE**
 
-<code>
-msg.reset = true;
-</code>
-Resets all inputs to undefined.
+|Input msg|Description|
+|--|--|
+| msg.reset = true | Resets all saved input values to undefined |
+| msg.inputcount | Changes the inputs count property. For example, <b>msg.inputcount = 3</b> Whenever you lower the inputcount from a higher number to a lower one, for example from 3 to 2, it's suggested to do a <b>msg.reset=true</b> to reset all stored input values. |
+
+
 
 <br/>
 <br/>

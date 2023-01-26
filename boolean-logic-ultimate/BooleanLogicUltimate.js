@@ -89,12 +89,23 @@ module.exports = function (RED) {
 				return;
 			}
 
+			// 26/01/2023 you can change the input count from msg
+			if (msg.hasOwnProperty("inputcount")) {
+				setTimeout(() => {
+					setNodeStatus({ fill: "grey", shape: "dot", text: "Input count changed to " + msg.inputcount });
+				}, 500);
+				try {
+					node.config.inputCount = Number(msg.inputcount);	
+				} catch (error) {					
+				}	
+				
+			}
+
 			// 15/11/2021 inform user about undefined topic or payload
 			if (!msg.hasOwnProperty("topic") || msg.topic === undefined || msg.topic === null) {
 				setNodeStatus({ fill: "red", shape: "dot", text: "Received invalid topic!" });
 				return;
 			}
-
 
 			var topic = msg.topic;
 			const utils = require("./utils.js");

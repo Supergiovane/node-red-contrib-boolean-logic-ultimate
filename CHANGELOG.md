@@ -4,6 +4,11 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.59</b> January 2023<br/>
+- NEW: added msg.gatecount property, to dinamically change the gate input count.</br>
+- Updated the README</br>
+</p>
+<p>
 <b>Version 1.0.58</b> December 2022<br/>
 - NEW: added string conversion from "home", "not_home" to boolean.</br>
 - Updated the README</br>
