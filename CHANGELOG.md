@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.60</b> March 2023<br/>
+- FIX: Fixed some little issues to the Railways Node and fixed the youtube video not having audio https://youtu.be/iPVyiwDIUMg. 
+</p>
+<p>
 <b>Version 1.0.59</b> January 2023<br/>
 - NEW: added msg.gatecount property, to dinamically change the gate input count.</br>
 - Updated the README</br>
@@ -35,7 +39,7 @@
 </p>
 <p>
 <b>Version 1.0.52</b> Mai 2022<br/>
-- NEW: Railway Switcher Ultimate: new node to switch the input message to an output pin (https://youtu.be/1SjYE7d04u4).</br>
+- NEW: Railway Switcher Ultimate: new node to switch the input message to an output pin (https://youtu.be/iPVyiwDIUMg).</br>
 - Updated README with samples of Railway Switch node.
 </p>
 <p>
