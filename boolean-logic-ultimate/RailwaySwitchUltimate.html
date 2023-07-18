@@ -39,7 +39,7 @@
 	});
 </script>
 
-<script type="text/x-red" data-template-name="RailwaySwitchUltimate">
+<script type="text/html" data-template-name="RailwaySwitchUltimate">
 	<div class="form-row">
 		<b>Railway Switch Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
 		&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp<a target="_blank" href="https://youtu.be/iPVyiwDIUMg"><u>Youtube Sample</u></a></span>
@@ -88,11 +88,7 @@
 </script>
 
 <script type="text/markdown" data-help-name="RailwaySwitchUltimate">
-[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
-
-[Find it useful?](https://www.paypal.me/techtoday)
-
-The railway switcher, switches the input msg flow to one ot the two outputs (upper or lower).
+<p>The railway switcher, switches the input msg flow to one ot the two outputs (upper or lower).</p>
 
 |Property|Description|
 |--|--|
@@ -100,10 +96,17 @@ The railway switcher, switches the input msg flow to one ot the two outputs (upp
 | With Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Then | This property, allow you to auto toggle the selected start state after some time. |
 
-**INPUT MSG WITH "TRIGGER" TOPIC**
+* Input messages
+
+Explanation of the input msg, having the <code>msg.topic</code> equal to the *Switcher by topic* property:
 
 Pass <code>msg.payload = false</code> switches the msg input to the UPPER output</br>
 Pass <code>msg.payload = true</code> switches the msg input to the LOWER output</br>
 
+<br/>
+
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
+
+[Find it useful?](https://www.paypal.me/techtoday)
 
 </script>

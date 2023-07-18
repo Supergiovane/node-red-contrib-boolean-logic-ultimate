@@ -109,6 +109,8 @@
 				this.sInitializeWith = "WaitForPayload";
 			}
 
+			$("#tabs").tabs();
+
 		},
 		oneditsave: function () {
 			// Delete persistent state file
@@ -119,7 +121,7 @@
 
 </script>
 
-<script type="text/x-red" data-template-name="BooleanLogicUltimate">
+<script type="text/html" data-template-name="BooleanLogicUltimate">
 	<div class="form-row">
 	<b>Boolean Logic Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
 	&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp<a target="_blank" href="https://youtu.be/6En2WiWKsXM"><u>Youtube Sample</u></a></span>
@@ -127,81 +129,105 @@
 	<br/>        
 	</div>
 
-	<div class="form-row">
-        <label for="node-input-inputCount"><i class="fa fa-step-forward"></i> Inputs count</label>
-		<input style="width:100px" type="text" id="node-input-inputCount" placeholder="Inputs count, for example: 2">
+	<div id="tabs">
+	<ul>
+		<li><a href="#fragment-1">Basic configuration</a></li>
+		<li><a href="#fragment-2">Advanced configuration</a></li>
+	</ul>
+	<div id="fragment-1">
+		<p>
+			<div class="form-row">
+				<label for="node-input-inputCount"><i class="fa fa-step-forward"></i> Inputs count</label>
+				<input style="width:100px" type="text" id="node-input-inputCount" placeholder="Inputs count, for example: 2">
+			</div>
+			<div class="form-row">
+				<label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Evaluate</label>
+				<input type="text" id="node-input-payloadPropName">
+			</div>
+			<div class="form-row">
+				<label for="node-input-name"><i class="icon-tag"></i> Name</label>
+				<input type="text" id="node-input-name" placeholder="Name">
+			</div>
+			<div class="form-row">
+				<label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+				<input type="text" id="node-input-topic" placeholder="Node's own topic">
+			</div>
+		</p>
 	</div>
-	<div class="form-tips" style="margin-top: 8px;text-align:center">Inputs count: each incoming msg.topic represents one input.</div>
-<br/>
-	<div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-	<div class="form-row">
-        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
-		<input type="text" id="node-input-payloadPropName">
-    </div>
-	<div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="Node's own topic">
-	</div>
-    <div class="form-row">
-        <label for="node-input-filtertrue"><i class="fa fa-filter"></i> Filter output</label>
-        <select type="text" id="node-input-filtertrue" placeholder="Filter">
-			<option value="both">Output both 'true' and 'false' results</option>
-			<option value="onlytrue">Output only 'true' results</option>
-		</select>
-	</div>
-	<div class="form-row">
-        <label for="node-input-outputtriggeredby"><i class="fa fa-filter"></i> Trigger mode</label>
-        <select type="text" id="node-input-outputtriggeredby" placeholder="Event">
-			<option value="all">All topics (will output a result whenever an input msg arrives)</option>
-			<option value="onlyonetopic">Single topic (still evaluates all inputs, but will output a result only if a specified topic arrives)</option>
-		</select>
-	</div>
-	<div class="form-row" id="triggertopic">
-        <label for="node-input-triggertopic"><i class="fa fa-tasks"></i> Topic that start boolean logic evaluation</label>
-        <input type="text" id="node-input-triggertopic" placeholder="Input topic">
-	</div>
-	<div class="form-row">
-        <label style="width:250px" for="node-input-sInitializeWith"><i class="fa fa-home"></i> If input states are undefined at boot</label>
-        <select style="width:170px" type="text" id="node-input-sInitializeWith" placeholder="">
-			<option value="WaitForPayload">Leave undefined</option>
-			<option value="false">Initialize all with False</option>
-			<option value="true">Initialize all with True</option>
-		</select>
-	</div>
-	<div class="form-row">
-		<i class="fa fa-floppy-o"></i> &nbsp
-		<input type="checkbox" id="node-input-persist" style="display:inline-block; width:auto; vertical-align:top;">
-		&nbsp<label style="width:auto" for="node-input-persist"> Remember latest input values after reboot</label> 
-	</div>
-	<div class="form-row">
-		<i class="fa fa-gavel"></i>&nbsp
-		<input type="checkbox" id="node-input-restrictinputevaluation" style="display:inline-block; width:auto; vertical-align:top;">
-		&nbsp<label style="width:auto" for="node-input-restrictinputevaluation"> Reject non boolean (true/false) input values</label>
-	</div>
-	<div class="form-row">
-        <label style="width:160px" for="node-input-delayEvaluation"><i class="fa fa-hourglass-o"></i> Delay evaluation (ms)</label>
-		<input style="width:150px" type="text" id="node-input-delayEvaluation" placeholder="Set 0 for no delay">
+	<div id="fragment-2">
+		<p>
+			<div class="form-row">
+				<label for="node-input-filtertrue"><i class="fa fa-filter"></i> Filter output</label>
+				<select type="text" id="node-input-filtertrue" placeholder="Filter">
+					<option value="both">Output both 'true' and 'false' results</option>
+					<option value="onlytrue">Output only 'true' results</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<label for="node-input-outputtriggeredby"><i class="fa fa-filter"></i> Trigger mode</label>
+				<select type="text" id="node-input-outputtriggeredby" placeholder="Event">
+					<option value="all">All topics (will output a result whenever an input msg arrives)</option>
+					<option value="onlyonetopic">Single topic (still evaluates all inputs, but will output a result only if a
+						specified topic arrives)</option>
+				</select>
+			</div>
+			<div class="form-row" id="triggertopic">
+				<label for="node-input-triggertopic"><i class="fa fa-tasks"></i> Topic that start boolean logic evaluation</label>
+				<input type="text" id="node-input-triggertopic" placeholder="Input topic">
+			</div>
+			<div class="form-row">
+				<label style="width:250px" for="node-input-sInitializeWith"><i class="fa fa-home"></i> If input states are undefined
+					at boot</label>
+				<select style="width:170px" type="text" id="node-input-sInitializeWith" placeholder="">
+					<option value="WaitForPayload">Leave undefined</option>
+					<option value="false">Initialize all with False</option>
+					<option value="true">Initialize all with True</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<i class="fa fa-floppy-o"></i> &nbsp
+				<input type="checkbox" id="node-input-persist" style="display:inline-block; width:auto; vertical-align:top;">
+				&nbsp<label style="width:auto" for="node-input-persist"> Remember latest input values after reboot</label>
+			</div>
+			<div class="form-row">
+				<i class="fa fa-gavel"></i>&nbsp
+				<input type="checkbox" id="node-input-restrictinputevaluation"
+					style="display:inline-block; width:auto; vertical-align:top;">
+				&nbsp<label style="width:auto" for="node-input-restrictinputevaluation"> Reject non boolean (true/false) input
+					values</label>
+			</div>
+			<div class="form-row">
+				<label style="width:160px" for="node-input-delayEvaluation"><i class="fa fa-hourglass-o"></i> Delay evaluation
+					(ms)</label>
+				<input style="width:150px" type="text" id="node-input-delayEvaluation" placeholder="Set 0 for no delay">
+			</div>
+		</p>
 	</div>
 	
+	</div>
 	<br/>
 	<br/>
 	<br/>
 </script>
 
 <script type="text/markdown" data-help-name="BooleanLogicUltimate">
-[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
+<p>This node does a boolean logic evaluation and outputs a result. It's compatible with the HomeAssistant's output nodes.</p>
 
-[Find it useful?](https://www.paypal.me/techtoday)
- 
+**Basic Configuration**
+
 |Property|Description|
 |--|--|
 | Inputs count | Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of *different* topics arrives. *Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.* |
-| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Evaluate | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+
+<br/>
+
+**Advanced Configuration**
+
+|Property|Description|
+|--|--|
 | Filter output | **Output both 'true' and 'false'** results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output. **Output only 'true'** results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out. |
-| Trigger mode | **All topics**: standard behaviour, the node will evaluate each input topic and ouputs the values. At each input change, it will output a msg on the flow. **Single topic + eval other inputs**: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic**, it  outputs a msg to the flow.|
+| Trigger mode | **All topics** is the standard behaviour, the node will evaluate each input topic and ouputs the values. At each input change, it will output a msg on the flow. **Single topic + eval other inputs**: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic**, it  outputs a msg to the flow.|
 | If input states are undefined | Every time you create a node or modify the node, all inputs are set to undefined. This means that the node will wait the arrive of all topics (for example 3 topics, if you've selected 3 topics in the option), before it can output a payload. This can be a problem if your logic must be operative as soon as you deploy the flow. To overcome this problem, you can "initialize" all the undefined inputs with True or False. **Leave undefined**: Standard behaviour, the node will wait all the "undefined" topics to arrive, then starts a flow with the result. **True or False**: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false".|
 | Remember latest input values after reboot | If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload. Every time you modify the node's config, <b>the retained values are cleared</b>.|
 | Reject non boolean (true/false) input values | If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload value to a logic true/false boolean. |
@@ -213,5 +239,13 @@
 |--|--|
 | msg.reset = true | Resets all saved input values to undefined |
 | msg.inputcount | Changes the inputs count property. For example, <b>msg.inputcount = 3</b> Whenever you lower the inputcount from a higher number to a lower one, for example from 3 to 2, it's suggested to do a <b>msg.reset=true</b> to reset all stored input values.|
+
+<br/>
+<br/>
+
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
+
+[Find it useful?](https://www.paypal.me/techtoday)
+<br/>
 
 </script>

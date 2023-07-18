@@ -50,7 +50,7 @@
 
 </script>
 
-<script type="text/x-red" data-template-name="ImpulseUltimate">
+<script type="text/html" data-template-name="ImpulseUltimate">
 	<div class="form-row">
 		<b>Impulse Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
         &nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp<a target="_blank" href="https://youtu.be/PdLEWtKsNv8"><u>Youtube Sample</u></a></span>
@@ -82,17 +82,16 @@
 </script>
 
 <script type="text/markdown" data-help-name="ImpulseUltimate">
-[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
+<p>The pourpose of this node is to send a sequence of pulsed commands to for example, open a garage door or to command an appliance requiring a set of timed commands.</p>
 
-[Find it useful?](https://www.paypal.me/techtoday)
-
-The pourpose of this node is to send a sequence of pulsed commands to for example, open a garage door or to command an appliance requiring a set of timed commands.<br />
+**Configuration**
 
 |Property|Description|
 |--|--|
 | Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 
-**Avaiable Commands**<br />
+* Avaiable Commands
+
 Commands are to be wrote in the format: command:value. For example ***send:200***, ***wait:2000***. Each row represents a command.<br />
 <br /><b>send</b><br />
 sends a value. For example: ***send:true*** or ***send:100*** or ***send:Hello***<br />
@@ -106,8 +105,15 @@ comment. For example: ***// This opens the garage***. The comment are ignored, s
 
 Pass <code>msg.payload = true</code> to the node to start the sequence</br>
 Pass <code>msg.payload = false</code> to the node to stop the running sequence</br>
-<br />
+<br/>
 
 - Output: the node outputs a message you specified in the command textbox<br/>
+
+<br/>
+<br/>
+
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
+
+[Find it useful?](https://www.paypal.me/techtoday)
 
 </script>

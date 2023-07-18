@@ -4,6 +4,11 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.61</b> Juli 2023<br/>
+- Standardization of the help, based on Node-Red directives.</br>
+- Updated the README</br>
+</p>
+<p>
 <b>Version 1.0.60</b> March 2023<br/>
 - FIX: Fixed some little issues to the Railways Node and fixed the youtube video not having audio https://youtu.be/iPVyiwDIUMg. 
 </p>

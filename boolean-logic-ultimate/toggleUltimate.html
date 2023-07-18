@@ -26,7 +26,7 @@
 	});
 </script>
 
-<script type="text/x-red" data-template-name="toggleUltimate">
+<script type="text/html" data-template-name="toggleUltimate">
 	<div class="form-row">
 		<b>Toggle Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
 		&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp<a target="_blank" href="https://youtu.be/VijkMBpt_CM"><u>Youtube Sample</u></a></span>
@@ -60,17 +60,20 @@
 </script>
 
 <script type="text/markdown" data-help-name="toggleUltimate">
-[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
-
-[Find it useful?](https://www.paypal.me/techtoday)
-
-The pourpose of this node is to toggle between true/false, everytime an inboud message arrives.<br />
+<p>The pourpose of this node is to toggle between true/false, everytime an inboud message arrives.</p>
 
 |Property|Description|
 |--|--|
 | Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 
-**INPUT**<br />
+* Input message
 
 Any message that arrives on input, will be passwd through to the output with the payload toggled between true and false.
+
+<br/>
+
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
+
+[Find it useful?](https://www.paypal.me/techtoday)
+
 </script>
