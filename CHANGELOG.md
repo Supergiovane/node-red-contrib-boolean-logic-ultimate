@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.62</b> August 2023<br/>
+- Math node: added "subtract option".</br>
+</p>
+<p>
 <b>Version 1.0.61</b> Juli 2023<br/>
 - Standardization of the help, based on Node-Red directives.</br>
 - Updated the README</br>

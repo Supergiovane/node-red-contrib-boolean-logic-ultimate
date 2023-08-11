@@ -75,6 +75,24 @@ module.exports = function (RED) {
 							msg.payload = moltiplicazione; // Sum
 							msg.average = undefined; // Average
 							msg.measurements = quantita; // Topics	
+						} else if (node.math === "subtract") {
+							let values = []
+							for (let row in node.topics) {
+								if (node.topics.hasOwnProperty(row)) {
+									values.push(node.topics[row]);
+								}
+							}
+							function orderReverseNumbers(a, b) {
+								return b - a;
+							}
+							values.sort(orderReverseNumbers)
+							let risultato = values[0]
+							for (let index = 1; index < values.length; index++) {
+								risultato -= values[index];
+							}
+							msg.payload = risultato; // Sum
+							msg.average = risultato / quantita; // Average
+							msg.measurements = quantita; // Topics	
 						}
 
 						// overwrite topic if configured
