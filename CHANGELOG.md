@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.0.63</b> September 2023<br/>
+- NEW: Comparator node. Compare the values from 2 input messages.</br>
+</p>
+<p>
 <b>Version 1.0.62</b> August 2023<br/>
 - Math node: added "subtract option".</br>
 </p>

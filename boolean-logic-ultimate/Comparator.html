@@ -1,0 +1,101 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Comparator', {
+        category: 'boolean logic ultimate',
+        color: '#ff8080',
+        defaults: {
+            name: {
+                value: "Comparator"
+            },
+            property: {
+                value: "payload"
+            },
+            math: {
+                value: "==="
+            },
+            topic1: {
+                value: "", required: true
+            },
+            topic2: {
+                value: "", required: true
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-arrows-v",
+        label:
+            function () {
+                return this.name || "Comparator";
+            },
+        paletteLabel: function () {
+            return "ComparatorUltimate";
+        },
+        oneditprepare: function () {
+            if ($("#node-input-property").val() === "") $("#node-input-property").val("payload");
+            $("#node-input-property").typedInput({ default: 'msg', types: ['msg'] });            
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Comparator">
+	<div class="form-row">
+		<b>Comparator</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp<a target="_blank" href="https://youtu.be/fDRsQPu3bG4"><u>Youtube Sample</u></a></span>
+        <br/>
+		<br/>        
+	</div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Topic">
+    </div>
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-property"><i class="icon-tag"></i> Input</label>
+        <input type="text" id="node-input-property" placeholder="payload">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic1"><i class="icon-tag"></i> Topic 1</label>
+        <input type="text" id="node-input-topic1" placeholder="For example, topic 1">
+    </div>
+    <div class="form-row">
+		<label for="node-input-math"><i class="icon-tag"></i> Operation</label>
+		<select type="text" id="node-input-math" placeholder="">
+			<option value="===">=== (equals)</option>
+            <option value="!==">!== (not equals)</option>
+            <option value=">=">></option>
+            <option value="<="><</option>
+			<option value=">=">>=</option>
+            <option value="<="><=</option>            
+		</select>
+	</div>
+    <div class="form-row">
+        <label for="node-input-topic2"><i class="icon-tag"></i> Topic 2</label>
+        <input type="text" id="node-input-topic2" placeholder="For example, topic 2">
+    </div>
+</script>
+
+<script type="text/markdown" data-help-name="Comparator">
+<p>The Comparator, compares two msg values and outputs true/false.</p>
+
+|Property|Description|
+|--|--|
+| Name | It's the node name. This will be also the output topic. |
+| Input | It's the msg property to be evaluated. *By default, it is *payload*, but you can also specify other properties, for example "payload.value"*. It **must** be a numeric value. The node will try to automatically convert numeric values expressed as strings, to real numbers. |
+| Topic 1 | It's the topic to be evaluated against the second topic. |
+| Comparator | It's the comparator. It compares the Topic 1 against the Topic 2. |
+| Topic 2 | It's the second topic to be evaluated against the first topic. |
+
+<br/>
+
+### Outputs
+
+1. Standard output
+: payload (boolean) : the standard output of the command.
+
+### Details
+
+`msg.payload` is used as the payload of the published message. I'ts true or false based on the result of the compare operation.  
+
+<br/>
+
+[Find it useful?](https://www.paypal.me/techtoday)
+
+</script>

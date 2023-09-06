@@ -84,7 +84,7 @@ The node can convert arbitrary input values to true/false. It supports Homeassis
 |Property|Description|
 |--|--|
 | Inputs count | Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of *different* topics arrives. *Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics.* |
-| Evaluate | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Evaluate | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Filter output | **Output both 'true' and 'false'** results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output. **Output only 'true'** results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out. |
 | Trigger mode | **All topics**: standard behaviour, the node will evaluate each input topic and ouputs the values. At each input change, it will output a msg on the flow. **Single topic + eval other inputs**: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic**, it  outputs a msg to the flow.|
 | If input states are undefined | Every time you create a node or modify the node, all inputs are set to undefined. This means that the node will wait the arrive of all topics (for example 3 topics, if you've selected 3 topics in the option), before it can output a payload. This can be a problem if your logic must be operative as soon as you deploy the flow. To overcome this problem, you can "initialize" all the undefined inputs with True or False. **Leave undefined**: Standard behaviour, the node will wait all the "undefined" topics to arrive, then starts a flow with the result. **True or False**: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false".|
@@ -118,7 +118,7 @@ The interrupt flows is able to stop the input messages to exiting the node.
 |Property|Description|
 |--|--|
 | Trigger by topic | Whenever the node receives a payload = false from this topic,it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again. The node will output the current stored message plus an added property "isReplay = true", as soon as it receives a ***msg.play = true*** from this topic. The node will clear the current stored message, as soon as it receives a ***msg.reset = true*** from this topic. |
-| With Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| With Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Then | This property, allow you to auto toggle the selected start state (pass or block) after a timer has elapsed. You can choose from some pre-defined delays. If you have, for example, an Homekit-Bridged nodeset with a thermostat node or security system node in your flow, once node-red restarts, these homekit nodes output a default message to the flow. Just put an InterruptFlow node with a "block at start" behaviour and a toggle delay enabled behind homekit nodes, to temporary stop the chained nodes to receive the unwanted startup message.|
 
 
@@ -190,7 +190,7 @@ The input message is preserved and passed to the output, changing only the topic
 
 |Property|Description|
 |--|--|
-| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 
 <br/>
 
@@ -212,7 +212,7 @@ The input message is preserved and passed to the output, changing only the topic
 
 |Property|Description|
 |--|--|
-| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 
 <br/>
 
@@ -234,7 +234,7 @@ output2 : outputs the inverted value false/true<br/>
 
 |Property|Description|
 |--|--|
-| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 
 <br/>
 
@@ -270,7 +270,7 @@ This is useful if you need to simply send a true or false payload.
 
 |Property|Description|
 |--|--|
-| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 
 <br/>
 
@@ -344,7 +344,7 @@ The pourpose of this node is to send a sequence of pulsed commands to for exampl
 
 |Property|Description|
 |--|--|
-| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 
 <br/>
 
@@ -389,7 +389,7 @@ The pourpose of this node is to do maths on the incoming values. Each incoming m
 
 |Property|Description|
 |--|--|
-| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 
 <br/>
 
@@ -427,7 +427,7 @@ The pourpose of this node is to toggle between true/false, everytime an inboud m
 
 |Property|Description|
 |--|--|
-| Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 
 <br/>
 
@@ -452,7 +452,7 @@ The railway switcher, switches the input msg flow to one ot the two outputs (upp
 |Property|Description|
 |--|--|
 | Switcher topic | Whenever the node receives a payload from this **topic**, it switches the input messages to an output. |
-| With Input | Set the property where the input payload is. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| With Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Then | This property, allow you to auto toggle the selected start state after some time. |
 
 <br/>
