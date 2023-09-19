@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.0</b> September 2023<br/>
+- NEW: Translator config node. Each boolean logic node can now translate the input payload to a boolean value. For example, you can add "done:true" to the translation table, to convert the input payload "done", to a boolean <i>TRUE</> value.</br>
+</p>
+<p>
 <b>Version 1.0.63</b> September 2023<br/>
 - NEW: Comparator node. Compare the values from 2 input messages.</br>
 </p>

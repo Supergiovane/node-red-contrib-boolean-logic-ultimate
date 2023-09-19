@@ -7,7 +7,8 @@
 			triggertopic: { value: "trigger" },
 			initializewith: { value: "0" },
 			autoToggle: { value: "0" },
-			payloadPropName: { value: "payload", required: false }
+			payloadPropName: { value: "payload", required: false },
+			translatorConfig: { type: "translator-config", required: false }			
 		},
 		inputs: 1,
 		outputs: 2,
@@ -85,6 +86,15 @@
 			<option value="120">Toggle above option after 120 seconds</option>
 		</select>
 	</div>
+	<div class="form-row">
+		<br />
+		<b>Translator</b>
+		<br />
+		<label for="node-input-translatorConfig">
+			<font color="green" size="4px"><i class="fa fa-sign-in" aria-hidden="true"></i></font> Input
+		</label>
+		<input type="text" id="node-input-translatorConfig" />
+	</div>
 </script>
 
 <script type="text/markdown" data-help-name="RailwaySwitchUltimate">
@@ -95,6 +105,7 @@
 | Switcher topic | Whenever the node receives a payload from this **topic**, it switches the input messages to an output. |
 | With Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Then | This property, allow you to auto toggle the selected start state after some time. |
+| Translator Input | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
 * Input messages
 

@@ -35,7 +35,8 @@
 					}
 			},
 			restrictinputevaluation: { value: false },
-			delayEvaluation: { value: 0 }
+			delayEvaluation: { value: 0 },
+			translatorConfig: { type: "translator-config", required: false }
 		},
 		inputs: 1,
 		outputs: 3,
@@ -201,6 +202,15 @@
 					(ms)</label>
 				<input style="width:150px" type="text" id="node-input-delayEvaluation" placeholder="Set 0 for no delay">
 			</div>
+			<div class="form-row">
+				<br />
+				<b>Translator</b>
+				<br />
+				<label for="node-input-translatorConfig">
+					<font color="green" size="4px"><i class="fa fa-sign-in" aria-hidden="true"></i></font> Input
+				</label>
+				<input type="text" id="node-input-translatorConfig" />
+			</div>
 		</p>
 	</div>
 	
@@ -232,6 +242,7 @@
 | Remember latest input values after reboot | If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload. Every time you modify the node's config, <b>the retained values are cleared</b>.|
 | Reject non boolean (true/false) input values | If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload value to a logic true/false boolean. |
 | Delay evaluation (ms) | Delays the evaluation until this time (in milliseconds) is elapsed. Each time a message or "topic trigger message" (see **Trigger mode**) arrives, the delay is restarted. This option is useful for debouncing pourposes or simply for adding some delay. For example, you can turn on a light if the room is occupied for a long time, allowing people to fast transit repeatedly, without the need of turning the light on. Another example, if you have many sensors changing state rapidly, you can wait until these sensor reach a quiet state, then evaluate the inputs.|
+| Translator Input | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
 <br/>
 

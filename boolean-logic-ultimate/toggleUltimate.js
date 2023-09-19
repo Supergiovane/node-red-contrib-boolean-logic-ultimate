@@ -4,7 +4,7 @@ module.exports = function (RED) {
 		this.config = config;
 		var node = this;
 		const utils = require("./utils.js");
-		node.valueToToggle = config.valueToToggle === undefined ? true : utils.ToBoolean(config.valueToToggle);
+		node.valueToToggle = config.valueToToggle === undefined ? true : utils.ToBoolean(config.valueToToggle, RED.nodes.getNode(config.translatorConfig)) // Retrieve the config node. It can be null, but it's handled in utils.js);
 
 		function setNodeStatus({ fill, shape, text }) {
 			let dDate = new Date();

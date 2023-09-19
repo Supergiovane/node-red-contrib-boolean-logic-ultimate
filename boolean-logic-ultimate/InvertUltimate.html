@@ -6,7 +6,8 @@
 			name: { 
 				value: "Invert"
 			},
-			payloadPropName: { value: "payload", required: false }			
+			payloadPropName: { value: "payload", required: false },
+			translatorConfig: { type: "translator-config", required: false }			
         },
         inputs:1,
         outputs:1,
@@ -25,7 +26,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="InvertUltimate">
+<script type="text/html" data-template-name="InvertUltimate">
 	<div class="form-row">
 		<b>Invert Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
 		&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp<a target="_blank" href="https://youtu.be/A41x8VevZD8"><u>Youtube Sample</u></a></span>
@@ -40,6 +41,15 @@
         <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
 		<input type="text" id="node-input-payloadPropName">
     </div>
+	<div class="form-row">
+		<br />
+		<b>Translator</b>
+		<br />
+		<label for="node-input-translatorConfig">
+			<font color="green" size="4px"><i class="fa fa-sign-in" aria-hidden="true"></i></font> Input
+		</label>
+		<input type="text" id="node-input-translatorConfig" />
+	</div>
 </script>
 
 <script type="text/markdown" data-help-name="InvertUltimate">
@@ -50,10 +60,9 @@ The input message is preserved and passed to the output, changing only the topic
 |Property|Description|
 |--|--|
 | Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Translator Input | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
 <br/>
-
-[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
 
 [Find it useful?](https://www.paypal.me/techtoday)
 

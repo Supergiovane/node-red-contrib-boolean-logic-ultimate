@@ -38,6 +38,7 @@ Other than true/false, all nodes accepts these strings and convert it to true/fa
 | "home" | true |
 | "not_home" | false |
 
+You can add your own translation command, thanks to the translator-config node.
 
 <br/>
 <br/>

@@ -17,7 +17,7 @@
             },
             topic2: {
                 value: "", required: true
-            },
+            }           
         },
         inputs: 1,
         outputs: 1,
@@ -31,7 +31,7 @@
         },
         oneditprepare: function () {
             if ($("#node-input-property").val() === "") $("#node-input-property").val("payload");
-            $("#node-input-property").typedInput({ default: 'msg', types: ['msg'] });            
+            $("#node-input-property").typedInput({ default: 'msg', types: ['msg'] });
         }
     });
 </script>
@@ -70,6 +70,7 @@
         <label for="node-input-topic2"><i class="icon-tag"></i> Topic 2</label>
         <input type="text" id="node-input-topic2" placeholder="For example, topic 2">
     </div>
+    
 </script>
 
 <script type="text/markdown" data-help-name="Comparator">

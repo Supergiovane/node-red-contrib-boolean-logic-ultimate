@@ -6,7 +6,7 @@ module.exports = function (RED) {
     node.math = config.math === undefined ? "===" : config.math;
     node.topic1Value = undefined;
     node.topic2Value = undefined;
-
+    
     function setNodeStatus({ fill, shape, text }) {
       let dDate = new Date();
       node.status({

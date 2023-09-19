@@ -1,0 +1,63 @@
+<script type="text/javascript">
+    RED.nodes.registerType('translator-config', {
+        category: 'config',
+        defaults: {
+            name: { value: "" },
+            commandText: { value: 'on:true\noff:false\nactive:true\ninactive:false\nopen:true\nclosed:false\nclose:false\n1:true\n0:false\ntrue:true\nfalse:false\nhome:true\nnot_home:false', required: false }
+        },
+        label: function () {
+            return this.name;
+        },
+        oneditprepare: function () {
+            var node = this;
+            node.editor = RED.editor.createEditor({
+                id: 'node-input-editorcommandText',
+                mode: 'ace/mode/text',
+                value: node.commandText
+            });
+        },
+        oneditsave: function () {
+            var node = this;
+            node.commandText = node.editor.getValue();
+            node.editor.destroy();
+            delete node.editor;
+        },
+        oneditcancel: function () {
+            var node = this;
+            node.editor.destroy();
+            delete node.editor;
+        },
+    });
+</script>
+
+<script type="text/html" data-template-name="translator-config">
+    <div class="form-row">
+        <label for="node-config-input-name">
+            <i class="fa fa-tag"></i> Name
+        </label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label style="width:300px;" for="node-input-commandText"><i class="fa fa-tasks"></i> Translate</label>
+        <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-editorcommandText"></div>
+    </div>
+</script>
+
+<script type="text/markdown" data-help-name="translator-config">
+<p>This node translates the input msg to valid true/false values.<p>
+
+
+It can translate an input payload, to a true/false boolean values.<br />
+Each row in the text box, represents a translation command. <br/>
+There are some default translation's rows, to make the *boolean-logic-ultimate* nodes compatible with Homeassistant. <br/>
+You can add your own translation row.<br/>
+
+|Property|Description|
+|--|--|
+| Translate | Add, delete or edit your own translation command. The row's translation command must be **input string:true(or false)**. For example: <code>open:true</code> <code>closed:false</code> |
+
+<br/>
+
+
+[Find it useful?](https://www.paypal.me/techtoday)
+</script>
