@@ -79,6 +79,7 @@ module.exports = function (RED) {
 							let values = []
 							for (let row in node.topics) {
 								if (node.topics.hasOwnProperty(row)) {
+									++quantita;
 									values.push(node.topics[row]);
 								}
 							}
