@@ -5,7 +5,7 @@
 
 <p>
 <b>Version 1.1.1</b> October 2023<br/>
-- Math node: FIX: fixed "measurement" and "average" not showing correct results when using the "subtract" option.</br>
+- Math node: FIX: fixed "measurement" and "average" not showing correct results when using the "subtract" option. Thanks to @VanillaFord</br>
 </p>
 <p>
 <b>Version 1.1.0</b> September 2023<br/>
