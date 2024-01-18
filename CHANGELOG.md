@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.2</b> January 2024<br/>
+- NEW: added "normal" and "violated" as default accepted inputs, for compatibility with Home Assistant.</br>
+</p>
+<p>
 <b>Version 1.1.1</b> October 2023<br/>
 - Math node: FIX: fixed "measurement" and "average" not showing correct results when using the "subtract" option. Thanks to @VanillaFord</br>
 </p>
