@@ -22,22 +22,7 @@ A set of Node-RED enhanced boolean logic and utility nodes, with persistent valu
 <br/>
 
 ### COMPATIBLES INPUT VALUES
-Other than true/false, all nodes accepts these strings and convert it to true/false. All nodes are compatible with Homeassistant output strings.
-|Input|Translated into|
-|--|--|
-| "on" | true |
-| "off" | false |
-| "active" | true |
-| "inactive" | false |
-| "open" | true |
-| "closed" or "close" | false |
-| "true" | true |
-| "false" | false |
-| "1" | true |
-| "0" | false |
-| "home" | true |
-| "not_home" | false |
-
+Other than true/false, all nodes accepts Homeassistant output strings.  
 You can add your own translation command, thanks to the translator-config node.
 
 <br/>
