@@ -21,9 +21,9 @@ A set of Node-RED enhanced boolean logic and utility nodes, with persistent valu
 <br/>
 <br/>
 
-### COMPATIBLES INPUT VALUES
-Other than true/false, all nodes accepts Homeassistant output strings.  
-You can add your own translation command, thanks to the translator-config node.
+### HOME ASSISTANT COMPATIBLES INPUT VALUES
+Other than true/false, all nodes accepts [Homeassistant](https://www.home-assistant.io) output strings.  
+You can **even add your own input translation word list**, thanks to the translator-config node.
 
 <br/>
 <br/>
