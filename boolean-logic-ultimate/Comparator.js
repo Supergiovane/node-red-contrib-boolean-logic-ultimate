@@ -6,7 +6,7 @@ module.exports = function (RED) {
     node.math = config.math === undefined ? "===" : config.math;
     node.topic1Value = undefined;
     node.topic2Value = undefined;
-    
+
     function setNodeStatus({ fill, shape, text }) {
       let dDate = new Date();
       node.status({
@@ -41,6 +41,16 @@ module.exports = function (RED) {
     }
 
     node.on("input", function (msg) {
+      if (msg.hasOwnProperty("reset")) {
+        node.topic1Value = undefined;
+        node.topic2Value = undefined;
+        setNodeStatus({
+          fill: "grey",
+          shape: "ring",
+          text: "Reset",
+        });
+        return;
+      }
       if (!msg.hasOwnProperty("topic")) {
         setNodeStatus({
           fill: "red",

@@ -17,7 +17,7 @@
             },
             topic2: {
                 value: "", required: true
-            }           
+            }
         },
         inputs: 1,
         outputs: 1,
@@ -84,9 +84,13 @@
 | Comparator | It's the comparator. It compares the Topic 1 against the Topic 2. |
 | Topic 2 | It's the second topic to be evaluated against the first topic. |
 
-<br/>
 
-### Outputs
+### Input
+
+: reset (boolean) : `msg.reset = true` is used to reset both input values to ***undefined***. The node will execute only the *reset* command, regardless of other message properties.
+
+
+### Output
 
 1. Standard output
 : payload (boolean) : the standard output of the command.

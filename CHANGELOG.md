@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.3</b> March 2024<br/>
+- Comparator node: NEW: you can now reset both input values to *undefined*, by sending **msg.reset = true**.</br>
+</p>
+<p>
 <b>Version 1.1.2</b> January 2024<br/>
 - NEW: added "normal" and "violated" as default accepted inputs, for compatibility with Home Assistant.</br>
 </p>
