@@ -4,7 +4,7 @@ module.exports = function (RED) {
 		this.config = config;
 		var node = this;
 		node.math = config.math === undefined ? "sum" : config.math;
-		this.topics = {};
+		node.topics = [];
 
 		function setNodeStatus({ fill, shape, text }) {
 			let dDate = new Date();
@@ -31,7 +31,7 @@ module.exports = function (RED) {
 
 			// handle reset
 			if (msg.hasOwnProperty("reset")) {
-				node.topics = {};
+				node.topics = [];
 				setNodeStatus({ fill: "grey", shape: "ring", text: "Reset" });
 				return;
 			}
@@ -50,52 +50,45 @@ module.exports = function (RED) {
 
 					// Sum
 					if (!isNaN(ret) && isFinite(ret)) {
-						node.topics[msg.topic.toString()] = ret;
+						if (node.topics.find(a => a.id === msg.topic.toString()) === undefined) {
+							node.topics.push({ id: msg.topic.toString(), val: ret });
+						}
 
 						var quantita = 0;
-
+						let somma = 0;
 						if (node.math === "sum") {
-							let somma = Object.keys(node.topics).reduce(function (a, b) {
+							node.topics.forEach((item) => {
+								somma += item.val;
 								++quantita;
-								return a + node.topics[b];
-							}, 0);
+							});
 							msg.payload = somma; // Sum
 							msg.average = somma / quantita; // Average
 							msg.measurements = quantita; // Topics	
 						} else if (node.math === "multiply") {
-							let moltiplicazione = Object.keys(node.topics).reduce(function (a, b) {
-								try {
+
+							let moltiplicazione = 1;
+							node.topics.forEach((item) => {
+								if (item.val !== 0) {
+									moltiplicazione *= item.val;
 									++quantita;
-									return (a > 0 ? a : 1) * node.topics[b]; // Avoid returning zero everytime	
-								} catch (error) {
-									setNodeStatus({ fill: "red", shape: "ring", text: "Error " + error.message });
-									return 0;
 								}
-							}, 0);
+							});
 							msg.payload = moltiplicazione; // Sum
-							msg.average = undefined; // Average
+							msg.average = moltiplicazione / quantita; // Average
 							msg.measurements = quantita; // Topics	
 						} else if (node.math === "subtract") {
-							let values = []
-							for (let row in node.topics) {
-								if (node.topics.hasOwnProperty(row)) {
-									++quantita;
-									values.push(node.topics[row]);
-								}
+
+							let risultato = node.topics[0].val;
+							quantita = 1;
+							for (let index = 1; index < node.topics.length; index++) {
+								risultato -= node.topics[index].val;
+								++quantita;
 							}
-							// function orderReverseNumbers(a, b) {
-							// 	return b - a;
-							// }
-							// values.sort(orderReverseNumbers)
-							let risultato = values[0]
-							for (let index = 1; index < values.length; index++) {
-								risultato -= values[index];
-							}
+
 							msg.payload = risultato; // Sum
 							msg.average = risultato / quantita; // Average
 							msg.measurements = quantita; // Topics	
 						}
-
 						// overwrite topic if configured
 						if (config.name) {
 							msg.topic = config.name;
