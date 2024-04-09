@@ -4,6 +4,7 @@ module.exports = function (RED) {
 		this.config = config;
 		var node = this;
 		node.math = config.math === undefined ? "sum" : config.math;
+		node.subtractstartfrom = config.subtractstartfrom === undefined ? "" : config.subtractstartfrom;
 		node.topics = [];
 
 		function setNodeStatus({ fill, shape, text }) {
@@ -50,8 +51,11 @@ module.exports = function (RED) {
 
 					// Sum
 					if (!isNaN(ret) && isFinite(ret)) {
-						if (node.topics.find(a => a.id === msg.topic.toString()) === undefined) {
+						let oFound = node.topics.find(a => a.id === msg.topic.toString());
+						if (oFound === undefined) {
 							node.topics.push({ id: msg.topic.toString(), val: ret });
+						} else {
+							oFound.val = ret;
 						}
 
 						var quantita = 0;
@@ -77,12 +81,24 @@ module.exports = function (RED) {
 							msg.average = moltiplicazione / quantita; // Average
 							msg.measurements = quantita; // Topics	
 						} else if (node.math === "subtract") {
-
-							let risultato = node.topics[0].val;
+							let risultato = 0;
+							if (node.subtractstartfrom !== "") {
+								try {
+									risultato = node.topics.find(m => m.id === node.subtractstartfrom).val;
+								} catch (error) {
+									setNodeStatus({ fill: "grey", shape: "ring", text: "Waiting for " + node.subtractstartfrom });
+									return;
+								}
+							} else {
+								setNodeStatus({ fill: "red", shape: "ring", text: "Please specify the topic form subtract to." });
+								return;
+							}
 							quantita = 1;
-							for (let index = 1; index < node.topics.length; index++) {
-								risultato -= node.topics[index].val;
-								++quantita;
+							for (let index = 0; index < node.topics.length; index++) {
+								if (node.topics[index].id !== node.subtractstartfrom) {
+									risultato -= node.topics[index].val;
+									++quantita;
+								}
 							}
 
 							msg.payload = risultato; // Sum

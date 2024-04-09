@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.6</b> April 2024<br/>
+- Math node: in SUBTRACT mode, now you must set a msg.topic to start subtracting from.</br>
+</p>
+<p>
 <b>Version 1.1.5</b> April 2024<br/>
 - Math node: fixed an issue with the "subtract" operator. See contestual help in the node-red help tab.</br>
 </p>
