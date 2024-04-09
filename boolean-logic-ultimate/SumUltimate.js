@@ -122,7 +122,7 @@ module.exports = function (RED) {
 			} catch (error) {
 				setNodeStatus({ fill: "red", shape: "ring", text: error.message });
 			}
-			setNodeStatus({ fill: "green", shape: "dot", text: "Sum " + msg.payload });
+			setNodeStatus({ fill: "green", shape: "dot", text: node.math + " " + msg.payload });
 			node.send(msg);
 		});
 

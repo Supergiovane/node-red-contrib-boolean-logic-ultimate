@@ -4,7 +4,7 @@
 # CHANGELOG
 
 <p>
-<b>Version 1.1.6</b> April 2024<br/>
+<b>Version 1.1.7</b> April 2024<br/>
 - Math node: <b>BREAKING CHANGE</b>: in SUBTRACT mode, now you must set a msg.topic to start subtracting from.</br>
 </p>
 <p>
