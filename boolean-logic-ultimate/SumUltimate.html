@@ -12,7 +12,7 @@
             math: {
                 value: "sum"
             }
-            
+
         },
         inputs: 1,
         outputs: 1,
@@ -24,10 +24,10 @@
         paletteLabel: function () {
             return "MathUltimate";
         },
-		oneditprepare: function () {
-			if ($("#node-input-property").val() === "") $("#node-input-property").val("payload");
-			$("#node-input-property").typedInput({ default: 'msg', types: ['msg'] });
-		}
+        oneditprepare: function () {
+            if ($("#node-input-property").val() === "") $("#node-input-property").val("payload");
+            $("#node-input-property").typedInput({ default: 'msg', types: ['msg'] });
+        }
     });
 </script>
 
@@ -62,7 +62,7 @@
 |Property|Description|
 |--|--|
 | Input | It's the msg property to be evaluated. *By default, it is *payload*, but you can also specify other properties, for example "payload.value"* |
-| Operation | Operation to be performed. |
+| Operation | Operation to be performed. For **subtract** operation, the **first topic** arriving to the node is the number to subtract to.|
 
 <br/>
 <br/>

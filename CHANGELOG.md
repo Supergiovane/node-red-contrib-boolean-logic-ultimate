@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.4</b> April 2024<br/>
+- Math node: fixed an issue with the "subtract" operator. See contestual help in the node-red help tab.</br>
+</p>
+<p>
 <b>Version 1.1.3</b> March 2024<br/>
 - Comparator node: NEW: you can now reset both input values to *undefined*, by sending **msg.reset = true**.</br>
 </p>

@@ -83,10 +83,10 @@ module.exports = function (RED) {
 									values.push(node.topics[row]);
 								}
 							}
-							function orderReverseNumbers(a, b) {
-								return b - a;
-							}
-							values.sort(orderReverseNumbers)
+							// function orderReverseNumbers(a, b) {
+							// 	return b - a;
+							// }
+							// values.sort(orderReverseNumbers)
 							let risultato = values[0]
 							for (let index = 1; index < values.length; index++) {
 								risultato -= values[index];
