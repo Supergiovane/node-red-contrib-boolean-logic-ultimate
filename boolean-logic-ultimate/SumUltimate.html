@@ -74,7 +74,7 @@
 |--|--|
 | Input | It's the msg property to be evaluated. *By default, it is *payload*, but you can also specify other properties, for example "payload.value"* |
 | Operation | Operation to be performed. |
-| Subtract from | Only visible when the *operation* is **subtract**. The *msg.topic* indicating the start number for subtraction. This can be, for example, ***SolarPower***, indicating the power from wich you could subtract the house power consumption and obtain the power you sell to the grid. Remember, each inbound msg.topic to be subtracted must be different.|
+| Subtract from | Only visible when the *operation* is **subtract**. It's the *msg.topic* of the message containing the value from wich start subtracting. |
 
 <br/>
 <br/>
