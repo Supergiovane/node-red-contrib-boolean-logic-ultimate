@@ -66,7 +66,6 @@ module.exports = function (RED) {
         if (ret !== undefined) {
           ret = Number(ret);
 
-          // Sum
           if (!isNaN(ret) && isFinite(ret)) {
             if (msg.topic === node.config.topic1) node.topic1Value = ret;
             if (msg.topic === node.config.topic2) node.topic2Value = ret;

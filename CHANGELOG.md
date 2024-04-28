@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.7</b> Mai 2024<br/>
+- FIX Comparator node: fixed wrong results using minor and major comparator.</br>
+</p>
+<p>
 <b>Version 1.1.7</b> April 2024<br/>
 - Math node: <b>BREAKING CHANGE</b>: in SUBTRACT mode, now you must set a msg.topic to start subtracting from.</br>
 </p>
