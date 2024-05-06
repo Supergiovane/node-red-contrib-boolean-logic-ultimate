@@ -4,7 +4,11 @@
 # CHANGELOG
 
 <p>
-<b>Version 1.1.7</b> Mai 2024<br/>
+<b>Version 1.1.9</b> Mai 2024<br/>
+- Added samples and better description of the Math's node (in particular, to the subract function).</br>
+</p>
+<p>
+<b>Version 1.1.8</b> Mai 2024<br/>
 - FIX Comparator node: fixed wrong results using minor and major comparator.</br>
 </p>
 <p>

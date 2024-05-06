@@ -63,7 +63,7 @@
 	</div>
     <div class="form-row" id="divSubtractFirst" hidden>
         <label for="node-input-subtractstartfrom"><i class="icon-tag"></i> Subtract from</label>
-        <input type="text" id="node-input-subtractstartfrom" placeholder="Type the msg.topic. See the help.">
+        <input type="text" id="node-input-subtractstartfrom" placeholder="See the help.">
     </div>
 </script>
 
@@ -74,9 +74,24 @@
 |--|--|
 | Input | It's the msg property to be evaluated. *By default, it is *payload*, but you can also specify other properties, for example "payload.value"* |
 | Operation | Operation to be performed. |
-| Subtract from | Only visible when the *operation* is **subtract**. It's the *msg.topic* of the message containing the value from wich start subtracting. |
+| Subtract from | Only visible when the *operation* is **subtract**. It's the *msg.topic value* of the message containing the payload from wich the node starts subtracting. For example, if the incoming msg has ***msg.topic = 'startNumber'***, you must write only **startNumber** in the *Subtract from* field. |
 
 <br/>
+
+### Inputs
+
+: reset (any) : by passing msg.reset, the node will reset all values and sarts from scratch.
+: topic (string) : the topic identifying the incoming message. Each incoming msg, must have a different topic.
+: payload (number) : the payload containing the number. If you've changed the incoming evaluation property in the ***Input*** field, the number to be evaluated must be put in such message's property, instead of the *payload* property. 
+
+### Example of "subtract"
+
+Copy this code and paste it in to your flow.
+
+```json
+[{"id":"430cc033ed140940","type":"inject","z":"1050ddfb1ce105e8","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"a","payload":"20","payloadType":"num","x":110,"y":140,"wires":[["97d95d92ddf4bf08"]]},{"id":"514067713f250a42","type":"inject","z":"1050ddfb1ce105e8","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"startNumber","payload":"100","payloadType":"num","x":140,"y":100,"wires":[["97d95d92ddf4bf08"]]},{"id":"97d95d92ddf4bf08","type":"SumUltimate","z":"1050ddfb1ce105e8","name":"Subtract","property":"payload","math":"subtract","subtractstartfrom":"startNumber","x":320,"y":140,"wires":[["c55f332fe2dadc53"]]},{"id":"c55f332fe2dadc53","type":"debug","z":"1050ddfb1ce105e8","name":"Debug","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":470,"y":140,"wires":[]},{"id":"fe0ac0d4cd660a65","type":"inject","z":"1050ddfb1ce105e8","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"b","payload":"10","payloadType":"num","x":110,"y":180,"wires":[["97d95d92ddf4bf08"]]},{"id":"3de15e77a932a0eb","type":"inject","z":"1050ddfb1ce105e8","name":"Reset","props":[{"p":"reset","v":"true","vt":"bool"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","x":110,"y":220,"wires":[["97d95d92ddf4bf08"]]}]
+```
+
 <br/>
 
 [SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)
