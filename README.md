@@ -1,6 +1,4 @@
-# node-red-contrib-boolean-logic-ultimate
-
-![Sample Node](img/logo.png) 
+![Logo](img/logo.png) 
 
 [![NPM version][npm-version-image]][npm-url]
 [![NPM downloads per month][npm-downloads-month-image]][npm-url]
