@@ -1,3 +1,5 @@
+const { tryCatch } = require("@project-chip/matter-node.js/common");
+
 module.exports = function (RED) {
 	function InjectUltimate(config) {
 		RED.nodes.createNode(this, config);
@@ -5,6 +7,7 @@ module.exports = function (RED) {
 		var node = this;
 		node.curVal = true;
 		node.topic = config.topic || "Inject";
+		node.outputJSON = config.outputJSON === undefined ? "{}" : config.outputJSON;
 		setNodeStatus({ fill: "grey", shape: "dot", text: "Waiting" });
 
 
@@ -16,7 +19,7 @@ module.exports = function (RED) {
 					res.sendStatus(200);
 				} catch (err) {
 					res.sendStatus(500);
-					node.error(RED._("InjectUltimate.failed", { error: err.toString() }));
+					node.error(RED._("InjectUltimate.failed, error:" + err.message));
 				}
 			} else {
 				res.sendStatus(404);
@@ -30,7 +33,14 @@ module.exports = function (RED) {
 			let msgFalse = { payload: false, topic: node.topic };
 			let msgToggled = { payload: node.curVal, topic: node.topic };
 			node.curVal = !node.curVal;
-			node.send([msgTrue, msgFalse, msgToggled]);
+			try {
+				node.outputJSON = JSON.parse(node.outputJSON);
+				if (node.outputJSON.topic === undefined) node.outputJSON.topic = node.topic; // Add topic if not present
+			} catch (error) {
+				setNodeStatus({ fill: "red", shape: "dot", text: "JSON error " + error.message });
+				RED.log.error("node.outputJSON = JSON.parse(node.outputJSON) error:" + error.message);
+			}
+			node.send([msgTrue, msgFalse, msgToggled, node.outputJSON]);
 		}
 
 		function setNodeStatus({ fill, shape, text }) {

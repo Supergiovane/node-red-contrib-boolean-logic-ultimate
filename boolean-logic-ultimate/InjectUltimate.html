@@ -11,11 +11,12 @@
             },
             curVal: {
                 value: true,
-            }
+            },
+            outputJSON: { value: '{ \n\t"payload":"hello",\n\t"topic":"1"\n}' },
         },
         inputs: 0,
-        outputs: 3,
-        outputLabels: ["True", "False", "Toggle"],
+        outputs: 4,
+        outputLabels: ["True", "False", "Toggle", "JSON"],
         icon: "inject.svg",
         button: {
             onclick: function () {
@@ -53,13 +54,34 @@
             function () {
                 return this.name + " " + this.topic;
             },
+        oneditprepare: function () {
+            var node = this;
+            node.editor = RED.editor.createEditor({
+                id: 'node-input-editoroutputJSON',
+                mode: 'ace/mode/json',
+                value: node.outputJSON
+            });
+            if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
+
+        },
+        oneditsave: function () {
+            var node = this;
+            node.outputJSON = node.editor.getValue();
+            node.editor.destroy();
+            delete node.editor;
+        },
+        oneditcancel: function () {
+            var node = this;
+            node.editor.destroy();
+            delete node.editor;
+        },
         paletteLabel: function () {
             return "InjectUltimate";
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="InjectUltimate">
+<script type="text/html" data-template-name="InjectUltimate">
 	<div class="form-row">
 		<b>Inject Ultimate</b>&nbsp&nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
         &nbsp&nbsp&nbsp<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp<a target="_blank" href="https://youtu.be/sYc6L5QQrTw"><u>Youtube Sample</u></a></span>
@@ -74,12 +96,31 @@
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic" placeholder="Topic">
     </div>
+    <div class="form-row" >
+        <label style="width:300px;" for="node-input-outputJSON"><i class="fa fa-tasks"></i> JSON</label>
+        <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-editoroutputJSON"></div>
+	</div>
 </script>
 
 <script type="text/markdown" data-help-name="InjectUltimate">
-<p>The pourpose of this node is to send a message with payload TRUE on the first output, FALSE on second output and a TOGGLE (true/false) on the third output, by pressing the pushbutton.</p>
+<p>The pourpose of this node is to send a msg to all output pins at once.</p>
 
-This is useful if you need to simply test your flow.
+**Configuration**
+
+|Property|Description|
+|--|--|
+| Name | Node name.|
+| Topic | The msg output topic. It can be overridden by the JSON field, but only in the output pin #4.|
+| JSON | The pin #4 will output this JSON message.|
+
+### Output
+
+- pin1 : true
+- pin2 : false
+- pin3 : toggle
+- pin4 : json object
+<br/>
+<br/>
 
 
 [SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)

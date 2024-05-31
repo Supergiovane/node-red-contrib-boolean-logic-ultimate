@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.10</b> Mai 2024<br/>
+- NEW: inject node now can inject a JSON as well.</br>
+</p>
+<p>
 <b>Version 1.1.9</b> Mai 2024<br/>
 - Added samples and better description of the Math's node (in particular, to the subract function).</br>
 </p>
