@@ -1,4 +1,4 @@
-const { tryCatch } = require("@project-chip/matter-node.js/common");
+
 
 module.exports = function (RED) {
 	function InjectUltimate(config) {

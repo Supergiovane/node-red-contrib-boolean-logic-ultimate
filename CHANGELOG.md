@@ -4,7 +4,7 @@
 # CHANGELOG
 
 <p>
-<b>Version 1.1.10</b> Mai 2024<br/>
+<b>Version 1.1.11</b> Mai 2024<br/>
 - NEW: inject node now can inject a JSON as well.</br>
 </p>
 <p>
