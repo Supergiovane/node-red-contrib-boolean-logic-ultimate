@@ -56,13 +56,14 @@
             },
         oneditprepare: function () {
             var node = this;
+
+            if (node.outputJSON === undefined || node.outputJSON === '') node.outputJSON = '{ \n\t"payload":"hello",\n\t"topic":"1"\n}';
             node.editor = RED.editor.createEditor({
                 id: 'node-input-editoroutputJSON',
                 mode: 'ace/mode/json',
                 value: node.outputJSON
             });
             if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
-
         },
         oneditsave: function () {
             var node = this;

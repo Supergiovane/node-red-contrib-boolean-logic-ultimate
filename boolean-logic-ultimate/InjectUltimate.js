@@ -7,7 +7,7 @@ module.exports = function (RED) {
 		var node = this;
 		node.curVal = true;
 		node.topic = config.topic || "Inject";
-		node.outputJSON = config.outputJSON === undefined ? "{}" : config.outputJSON;
+		node.outputJSON = (config.outputJSON === undefined || config.outputJSON === '') ? '{ \n\t"payload":"hello",\n\t"topic":"1"\n}' : config.outputJSON;
 		setNodeStatus({ fill: "grey", shape: "dot", text: "Waiting" });
 
 
@@ -37,8 +37,8 @@ module.exports = function (RED) {
 				node.outputJSON = JSON.parse(node.outputJSON);
 				if (node.outputJSON.topic === undefined) node.outputJSON.topic = node.topic; // Add topic if not present
 			} catch (error) {
-				setNodeStatus({ fill: "red", shape: "dot", text: "JSON error " + error.message });
-				RED.log.error("node.outputJSON = JSON.parse(node.outputJSON) error:" + error.message);
+				setNodeStatus({ fill: "red", shape: "dot", text: "JSON error " + error.trace });
+				RED.log.error("injectUltimate: node.outputJSON = JSON.parse(node.outputJSON) error:" + error.trace);
 			}
 			node.send([msgTrue, msgFalse, msgToggled, node.outputJSON]);
 		}

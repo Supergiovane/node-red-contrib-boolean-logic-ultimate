@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.12</b> Mai 2024<br/>
+- FIX: fixed the empty JSON for old injectUltimate nodes.</br>
+</p>
+<p>
 <b>Version 1.1.11</b> Mai 2024<br/>
 - NEW: inject node now can inject a JSON as well.</br>
 </p>
