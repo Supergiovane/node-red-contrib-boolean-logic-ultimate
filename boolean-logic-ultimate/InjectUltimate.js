@@ -33,14 +33,15 @@ module.exports = function (RED) {
 			let msgFalse = { payload: false, topic: node.topic };
 			let msgToggled = { payload: node.curVal, topic: node.topic };
 			node.curVal = !node.curVal;
+			let jRet;
 			try {
-				node.outputJSON = JSON.parse(node.outputJSON);
+				jRet = JSON.parse(node.outputJSON);
 				if (node.outputJSON.topic === undefined) node.outputJSON.topic = node.topic; // Add topic if not present
 			} catch (error) {
 				setNodeStatus({ fill: "red", shape: "dot", text: "JSON error " + error.trace });
 				RED.log.error("injectUltimate: node.outputJSON = JSON.parse(node.outputJSON) error:" + error.trace);
 			}
-			node.send([msgTrue, msgFalse, msgToggled, node.outputJSON]);
+			node.send([msgTrue, msgFalse, msgToggled, jRet]);
 		}
 
 		function setNodeStatus({ fill, shape, text }) {

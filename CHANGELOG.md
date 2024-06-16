@@ -4,8 +4,12 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.14</b> Mai 2024<br/>
+- FIX: inject node: fixed an error in JSON.parse.</br>
+</p>
+<p>
 <b>Version 1.1.12</b> Mai 2024<br/>
-- FIX: fixed the empty JSON for old injectUltimate nodes.</br>
+- FIX: inject node: fixed the empty JSON for old injectUltimate nodes.</br>
 </p>
 <p>
 <b>Version 1.1.11</b> Mai 2024<br/>
