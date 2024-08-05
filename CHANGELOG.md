@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.15</b> August 2024<br/>
+- Railway Switcher: now you can choose between 5 different output instead of 2.</br>
+</p>
+<p>
 <b>Version 1.1.14</b> Mai 2024<br/>
 - FIX: inject node: fixed an error in JSON.parse.</br>
 </p>

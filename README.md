@@ -428,27 +428,57 @@ Any message that arrives on input, will be passwd through to the output with the
 
 # RAILWAY SWITCH ULTIMATE
 
-The railway switcher, switches the input msg flow to one ot the two outputs (upper or lower).
+The railway switcher, redirect the incoming messages to one ot the avaiable output pins, just like a railway jinction switch.
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/railroadSwitchScambio.png' width='80%'>
 
 ### NODE CONFIGURATION
 
+
 |Property|Description|
 |--|--|
-| Switcher topic | Whenever the node receives a payload from this **topic**, it switches the input messages to an output. |
+| Switcher topic | Whenever the node receives a payload from this **topic**, it redirects the input messages to a choosen output PIN. |
 | With Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
-| Then | This property, allow you to auto toggle the selected start state after some time. |
+| Translator | Translates the incoming <code>payload</code> value. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
-<br/>
+### Inputs
 
-</br>
-</br>
+The *Switcher topic* controls where the railway switch must be switched, between the output PINs.  
+Once an output PIN has been choosen, all messages passing through the node will be deviated to te choosen output PIN.
 
-**INPUT MSG WITH "TRIGGER" TOPIC**
+: topic (string|number) : this is the topic of the switcher message.
+: payload (number|boolean) : this is the ouput PIN selector, base 0 (0 is the first output PIN). 
 
-Pass <code>msg.payload = false</code> switches the msg input to the UPPER output</br>
-Pass <code>msg.payload = true</code> switches the msg input to the LOWER output</br>
+### JSON switcher message
+
+Take the example where you choosen such properties:  
+**Switcher topic**: "switcher"  
+**With Input**: "payload"  
+this JSON input message redirects all input messages to the first PIN  
+
+```json
+{
+	topic:"switcher",
+	payload:0
+}
+```
+this JSON input message redirects all input messages to the second PIN  
+ 
+```json
+{
+	topic:"switcher",
+	payload:1
+}
+```
+
+this JSON input message redirects all input messages to the third PIN, and so on... 
+ 
+```json
+{
+	topic:"switcher",
+	payload:2
+}
+```
 
 </br>
 
@@ -458,7 +488,7 @@ See the example below.<br/>
 
 Copy and paste it into your flow
 ```javascript
-[{"id":"a6993d5187f05c0a","type":"RailwaySwitchUltimate","z":"e5b506b72b42922e","name":"Railway Switch","triggertopic":"trigger","initializewith":"0","autoToggle":"0","x":490,"y":180,"wires":[["51e7df8da0bd8d67"],["7f33b14e12c91744"]]},{"id":"2e3014226290f678","type":"InjectUltimate","z":"e5b506b72b42922e","name":"Sample message","topic":"Train","curVal":true,"x":180,"y":140,"wires":[["a6993d5187f05c0a"],[],[]]},{"id":"f6f80cd77a65073e","type":"InjectUltimate","z":"e5b506b72b42922e","name":"Railway switcher","topic":"trigger","curVal":true,"x":180,"y":220,"wires":[[],[],["a6993d5187f05c0a"]]},{"id":"51e7df8da0bd8d67","type":"debug","z":"e5b506b72b42922e","name":"Upper railway","active":true,"tosidebar":true,"console":false,"tostatus":true,"complete":"true","targetType":"full","statusVal":"topic","statusType":"msg","x":720,"y":140,"wires":[]},{"id":"7f33b14e12c91744","type":"debug","z":"e5b506b72b42922e","name":"Lower railway","active":true,"tosidebar":true,"console":false,"tostatus":true,"complete":"true","targetType":"full","statusVal":"topic","statusType":"msg","x":720,"y":220,"wires":[]},{"id":"8716120e94a7b6ee","type":"comment","z":"e5b506b72b42922e","name":"Switch between railways","info":"","x":190,"y":80,"wires":[]}]
+[{"id":"8243309f7c926112","type":"RailwaySwitchUltimate","z":"aa3efc585a6c7b9b","name":"Railway Switch","triggertopic":"switcher","initializewith":"3","payloadPropName":"payload","translatorConfig":"","x":350,"y":260,"wires":[["7f5a2c19a9ef64c8"],["5a35a650b225d910"],[],[],[]]},{"id":"d7bbc077bc20f4ea","type":"InjectUltimate","z":"aa3efc585a6c7b9b","name":"Junction switcher to Rail 0","topic":"","curVal":true,"outputJSON":"{ \n\t\"payload\":0,\n\t\"topic\":\"switcher\"\n}","x":350,"y":80,"wires":[[],[],[],["8243309f7c926112"]]},{"id":"5656d0c2ba66ed5e","type":"InjectUltimate","z":"aa3efc585a6c7b9b","name":"Junction switcher to Rail 1","topic":"","curVal":true,"outputJSON":"{ \n\t\"payload\":\"1\",\n\t\"topic\":\"switcher\"\n}","x":350,"y":160,"wires":[[],[],[],["8243309f7c926112"]]},{"id":"2253336fa8374c78","type":"InjectUltimate","z":"aa3efc585a6c7b9b","name":"Train","topic":"","curVal":true,"outputJSON":"{ \n\t\"payload\":\"hello\",\n\t\"topic\":\"I'm a train!\"\n}","x":110,"y":280,"wires":[["8243309f7c926112"],[],[],[]]},{"id":"7f5a2c19a9ef64c8","type":"debug","z":"aa3efc585a6c7b9b","name":"Rail 0","active":true,"tosidebar":true,"console":false,"tostatus":true,"complete":"payload","targetType":"msg","statusVal":"payload","statusType":"auto","x":590,"y":260,"wires":[]},{"id":"5a35a650b225d910","type":"debug","z":"aa3efc585a6c7b9b","name":"Rail 1","active":true,"tosidebar":true,"console":false,"tostatus":true,"complete":"payload","targetType":"msg","statusVal":"payload","statusType":"auto","x":590,"y":300,"wires":[]}]
 ```
 
 

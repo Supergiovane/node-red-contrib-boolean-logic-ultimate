@@ -4,26 +4,15 @@
 		color: '#ff8080',
 		defaults: {
 			name: { value: "Railway Switch" },
-			triggertopic: { value: "trigger" },
-			initializewith: { value: "0" },
-			autoToggle: { value: "0" },
+			triggertopic: { value: "switcher" },
+			initializewith: { value: "1" },
 			payloadPropName: { value: "payload", required: false },
-			translatorConfig: { type: "translator-config", required: false }			
+			translatorConfig: { type: "translator-config", required: false }
 		},
 		inputs: 1,
-		outputs: 2,
+		outputs: 5,
 		outputLabels: function (i) {
-			var ret = "";
-			switch (i) {
-				case 0:
-					return "Upper PIN";
-					break;
-				case 1:
-					return "Lower PIN";
-					break;
-				default:
-					break;
-			}
+			return "PIN " + i;
 		},
 		icon: "font-awesome/fa-train",
 		label:
@@ -60,59 +49,72 @@
         <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
 		<input type="text" id="node-input-payloadPropName">
     </div>
-	<div><i>An input msg having this topic and msg true or false<br/>will trigger the railway switch between the two output PINs<br/>
-		false switches to the upper PIN<br/>
-		true switches to the lower PIN<br/>
-	</i></div>
-	<br/>
 	<div class="form-row">
         <label style="width:160px" for="node-input-initializewith"><i class="fa fa-home"></i> At node-red start</label>
         <select type="text" id="node-input-initializewith" placeholder="" style="width:250px">
-			<option value="0">Flow messages to the upper PIN</option>
-			<option value="1">Flow messages to the lower PIN</option>			
+			<option value="0">PIN 0</option>
+			<option value="1">PIN 1</option>			
+			<option value="2">PIN 2</option>
+			<option value="3">PIN 3</option>
+			<option value="4">PIN 4</option>
 		</select>	
 	</div>
 	<div class="form-row">
-		<label style="width:160px" for="node-input-autoToggle"><i class="fa fa-hourglass-o"></i> Then</label>
-		<select type="text" id="node-input-autoToggle" placeholder="" style="width:250px">
-			<option value="0">Nothing</option>
-			<option value="10">Toggle above option after 10 seconds</option>
-			<option value="20">Toggle above option after 20 seconds</option>
-			<option value="30">Toggle above option after 30 seconds</option>
-			<option value="40">Toggle above option after 40 seconds</option>
-			<option value="50">Toggle above option after 50 seconds</option>
-			<option value="60">Toggle above option after 60 seconds</option>
-			<option value="90">Toggle above option after 90 seconds</option>
-			<option value="120">Toggle above option after 120 seconds</option>
-		</select>
-	</div>
-	<div class="form-row">
-		<br />
-		<b>Translator</b>
-		<br />
 		<label for="node-input-translatorConfig">
-			<font color="green" size="4px"><i class="fa fa-sign-in" aria-hidden="true"></i></font> Input
+			<font color="green" size="4px"><i class="fa fa-sign-in" aria-hidden="true"></i></font> Translator
 		</label>
 		<input type="text" id="node-input-translatorConfig" />
 	</div>
 </script>
 
 <script type="text/markdown" data-help-name="RailwaySwitchUltimate">
-<p>The railway switcher, switches the input msg flow to one ot the two outputs (upper or lower).</p>
+<p>The railway switcher, redirect the incoming messages to one ot the avaiable output pins, just like a railway jinction switch.</p>
 
 |Property|Description|
 |--|--|
-| Switcher topic | Whenever the node receives a payload from this **topic**, it switches the input messages to an output. |
+| Switcher topic | Whenever the node receives a payload from this **topic**, it redirects the input messages to a choosen output PIN. |
 | With Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
-| Then | This property, allow you to auto toggle the selected start state after some time. |
-| Translator Input | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
+| Translator | Translates the incoming <code>payload</code> value. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
-* Input messages
+### Inputs
 
-Explanation of the input msg, having the <code>msg.topic</code> equal to the *Switcher by topic* property:
+The *Switcher topic* controls where the railway switch must be switched, between the output PINs.  
+Once an output PIN has been choosen, all messages passing through the node will be deviated to te choosen output PIN.
 
-Pass <code>msg.payload = false</code> switches the msg input to the UPPER output</br>
-Pass <code>msg.payload = true</code> switches the msg input to the LOWER output</br>
+: topic (string|number) : this is the topic of the switcher message.
+: payload (number|boolean) : this is the ouput PIN selector, base 0 (0 is the first output PIN). 
+
+### JSON switcher message
+
+Take the example where you choosen such properties:  
+**Switcher topic**: "switcher"  
+**With Input**: "payload"  
+this JSON input message redirects all input messages to the first PIN  
+
+```json
+{
+	topic:"switcher",
+	payload:0
+}
+```
+this JSON input message redirects all input messages to the second PIN  
+ 
+```json
+{
+	topic:"switcher",
+	payload:1
+}
+```
+
+this JSON input message redirects all input messages to the third PIN, and so on... 
+ 
+```json
+{
+	topic:"switcher",
+	payload:2
+}
+```
+
 
 <br/>
 

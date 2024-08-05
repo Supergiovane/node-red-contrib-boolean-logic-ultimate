@@ -14,7 +14,7 @@ module.exports.ToBoolean = function ToBoolean(value, _configTranslationNode) {
       }
       for (let index = 0; index < translationTable.length; index++) {
         let inputPayloadToBeTranslated = translationTable[index].split(":")[0];
-        let outputBoolean = Boolean(translationTable[index].split(":")[1]);
+        //let outputBoolean = Boolean(translationTable[index].split(":")[1]);
         if (
           value.toLowerCase() === inputPayloadToBeTranslated.toLowerCase() &&
           inputPayloadToBeTranslated.toLowerCase() !== ""
@@ -36,6 +36,33 @@ module.exports.ToBoolean = function ToBoolean(value, _configTranslationNode) {
     }
     return res;
   }
+};
+
+module.exports.ToAny = function ToAny(value, _configTranslationNode) {
+
+  try {
+    let translationTable = [];
+    if (_configTranslationNode === null) {
+      // Don't do translation, because the default translation input may contin unwanted translations
+      return value;
+    } else {
+      translationTable = _configTranslationNode.commandText.split("\n");
+    }
+    for (let index = 0; index < translationTable.length; index++) {
+      let inputPayloadToBeTranslated = translationTable[index].split(":")[0];
+      //let outputBoolean = Boolean(translationTable[index].split(":")[1]);
+      if (
+        String(value).toLowerCase() === inputPayloadToBeTranslated.toLowerCase() &&
+        inputPayloadToBeTranslated.toLowerCase() !== ""
+      ) {
+        return translationTable[index].split(":")[1];
+      }
+    }
+    return value;
+  } catch (error) {
+    console.log("Boolean-Logic-Ultimate:utils:toAny: " + error.message);
+  }
+
 };
 
 module.exports.fetchFromObject = function fetchFromObject(

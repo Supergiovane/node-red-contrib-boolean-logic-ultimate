@@ -8,11 +8,8 @@ module.exports = function (RED) {
       node.config.triggertopic.replace(
         /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
         ""
-      ) || "trigger"; // Topic controlling the iRailway
-    node.iRailway = Number(node.config.initializewith); // Railway selector
-    node.autoToggle =
-      config.autoToggle === undefined ? 0 : parseInt(config.autoToggle); // Auto toggle the selected "initializewith" after a while (useful for homekit bridged, that sends junk after start)
-    node.timerAutoToggle = null;
+      ) || "trigger"; // Topic controlling the sRailway
+    node.sRailway = String(node.config.initializewith); // Railway selector
 
     function setNodeStatus({ fill, shape, text }) {
       let dDate = new Date();
@@ -30,30 +27,13 @@ module.exports = function (RED) {
     }
 
     node.alignStatus = () => {
-      let sAutoToggle =
-        node.autoToggle > 0 ? " (Autotoggle in " + node.autoToggle + "s)" : "";
-      if (node.iRailway === 0) {
-        setNodeStatus({
-          fill: "green",
-          shape: "dot",
-          text: "-> UPPER PIN" + sAutoToggle,
-        });
-      } else {
-        setNodeStatus({
-          fill: "blue",
-          shape: "dot",
-          text: "-> LOWER PIN" + sAutoToggle,
-        });
-      }
-    };
+      setNodeStatus({
+        fill: "green",
+        shape: "dot",
+        text: "-> PIN " + node.sRailway,
+      });
 
-    if (node.autoToggle > 0) {
-      node.timerAutoToggle = setTimeout(() => {
-        node.autoToggle = 0;
-        node.iRailway === 0 ? (node.iRailway = 1) : (node.iRailway = 0);
-        node.alignStatus();
-      }, node.autoToggle * 1000);
-    }
+    };
 
     node.alignStatus();
 
@@ -83,36 +63,29 @@ module.exports = function (RED) {
             });
             return;
           }
-
-          msg.payload = utils.ToBoolean(
+          sPayload = String(sPayload); // Must be always a string
+          msg.payload = utils.ToAny(
             sPayload,
             RED.nodes.getNode(config.translatorConfig) // Retrieve the config node. It can be null, but it's handled in utils.js;
-          ); 
+          );
           if (msg.payload === undefined) return null;
-          if (node.timerAutoToggle !== null)
-            // 28/01/2022 Stop autotoggle
-            clearInterval(node.timerAutoToggle);
 
-          if (msg.payload === false) node.iRailway = 0;
-          if (msg.payload === true) node.iRailway = 1;
-          if (node.iRailway === 0) {
-            setNodeStatus({
-              fill: "green",
-              shape: "dot",
-              text: "-> UPPER PIN",
-            });
-          } else {
-            setNodeStatus({ fill: "blue", shape: "dot", text: "-> LOWER PIN" });
-          }
+          // Backward compatibility
+          // Pass msg.payload = false switches the msg input to the UPPER output
+          // Pass msg.payload = true switches the msg input to the LOWER output
+          if (msg.payload === false) msg.payload = '0';
+          if (msg.payload === true) msg.payload = '1';
+          node.sRailway = msg.payload;
+          node.alignStatus();
           return; // DONT'S SEND THIS MESSAGE
         }
       }
       node.currentMsg = RED.util.cloneMessage(msg);
-      if (node.iRailway === 0) {
-        node.send([msg, null]);
-      } else {
-        node.send([null, msg]);
-      }
+      if (node.sRailway === "0") node.send([msg, null, null, null, null]);
+      if (node.sRailway === "1") node.send([null, msg, null, null, null]);
+      if (node.sRailway === "2") node.send([null, null, msg, null, null]);
+      if (node.sRailway === "3") node.send([null, null, null, msg, null]);
+      if (node.sRailway === "4") node.send([null, null, null, null, msg]);
     });
   }
 
