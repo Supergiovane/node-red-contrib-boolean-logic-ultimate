@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.16</b> August 2024<br/>
+- Railway Switcher: fixed an issue for backward compatibility of true/false input msg.</br>
+</p>
+<p>
 <b>Version 1.1.15</b> August 2024<br/>
 - Railway Switcher: now you can choose between 5 different output instead of 2.</br>
 </p>

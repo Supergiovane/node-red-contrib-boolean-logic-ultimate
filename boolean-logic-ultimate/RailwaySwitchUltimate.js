@@ -38,6 +38,12 @@ module.exports = function (RED) {
     node.alignStatus();
 
     this.on("input", function (msg) {
+      // Backward compatibility
+      // Pass msg.payload = false switches the msg input to the UPPER output
+      // Pass msg.payload = true switches the msg input to the LOWER output
+      if (msg.payload === false) msg.payload = '0';
+      if (msg.payload === true) msg.payload = '1';
+
       var sIncomingTopic = "";
       if (msg.hasOwnProperty("topic")) {
         // 06/11/2019
@@ -70,11 +76,6 @@ module.exports = function (RED) {
           );
           if (msg.payload === undefined) return null;
 
-          // Backward compatibility
-          // Pass msg.payload = false switches the msg input to the UPPER output
-          // Pass msg.payload = true switches the msg input to the LOWER output
-          if (msg.payload === false) msg.payload = '0';
-          if (msg.payload === true) msg.payload = '1';
           node.sRailway = msg.payload;
           node.alignStatus();
           return; // DONT'S SEND THIS MESSAGE
