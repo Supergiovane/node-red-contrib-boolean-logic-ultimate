@@ -38,14 +38,10 @@ module.exports = function (RED) {
     node.alignStatus();
 
     this.on("input", function (msg) {
-      // Backward compatibility
-      // Pass msg.payload = false switches the msg input to the UPPER output
-      // Pass msg.payload = true switches the msg input to the LOWER output
-      if (msg.payload === false) msg.payload = '0';
-      if (msg.payload === true) msg.payload = '1';
 
       var sIncomingTopic = "";
       if (msg.hasOwnProperty("topic")) {
+
         // 06/11/2019
         if (!msg.hasOwnProperty("topic") || msg.topic === undefined)
           msg.topic = "NoTopicReceived";
@@ -54,6 +50,12 @@ module.exports = function (RED) {
           ""
         ); // Cut unwanted Characters
         if (sIncomingTopic === node.sTriggerTopic) {
+          // Backward compatibility
+          // Pass msg.payload = false switches the msg input to the UPPER output
+          // Pass msg.payload = true switches the msg input to the LOWER output
+          if (msg.payload === false) msg.payload = '0';
+          if (msg.payload === true) msg.payload = '1';
+
           const utils = require("./utils.js");
           let sPayload = utils.fetchFromObject(
             msg,
