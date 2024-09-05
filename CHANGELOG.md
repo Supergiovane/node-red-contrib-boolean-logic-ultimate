@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.18</b> September 2024<br/>
+- Impulse node: changed the STOP procedure.</br>
+</p>
+<p>
 <b>Version 1.1.17</b> September 2024<br/>
 - Railway Switcher: fixed an issue caused by fixing an issue for backward compatibility of true/false input msg. The node was emitting 0 and 1 instead of true and false</br>
 </p>

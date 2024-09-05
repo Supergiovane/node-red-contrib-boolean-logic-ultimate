@@ -90,7 +90,7 @@ module.exports = function (RED) {
 		}
 
 		this.on('input', function (msg) {
-			
+
 			const utils = require("./utils.js");
 			let sPayload = utils.fetchFromObject(msg, config.payloadPropName || "payload");
 
@@ -102,8 +102,8 @@ module.exports = function (RED) {
 				avvio();
 
 			} else if (sPayload === false) {
-				if (node.timerWait !== null) clearTimeout(node.timerWait);
 				node.isPlaying = false;
+				if (node.timerWait !== null) clearTimeout(node.timerWait);
 				node.setNodeStatus({ fill: "red", shape: "dot", text: "Forced stop" });
 			}
 
