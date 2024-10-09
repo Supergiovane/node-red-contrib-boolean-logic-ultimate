@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('SumUltimate', {
-        category: 'boolean logic ultimate',
+        category: 'Boolean Logic Ultimate',
         color: '#ff8080',
         defaults: {
             name: {
@@ -22,7 +22,7 @@
                 return this.name || "Math";
             },
         paletteLabel: function () {
-            return "MathUltimate";
+            return "Math";
         },
         oneditprepare: function () {
             if ($("#node-input-property").val() === "") $("#node-input-property").val("payload");

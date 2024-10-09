@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	RED.nodes.registerType('BlinkerUltimate', {
-		category: 'boolean logic ultimate',
+		category: 'Boolean Logic Ultimate',
 		color: '#ff8080',
 		defaults: {
 			name: { value: "Blinker" },
@@ -30,7 +30,7 @@
 				return (this.name || "Blinker") + " (" + this.blinkfrequency + "ms)";
 			},
 		paletteLabel: function () {
-			return "BlinkerUltimate";
+			return "Blinker";
 		},
 		oneditprepare: function () {
 			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");

@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	RED.nodes.registerType('FilterUltimate', {
-		category: 'boolean logic ultimate',
+		category: 'Boolean Logic Ultimate',
 		color: '#ff8080',
 		defaults: {
 			name: {
@@ -30,9 +30,9 @@
 				return this.name || "Filter";
 			},
 		paletteLabel: function () {
-			return "FilterUltimate";
+			return "Filter";
 		},
-		oneditprepare: function () {			
+		oneditprepare: function () {
 			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
 			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
 		}

@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('Comparator', {
-        category: 'boolean logic ultimate',
+        category: 'Boolean Logic Ultimate',
         color: '#ff8080',
         defaults: {
             name: {
@@ -27,7 +27,7 @@
                 return this.name || "Comparator";
             },
         paletteLabel: function () {
-            return "ComparatorUltimate";
+            return "Comparator";
         },
         oneditprepare: function () {
             if ($("#node-input-property").val() === "") $("#node-input-property").val("payload");

@@ -1,29 +1,29 @@
 <script type="text/javascript">
-    RED.nodes.registerType('InvertUltimate',{
-        category: 'boolean logic ultimate',
-        color: '#ff8080',
-        defaults: {
-			name: { 
+	RED.nodes.registerType('InvertUltimate', {
+		category: 'Boolean Logic Ultimate',
+		color: '#ff8080',
+		defaults: {
+			name: {
 				value: "Invert"
 			},
 			payloadPropName: { value: "payload", required: false },
-			translatorConfig: { type: "translator-config", required: false }			
-        },
-        inputs:1,
-        outputs:1,
-        icon: "swap.png",
-        label: 
-			function() {
-				return this.name||"Invert";
+			translatorConfig: { type: "translator-config", required: false }
+		},
+		inputs: 1,
+		outputs: 1,
+		icon: "swap.png",
+		label:
+			function () {
+				return this.name || "Invert";
 			},
-		paletteLabel: function() {
-			return "InvertUltimate";
+		paletteLabel: function () {
+			return "Invert";
 		},
 		oneditprepare: function () {
 			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
 			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
 		}
-    });
+	});
 </script>
 
 <script type="text/html" data-template-name="InvertUltimate">

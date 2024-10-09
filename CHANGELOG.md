@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.19</b> October 2024<br/>
+- Maintenance release.</br>
+</p>
+<p>
 <b>Version 1.1.18</b> September 2024<br/>
 - Impulse node: changed the STOP procedure.</br>
 </p>
@@ -197,7 +201,7 @@
 </p>
 <p>
 <b>Version 1.0.27</b> April 2021<br/>
-- Boolean logic ultimate: msg.reset = true now resets all inputs.</br>
+- Boolean Logic Ultimate: msg.reset = true now resets all inputs.</br>
 - Update the help in the README to reflect the changes.</br>
 </p>
 <p>
@@ -248,7 +252,7 @@
 </p>
 <p>
 <b>Version 1.0.15</b> May 2020<br/>
-- Adjusted status of Boolean Logic ultimate. Replaced the text "null", with --- for better understanding.</br>
+- Adjusted status of Boolean Logic Ultimate. Replaced the text "null", with --- for better understanding.</br>
 </p>
 <p>
 <b>Version 1.0.14</b><br/>

@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	RED.nodes.registerType('toggleUltimate', {
-		category: 'boolean logic ultimate',
+		category: 'Boolean Logic Ultimate',
 		color: '#ff8080',
 		defaults: {
 			name: {
@@ -18,7 +18,7 @@
 				return this.name || "Toggle";
 			},
 		paletteLabel: function () {
-			return "toggleUltimate";
+			return "Toggle";
 		},
 		oneditprepare: function () {
 			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");

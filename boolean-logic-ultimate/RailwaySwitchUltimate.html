@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	RED.nodes.registerType('RailwaySwitchUltimate', {
-		category: 'boolean logic ultimate',
+		category: 'Boolean Logic Ultimate',
 		color: '#ff8080',
 		defaults: {
 			name: { value: "Railway Switch" },
@@ -20,7 +20,7 @@
 				return (this.name || "Switch") + " (" + this.triggertopic + ")";
 			},
 		paletteLabel: function () {
-			return "RailwaySwitchUltimate";
+			return "Railway Switch";
 		},
 		oneditprepare: function () {
 			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
