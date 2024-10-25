@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.20</b> November 2024<br/>
+- NEW: Kalman Filter node.</br>
+</p>
+<p>
 <b>Version 1.1.19</b> October 2024<br/>
 - Maintenance release.</br>
 </p>
