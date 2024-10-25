@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.21</b> November 2024<br/>
+- Kalman Filter node: rounded the output paylad to three decimals.</br>
+</p>
+<p>
 <b>Version 1.1.20</b> November 2024<br/>
 - NEW: Kalman Filter node.</br>
 </p>

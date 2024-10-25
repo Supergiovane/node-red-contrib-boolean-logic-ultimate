@@ -53,6 +53,7 @@ module.exports = function (RED) {
         } else {
           msg.payload = kalmanFilter.filter(sPayload);
         }
+        msg.payload = Math.round((msg.payload + Number.EPSILON) * 1000) / 1000
         setNodeStatus({
           fill: "green",
           shape: "dot",
