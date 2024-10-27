@@ -1,18 +1,12 @@
 ![Logo](img/logo.png) 
 
 [![NPM version][npm-version-image]][npm-url]
-
 [![NPM downloads per month][npm-downloads-month-image]][npm-url]
-
 [![NPM downloads total][npm-downloads-total-image]][npm-url]
-
 [![MIT License][license-image]][license-url]
-
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
-[![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
-
-[![youtube][youtube-image]][youtube-url]
+[![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday)
+[![youtube][youtube-image]][youtube-url]  
 
 A set of Node-RED enhanced boolean logic and utility nodes, with persistent values after reboot. Compatible also with Homeassistant values. 
 
@@ -531,6 +525,13 @@ Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it
 | Input            | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | r,q              | Kalman's parameters to be set.                                                                       |
 | Translator Input | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
+
+<br/>
+
+### Inputs
+
+: reset (any) : by passing msg.reset, the Kalman filter will be reset.
+: payload (number) : the payload containing the number. If you've changed the incoming evaluation property in the ***Input*** field, the number to be evaluated must be put in such message's property, instead of the *payload* property. 
 
 <br/>
 

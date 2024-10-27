@@ -4,11 +4,15 @@ module.exports = function (RED) {
     this.config = config;
     var node = this;
     const KalmanFilter = require('kalmanjs');
-    try {
-      var kalmanFilter = new KalmanFilter({ R: config.R || 0.01, Q: config.Q || 3 });
-    } catch (error) {
-    }
+    var kalmanFilter = undefined;
 
+    function initFilter() {
+      try {
+        kalmanFilter = new KalmanFilter({ R: config.R || 0.01, Q: config.Q || 3 });
+      } catch (error) {
+      }
+    }
+    initFilter();
 
     function setNodeStatus({ fill, shape, text }) {
       let dDate = new Date();
@@ -34,6 +38,16 @@ module.exports = function (RED) {
         msg,
         config.payloadPropName || "payload"
       );
+
+      if (msg.reset !== undefined) {
+        initFilter();
+        setNodeStatus({
+          fill: "grey",
+          shape: "dot",
+          text: "Filter initialized"
+        });
+        return;
+      }
 
       // 15/11/2021 inform user about undefined topic or payload
       if (sPayload === undefined) {
