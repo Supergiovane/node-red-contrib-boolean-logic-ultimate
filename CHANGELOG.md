@@ -4,7 +4,7 @@
 # CHANGELOG
 
 <p>
-<b>Version 1.1.23</b> November 2024<br/>
+<b>Version 1.1.23</b> December 2024<br/>
 - Math node. fixed multiply by zero issue.</br>
 </p>
 <p>
