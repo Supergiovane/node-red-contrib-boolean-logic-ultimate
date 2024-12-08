@@ -72,10 +72,8 @@ module.exports = function (RED) {
 
 							let moltiplicazione = 1;
 							node.topics.forEach((item) => {
-								if (item.val !== 0) {
-									moltiplicazione *= item.val;
-									++quantita;
-								}
+								moltiplicazione *= item.val;
+								++quantita;
 							});
 							msg.payload = moltiplicazione; // Sum
 							msg.average = moltiplicazione / quantita; // Average

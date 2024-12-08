@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.23</b> November 2024<br/>
+- Math node. fixed multiply by zero issue.</br>
+</p>
+<p>
 <b>Version 1.1.22</b> November 2024<br/>
 - Kalman Filter node: added filter's reset by issuing meg.reset=true.</br>
 </p>
