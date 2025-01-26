@@ -4,6 +4,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.24</b> January 2025<br/>
+- Translator node. added js evaluation of the values. For example "{{value>=50}}:true".</br>
+</p>
+<p>
 <b>Version 1.1.23</b> December 2024<br/>
 - Math node. fixed multiply by zero issue.</br>
 </p>
