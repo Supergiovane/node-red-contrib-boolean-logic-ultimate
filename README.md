@@ -20,11 +20,19 @@ A set of Node-RED enhanced boolean logic and utility nodes, with persistent valu
 <br/>
 <br/>
 
-### HOME ASSISTANT COMPATIBLES INPUT VALUES
+### TRANSLATOR NODE
 
 Other than true/false, all nodes accepts [Homeassistant](https://www.home-assistant.io) output strings.  
-
 You can **even add your own input translation word list**, thanks to the translator-config node.
+
+The translator node can translate an input payload, to a true/false boolean values.<br />
+Each row in the text box, represents a translation command. <br/>
+There are some default translation's rows, to make the *boolean-logic-ultimate* nodes compatible with Homeassistant as default. <br/>
+You can add your own translation row.<br/>
+
+|Property|Description|
+|--|--|
+| Translate | Add, delete or edit your own translation command. The row's translation command must be **input string:true(or false)**. For example: <code>open:true</code> <code>closed:false</code>. You can also use an expressions to be evaluated, like this <code>{{value>=50}}:true</code> and <code>{{value<50}}:false</code>. In this case, the tranlsator will evaluate (javascript eval) the expression and, if true, returns the choosen value.  |
 
 <br/>
 <br/>

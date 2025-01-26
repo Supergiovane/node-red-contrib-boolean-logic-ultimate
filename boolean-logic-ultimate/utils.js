@@ -7,17 +7,26 @@ module.exports.ToBoolean = function ToBoolean(value, _configTranslationNode) {
   } else if (typeof value === "string") {
     try {
       let translationTable = [];
+      value = value.toLowerCase();
       if (_configTranslationNode === null) {
         translationTable = DEFAULTTRANSLATIONINPUT.split("\n");
       } else {
         translationTable = _configTranslationNode.commandText.split("\n");
       }
       for (let index = 0; index < translationTable.length; index++) {
-        let inputPayloadToBeTranslated = translationTable[index].split(":")[0];
-        //let outputBoolean = Boolean(translationTable[index].split(":")[1]);
-        if (
-          value.toLowerCase() === inputPayloadToBeTranslated.toLowerCase() &&
-          inputPayloadToBeTranslated.toLowerCase() !== ""
+        // HA Style evaluation in the format "{{value>=0}}"
+        let inputPayloadToBeTranslated = translationTable[index].toLowerCase().split(":")[0];
+        if (inputPayloadToBeTranslated.indexOf("{{") > -1 && inputPayloadToBeTranslated.indexOf("}}") > -1) {
+          // Eval content of the brackets {{value<=0}}, HA style
+          inputPayloadToBeTranslated = inputPayloadToBeTranslated.replace("{{", "").replace("}}", "").replace("value", value); // Set the word value to real value
+          if (eval(inputPayloadToBeTranslated)) {
+            return translationTable[index].split(":")[1] === "true"
+              ? true
+              : false;
+          } // Eval the operation
+        } else if (
+          // Normal string value
+          value === inputPayloadToBeTranslated
         ) {
           return translationTable[index].split(":")[1] === "true"
             ? true
