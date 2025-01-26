@@ -1,4 +1,5 @@
 ![Logo](img/logo.png) 
+
 [![NPM version][npm-version-image]][npm-url]
 [![NPM downloads per month][npm-downloads-month-image]][npm-url]
 [![NPM downloads total][npm-downloads-total-image]][npm-url]
@@ -24,13 +25,9 @@ A set of Node-RED enhanced boolean logic and utility nodes, with persistent valu
 Other than true/false, all nodes accepts [Homeassistant](https://www.home-assistant.io) output strings.  
 
 You can **even add your own input translation word list**, thanks to the translator-config node.
-
 The translator node can translate an input payload, to a true/false boolean values.<br />
-
 Each row in the text box, represents a translation command. <br/>
-
 There are some default translation's rows, to make the *boolean-logic-ultimate* nodes compatible with Homeassistant as default. <br/>
-
 You can add your own translation row.<br/>
 
 |           | Description                                                                                          |
@@ -38,6 +35,48 @@ You can add your own translation row.<br/>
 | Translate | Add, delete or edit your own translation command. The row's translation command must be **input string:true(or false)**. For example: <code>open:true</code> <code>closed:false</code>. You can also use an expressions to be evaluated, like this <code>{{value>=50}}:true</code> and <code>{{value<50}}:false</code>. In this case, the tranlsator will evaluate (javascript eval) the expression and, if true, returns the choosen value. |
 
 ![alt text](image.png)
+
+
+<br/>
+<br/>
+
+# BOOLEAN LOGIC
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl1.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"1a90a718.5c0409","type":"BooleanLogicUltimate","z":"adb2ee5c.0bf6e","name":"","filtertrue":"both","persist":true,"sInitializeWith":"WaitForPayload","triggertopic":"trigger","outputtriggeredby":"all","inputCount":2,"topic":"result","x":380,"y":160,"wires":[["5f9fbfcc.d2c34"],[],[]]},{"id":"81ef6fec.5d413","type":"inject","z":"adb2ee5c.0bf6e","name":"Night","topic":"Dark","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":170,"y":180,"wires":[["1a90a718.5c0409"]]},{"id":"e0d5d620.966478","type":"inject","z":"adb2ee5c.0bf6e","name":"Daylight","topic":"Dark","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":160,"y":140,"wires":[["1a90a718.5c0409"]]},{"id":"1c2f8e73.2c22ba","type":"inject","z":"adb2ee5c.0bf6e","name":"Motion detect true","topic":"Motion","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":130,"y":240,"wires":[["1a90a718.5c0409"]]},{"id":"5f9fbfcc.d2c34","type":"debug","z":"adb2ee5c.0bf6e","name":"Garden Light","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":580,"y":160,"wires":[]},{"id":"201baa3d.7c63ae","type":"inject","z":"adb2ee5c.0bf6e","name":"Motion detect false","topic":"Motion","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":130,"y":280,"wires":[["1a90a718.5c0409"]]},{"id":"b65f4ff4.bfe2c8","type":"comment","z":"adb2ee5c.0bf6e","name":"Motion sensor turns on lights, when it's dark. The light turns off itself at day","info":"","x":290,"y":100,"wires":[]}]
+</code>
+</details>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl2.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"53a10a7a.cf1894","type":"BooleanLogicUltimate","z":"a76c6a12.37379","name":"","filtertrue":"onlytrue","persist":true,"sInitializeWith":"true","triggertopic":"Pushbutton","outputtriggeredby":"onlyonetopic","inputCount":2,"topic":"result","x":340,"y":220,"wires":[["cd9244ea.471b78"],[],[]]},{"id":"9318320b.670af8","type":"inject","z":"a76c6a12.37379","name":"","topic":"Pushbutton","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":120,"y":220,"wires":[["53a10a7a.cf1894"]]},{"id":"20a981b9.552b4e","type":"inject","z":"a76c6a12.37379","name":"","topic":"IsNight","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":320,"wires":[["53a10a7a.cf1894"]]},{"id":"da0dff55.d7888","type":"inject","z":"a76c6a12.37379","name":"","topic":"IsNight","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":360,"wires":[["53a10a7a.cf1894"]]},{"id":"7129d101.1fb7d8","type":"comment","z":"a76c6a12.37379","name":"Pushbutton to switch on light stairs, only if it's night.","info":"","x":210,"y":180,"wires":[]},{"id":"cd9244ea.471b78","type":"debug","z":"a76c6a12.37379","name":"Temporized Stairs Lightbulb","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","x":580,"y":220,"wires":[]},{"id":"ad5a62a1.7ad81","type":"comment","z":"a76c6a12.37379","name":"Brightness sensor","info":"","x":110,"y":280,"wires":[]}]
+</code>
+</details>
+
+The node performs Boolean logic on the incoming payloads.<br/>
+
+The node expects a fixed number of topics (configured in the settings) on which it will operate. It will only output a value 
+
+when it has seen the expected number of topics. If it ever sees more than the configured number of topics it will log a message then reset its state and start over.<br/>
+
+The input message is preserved and passed to the output, changing only the topic and the payload. 
+
+The node performs some checks on the incoming boolean payloads and outputs all results at the same time, as follow:<br/>
+
+- Output "AND": true or false<br/>
+- Output "OR": true or false<br/>
+- Output "XOR": true or false<br/>
+
+If you need ***"NAND"*** or ***"NOR"*** gate, just put an **InvertUltimate** node respectively after the "AND" or "OR" output.
+
+The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
+
+You can also set the default values of the topic inputs.<br/>
 
 The node can convert arbitrary input values to true/false. It supports Homeassistant string to boolean conversion as well. For enabling auto conversion, please be sure to disable **Reject non boolean (true/false) input values** <br/>
 
@@ -86,8 +125,11 @@ The interrupt flows is able to stop the input messages to exiting the node.
 **INPUT MSG WITH "TRIGGER" TOPIC**
 
 Pass <code>msg.payload = true</code> to allow messages to pass through</br>
+
 Pass <code>msg.payload = false</code> to prevent messages from passing through</br>
+
 Pass <code>msg.play = true</code> from a message having the "trigger" topic, to replay the last stored message</br>
+
 Pass <code>msg.reset = true</code> from a message having the "trigger" topic, to clear the last stored message</br>
 
 <code>
@@ -485,6 +527,8 @@ Copy and paste it into your flow
 
 Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it works.  
 
+
+
 ![image.png](/img/image.png)
 
 | Property         | Description                                                                                          |
@@ -498,7 +542,6 @@ Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it
 ### Inputs
 
 : reset (any) : by passing msg.reset, the Kalman filter will be reset.
-
 : payload (number) : the payload containing the number. If you've changed the incoming evaluation property in the ***Input*** field, the number to be evaluated must be put in such message's property, instead of the *payload* property. 
 
 <br/>
