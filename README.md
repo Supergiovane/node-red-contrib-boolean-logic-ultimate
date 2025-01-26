@@ -1,13 +1,8 @@
 ![Logo](img/logo.png) 
-
 [![NPM version][npm-version-image]][npm-url]
-
 [![NPM downloads per month][npm-downloads-month-image]][npm-url]
-
 [![NPM downloads total][npm-downloads-total-image]][npm-url]
-
 [![MIT License][license-image]][license-url]
-
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday)
@@ -93,11 +88,8 @@ The interrupt flows is able to stop the input messages to exiting the node.
 **INPUT MSG WITH "TRIGGER" TOPIC**
 
 Pass <code>msg.payload = true</code> to allow messages to pass through</br>
-
 Pass <code>msg.payload = false</code> to prevent messages from passing through</br>
-
 Pass <code>msg.play = true</code> from a message having the "trigger" topic, to replay the last stored message</br>
-
 Pass <code>msg.reset = true</code> from a message having the "trigger" topic, to clear the last stored message</br>
 
 <code>
@@ -527,4 +519,4 @@ Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it
 
 [youtube-image]: https://img.shields.io/badge/Visit%20me-youtube-red
 
-[youtube-url]: https://youtube.com/playlist?list=PL9Yh1bjbLAYoRH4IyQB7EL5srHAihiKpy![image.png](</img/image (2).png>)
+[youtube-url]: https://youtube.com/playlist?list=PL9Yh1bjbLAYoRH4IyQB7EL5srHAihiKpy
