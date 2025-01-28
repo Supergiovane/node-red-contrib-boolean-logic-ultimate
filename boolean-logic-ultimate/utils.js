@@ -4,7 +4,8 @@ module.exports.ToBoolean = function ToBoolean(value, _configTranslationNode) {
 
   if (typeof value === "boolean") {
     return value;
-  } else if (typeof value === "string") {
+  } else if (typeof value === "string" || typeof value === "number") {
+    if (typeof value === "number") value = value.toString(); // We work with strings
     try {
       let translationTable = [];
       value = value.toLowerCase();
@@ -36,15 +37,16 @@ module.exports.ToBoolean = function ToBoolean(value, _configTranslationNode) {
     } catch (error) {
       console.log("Boolean-Logic-Ultimate:utils:toBoolean: " + error.message);
     }
-  } else if (typeof value === "number") {
-    // Is it formated as a decimal number?
-    if (decimal.test(value)) {
-      res = parseFloat(value) != 0;
-    } else {
-      res = value.toLowerCase() === "true";
-    }
-    return res;
   }
+  // else if (typeof value === "number") {
+  //   // Is it formated as a decimal number?
+  //   if (decimal.test(value)) {
+  //     res = parseFloat(value) != 0;
+  //   } else {
+  //     res = value.toLowerCase() === "true";
+  //   }
+  //   return res;
+  // }
 };
 
 module.exports.ToAny = function ToAny(value, _configTranslationNode) {

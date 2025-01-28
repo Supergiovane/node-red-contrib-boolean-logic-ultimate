@@ -4,6 +4,17 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.25</b> January 2025<br/>
+- BREAKING CHANGE
+- BREAKING CHANGE
+- BREAKING CHANGE
+- Numerical values are now evaluated as string values and translated like any other word in translation table. That means, 1 and numbers major than 1 are not equal to true anymore, and 0 is not equal to false anymore. If you inputs numerical values as boolean (bad attitude), please fix your flows by change it to boolean.</br>
+- BREAKING CHANGE
+- BREAKING CHANGE
+- BREAKING CHANGE
+
+</p>
+<p>
 <b>Version 1.1.24</b> January 2025<br/>
 - Translator node. added js evaluation of the values. For example "{{value>=50}}:true".</br>
 </p>
