@@ -8,7 +8,7 @@
 - BREAKING CHANGE<br/>
 - BREAKING CHANGE<br/>
 - BREAKING CHANGE<br/>
-- Numerical values are now evaluated as string values and translated like any other word in translation table. That means, 1 and numbers major than 1 are not equal to true anymore, and 0 is not equal to false anymore. If you inputs numerical values as boolean (bad attitude), please fix your flows by change it to boolean.</br>
+- Numerical values are now evaluated as string values and translated like any other word in translation table. That means, 1 and numbers major than 1 are not equal to true anymore, and 0 is not equal to false anymore. If you input numerical values as boolean (bad attitude), please fix your flows by change it to boolean.</br>
 - BREAKING CHANGE<br/>
 - BREAKING CHANGE<br/>
 - BREAKING CHANGE<br/>
