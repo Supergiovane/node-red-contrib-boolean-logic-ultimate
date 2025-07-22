@@ -27,17 +27,17 @@ module.exports = function (RED) {
 
 		this.on('input', function (msg) {
 			try {
+				node.send(msg);
 				let props = [] = this.config.property.split(".");
 				let ret = fetchFromObject(msg, this.config.property);
 				if (ret !== undefined) {
 					setNodeStatus({ fill: "green", shape: "ring", text: ret.toString() });
 				} else {
-					setNodeStatus({ fill: "red", shape: "ring", text: this.config.property + " is undefined."});
+					setNodeStatus({ fill: "red", shape: "ring", text: this.config.property + " is undefined." });
 				}
 			} catch (error) {
-				//console.log(error.message);
+				setNodeStatus({ fill: "red", shape: "ring", text: error.message });
 			}
-			node.send(msg);
 		});
 
 

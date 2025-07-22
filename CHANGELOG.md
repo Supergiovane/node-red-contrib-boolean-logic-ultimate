@@ -4,10 +4,13 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.1.27</b> July 2025<br/>
+- Status node: UI correction. </br>
+</p>
+<p>
 <b>Version 1.1.26</b> July 2025<br/>
 - Interruptflow node: fixed non functional msg.play. </br>
 </p>
-
 <p>
 <b>Version 1.1.25</b> January 2025<br/>
 - BREAKING CHANGE<br/>

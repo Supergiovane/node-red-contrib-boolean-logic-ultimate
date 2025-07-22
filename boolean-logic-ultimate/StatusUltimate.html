@@ -20,6 +20,10 @@
             },
         paletteLabel: function () {
             return "Status";
+        },
+        oneditprepare: function () {
+            if ($("#node-input-property").val() === "") $("#node-input-property").val("payload");
+            $("#node-input-property").typedInput({ default: 'msg', types: ['msg'] });
         }
     });
 </script>
@@ -36,7 +40,7 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-property"><i class="icon-tag"></i> Show msg.</label>
+        <label for="node-input-property"><i class="fa fa-ellipsis-h"></i> Show</label>
         <input type="text" id="node-input-property" placeholder="payload">
     </div>
 </script>
