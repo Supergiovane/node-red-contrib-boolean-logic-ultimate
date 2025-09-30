@@ -4,6 +4,14 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.0</b> September 2025<br/>
+- NEW: PresenceSimulatorUltimate to replay configurable message sequences and simulate occupancy.<br/>
+- NEW: StaircaseLightUltimate to manage staircase lighting timers with pre-off warnings.<br/>
+- NEW: RateLimiterUltimate node with debounce, throttle and window modes.<br/>
+- Added shared helper for consistent status/timer handling across ultimate nodes.</br>
+</p>
+
+<p>
 <b>Version 1.1.27</b> July 2025<br/>
 - Status node: UI correction. </br>
 </p>

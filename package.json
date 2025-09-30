@@ -1,12 +1,18 @@
 {
     "name": "node-red-contrib-boolean-logic-ultimate",
-    "version": "1.1.27",
+    "version": "1.2.0",
     "description": "A set of Node-RED enhanced boolean logic and utility nodes, flow interruption, blinker, invert, filter, toggle etc.., with persistent values after reboot. Compatible also with Homeassistant values.",
     "author": "Supergiovane (https://github.com/Supergiovane)",
     "dependencies": {
         "fs": "0.0.1-security",
         "path": ">=0.12.7",
         "kalmanjs": "1.1.0"
+    },
+    "devDependencies": {
+        "chai": "^4.3.10",
+        "mocha": "^10.4.0",
+        "node-red": "^3.1.0",
+        "node-red-node-test-helper": "^0.2.0"
     },
     "keywords": [
         "node-red",
@@ -36,7 +42,13 @@
             "RailwaySwitchUltimate": "boolean-logic-ultimate/RailwaySwitchUltimate.js",
             "Comparator": "boolean-logic-ultimate/Comparator.js",
             "KalmanFilterUltimate": "boolean-logic-ultimate/KalmanFilterUltimate.js",
+            "RateLimiterUltimate": "boolean-logic-ultimate/RateLimiterUltimate.js",
+            "PresenceSimulatorUltimate": "boolean-logic-ultimate/PresenceSimulatorUltimate.js",
+            "StaircaseLightUltimate": "boolean-logic-ultimate/StaircaseLightUltimate.js",
             "translator-config": "boolean-logic-ultimate/translator-config.js"
         }
+    },
+    "scripts": {
+        "test": "mocha test/**/*.spec.js"
     }
 }

@@ -546,6 +546,113 @@ Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it
 
 <br/>
 
+# RATE LIMITER ULTIMATE
+
+Gateway per sensori e dispositivi troppo “chiacchieroni”: limita burst e rimbalzi con modalità **Debounce**, **Throttle** e **Window**. Lo stato del nodo riporta sempre modalità corrente, contatori di messaggi inoltrati e bloccati.
+
+### NODE CONFIGURATION
+
+| Property | Description |
+| -------- | ----------- |
+| Mode | Seleziona la logica: *Debounce* (attende quiete), *Throttle* (impone un intervallo minimo), *Window* (massimo N messaggi per finestra temporale). |
+| Wait (ms) | Ritardo di quiete per la modalità debounce. |
+| Emit | Per debounce: scegli tra *Leading* (subito), *Trailing* (ultimo), *Both*. |
+| Interval (ms) | Intervallo minimo tra messaggi in modalità throttle. |
+| Emit trailing | In throttle, inoltra l’ultimo messaggio ricevuto allo scadere dell’intervallo. |
+| Window size (ms) | Larghezza della finestra mobile in modalità window. |
+| Max messages | Numero di messaggi ammessi nella finestra. |
+| On limit | *Drop* scarta i messaggi extra, *Queue last* accoda l’ultimo e lo riproduce appena possibile. |
+| Control topic | Topic dei messaggi di controllo (default `rate`). |
+| With Input | Proprietà del messaggio da monitorare (default `msg.payload`). |
+| Stats every (s) | Ogni quanti secondi emettere un riepilogo statistico (0 = disattivato). |
+| Translator | Nodo translator-config opzionale per adattare le stringhe d’ingresso a true/false. |
+
+<br/>
+
+### OUTPUTS
+
+- **Output 1**: messaggi inoltrati, invariati.
+- **Output 2**: diagnostica (`{mode, reason, passed, dropped, msg, propertyValue}`) e statistiche periodiche su `controlTopic/stats`.
+
+<br/>
+
+### CONTROL MESSAGES (`msg.topic === controlTopic`)
+
+- `msg.reset = true` &rarr; azzera contatori, accoda azzerata e timer cancellati.
+- `msg.flush = true` &rarr; forza l’emissione immediata del messaggio in attesa.
+- `msg.mode = 'debounce'|'throttle'|'window'` &rarr; cambia modalità runtime e resetta lo stato.
+- `msg.interval`, `msg.wait`, `msg.windowSize`, `msg.maxInWindow` &rarr; aggiorna i parametri corrispondenti.
+
+<br/>
+
+# PRESENCE SIMULATOR ULTIMATE
+
+The purpose of this node is to replay a programmable sequence of messages in order to simulate occupancy when you are away.
+
+### NODE CONFIGURATION
+
+| Property | Description |
+| -------- | ----------- |
+| Control topic | Topic used for runtime commands such as start/stop/reset. |
+| Auto start | Starts the sequence automatically after deploy or restart. |
+| Loop sequence | Repeats the sequence when it reaches the end. |
+| Random delays | Enables a random variation of the programmed delays. |
+| Jitter (%) | Maximum percentage of variation applied when random delays are enabled. |
+| With Input | Message property to inspect for inline events (default `payload`). |
+| Translator | Optional translator-config to convert incoming values. |
+| Sequence | One JSON object per line, each containing at least `delay` (ms) plus the properties to output. |
+
+### CONTROL MESSAGES (`msg.topic === controlTopic`)
+
+- `msg.command = 'start'` / `msg.start = true` &rarr; begin playback.
+- `msg.command = 'stop'` / `msg.stop = true` &rarr; halt playback.
+- `msg.reset = true` &rarr; reset counters and start position.
+- `msg.sequence = [...]` &rarr; load a new sequence at runtime.
+- `msg.loop`, `msg.randomize`, `msg.jitter` &rarr; update the corresponding options.
+
+Each event in the sequence outputs a message configured in the JSON line. When random delays are enabled, the effective delay is varied within the configured jitter.
+
+<br/>
+
+# STAIRCASE LIGHT ULTIMATE
+
+The purpose of this node is to control staircase lighting with a timer, pre-off warning and optional extension on every trigger.
+
+### NODE CONFIGURATION
+
+| Property | Description |
+| -------- | ----------- |
+| Control topic | Topic that receives manual commands such as `on`, `off`, `extend`. |
+| Duration (s) | Lighting duration for each trigger. |
+| Warning before off | Enables emission of a pre-off warning on output 2. |
+| Warning offset (s) | Seconds before switch-off when the warning is sent. |
+| Restart on trigger | Restarts the timer when a new trigger arrives while active. |
+| Allow off input | Allows a `false` from the main input to switch off immediately. |
+| With Input | Message property evaluated as trigger (default `payload`). |
+| Translator | Optional translator-config for true/false conversion. |
+| On/Off payload | Values emitted on output 1 to turn the light on/off. |
+| Warning payload | Value emitted on output 2 when the warning fires. |
+
+### CONTROL MESSAGES (`msg.topic === controlTopic`)
+
+- `msg.command = 'on'` / `msg.start = true` &rarr; start the timer and turn on the light.
+- `msg.command = 'off'` / `msg.stop = true` &rarr; switch off immediately.
+- `msg.command = 'extend'` / `msg.extend = true` &rarr; refresh the timer while keeping the light on.
+- `msg.duration`, `msg.warningEnabled`, `msg.warningOffset` &rarr; adjust runtime settings.
+
+Output 1 delivers the ON/OFF command. Output 2 delivers the warning and includes `msg.remaining` with the seconds left.
+
+<br/>
+
+# DEVELOPMENT
+
+Per eseguire i test automatici:
+
+1. `npm install`
+2. `npm test`
+
+<br/>
+
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 
 [license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE

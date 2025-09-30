@@ -1,0 +1,164 @@
+<script type="text/javascript">
+  RED.nodes.registerType('RateLimiterUltimate', {
+    category: 'Boolean Logic Ultimate',
+    color: '#ffcc66',
+    defaults: {
+      name: { value: '' },
+      mode: { value: 'debounce' },
+      wait: { value: 500, validate: RED.validators.number() },
+      emitOn: { value: 'trailing' },
+      interval: { value: 1000, validate: RED.validators.number() },
+      trailing: { value: false },
+      windowSize: { value: 1000, validate: RED.validators.number() },
+      maxInWindow: { value: 10, validate: RED.validators.number() },
+      dropStrategy: { value: 'drop' },
+      payloadPropName: { value: 'payload', required: false },
+      translatorConfig: { type: 'translator-config', required: false },
+      controlTopic: { value: 'rate' },
+      statInterval: { value: 0, validate: RED.validators.number() }
+    },
+    inputs: 1,
+    outputs: 2,
+    outputLabels: function (index) {
+      return index === 0 ? 'Forward' : 'Diagnostics';
+    },
+    icon: 'file-in.png',
+    label: function () {
+      const mode = (this.mode || 'debounce').charAt(0).toUpperCase() + (this.mode || 'debounce').slice(1);
+      return (this.name || 'RateLimiter') + ' (' + mode + ')';
+    },
+    paletteLabel: function () {
+      return 'Rate Limiter';
+    },
+    oneditprepare: function () {
+      const payloadField = $('#node-input-payloadPropName');
+      if (payloadField.val() === '') payloadField.val('payload');
+      payloadField.typedInput({ default: 'msg', types: ['msg'] });
+
+      $('#node-input-trailing').prop('checked', this.trailing === true);
+
+      function toggleSections(mode) {
+        $('.rate-config-section').hide();
+        $('.rate-config-common').show();
+        $('.rate-config-' + mode).show();
+      }
+
+      $('#node-input-mode').on('change', function () {
+        toggleSections($(this).val());
+      });
+
+      toggleSections($('#node-input-mode').val());
+    },
+    oneditsave: function () {
+      this.trailing = $('#node-input-trailing').is(':checked');
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="RateLimiterUltimate">
+  <div class="form-row">
+    <b>Rate Limiter Ultimate</b>&nbsp;&nbsp;
+    <span style="color:red"><i class="fa fa-question-circle"></i>&nbsp;<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+    &nbsp;&nbsp;<span style="color:red"><i class="fa fa-youtube-play"></i>&nbsp;<a target="_blank" href="https://youtu.be/1T1g0HCeYA8"><u>Youtube Sample</u></a></span>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row rate-config-common">
+    <label for="node-input-mode"><i class="fa fa-sliders"></i> Mode</label>
+    <select id="node-input-mode">
+      <option value="debounce">Debounce</option>
+      <option value="throttle">Throttle</option>
+      <option value="window">Window</option>
+    </select>
+  </div>
+
+  <div class="form-row rate-config-common">
+    <label for="node-input-controlTopic"><i class="fa fa-tag"></i> Control topic</label>
+    <input type="text" id="node-input-controlTopic">
+  </div>
+
+  <div class="form-row rate-config-common">
+    <label for="node-input-statInterval"><i class="fa fa-clock-o"></i> Stats every (s)</label>
+    <input type="number" min="0" id="node-input-statInterval" placeholder="0 = off">
+  </div>
+
+  <div class="form-row rate-config-common">
+    <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
+    <input type="text" id="node-input-payloadPropName">
+  </div>
+
+  <div class="form-row rate-config-common">
+    <label for="node-input-translatorConfig"><i class="fa fa-language"></i> Translator</label>
+    <input type="text" id="node-input-translatorConfig">
+  </div>
+
+  <div class="form-row rate-config-section rate-config-debounce">
+    <label for="node-input-wait"><i class="fa fa-hourglass-o"></i> Wait (ms)</label>
+    <input type="number" id="node-input-wait" min="0">
+  </div>
+
+  <div class="form-row rate-config-section rate-config-debounce">
+    <label for="node-input-emitOn"><i class="fa fa-exchange"></i> Emit</label>
+    <select id="node-input-emitOn">
+      <option value="leading">Leading edge</option>
+      <option value="trailing">Trailing edge</option>
+      <option value="both">Both</option>
+    </select>
+  </div>
+
+  <div class="form-row rate-config-section rate-config-throttle">
+    <label for="node-input-interval"><i class="fa fa-hourglass-start"></i> Interval (ms)</label>
+    <input type="number" id="node-input-interval" min="0">
+  </div>
+
+  <div class="form-row rate-config-section rate-config-throttle">
+    <label for="node-input-trailing"><i class="fa fa-arrow-circle-right"></i> Emit trailing</label>
+    <input type="checkbox" id="node-input-trailing" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row rate-config-section rate-config-window">
+    <label for="node-input-windowSize"><i class="fa fa-arrows-h"></i> Window size (ms)</label>
+    <input type="number" id="node-input-windowSize" min="0">
+  </div>
+
+  <div class="form-row rate-config-section rate-config-window">
+    <label for="node-input-maxInWindow"><i class="fa fa-filter"></i> Max messages</label>
+    <input type="number" id="node-input-maxInWindow" min="1">
+  </div>
+
+  <div class="form-row rate-config-section rate-config-window">
+    <label for="node-input-dropStrategy"><i class="fa fa-random"></i> On limit</label>
+    <select id="node-input-dropStrategy">
+      <option value="drop">Drop</option>
+      <option value="queue">Queue last</option>
+    </select>
+  </div>
+</script>
+
+<script type="text/markdown" data-help-name="RateLimiterUltimate">
+The purpose of this node is to moderate the frequency of incoming messages.
+
+**Modes**
+
+- **Debounce** – waits for the line to be quiet before forwarding the final message. With *Leading* it emits the first message immediately and blocks the following ones until the delay ends; *Trailing* sends only the last message; *Both* combines both behaviours.
+- **Throttle** – enforces a minimum interval between consecutive messages. When *Emit trailing* is enabled the most recent message is forwarded once the interval has elapsed.
+- **Window** – limits the number of messages in a moving time window. Extra messages can be dropped or queued to play once a slot becomes available.
+
+**Outputs**
+
+- Output 1: messages that pass the limiter.
+- Output 2: diagnostic events `{ payload: { mode, reason, passed, dropped, msg, propertyValue } }` and periodic statistics (`controlTopic/stats`).
+
+**Control messages** (when `msg.topic` equals the *Control topic*):
+
+- `msg.reset = true` – clears counters and buffers.
+- `msg.flush = true` – forces emission of the pending message, if any.
+- `msg.mode = 'debounce'|'throttle'|'window'` – changes mode at runtime.
+- `msg.interval`, `msg.wait`, `msg.windowSize`, `msg.maxInWindow` – adjust the related thresholds.
+
+The **With Input** field selects which message property to evaluate (default `msg.payload`). When configured, it can be translated through the **translator-config** node for Home Assistant compatibility.
+</script>

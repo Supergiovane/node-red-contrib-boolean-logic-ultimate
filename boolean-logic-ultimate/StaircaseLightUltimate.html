@@ -1,0 +1,165 @@
+<script type="text/javascript">
+  RED.nodes.registerType('StaircaseLightUltimate', {
+    category: 'Boolean Logic Ultimate',
+    color: '#ffd966',
+    defaults: {
+      name: { value: '' },
+      controlTopic: { value: 'stairs' },
+      payloadPropName: { value: 'payload', required: false },
+      translatorConfig: { type: 'translator-config', required: false },
+      durationSeconds: { value: 30, validate: RED.validators.number() },
+      warningEnabled: { value: true },
+      warningOffsetSeconds: { value: 5, validate: RED.validators.number() },
+      restartOnTrigger: { value: true },
+      allowOffInput: { value: false },
+      onPayload: { value: true },
+      onPayloadType: { value: 'bool' },
+      offPayload: { value: false },
+      offPayloadType: { value: 'bool' },
+      warningPayload: { value: 'warning' },
+      warningPayloadType: { value: 'str' }
+    },
+    inputs: 1,
+    outputs: 2,
+    outputLabels: ['Light command', 'Warning'],
+    icon: 'timer.png',
+    label: function () {
+      return this.name || 'Staircase Light';
+    },
+    paletteLabel: function () {
+      return 'Staircase Light';
+    },
+    oneditprepare: function () {
+      const payloadField = $('#node-input-payloadPropName');
+      if (payloadField.val() === '') payloadField.val('payload');
+      payloadField.typedInput({ default: 'msg', types: ['msg'] });
+
+      $('#node-input-onPayload').typedInput({
+        default: this.onPayloadType || 'bool',
+        types: ['str', 'num', 'bool', 'json', 'date']
+      });
+      $('#node-input-onPayload').typedInput('type', this.onPayloadType || 'bool');
+
+      $('#node-input-offPayload').typedInput({
+        default: this.offPayloadType || 'bool',
+        types: ['str', 'num', 'bool', 'json', 'date']
+      });
+      $('#node-input-offPayload').typedInput('type', this.offPayloadType || 'bool');
+
+      $('#node-input-warningPayload').typedInput({
+        default: this.warningPayloadType || 'str',
+        types: ['str', 'num', 'bool', 'json']
+      });
+      $('#node-input-warningPayload').typedInput('type', this.warningPayloadType || 'str');
+    },
+    oneditsave: function () {
+      this.onPayloadType = $('#node-input-onPayload').typedInput('type');
+      this.offPayloadType = $('#node-input-offPayload').typedInput('type');
+      this.warningPayloadType = $('#node-input-warningPayload').typedInput('type');
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="StaircaseLightUltimate">
+  <div class="form-row">
+    <b>Staircase Light Ultimate</b>
+    &nbsp;&nbsp;<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp;<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-controlTopic"><i class="fa fa-tag"></i> Control topic</label>
+    <input type="text" id="node-input-controlTopic">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-durationSeconds"><i class="fa fa-clock-o"></i> Duration (s)</label>
+    <input type="number" id="node-input-durationSeconds" min="1">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-warningEnabled"><i class="fa fa-bell"></i> Warning before off</label>
+    <input type="checkbox" id="node-input-warningEnabled" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-warningOffsetSeconds"><i class="fa fa-hourglass-end"></i> Warning offset (s)</label>
+    <input type="number" id="node-input-warningOffsetSeconds" min="1">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-restartOnTrigger"><i class="fa fa-repeat"></i> Restart on trigger</label>
+    <input type="checkbox" id="node-input-restartOnTrigger" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-allowOffInput"><i class="fa fa-power-off"></i> Allow off input</label>
+    <input type="checkbox" id="node-input-allowOffInput" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
+    <input type="text" id="node-input-payloadPropName">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-translatorConfig"><i class="fa fa-language"></i> Translator</label>
+    <input type="text" id="node-input-translatorConfig">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-onPayload"><i class="fa fa-lightbulb-o"></i> On payload</label>
+    <input type="text" id="node-input-onPayload">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-offPayload"><i class="fa fa-lightbulb-o"></i> Off payload</label>
+    <input type="text" id="node-input-offPayload">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-warningPayload"><i class="fa fa-exclamation-triangle"></i> Warning payload</label>
+    <input type="text" id="node-input-warningPayload">
+  </div>
+</script>
+
+<script type="text/markdown" data-help-name="StaircaseLightUltimate">
+<p>The purpose of this node is to control staircase lighting with timed auto-off and optional warning messages.</p>
+
+|Property|Description|
+|--|--|
+| Control topic | Topic that receives manual commands (on/off/extend). |
+| Duration (s) | Length of the lighting period for each trigger. |
+| Warning before off | Enables emission of a pre-off warning on output 2. |
+| Warning offset (s) | Seconds before switch-off when the warning is sent. |
+| Restart on trigger | Restarts the timer every time a new trigger arrives while active. |
+| Allow off input | Allows a `false` from the main input to switch off immediately. |
+| With Input | Message property to evaluate as trigger (default `payload`). |
+| Translator | Optional translator-config for true/false conversion. |
+| On/Off payload | Values emitted on output 1 to switch the light. |
+| Warning payload | Value emitted on output 2 when the warning fires. |
+
+<br/>
+
+* Control topic commands (`msg.topic` must match the control topic)
+
+Pass <code>msg.command = "on"</code> (or <code>msg.start = true</code>) to turn on and start the timer</br>
+Pass <code>msg.command = "off"</code> (or <code>msg.stop = true</code>) to force immediate off</br>
+Pass <code>msg.command = "extend"</code> (or <code>msg.extend = true</code>) to refresh the timer while keeping the light on</br>
+Pass <code>msg.duration</code>, <code>msg.warningEnabled</code> or <code>msg.warningOffset</code> to update runtime settings</br>
+
+<br/>
+
+Output 1 emits the configured ON/OFF command. Output 2 emits the pre-off warning and includes <code>msg.remaining</code> with the seconds left.</br>
+
+<br/>
+
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)</br>
+
+[Find it useful?](https://www.paypal.me/techtoday)
+
+</script>

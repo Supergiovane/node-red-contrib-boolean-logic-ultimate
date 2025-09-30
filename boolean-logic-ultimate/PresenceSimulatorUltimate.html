@@ -1,0 +1,119 @@
+<script type="text/javascript">
+  RED.nodes.registerType('PresenceSimulatorUltimate', {
+    category: 'Boolean Logic Ultimate',
+    color: '#ffe599',
+    defaults: {
+      name: { value: '' },
+      controlTopic: { value: 'presence' },
+      autoStart: { value: false },
+      autoLoop: { value: true },
+      randomize: { value: false },
+      jitter: { value: 10, validate: RED.validators.number() },
+      payloadPropName: { value: 'payload', required: false },
+      translatorConfig: { type: 'translator-config', required: false },
+      patterns: { value: '' }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'file-in.png',
+    label: function () {
+      return this.name || 'Presence Simulator';
+    },
+    paletteLabel: function () {
+      return 'Presence Simulator';
+    },
+    oneditprepare: function () {
+      const payloadField = $('#node-input-payloadPropName');
+      if (payloadField.val() === '') payloadField.val('payload');
+      payloadField.typedInput({ default: 'msg', types: ['msg'] });
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="PresenceSimulatorUltimate">
+  <div class="form-row">
+    <b>Presence Simulator Ultimate</b>
+    &nbsp;&nbsp;<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp;<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-controlTopic"><i class="fa fa-tag"></i> Control topic</label>
+    <input type="text" id="node-input-controlTopic">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-autoStart"><i class="fa fa-play"></i> Auto start</label>
+    <input type="checkbox" id="node-input-autoStart" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-autoLoop"><i class="fa fa-refresh"></i> Loop sequence</label>
+    <input type="checkbox" id="node-input-autoLoop" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-randomize"><i class="fa fa-random"></i> Random delays</label>
+    <input type="checkbox" id="node-input-randomize" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-jitter"><i class="fa fa-percent"></i> Jitter (%)</label>
+    <input type="number" id="node-input-jitter" min="0" max="100">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
+    <input type="text" id="node-input-payloadPropName">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-translatorConfig"><i class="fa fa-language"></i> Translator</label>
+    <input type="text" id="node-input-translatorConfig">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-patterns"><i class="fa fa-list"></i> Sequence</label>
+    <textarea id="node-input-patterns" style="width:100%; height:150px;" placeholder='{"delay":600000,"payload":true,"topic":"light/living"}'></textarea>
+  </div>
+</script>
+
+<script type="text/markdown" data-help-name="PresenceSimulatorUltimate">
+<p>The purpose of this node is to replay a programmable sequence of messages in order to simulate occupancy.</p>
+
+|Property|Description|
+|--|--|
+| Control topic | Topic used for runtime commands such as start/stop/reset. |
+| Auto start | Starts the sequence automatically after deploy or restart. |
+| Loop sequence | Repeats the sequence when the end is reached. |
+| Random delays | Enables a random variation of the programmed delays. |
+| Jitter (%) | Maximum percentage of variation applied when random delays are enabled. |
+| With Input | Message property to inspect for inline events (default `payload`). |
+| Translator | Optional translator-config to convert incoming values. |
+| Sequence | One JSON object per line, each composed at least of `delay` (in ms) and the properties to output. |
+
+<br/>
+
+* Control topic commands (`msg.topic` must match the control topic)
+
+Pass <code>msg.command = "start"</code> (or <code>msg.start = true</code>) to begin playback</br>
+Pass <code>msg.command = "stop"</code> (or <code>msg.stop = true</code>) to halt playback</br>
+Pass <code>msg.reset = true</code> to reset counters and start position</br>
+Pass <code>msg.sequence = [...]</code> to load a new sequence at runtime</br>
+Pass <code>msg.loop</code>, <code>msg.randomize</code> or <code>msg.jitter</code> to update the related options</br>
+
+<br/>
+
+Each event in the sequence outputs a message containing the fields defined in the JSON line. When random delays are enabled, the effective delay is varied within the configured jitter.</br>
+
+<br/>
+
+[SEE THE README FOR FULL HELP AND SAMPLES](https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate)</br>
+
+[Find it useful?](https://www.paypal.me/techtoday)
+
+</script>
