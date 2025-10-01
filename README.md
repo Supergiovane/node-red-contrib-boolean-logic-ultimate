@@ -534,7 +534,8 @@ Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it
 | Property         | Description                                                                                          |
 | ---------------- | ---------------------------------------------------------------------------------------------------- |
 | Input            | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
-| r,q              | Kalman's parameters to be set.                                                                       |
+| Measurement noise | Kalman's <code>R</code> parameter.                                                                   |
+| Process noise     | Kalman's <code>Q</code> parameter.                                                                   |
 | Translator Input | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
 <br/>

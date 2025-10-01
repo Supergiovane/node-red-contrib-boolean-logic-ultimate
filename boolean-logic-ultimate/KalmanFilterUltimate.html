@@ -8,8 +8,8 @@
 			},
 			payloadPropName: { value: "payload", required: false },
 			translatorConfig: { type: "translator-config", required: false },
-			r: { value: 0.01 },
-			q: { value: 3 }
+			measurementNoise: { value: 0.01 },
+			processNoise: { value: 3 }
 		},
 		inputs: 1,
 		outputs: 1,
@@ -22,8 +22,15 @@
 			return "KalmanFilter";
 		},
 		oneditprepare: function () {
-			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
-			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
+			const payloadField = $("#node-input-payloadPropName");
+			if (payloadField.val() === "") payloadField.val("payload");
+			payloadField.typedInput({ default: 'msg', types: ['msg'] });
+
+			const measurementField = $("#node-input-measurementNoise");
+			if (measurementField.val() === "" && this.r !== undefined) measurementField.val(this.r);
+
+			const processField = $("#node-input-processNoise");
+			if (processField.val() === "" && this.q !== undefined) processField.val(this.q);
 		}
 	});
 </script>
@@ -44,13 +51,13 @@
 		<input type="text" id="node-input-payloadPropName">
     </div>
 	<div class="form-row">
-        <label for="node-input-r"><i class="icon-tag"></i> R</label>
-        <input type="text" id="node-input-r" placeholder="0.01">
-    </div>
-    <div class="form-row">
-        <label for="node-input-q"><i class="icon-tag"></i> Q</label>
-        <input type="text" id="node-input-q" placeholder="3">
-    </div>
+		<label for="node-input-measurementNoise"><i class="icon-tag"></i> Measurement noise (R)</label>
+		<input type="text" id="node-input-measurementNoise" placeholder="0.01">
+	</div>
+	<div class="form-row">
+		<label for="node-input-processNoise"><i class="icon-tag"></i> Process noise (Q)</label>
+		<input type="text" id="node-input-processNoise" placeholder="3">
+	</div>
 	<div class="form-row">
 		<br />
 		<b>Translator</b>
@@ -70,7 +77,8 @@ Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it
 |Property|Description|
 |--|--|
 | Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
-| r,q | Kalman's parameters to be set. |
+| Measurement noise | Kalman's <code>R</code> parameter. |
+| Process noise | Kalman's <code>Q</code> parameter. |
 | Translator Input | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
 <br/>

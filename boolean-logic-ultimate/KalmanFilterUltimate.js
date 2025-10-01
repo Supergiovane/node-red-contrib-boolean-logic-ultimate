@@ -6,9 +6,27 @@ module.exports = function (RED) {
     const KalmanFilter = require('kalmanjs');
     var kalmanFilter = undefined;
 
+    function resolveNoise(preferred, legacy, fallback) {
+      const getNumeric = (value) => {
+        if (value === undefined || value === "") return undefined;
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : undefined;
+      };
+
+      const primary = getNumeric(preferred);
+      if (primary !== undefined) return primary;
+
+      const legacyValue = getNumeric(legacy);
+      if (legacyValue !== undefined) return legacyValue;
+
+      return fallback;
+    }
+
     function initFilter() {
       try {
-        kalmanFilter = new KalmanFilter({ R: config.R || 0.01, Q: config.Q || 3 });
+        const measurementNoise = resolveNoise(config.measurementNoise, config.r, 0.01);
+        const processNoise = resolveNoise(config.processNoise, config.q, 3);
+        kalmanFilter = new KalmanFilter({ R: measurementNoise, Q: processNoise });
       } catch (error) {
       }
     }
