@@ -4,6 +4,11 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.3</b> November 2025<br/>
+- Impulse node allows now to send JSON as payload. Grazie Waldmensch1 !!</br>
+</p>
+
+<p>
 <b>Version 1.2.2</b> September 2025<br/>
 - KalmanFilterUltimate: renamed configuration fields for R/Q parameters to measurement/process noise to avoid reserved-property conflicts.</br>
 </p>

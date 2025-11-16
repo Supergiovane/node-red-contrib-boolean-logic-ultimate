@@ -45,7 +45,21 @@ module.exports = function (RED) {
 						var sCommand = element.split(":")[0].toString().toLowerCase().trim();
 						if (sCommand !== "restart") {
 							// Get the value of the command
-							var sVal = element.split(":")[1].toString().toLowerCase().trim();
+							//var sVal = element.split(":")[1].toString().toLowerCase().trim();
+							const idx = element.indexOf(":");
+							var sVal = (idx !== -1 ? element.substring(idx + 1) : "")
+								.toString()
+								.trim(); //  toLowerCase() would destroy JSON keys 
+
+							try {
+								const parsed = JSON.parse(sVal);
+								if (parsed && typeof parsed === "object") {
+									sVal = parsed; // sVal is real object now
+								}
+							} catch (e) {
+								// no valid JSON - sVal stays String. toLowerCase() could be done here if really needed, 
+								// but it could surprise the enduser that the foreseen value is manipulated
+							}
 						} else { var sVal = ""; }
 
 					} catch (error) {
