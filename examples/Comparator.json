@@ -1,0 +1,104 @@
+[
+  {
+    "id": "cmp_tab_1",
+    "type": "tab",
+    "label": "Comparator - compare two topics",
+    "disabled": false,
+    "info": "Esempio: confronta due valori numerici identificati da msg.topic e produce true/false."
+  },
+  {
+    "id": "cmp_cmt_1",
+    "type": "comment",
+    "z": "cmp_tab_1",
+    "name": "Confronto: t1 > t2",
+    "info": "Invia valori su topic t1 e t2. Il Comparator emette true/false quando ha entrambi i valori.",
+    "x": 210,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "cmp_inj_t1",
+    "type": "inject",
+    "z": "cmp_tab_1",
+    "name": "t1 = 25",
+    "props": [
+      { "p": "payload" },
+      { "p": "topic", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "t1",
+    "payload": "25",
+    "payloadType": "num",
+    "x": 120,
+    "y": 140,
+    "wires": [["cmp_node_1"]]
+  },
+  {
+    "id": "cmp_inj_t2",
+    "type": "inject",
+    "z": "cmp_tab_1",
+    "name": "t2 = 20",
+    "props": [
+      { "p": "payload" },
+      { "p": "topic", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "t2",
+    "payload": "20",
+    "payloadType": "num",
+    "x": 120,
+    "y": 180,
+    "wires": [["cmp_node_1"]]
+  },
+  {
+    "id": "cmp_inj_reset",
+    "type": "inject",
+    "z": "cmp_tab_1",
+    "name": "reset",
+    "props": [{ "p": "reset", "v": "true", "vt": "bool" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 120,
+    "y": 220,
+    "wires": [["cmp_node_1"]]
+  },
+  {
+    "id": "cmp_node_1",
+    "type": "Comparator",
+    "z": "cmp_tab_1",
+    "name": "t1 > t2",
+    "property": "payload",
+    "math": ">",
+    "topic1": "t1",
+    "topic2": "t2",
+    "x": 330,
+    "y": 180,
+    "wires": [["cmp_dbg_1"]]
+  },
+  {
+    "id": "cmp_dbg_1",
+    "type": "debug",
+    "z": "cmp_tab_1",
+    "name": "Result (boolean)",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 550,
+    "y": 180,
+    "wires": []
+  }
+]
+

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "imp_tab_1",
+    "type": "tab",
+    "label": "ImpulseUltimate - timed sequence",
+    "disabled": false,
+    "info": "Esempio: avvia una sequenza di comandi (send/wait/send) quando riceve payload=true."
+  },
+  {
+    "id": "imp_cmt_1",
+    "type": "comment",
+    "z": "imp_tab_1",
+    "name": "Start/Stop sequenza",
+    "info": "payload=true avvia la sequenza; payload=false ferma la sequenza in corso.",
+    "x": 210,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "imp_inj_start",
+    "type": "inject",
+    "z": "imp_tab_1",
+    "name": "Start",
+    "props": [{ "p": "payload" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 140,
+    "y": 140,
+    "wires": [["imp_node_1"]]
+  },
+  {
+    "id": "imp_inj_stop",
+    "type": "inject",
+    "z": "imp_tab_1",
+    "name": "Stop",
+    "props": [{ "p": "payload" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "false",
+    "payloadType": "bool",
+    "x": 140,
+    "y": 180,
+    "wires": [["imp_node_1"]]
+  },
+  {
+    "id": "imp_node_1",
+    "type": "ImpulseUltimate",
+    "z": "imp_tab_1",
+    "name": "Impulse demo",
+    "commandText": "// Demo\\nsend:true\\nwait:500\\nsend:false",
+    "payloadPropName": "payload",
+    "x": 350,
+    "y": 160,
+    "wires": [["imp_dbg_1"]]
+  },
+  {
+    "id": "imp_dbg_1",
+    "type": "debug",
+    "z": "imp_tab_1",
+    "name": "Output",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 540,
+    "y": 160,
+    "wires": []
+  }
+]
+

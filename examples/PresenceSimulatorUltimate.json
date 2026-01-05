@@ -1,0 +1,105 @@
+[
+  {
+    "id": "ps_tab_1",
+    "type": "tab",
+    "label": "PresenceSimulatorUltimate - sequence playback",
+    "disabled": false,
+    "info": "Esempio: riproduce una sequenza programmata (un JSON per riga) per simulare presenza."
+  },
+  {
+    "id": "ps_cmt_1",
+    "type": "comment",
+    "z": "ps_tab_1",
+    "name": "Topic di controllo: presence",
+    "info": "Usa START/STOP/RESET. La sequenza è definita nel nodo (campo Sequence).",
+    "x": 220,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "ps_inj_start",
+    "type": "inject",
+    "z": "ps_tab_1",
+    "name": "START",
+    "props": [
+      { "p": "topic", "v": "presence", "vt": "str" },
+      { "p": "command", "v": "start", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 120,
+    "y": 140,
+    "wires": [["ps_node_1"]]
+  },
+  {
+    "id": "ps_inj_stop",
+    "type": "inject",
+    "z": "ps_tab_1",
+    "name": "STOP",
+    "props": [
+      { "p": "topic", "v": "presence", "vt": "str" },
+      { "p": "command", "v": "stop", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 120,
+    "y": 180,
+    "wires": [["ps_node_1"]]
+  },
+  {
+    "id": "ps_inj_reset",
+    "type": "inject",
+    "z": "ps_tab_1",
+    "name": "RESET",
+    "props": [
+      { "p": "topic", "v": "presence", "vt": "str" },
+      { "p": "reset", "v": "true", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 120,
+    "y": 220,
+    "wires": [["ps_node_1"]]
+  },
+  {
+    "id": "ps_node_1",
+    "type": "PresenceSimulatorUltimate",
+    "z": "ps_tab_1",
+    "name": "Presence",
+    "controlTopic": "presence",
+    "autoStart": false,
+    "autoLoop": true,
+    "randomize": false,
+    "jitter": 10,
+    "payloadPropName": "payload",
+    "translatorConfig": "",
+    "patterns": "{\"delay\":1000,\"payload\":true,\"topic\":\"light/living\"}\n{\"delay\":1500,\"payload\":false,\"topic\":\"light/living\"}\n{\"delay\":800,\"payload\":true,\"topic\":\"light/kitchen\"}\n{\"delay\":1200,\"payload\":false,\"topic\":\"light/kitchen\"}",
+    "x": 360,
+    "y": 180,
+    "wires": [["ps_dbg_1"]]
+  },
+  {
+    "id": "ps_dbg_1",
+    "type": "debug",
+    "z": "ps_tab_1",
+    "name": "Output events",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 570,
+    "y": 180,
+    "wires": []
+  }
+]
+

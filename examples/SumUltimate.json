@@ -1,0 +1,222 @@
+[
+  {
+    "id": "sum_tab_1",
+    "type": "tab",
+    "label": "SumUltimate - sum + subtract",
+    "disabled": false,
+    "info": "Esempi: somma con topic diversi e sottrazione con \"Subtract from\"."
+  },
+  {
+    "id": "sum_cmt_1",
+    "type": "comment",
+    "z": "sum_tab_1",
+    "name": "SUM: ogni msg.topic rappresenta una variabile",
+    "info": "Il nodo memorizza l'ultimo valore per ciascun topic e ricalcola ad ogni arrivo.",
+    "x": 240,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "sum_inj_a",
+    "type": "inject",
+    "z": "sum_tab_1",
+    "name": "a = 10",
+    "props": [
+      { "p": "payload" },
+      { "p": "topic", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "a",
+    "payload": "10",
+    "payloadType": "num",
+    "x": 120,
+    "y": 120,
+    "wires": [["sum_node_sum"]]
+  },
+  {
+    "id": "sum_inj_b",
+    "type": "inject",
+    "z": "sum_tab_1",
+    "name": "b = 5",
+    "props": [
+      { "p": "payload" },
+      { "p": "topic", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "b",
+    "payload": "5",
+    "payloadType": "num",
+    "x": 110,
+    "y": 160,
+    "wires": [["sum_node_sum"]]
+  },
+  {
+    "id": "sum_inj_c",
+    "type": "inject",
+    "z": "sum_tab_1",
+    "name": "c = 2",
+    "props": [
+      { "p": "payload" },
+      { "p": "topic", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "c",
+    "payload": "2",
+    "payloadType": "num",
+    "x": 110,
+    "y": 200,
+    "wires": [["sum_node_sum"]]
+  },
+  {
+    "id": "sum_inj_reset_1",
+    "type": "inject",
+    "z": "sum_tab_1",
+    "name": "reset",
+    "props": [{ "p": "reset", "v": "true", "vt": "bool" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 110,
+    "y": 240,
+    "wires": [["sum_node_sum", "sum_node_sub"]]
+  },
+  {
+    "id": "sum_node_sum",
+    "type": "SumUltimate",
+    "z": "sum_tab_1",
+    "name": "Sum",
+    "property": "payload",
+    "math": "sum",
+    "subtractstartfrom": "",
+    "x": 320,
+    "y": 160,
+    "wires": [["sum_dbg_sum"]]
+  },
+  {
+    "id": "sum_dbg_sum",
+    "type": "debug",
+    "z": "sum_tab_1",
+    "name": "SUM result",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 540,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "sum_cmt_2",
+    "type": "comment",
+    "z": "sum_tab_1",
+    "name": "SUBTRACT: scegli il topic iniziale (Subtract from)",
+    "info": "Qui la sottrazione parte dal topic \"startNumber\" e sottrae a/b.",
+    "x": 270,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "sum_inj_start",
+    "type": "inject",
+    "z": "sum_tab_1",
+    "name": "startNumber = 100",
+    "props": [
+      { "p": "payload" },
+      { "p": "topic", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "startNumber",
+    "payload": "100",
+    "payloadType": "num",
+    "x": 150,
+    "y": 360,
+    "wires": [["sum_node_sub"]]
+  },
+  {
+    "id": "sum_inj_sa",
+    "type": "inject",
+    "z": "sum_tab_1",
+    "name": "a = 20",
+    "props": [
+      { "p": "payload" },
+      { "p": "topic", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "a",
+    "payload": "20",
+    "payloadType": "num",
+    "x": 120,
+    "y": 400,
+    "wires": [["sum_node_sub"]]
+  },
+  {
+    "id": "sum_inj_sb",
+    "type": "inject",
+    "z": "sum_tab_1",
+    "name": "b = 10",
+    "props": [
+      { "p": "payload" },
+      { "p": "topic", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "b",
+    "payload": "10",
+    "payloadType": "num",
+    "x": 120,
+    "y": 440,
+    "wires": [["sum_node_sub"]]
+  },
+  {
+    "id": "sum_node_sub",
+    "type": "SumUltimate",
+    "z": "sum_tab_1",
+    "name": "Subtract",
+    "property": "payload",
+    "math": "subtract",
+    "subtractstartfrom": "startNumber",
+    "x": 330,
+    "y": 420,
+    "wires": [["sum_dbg_sub"]]
+  },
+  {
+    "id": "sum_dbg_sub",
+    "type": "debug",
+    "z": "sum_tab_1",
+    "name": "SUBTRACT result",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 560,
+    "y": 420,
+    "wires": []
+  }
+]
+

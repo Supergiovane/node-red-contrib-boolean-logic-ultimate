@@ -1,0 +1,96 @@
+[
+  {
+    "id": "kal_tab_1",
+    "type": "tab",
+    "label": "KalmanFilterUltimate - smooth noisy values",
+    "disabled": false,
+    "info": "Esempio: genera un valore rumoroso e lo filtra con il Kalman filter."
+  },
+  {
+    "id": "kal_cmt_1",
+    "type": "comment",
+    "z": "kal_tab_1",
+    "name": "Clicca più volte \"Next sample\"",
+    "info": "Il Function genera una rampa con rumore. Confronta \"Raw\" e \"Filtered\".",
+    "x": 220,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "kal_inj_1",
+    "type": "inject",
+    "z": "kal_tab_1",
+    "name": "Next sample",
+    "props": [{ "p": "payload", "v": "", "vt": "date" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 140,
+    "y": 140,
+    "wires": [["kal_fn_1"]]
+  },
+  {
+    "id": "kal_fn_1",
+    "type": "function",
+    "z": "kal_tab_1",
+    "name": "Noisy generator",
+    "func": "let value = context.get('value') || 0;\nvalue += 1;\ncontext.set('value', value);\n\nconst noise = (Math.random() - 0.5) * 6; // +/- 3\nmsg.payload = value + noise;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 340,
+    "y": 140,
+    "wires": [["kal_dbg_raw", "kal_node_1"]]
+  },
+  {
+    "id": "kal_node_1",
+    "type": "KalmanFilterUltimate",
+    "z": "kal_tab_1",
+    "name": "Kalman",
+    "payloadPropName": "payload",
+    "translatorConfig": "",
+    "measurementNoise": 0.01,
+    "processNoise": 3,
+    "x": 520,
+    "y": 200,
+    "wires": [["kal_dbg_filt"]]
+  },
+  {
+    "id": "kal_dbg_raw",
+    "type": "debug",
+    "z": "kal_tab_1",
+    "name": "Raw",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 520,
+    "y": 120,
+    "wires": []
+  },
+  {
+    "id": "kal_dbg_filt",
+    "type": "debug",
+    "z": "kal_tab_1",
+    "name": "Filtered",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 700,
+    "y": 200,
+    "wires": []
+  }
+]
+

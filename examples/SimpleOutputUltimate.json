@@ -1,0 +1,80 @@
+[
+  {
+    "id": "sou_tab_1",
+    "type": "tab",
+    "label": "SimpleOutputUltimate - true/false emit",
+    "disabled": false,
+    "info": "Esempio: ad ogni input il nodo emette TRUE su output 1 e FALSE su output 2 (indipendentemente dal payload in ingresso)."
+  },
+  {
+    "id": "sou_cmt_1",
+    "type": "comment",
+    "z": "sou_tab_1",
+    "name": "Qualsiasi messaggio in ingresso genera true/false",
+    "info": "Utile per generare rapidamente un TRUE/FALSE senza usare due inject separati.",
+    "x": 260,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "sou_inj_1",
+    "type": "inject",
+    "z": "sou_tab_1",
+    "name": "Trigger",
+    "props": [
+      { "p": "payload", "v": "anything", "vt": "str" },
+      { "p": "topic", "v": "trigger", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 160,
+    "wires": [["sou_node_1"]]
+  },
+  {
+    "id": "sou_node_1",
+    "type": "SimpleOutputUltimate",
+    "z": "sou_tab_1",
+    "name": "Output",
+    "x": 370,
+    "y": 160,
+    "wires": [["sou_dbg_true"], ["sou_dbg_false"]]
+  },
+  {
+    "id": "sou_dbg_true",
+    "type": "debug",
+    "z": "sou_tab_1",
+    "name": "True",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 540,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "sou_dbg_false",
+    "type": "debug",
+    "z": "sou_tab_1",
+    "name": "False",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 540,
+    "y": 180,
+    "wires": []
+  }
+]
+

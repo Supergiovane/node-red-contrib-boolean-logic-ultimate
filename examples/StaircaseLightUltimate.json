@@ -1,0 +1,145 @@
+[
+  {
+    "id": "st_tab_1",
+    "type": "tab",
+    "label": "StaircaseLightUltimate - timed light",
+    "disabled": false,
+    "info": "Esempio: accende la luce per una durata e la spegne automaticamente, con warning pre-off opzionale."
+  },
+  {
+    "id": "st_cmt_1",
+    "type": "comment",
+    "z": "st_tab_1",
+    "name": "Trigger = payload true, off = payload false (se abilitato)",
+    "info": "Il topic di controllo è \"stairs\" (comandi on/off/extend).",
+    "x": 300,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "st_inj_motion",
+    "type": "inject",
+    "z": "st_tab_1",
+    "name": "Motion (true)",
+    "props": [
+      { "p": "payload", "v": "true", "vt": "bool" },
+      { "p": "topic", "v": "sensor", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 140,
+    "wires": [["st_node_1"]]
+  },
+  {
+    "id": "st_inj_off_input",
+    "type": "inject",
+    "z": "st_tab_1",
+    "name": "Off input (false)",
+    "props": [
+      { "p": "payload", "v": "false", "vt": "bool" },
+      { "p": "topic", "v": "sensor", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 160,
+    "y": 180,
+    "wires": [["st_node_1"]]
+  },
+  {
+    "id": "st_inj_extend",
+    "type": "inject",
+    "z": "st_tab_1",
+    "name": "Extend (topic=stairs)",
+    "props": [
+      { "p": "topic", "v": "stairs", "vt": "str" },
+      { "p": "extend", "v": "true", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 170,
+    "y": 240,
+    "wires": [["st_node_1"]]
+  },
+  {
+    "id": "st_inj_force_off",
+    "type": "inject",
+    "z": "st_tab_1",
+    "name": "Force off (topic=stairs)",
+    "props": [
+      { "p": "topic", "v": "stairs", "vt": "str" },
+      { "p": "command", "v": "off", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 180,
+    "y": 280,
+    "wires": [["st_node_1"]]
+  },
+  {
+    "id": "st_node_1",
+    "type": "StaircaseLightUltimate",
+    "z": "st_tab_1",
+    "name": "Stairs",
+    "controlTopic": "stairs",
+    "payloadPropName": "payload",
+    "translatorConfig": "",
+    "durationSeconds": 10,
+    "warningEnabled": true,
+    "warningOffsetSeconds": 3,
+    "restartOnTrigger": true,
+    "allowOffInput": true,
+    "onPayload": true,
+    "onPayloadType": "bool",
+    "offPayload": false,
+    "offPayloadType": "bool",
+    "warningPayload": "warning",
+    "warningPayloadType": "str",
+    "x": 390,
+    "y": 200,
+    "wires": [["st_dbg_cmd"], ["st_dbg_warn"]]
+  },
+  {
+    "id": "st_dbg_cmd",
+    "type": "debug",
+    "z": "st_tab_1",
+    "name": "Light command",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 600,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "st_dbg_warn",
+    "type": "debug",
+    "z": "st_tab_1",
+    "name": "Warning",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 580,
+    "y": 220,
+    "wires": []
+  }
+]
+

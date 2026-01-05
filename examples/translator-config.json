@@ -1,0 +1,99 @@
+[
+  {
+    "id": "tr_tab_1",
+    "type": "tab",
+    "label": "translator-config - example usage",
+    "disabled": false,
+    "info": "Esempio: usa translator-config per convertire stringhe (on/off, open/closed, ecc.) in booleani."
+  },
+  {
+    "id": "tr_cmt_1",
+    "type": "comment",
+    "z": "tr_tab_1",
+    "name": "Il FilterUltimate usa translator-config",
+    "info": "Invia payload \"open\"/\"closed\" e osserva su quale uscita viene instradato.",
+    "x": 240,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "tr_inj_open",
+    "type": "inject",
+    "z": "tr_tab_1",
+    "name": "payload = \"open\"",
+    "props": [{ "p": "payload", "v": "open", "vt": "str" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 140,
+    "wires": [["tr_filter_1"]]
+  },
+  {
+    "id": "tr_inj_closed",
+    "type": "inject",
+    "z": "tr_tab_1",
+    "name": "payload = \"closed\"",
+    "props": [{ "p": "payload", "v": "closed", "vt": "str" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 160,
+    "y": 180,
+    "wires": [["tr_filter_1"]]
+  },
+  {
+    "id": "tr_filter_1",
+    "type": "FilterUltimate",
+    "z": "tr_tab_1",
+    "name": "Filter + Translator",
+    "payloadPropName": "payload",
+    "translatorConfig": "tr_cfg_1",
+    "x": 380,
+    "y": 160,
+    "wires": [["tr_dbg_true"], ["tr_dbg_false"]]
+  },
+  {
+    "id": "tr_dbg_true",
+    "type": "debug",
+    "z": "tr_tab_1",
+    "name": "True (translated)",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 600,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "tr_dbg_false",
+    "type": "debug",
+    "z": "tr_tab_1",
+    "name": "False (translated)",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 610,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "tr_cfg_1",
+    "type": "translator-config",
+    "name": "Default translations",
+    "commandText": "on:true\noff:false\nactive:true\ninactive:false\nopen:true\nclosed:false\nclose:false\n1:true\n0:false\ntrue:true\nfalse:false\nhome:true\nnot_home:false"
+  }
+]
+

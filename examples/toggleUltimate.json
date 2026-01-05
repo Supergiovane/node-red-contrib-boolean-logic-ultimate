@@ -1,0 +1,63 @@
+[
+  {
+    "id": "tog_tab_1",
+    "type": "tab",
+    "label": "toggleUltimate - toggle true/false",
+    "disabled": false,
+    "info": "Esempio: ad ogni msg in ingresso, il nodo alterna il payload tra true e false."
+  },
+  {
+    "id": "tog_cmt_1",
+    "type": "comment",
+    "z": "tog_tab_1",
+    "name": "Ogni click alterna true/false",
+    "info": "Serve solo che esista msg.payload (il valore non viene usato, ma deve essere presente).",
+    "x": 220,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "tog_inj_1",
+    "type": "inject",
+    "z": "tog_tab_1",
+    "name": "Toggle",
+    "props": [{ "p": "payload", "v": "1", "vt": "num" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 140,
+    "y": 140,
+    "wires": [["tog_node_1"]]
+  },
+  {
+    "id": "tog_node_1",
+    "type": "toggleUltimate",
+    "z": "tog_tab_1",
+    "name": "Toggle",
+    "valueToToggle": "true",
+    "payloadPropName": "payload",
+    "translatorConfig": "",
+    "x": 330,
+    "y": 140,
+    "wires": [["tog_dbg_1"]]
+  },
+  {
+    "id": "tog_dbg_1",
+    "type": "debug",
+    "z": "tog_tab_1",
+    "name": "Output",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 520,
+    "y": 140,
+    "wires": []
+  }
+]
+

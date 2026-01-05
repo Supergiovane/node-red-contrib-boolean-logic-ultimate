@@ -1,0 +1,61 @@
+[
+  {
+    "id": "stu_tab_1",
+    "type": "tab",
+    "label": "StatusUltimate - show msg property",
+    "disabled": false,
+    "info": "Esempio: mostra il valore di una proprietà del msg nello status del nodo, e lascia passare il msg."
+  },
+  {
+    "id": "stu_cmt_1",
+    "type": "comment",
+    "z": "stu_tab_1",
+    "name": "Lo status mostra msg.payload",
+    "info": "Configura la proprietà da mostrare (es. payload, mycar.color, ecc.).",
+    "x": 200,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "stu_inj_1",
+    "type": "inject",
+    "z": "stu_tab_1",
+    "name": "payload = \"Ciao\"",
+    "props": [{ "p": "payload", "v": "Ciao", "vt": "str" }],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 140,
+    "wires": [["stu_node_1"]]
+  },
+  {
+    "id": "stu_node_1",
+    "type": "StatusUltimate",
+    "z": "stu_tab_1",
+    "name": "Status",
+    "property": "payload",
+    "x": 340,
+    "y": 140,
+    "wires": [["stu_dbg_1"]]
+  },
+  {
+    "id": "stu_dbg_1",
+    "type": "debug",
+    "z": "stu_tab_1",
+    "name": "Pass-through",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 560,
+    "y": 140,
+    "wires": []
+  }
+]
+

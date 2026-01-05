@@ -1,0 +1,186 @@
+[
+  {
+    "id": "rws_tab_1",
+    "type": "tab",
+    "label": "RailwaySwitchUltimate - route by switcher",
+    "disabled": false,
+    "info": "Esempio: cambia l'uscita attiva inviando un messaggio sul topic di switch (switcher)."
+  },
+  {
+    "id": "rws_cmt_1",
+    "type": "comment",
+    "z": "rws_tab_1",
+    "name": "Switcher topic: switcher (payload 0..4)",
+    "info": "1) Invia switcher=0/1/2 per selezionare l'uscita.\n2) Invia DATA e osserva su quale debug arriva.",
+    "x": 280,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "rws_inj_sw0",
+    "type": "inject",
+    "z": "rws_tab_1",
+    "name": "switcher = 0",
+    "props": [
+      { "p": "payload", "v": "0", "vt": "num" },
+      { "p": "topic", "v": "switcher", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 140,
+    "wires": [["rws_node_1"]]
+  },
+  {
+    "id": "rws_inj_sw1",
+    "type": "inject",
+    "z": "rws_tab_1",
+    "name": "switcher = 1",
+    "props": [
+      { "p": "payload", "v": "1", "vt": "num" },
+      { "p": "topic", "v": "switcher", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 180,
+    "wires": [["rws_node_1"]]
+  },
+  {
+    "id": "rws_inj_sw2",
+    "type": "inject",
+    "z": "rws_tab_1",
+    "name": "switcher = 2",
+    "props": [
+      { "p": "payload", "v": "2", "vt": "num" },
+      { "p": "topic", "v": "switcher", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 220,
+    "wires": [["rws_node_1"]]
+  },
+  {
+    "id": "rws_inj_data",
+    "type": "inject",
+    "z": "rws_tab_1",
+    "name": "DATA",
+    "props": [
+      { "p": "payload", "v": "data", "vt": "str" },
+      { "p": "topic", "v": "data", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 120,
+    "y": 300,
+    "wires": [["rws_node_1"]]
+  },
+  {
+    "id": "rws_node_1",
+    "type": "RailwaySwitchUltimate",
+    "z": "rws_tab_1",
+    "name": "Railway Switch",
+    "triggertopic": "switcher",
+    "initializewith": "1",
+    "payloadPropName": "payload",
+    "translatorConfig": "",
+    "x": 370,
+    "y": 220,
+    "wires": [["rws_dbg_0"], ["rws_dbg_1"], ["rws_dbg_2"], ["rws_dbg_3"], ["rws_dbg_4"]]
+  },
+  {
+    "id": "rws_dbg_0",
+    "type": "debug",
+    "z": "rws_tab_1",
+    "name": "PIN 0",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 560,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "rws_dbg_1",
+    "type": "debug",
+    "z": "rws_tab_1",
+    "name": "PIN 1",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 560,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "rws_dbg_2",
+    "type": "debug",
+    "z": "rws_tab_1",
+    "name": "PIN 2",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 560,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "rws_dbg_3",
+    "type": "debug",
+    "z": "rws_tab_1",
+    "name": "PIN 3",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 560,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "rws_dbg_4",
+    "type": "debug",
+    "z": "rws_tab_1",
+    "name": "PIN 4",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 560,
+    "y": 300,
+    "wires": []
+  }
+]
+

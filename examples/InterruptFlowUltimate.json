@@ -1,0 +1,153 @@
+[
+  {
+    "id": "int_tab_1",
+    "type": "tab",
+    "label": "InterruptFlowUltimate - block/pass/replay",
+    "disabled": false,
+    "info": "Esempio: blocca il flusso quando riceve payload=false dal topic di trigger; riprende con payload=true; replay e reset tramite msg.play / msg.reset."
+  },
+  {
+    "id": "int_cmt_1",
+    "type": "comment",
+    "z": "int_tab_1",
+    "name": "Topic di controllo: trigger",
+    "info": "1) Invia un messaggio 'DATA' (sarà memorizzato).\n2) Invia 'BLOCK' (topic=trigger, payload=false) per bloccare.\n3) Invia altri DATA: non passeranno ma verranno memorizzati.\n4) Invia 'PLAY' (topic=trigger, msg.play=true) per riprodurre l'ultimo memorizzato (con isReplay=true).\n5) Invia 'PASS' (topic=trigger, payload=true) per riprendere il flusso.\n6) Invia 'RESET' (topic=trigger, msg.reset=true) per cancellare il messaggio memorizzato.",
+    "x": 300,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "int_inj_data_1",
+    "type": "inject",
+    "z": "int_tab_1",
+    "name": "DATA #1",
+    "props": [
+      { "p": "payload", "v": "hello", "vt": "str" },
+      { "p": "topic", "v": "data", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 140,
+    "y": 160,
+    "wires": [["int_node_1"]]
+  },
+  {
+    "id": "int_inj_data_2",
+    "type": "inject",
+    "z": "int_tab_1",
+    "name": "DATA #2",
+    "props": [
+      { "p": "payload", "v": "world", "vt": "str" },
+      { "p": "topic", "v": "data", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 140,
+    "y": 200,
+    "wires": [["int_node_1"]]
+  },
+  {
+    "id": "int_inj_block",
+    "type": "inject",
+    "z": "int_tab_1",
+    "name": "BLOCK (trigger=false)",
+    "props": [
+      { "p": "payload", "v": "false", "vt": "bool" },
+      { "p": "topic", "v": "trigger", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 170,
+    "y": 280,
+    "wires": [["int_node_1"]]
+  },
+  {
+    "id": "int_inj_pass",
+    "type": "inject",
+    "z": "int_tab_1",
+    "name": "PASS (trigger=true)",
+    "props": [
+      { "p": "payload", "v": "true", "vt": "bool" },
+      { "p": "topic", "v": "trigger", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 170,
+    "y": 320,
+    "wires": [["int_node_1"]]
+  },
+  {
+    "id": "int_inj_play",
+    "type": "inject",
+    "z": "int_tab_1",
+    "name": "PLAY (msg.play=true)",
+    "props": [
+      { "p": "play", "v": "true", "vt": "bool" },
+      { "p": "topic", "v": "trigger", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 170,
+    "y": 360,
+    "wires": [["int_node_1"]]
+  },
+  {
+    "id": "int_inj_reset",
+    "type": "inject",
+    "z": "int_tab_1",
+    "name": "RESET (msg.reset=true)",
+    "props": [
+      { "p": "reset", "v": "true", "vt": "bool" },
+      { "p": "topic", "v": "trigger", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 180,
+    "y": 400,
+    "wires": [["int_node_1"]]
+  },
+  {
+    "id": "int_node_1",
+    "type": "InterruptFlowUltimate",
+    "z": "int_tab_1",
+    "name": "Interrupt",
+    "triggertopic": "trigger",
+    "initializewith": "1",
+    "autoToggle": "0",
+    "payloadPropName": "payload",
+    "translatorConfig": "",
+    "x": 420,
+    "y": 260,
+    "wires": [["int_dbg_1"]]
+  },
+  {
+    "id": "int_dbg_1",
+    "type": "debug",
+    "z": "int_tab_1",
+    "name": "Flow output",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 620,
+    "y": 260,
+    "wires": []
+  }
+]
+

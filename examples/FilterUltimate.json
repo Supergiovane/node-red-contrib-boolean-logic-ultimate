@@ -1,0 +1,105 @@
+[
+  {
+    "id": "fil_tab_1",
+    "type": "tab",
+    "label": "FilterUltimate - true/false routing",
+    "disabled": false,
+    "info": "Esempio: instradamento su 2 uscite in base al valore booleano (con supporto translator-config)."
+  },
+  {
+    "id": "fil_cmt_1",
+    "type": "comment",
+    "z": "fil_tab_1",
+    "name": "Output 1 = True, Output 2 = False",
+    "info": "Invia \"on\"/\"off\": il translator-config converte a booleano prima del filtro.",
+    "x": 230,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "fil_inj_on",
+    "type": "inject",
+    "z": "fil_tab_1",
+    "name": "payload = \"on\"",
+    "props": [
+      { "p": "payload", "v": "on", "vt": "str" },
+      { "p": "topic", "v": "state", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 140,
+    "y": 140,
+    "wires": [["fil_node_1"]]
+  },
+  {
+    "id": "fil_inj_off",
+    "type": "inject",
+    "z": "fil_tab_1",
+    "name": "payload = \"off\"",
+    "props": [
+      { "p": "payload", "v": "off", "vt": "str" },
+      { "p": "topic", "v": "state", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 140,
+    "y": 180,
+    "wires": [["fil_node_1"]]
+  },
+  {
+    "id": "fil_node_1",
+    "type": "FilterUltimate",
+    "z": "fil_tab_1",
+    "name": "Filter (HA)",
+    "payloadPropName": "payload",
+    "translatorConfig": "fil_trans_1",
+    "x": 350,
+    "y": 160,
+    "wires": [["fil_dbg_true"], ["fil_dbg_false"]]
+  },
+  {
+    "id": "fil_dbg_true",
+    "type": "debug",
+    "z": "fil_tab_1",
+    "name": "Output True",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 580,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "fil_dbg_false",
+    "type": "debug",
+    "z": "fil_tab_1",
+    "name": "Output False",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 580,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "fil_trans_1",
+    "type": "translator-config",
+    "name": "Home Assistant",
+    "commandText": "on:true\noff:false\nactive:true\ninactive:false\nopen:true\nclosed:false\nclose:false\n1:true\n0:false\ntrue:true\nfalse:false\nhome:true\nnot_home:false"
+  }
+]
+

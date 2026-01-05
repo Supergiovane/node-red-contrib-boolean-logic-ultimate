@@ -1,0 +1,178 @@
+[
+  {
+    "id": "rl_tab_1",
+    "type": "tab",
+    "label": "RateLimiterUltimate - debounce + control",
+    "disabled": false,
+    "info": "Esempio: genera un burst di messaggi e limita la frequenza con RateLimiter (debounce)."
+  },
+  {
+    "id": "rl_cmt_1",
+    "type": "comment",
+    "z": "rl_tab_1",
+    "name": "Burst → RateLimiter → Forward/Diagnostics",
+    "info": "Clicca BURST per generare messaggi ravvicinati. Output 1 = forward; Output 2 = diagnostica.\nUsa i pulsanti RESET/FLUSH e CHANGE MODE via topic \"rate\".",
+    "x": 290,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "rl_inj_burst",
+    "type": "inject",
+    "z": "rl_tab_1",
+    "name": "BURST (20 msgs)",
+    "props": [
+      { "p": "count", "v": "20", "vt": "num" },
+      { "p": "interval", "v": "50", "vt": "num" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 160,
+    "y": 140,
+    "wires": [["rl_fn_burst"]]
+  },
+  {
+    "id": "rl_fn_burst",
+    "type": "function",
+    "z": "rl_tab_1",
+    "name": "Burst generator",
+    "func": "const count = Number(msg.count || 20);\nconst interval = Number(msg.interval || 50);\nlet i = 0;\n\nconst sendOne = () => {\n  node.send({ topic: 'data', payload: i, index: i, ts: Date.now() });\n  i += 1;\n  if (i < count) {\n    setTimeout(sendOne, interval);\n  }\n};\n\nsendOne();\nreturn null;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 370,
+    "y": 140,
+    "wires": [["rl_node_1"]]
+  },
+  {
+    "id": "rl_inj_reset",
+    "type": "inject",
+    "z": "rl_tab_1",
+    "name": "RESET",
+    "props": [
+      { "p": "topic", "v": "rate", "vt": "str" },
+      { "p": "reset", "v": "true", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 130,
+    "y": 220,
+    "wires": [["rl_node_1"]]
+  },
+  {
+    "id": "rl_inj_flush",
+    "type": "inject",
+    "z": "rl_tab_1",
+    "name": "FLUSH",
+    "props": [
+      { "p": "topic", "v": "rate", "vt": "str" },
+      { "p": "flush", "v": "true", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 130,
+    "y": 260,
+    "wires": [["rl_node_1"]]
+  },
+  {
+    "id": "rl_inj_mode_throttle",
+    "type": "inject",
+    "z": "rl_tab_1",
+    "name": "MODE throttle (200ms)",
+    "props": [
+      { "p": "topic", "v": "rate", "vt": "str" },
+      { "p": "mode", "v": "throttle", "vt": "str" },
+      { "p": "interval", "v": "200", "vt": "num" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 170,
+    "y": 300,
+    "wires": [["rl_node_1"]]
+  },
+  {
+    "id": "rl_inj_mode_debounce",
+    "type": "inject",
+    "z": "rl_tab_1",
+    "name": "MODE debounce (500ms trailing)",
+    "props": [
+      { "p": "topic", "v": "rate", "vt": "str" },
+      { "p": "mode", "v": "debounce", "vt": "str" },
+      { "p": "wait", "v": "500", "vt": "num" },
+      { "p": "emitOn", "v": "trailing", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 210,
+    "y": 340,
+    "wires": [["rl_node_1"]]
+  },
+  {
+    "id": "rl_node_1",
+    "type": "RateLimiterUltimate",
+    "z": "rl_tab_1",
+    "name": "RateLimiter",
+    "mode": "debounce",
+    "wait": 500,
+    "emitOn": "trailing",
+    "interval": 1000,
+    "trailing": false,
+    "windowSize": 1000,
+    "maxInWindow": 10,
+    "dropStrategy": "drop",
+    "payloadPropName": "payload",
+    "translatorConfig": "",
+    "controlTopic": "rate",
+    "statInterval": 2,
+    "x": 590,
+    "y": 220,
+    "wires": [["rl_dbg_fwd"], ["rl_dbg_diag"]]
+  },
+  {
+    "id": "rl_dbg_fwd",
+    "type": "debug",
+    "z": "rl_tab_1",
+    "name": "Forward",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 780,
+    "y": 200,
+    "wires": []
+  },
+  {
+    "id": "rl_dbg_diag",
+    "type": "debug",
+    "z": "rl_tab_1",
+    "name": "Diagnostics",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 790,
+    "y": 240,
+    "wires": []
+  }
+]
+

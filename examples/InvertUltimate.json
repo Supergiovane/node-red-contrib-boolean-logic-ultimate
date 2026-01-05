@@ -1,0 +1,88 @@
+[
+  {
+    "id": "inv_tab_1",
+    "type": "tab",
+    "label": "InvertUltimate - base + translator",
+    "disabled": false,
+    "info": "Esempio: inversione booleana con translator-config (utile con payload Home Assistant on/off)."
+  },
+  {
+    "id": "inv_cmt_1",
+    "type": "comment",
+    "z": "inv_tab_1",
+    "name": "Usa on/off (string) grazie al translator-config",
+    "info": "Il nodo converte il valore in booleano (con translator-config) e poi lo inverte.",
+    "x": 260,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "inv_inj_on",
+    "type": "inject",
+    "z": "inv_tab_1",
+    "name": "payload = \"on\"",
+    "props": [
+      { "p": "payload", "v": "on", "vt": "str" },
+      { "p": "topic", "v": "ha", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 140,
+    "y": 140,
+    "wires": [["inv_node_1"]]
+  },
+  {
+    "id": "inv_inj_off",
+    "type": "inject",
+    "z": "inv_tab_1",
+    "name": "payload = \"off\"",
+    "props": [
+      { "p": "payload", "v": "off", "vt": "str" },
+      { "p": "topic", "v": "ha", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 140,
+    "y": 180,
+    "wires": [["inv_node_1"]]
+  },
+  {
+    "id": "inv_node_1",
+    "type": "InvertUltimate",
+    "z": "inv_tab_1",
+    "name": "Invert (HA)",
+    "payloadPropName": "payload",
+    "translatorConfig": "inv_trans_1",
+    "x": 360,
+    "y": 160,
+    "wires": [["inv_dbg_1"]]
+  },
+  {
+    "id": "inv_dbg_1",
+    "type": "debug",
+    "z": "inv_tab_1",
+    "name": "Output (inverted boolean)",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 620,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "inv_trans_1",
+    "type": "translator-config",
+    "name": "Home Assistant",
+    "commandText": "on:true\noff:false\nactive:true\ninactive:false\nopen:true\nclosed:false\nclose:false\n1:true\n0:false\ntrue:true\nfalse:false\nhome:true\nnot_home:false"
+  }
+]
+
