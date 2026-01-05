@@ -26,9 +26,8 @@ Importable Node-RED example flows are available in the [`examples/`](examples/) 
 
 **How to import**
 
-- Node-RED editor → Menu (☰) → **Import** → **File** and select an example `.json` from `examples/`
-- or **Import** → **Clipboard** and paste the file contents
-- **Deploy** and use the Inject nodes (and the button on `InjectUltimate`) to try it out
+- Node-RED editor → Menu (☰) → **Import** → **Examples** and select an example from `node-red-contrib-boolean-logic-ultimate`
+
 
 <br/>
 <br/>
