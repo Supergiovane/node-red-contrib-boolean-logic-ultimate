@@ -3,6 +3,12 @@
 
 # CHANGELOG
 
+
+<p>
+<b>Version 1.2.4</b> January 2026<br/>
+- Added sample flows in the "example" folder. Just import it via the "import" menu of node-red</br>
+</p>
+
 <p>
 <b>Version 1.2.3</b> November 2025<br/>
 - Impulse node allows now to send JSON as payload. Grazie Waldmensch1 !!</br>

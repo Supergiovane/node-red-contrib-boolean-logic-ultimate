@@ -20,6 +20,19 @@ A set of Node-RED enhanced boolean logic and utility nodes, with persistent valu
 <br/>
 <br/>
 
+# EXAMPLES
+
+Importable Node-RED example flows are available in the [`examples/`](examples/) folder (one JSON per node). See [`examples/README.md`](examples/README.md) for a quick overview.
+
+**How to import**
+
+- Node-RED editor → Menu (☰) → **Import** → **File** and select an example `.json` from `examples/`
+- or **Import** → **Clipboard** and paste the file contents
+- **Deploy** and use the Inject nodes (and the button on `InjectUltimate`) to try it out
+
+<br/>
+<br/>
+
 # TRANSLATOR NODE
 
 Other than true/false, all nodes accepts [Homeassistant](https://www.home-assistant.io) output strings.  
