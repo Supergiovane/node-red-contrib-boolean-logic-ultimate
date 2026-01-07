@@ -103,7 +103,7 @@ The node can convert arbitrary input values to true/false. It supports Homeassis
 | If input states are undefined                | Every time you create a node or modify the node, all inputs are set to undefined. This means that the node will wait the arrive of all topics (for example 3 topics, if you've selected 3 topics in the option), before it can output a payload. This can be a problem if your logic must be operative as soon as you deploy the flow. To overcome this problem, you can "initialize" all the undefined inputs with True or False. **Leave undefined**: Standard behaviour, the node will wait all the "undefined" topics to arrive, then starts a flow with the result. **True or False**: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false". |
 | Remember latest input values after reboot    | If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload. Every time you modify the node's config, <b>the retained values are cleared</b>. |
 | Reject non boolean (true/false) input values | If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload value to a logic true/false boolean. |
-| Delay evaluation (ms)                        | Delays the evaluation until this time (in milliseconds) is elapsed. Each time a message or "topic trigger message" (see **Trigger mode**) arrives, the delay is restarted. This option is useful for debouncing pourposes or simply for adding some delay. For example, you can turn on a light if the room is occupied for a long time, allowing people to fast transit repeatedly, without the need of turning the light on. Another example, if you have many sensors changing state rapidly, you can wait until these sensor reach a quiet state, then evaluate the inputs. |
+| Delay evaluation (ms)                        | Delays the evaluation until this time (in milliseconds) is elapsed. Each time a message or "topic trigger message" (see **Trigger mode**) arrives, the delay is restarted. This option is useful for debouncing purposes or simply for adding some delay. For example, you can turn on a light if the room is occupied for a long time, allowing people to fast transit repeatedly, without the need of turning the light on. Another example, if you have many sensors changing state rapidly, you can wait until these sensor reach a quiet state, then evaluate the inputs. |
 
 <br/>
 
@@ -236,7 +236,7 @@ The input message is preserved and passed to the output, changing only the topic
 
 # BLINKER ULTIMATE
 
-The pourpose of this node is to blink a led or something.<br />
+The purpose of this node is to blink a led or something.<br />
 
 output1 : outputs the value true/false<br/>
 
@@ -277,7 +277,7 @@ Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
 
 # SIMPLE OUTPUT ULTIMATE
 
-The pourpose of this node is to send a message with payload TRUE on the first output and FALSE on second output, independently from the msg input.<br />
+The purpose of this node is to send a message with payload TRUE on the first output and FALSE on second output, independently from the msg input.<br />
 
 This is useful if you need to simply send a true or false payload.
 
@@ -305,7 +305,7 @@ This is useful if you need to simply send a true or false payload.
 
 # INJECT ULTIMATE
 
-The pourpose of this node is to send a message with payload TRUE on the first output, FALSE on second output and a TOGGLE (true/false) on the third output, by pressing the pushbutton.<br />
+The purpose of this node is to send a message with payload TRUE on the first output, FALSE on second output and a TOGGLE (true/false) on the third output, by pressing the pushbutton.<br />
 
 This is useful if you need to simply test your flow. 
 
@@ -325,7 +325,7 @@ This is useful if you need to simply test your flow.
 
 # STATUS ULTIMATE
 
-The pourpose of this node is to show a status of the passingthrough message.<br />
+The purpose of this node is to show a status of the passingthrough message.<br />
 
 **Show msg.**
 
@@ -346,7 +346,7 @@ The pourpose of this node is to show a status of the passingthrough message.<br 
 
 # IMPULSE ULTIMATE
 
-The pourpose of this node is to send a sequence of pulsed commands to for example, open a garage door or to command an appliance requiring a set of timed commands.<br />
+The purpose of this node is to send a sequence of pulsed commands to for example, open a garage door or to command an appliance requiring a set of timed commands.<br />
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Impulse.png' width='60%'>
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
@@ -393,7 +393,7 @@ Pass <code>msg.payload = false</code> to the node to stop the running sequence</
 
 # MATH ULTIMATE
 
-The pourpose of this node is to do maths on the incoming values. Each incoming message MUST HAVE OWN TOPIC.<br />
+The purpose of this node is to do maths on the incoming values. Each incoming message MUST HAVE OWN TOPIC.<br />
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/sum.png' width='60%'>
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
@@ -437,7 +437,7 @@ br/>
 
 # TOGGLE ULTIMATE
 
-The pourpose of this node is to toggle between true/false, everytime an inboud message arrives.<br />
+The purpose of this node is to toggle between true/false, everytime an inboud message arrives.<br />
 
 ### NODE CONFIGURATION
 
