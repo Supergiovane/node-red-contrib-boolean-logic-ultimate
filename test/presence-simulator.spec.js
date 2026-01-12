@@ -39,7 +39,7 @@ describe('PresenceSimulatorUltimate node', function () {
     ];
 
     loadPresence(flow).then(() => {
-      const input = helper.getNode('in');
+      const presence = helper.getNode('presence');
       const out = helper.getNode('out');
 
       out.on('input', (msg) => {
@@ -52,7 +52,7 @@ describe('PresenceSimulatorUltimate node', function () {
         }
       });
 
-      input.receive({ topic: 'presence', command: 'start' });
+      presence.receive({ topic: 'presence', command: 'start' });
     }).catch(done);
   });
 
@@ -76,14 +76,14 @@ describe('PresenceSimulatorUltimate node', function () {
     ];
 
     loadPresence(flow).then(() => {
-      const input = helper.getNode('in');
+      const presence = helper.getNode('presence');
       const out = helper.getNode('out');
       let received = 0;
 
       out.on('input', () => {
         received += 1;
         if (received === 1) {
-          input.receive({ topic: 'presence', command: 'stop' });
+          presence.receive({ topic: 'presence', command: 'stop' });
           setTimeout(() => {
             try {
               expect(received).to.equal(1);
@@ -95,7 +95,7 @@ describe('PresenceSimulatorUltimate node', function () {
         }
       });
 
-      input.receive({ topic: 'presence', command: 'start' });
+      presence.receive({ topic: 'presence', command: 'start' });
     }).catch(done);
   });
 });

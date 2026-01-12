@@ -10,8 +10,8 @@
     "id": "rws_cmt_1",
     "type": "comment",
     "z": "rws_tab_1",
-    "name": "Switcher topic: switcher (payload 0..4)",
-    "info": "1) Invia switcher=0/1/2 per selezionare l'uscita.\n2) Invia DATA e osserva su quale debug arriva.",
+    "name": "Switcher topic: switcher (payload 0..N-1)",
+    "info": "1) Imposta i pin di uscita nel nodo (Output pins).\n2) Invia switcher=0/1/2 per selezionare l'uscita.\n3) Invia DATA e osserva su quale debug arriva.",
     "x": 280,
     "y": 60,
     "wires": []
@@ -90,6 +90,7 @@
     "z": "rws_tab_1",
     "name": "Railway Switch",
     "triggertopic": "switcher",
+    "outputs": 5,
     "initializewith": "1",
     "payloadPropName": "payload",
     "translatorConfig": "",
@@ -183,4 +184,3 @@
     "wires": []
   }
 ]
-

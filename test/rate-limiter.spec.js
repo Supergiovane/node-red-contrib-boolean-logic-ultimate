@@ -41,7 +41,7 @@ describe('RateLimiterUltimate node', function () {
     ];
 
     loadRateLimiter(flow).then(() => {
-      const input = helper.getNode('in');
+      const rate = helper.getNode('rate');
       const out = helper.getNode('out');
       const diag = helper.getNode('diag');
 
@@ -56,7 +56,7 @@ describe('RateLimiterUltimate node', function () {
         }
       });
 
-      input.receive({ topic: 'sensor', payload: 'first' });
+      rate.receive({ topic: 'sensor', payload: 'first' });
     }).catch(done);
   });
 
@@ -83,7 +83,7 @@ describe('RateLimiterUltimate node', function () {
     ];
 
     loadRateLimiter(flow).then(() => {
-      const input = helper.getNode('in');
+      const rate = helper.getNode('rate');
       const out = helper.getNode('out');
       const diag = helper.getNode('diag');
       let seenForward = 0;
@@ -107,9 +107,9 @@ describe('RateLimiterUltimate node', function () {
         }
       });
 
-      input.receive({ topic: 'sensor', payload: 'first' });
+      rate.receive({ topic: 'sensor', payload: 'first' });
       setTimeout(() => {
-        input.receive({ topic: 'sensor', payload: 'second' });
+        rate.receive({ topic: 'sensor', payload: 'second' });
       }, 20);
     }).catch(done);
   });
@@ -138,7 +138,7 @@ describe('RateLimiterUltimate node', function () {
     ];
 
     loadRateLimiter(flow).then(() => {
-      const input = helper.getNode('in');
+      const rate = helper.getNode('rate');
       const out = helper.getNode('out');
       const diag = helper.getNode('diag');
       const start = Date.now();
@@ -160,9 +160,9 @@ describe('RateLimiterUltimate node', function () {
         }
       });
 
-      input.receive({ topic: 'sensor', payload: 'one' });
+      rate.receive({ topic: 'sensor', payload: 'one' });
       setTimeout(() => {
-        input.receive({ topic: 'sensor', payload: 'two' });
+        rate.receive({ topic: 'sensor', payload: 'two' });
       }, 20);
     }).catch(done);
   });

@@ -5,6 +5,12 @@
 
 
 <p>
+<b>Version 1.2.5</b> January 2026<br/>
+- RailwaySwitchUltimate: configurable output pins (1..10) using Node-RED standard <code>outputs</code> property + migration from legacy <code>outputCount</code> (fixes editor placement issue).<br/>
+- Updated README and examples accordingly.</br>
+</p>
+
+<p>
 <b>Version 1.2.4</b> January 2026<br/>
 - Added sample flows in the "example" folder. Just import it via the "import" menu of node-red</br>
 </p>

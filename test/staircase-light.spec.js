@@ -6,7 +6,21 @@ const { helper } = require('./helpers');
 const staircaseNode = require('../boolean-logic-ultimate/StaircaseLightUltimate.js');
 
 function loadStaircase(flow, credentials) {
-  return helper.load(staircaseNode, flow, credentials || {});
+  const normalizedFlow = flow.map((node, index) => {
+    if (
+      node &&
+      node.type &&
+      node.type !== 'tab' &&
+      node.type !== 'subflow' &&
+      node.type !== 'group' &&
+      node.z &&
+      !(Object.prototype.hasOwnProperty.call(node, 'x') && Object.prototype.hasOwnProperty.call(node, 'y'))
+    ) {
+      return { ...node, x: 100 + index * 10, y: 100 + index * 10 };
+    }
+    return node;
+  });
+  return helper.load(staircaseNode, normalizedFlow, credentials || {});
 }
 
 describe('StaircaseLightUltimate node', function () {
@@ -52,7 +66,7 @@ describe('StaircaseLightUltimate node', function () {
     ];
 
     loadStaircase(flow).then(() => {
-      const input = helper.getNode('in');
+      const stair = helper.getNode('stair');
       const outOn = helper.getNode('outOn');
       const outWarn = helper.getNode('outWarn');
       const events = [];
@@ -76,7 +90,7 @@ describe('StaircaseLightUltimate node', function () {
         }
       }, 400);
 
-      input.receive({ payload: true });
+      stair.receive({ payload: true });
     }).catch(done);
   });
 
@@ -105,8 +119,7 @@ describe('StaircaseLightUltimate node', function () {
     ];
 
     loadStaircase(flow).then(() => {
-      const input = helper.getNode('in');
-      const control = helper.getNode('control');
+      const stair = helper.getNode('stair');
       const out = helper.getNode('out');
       const events = [];
 
@@ -114,10 +127,10 @@ describe('StaircaseLightUltimate node', function () {
         events.push({ type: msg.event, at: Date.now() });
       });
 
-      input.receive({ payload: true });
+      stair.receive({ payload: true });
 
       setTimeout(() => {
-        control.receive({ topic: 'stairs', command: 'extend' });
+        stair.receive({ topic: 'stairs', command: 'extend' });
       }, 80);
 
       setTimeout(() => {

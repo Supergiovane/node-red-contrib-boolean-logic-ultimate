@@ -4,12 +4,31 @@ module.exports = function (RED) {
     this.config = config;
     var node = this;
     node.currentMsg = {}; // Stores current payload
+
+    const outputCountRaw =
+      config.outputs !== undefined ? parseInt(config.outputs, 10) : parseInt(config.outputCount, 10);
+    node.outputCount = Number.isFinite(outputCountRaw)
+      ? Math.max(1, Math.min(10, outputCountRaw))
+      : 5;
+
     node.sTriggerTopic =
       node.config.triggertopic.replace(
         /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
         ""
       ) || "trigger"; // Topic controlling the sRailway
-    node.sRailway = String(node.config.initializewith); // Railway selector
+
+    function parsePinIndex(value) {
+      if (value === false) return 0;
+      if (value === true) return 1;
+      const parsed = parseInt(String(value), 10);
+      return Number.isFinite(parsed) ? parsed : null;
+    }
+
+    const initialPin = parsePinIndex(node.config.initializewith);
+    node.railIndex =
+      initialPin === null
+        ? 0
+        : Math.max(0, Math.min(node.outputCount - 1, initialPin)); // Railway selector
 
     function setNodeStatus({ fill, shape, text }) {
       let dDate = new Date();
@@ -30,7 +49,7 @@ module.exports = function (RED) {
       setNodeStatus({
         fill: "green",
         shape: "dot",
-        text: "-> PIN " + node.sRailway,
+        text: "-> PIN " + node.railIndex,
       });
 
     };
@@ -67,7 +86,7 @@ module.exports = function (RED) {
             setNodeStatus({
               fill: "red",
               shape: "dot",
-              text: "Received invalid payload from " + msg.topic || "",
+              text: "Received invalid payload from " + (msg.topic || ""),
             });
             return;
           }
@@ -78,17 +97,31 @@ module.exports = function (RED) {
           );
           if (msg.payload === undefined) return null;
 
-          node.sRailway = msg.payload;
+          const nextPin = parsePinIndex(msg.payload);
+          if (nextPin === null || nextPin < 0 || nextPin >= node.outputCount) {
+            setNodeStatus({
+              fill: "red",
+              shape: "dot",
+              text:
+                "Invalid PIN " +
+                String(msg.payload) +
+                " (valid 0.." +
+                String(node.outputCount - 1) +
+                ")",
+            });
+            return;
+          }
+
+          node.railIndex = nextPin;
           node.alignStatus();
           return; // DONT'S SEND THIS MESSAGE
         }
       }
       node.currentMsg = RED.util.cloneMessage(msg);
-      if (node.sRailway === "0") node.send([msg, null, null, null, null]);
-      if (node.sRailway === "1") node.send([null, msg, null, null, null]);
-      if (node.sRailway === "2") node.send([null, null, msg, null, null]);
-      if (node.sRailway === "3") node.send([null, null, null, msg, null]);
-      if (node.sRailway === "4") node.send([null, null, null, null, msg]);
+
+      const out = new Array(node.outputCount).fill(null);
+      out[node.railIndex] = msg;
+      node.send(out);
     });
   }
 

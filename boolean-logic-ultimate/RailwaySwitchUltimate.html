@@ -5,6 +5,8 @@
 		defaults: {
 			name: { value: "Railway Switch" },
 			triggertopic: { value: "switcher" },
+			outputs: { value: 5 },
+			outputCount: { value: 5 }, // legacy (pre-outputs property) kept for backward compatibility
 			initializewith: { value: "1" },
 			payloadPropName: { value: "payload", required: false },
 			translatorConfig: { type: "translator-config", required: false }
@@ -22,9 +24,87 @@
 		paletteLabel: function () {
 			return "Railway Switch";
 		},
+		onadd: function () {
+			// Prefer the saved `wires.length` (it reflects the node's output count in the flow),
+			// otherwise fall back to legacy `outputCount`, then default to 5.
+			function clampOutputs(raw) {
+				var value = parseInt(raw, 10);
+				if (isNaN(value)) value = 5;
+				value = Math.max(1, Math.min(10, value));
+				return value;
+			}
+
+			var wiresCount = Array.isArray(this.wires) ? this.wires.length : NaN;
+			if (!isNaN(wiresCount) && wiresCount >= 1) {
+				this.outputs = clampOutputs(wiresCount);
+				this.outputCount = this.outputs; // keep legacy aligned
+				return;
+			}
+
+			var legacy = parseInt(this.outputCount, 10);
+			if (!isNaN(legacy)) {
+				this.outputs = clampOutputs(legacy);
+				this.outputCount = this.outputs;
+			}
+		},
 		oneditprepare: function () {
 			if ($("#node-input-payloadPropName").val() === "") $("#node-input-payloadPropName").val("payload");
 			$("#node-input-payloadPropName").typedInput({ default: 'msg', types: ['msg'] });
+
+			function rebuildPinSelect(outputCount) {
+				const $select = $("#node-input-initializewith");
+				const previous = $select.val();
+				$select.empty();
+				for (let i = 0; i < outputCount; i += 1) {
+					$("<option></option>").val(String(i)).text("PIN " + i).appendTo($select);
+				}
+				let nextValue = previous;
+				if (nextValue === undefined || nextValue === null || nextValue === "" || parseInt(nextValue, 10) >= outputCount) {
+					nextValue = "0";
+				}
+				$select.val(nextValue);
+			}
+
+			function clampOutputs(raw) {
+				var value = parseInt(raw, 10);
+				if (isNaN(value)) value = 5;
+				value = Math.max(1, Math.min(10, value));
+				return value;
+			}
+
+			// Migration: prefer saved wires length, then legacy outputCount, then current outputs.
+			var outputs = clampOutputs($("#node-input-outputs").val());
+			var wiresCount = Array.isArray(this.wires) ? this.wires.length : NaN;
+			if (!isNaN(wiresCount) && wiresCount >= 1 && wiresCount <= 10) {
+				outputs = clampOutputs(wiresCount);
+			} else {
+				var legacy = parseInt(this.outputCount, 10);
+				if (!isNaN(legacy) && legacy >= 1 && legacy <= 10 && outputs === 5 && legacy !== 5) {
+					outputs = legacy;
+				}
+			}
+			$("#node-input-outputs").val(String(outputs));
+			rebuildPinSelect(outputs);
+
+			$("#node-input-outputs").on("change", function () {
+				var nextOutputs = clampOutputs($(this).val());
+				$(this).val(String(nextOutputs));
+				rebuildPinSelect(nextOutputs);
+			});
+		},
+		oneditsave: function () {
+			var value = parseInt($("#node-input-outputs").val(), 10);
+			if (isNaN(value)) value = 5;
+			value = Math.max(1, Math.min(10, value));
+			this.outputs = value;
+			this.outputCount = value; // keep legacy field aligned for backward compatibility
+
+			var init = parseInt($("#node-input-initializewith").val(), 10);
+			if (isNaN(init) || init < 0 || init >= value) {
+				this.initializewith = "0";
+			} else {
+				this.initializewith = String(init);
+			}
 		}
 	});
 </script>
@@ -41,23 +121,32 @@
         <input type="text" id="node-input-name" placeholder="Name">
 	</div>
 	
-	<div class="form-row">
+    <div class="form-row">
         <label for="node-input-triggertopic"><i class="icon-tag"></i> Switcher topic</label>
 		<input type="text" id="node-input-triggertopic" placeholder="Name">
     </div>
+	<div class="form-row">
+		<label style="width:160px" for="node-input-outputs"><i class="fa fa-circle-o-notch"></i> Output pins</label>
+		<select type="text" id="node-input-outputs" style="width:250px">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+		</select>
+	</div>
 	<div class="form-row">
         <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
 		<input type="text" id="node-input-payloadPropName">
     </div>
 	<div class="form-row">
         <label style="width:160px" for="node-input-initializewith"><i class="fa fa-home"></i> At node-red start</label>
-        <select type="text" id="node-input-initializewith" placeholder="" style="width:250px">
-			<option value="0">PIN 0</option>
-			<option value="1">PIN 1</option>			
-			<option value="2">PIN 2</option>
-			<option value="3">PIN 3</option>
-			<option value="4">PIN 4</option>
-		</select>	
+        <select type="text" id="node-input-initializewith" placeholder="" style="width:250px"></select>	
 	</div>
 	<div class="form-row">
 		<label for="node-input-translatorConfig">
@@ -73,6 +162,7 @@
 |Property|Description|
 |--|--|
 | Switcher topic | Whenever the node receives a payload from this **topic**, it redirects the input messages to a choosen output PIN. |
+| Output pins | Number of output pins to display (1..10). |
 | With Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Translator | Translates the incoming <code>payload</code> value. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
@@ -82,7 +172,7 @@ The *Switcher topic* controls where the railway switch must be switched, between
 Once an output PIN has been choosen, all messages passing through the node will be deviated to te choosen output PIN.
 
 : topic (string|number) : this is the topic of the switcher message.
-: payload (number|boolean) : this is the ouput PIN selector, base 0 (0 is the first output PIN). 
+: payload (number|boolean) : this is the output PIN selector, base 0 (0 is the first output PIN). Valid range is <code>0..(output pins-1)</code>. 
 
 ### JSON switcher message
 
