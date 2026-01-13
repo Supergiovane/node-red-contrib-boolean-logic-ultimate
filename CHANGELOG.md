@@ -5,6 +5,11 @@
 
 
 <p>
+<b>Version 1.2.6</b> January 2026<br/>
+- Kalman Filter: added youtube sample and fixed a wrong link.</br>
+</p>
+
+<p>
 <b>Version 1.2.5</b> January 2026<br/>
 - RailwaySwitchUltimate: configurable output pins (1..10) using Node-RED standard <code>outputs</code> property + migration from legacy <code>outputCount</code> (fixes editor placement issue).<br/>
 - Updated README and examples accordingly.</br>
