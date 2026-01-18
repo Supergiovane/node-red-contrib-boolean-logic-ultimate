@@ -98,6 +98,20 @@
           RED.notify(`Zones: ${err.message}`, 'error');
         }
       });
+
+      $('#node-input-zones-legacy').on('click', function (evt) {
+        evt.preventDefault();
+        try {
+          const zones = parseZonesText(zonesField.val());
+          const legacy = zones
+            .map((zone) => JSON.stringify(zone))
+            .filter((line) => line !== undefined && line !== null && line !== '')
+            .join('\n');
+          zonesField.val(legacy);
+        } catch (err) {
+          RED.notify(`Zones: ${err.message}`, 'error');
+        }
+      });
     },
     oneditsave: function () {
       this.sirenOnPayloadType = $('#node-input-sirenOnPayload').typedInput('type');
@@ -224,6 +238,7 @@
   <div class="form-row">
     <label>&nbsp;</label>
     <button type="button" class="red-ui-button" id="node-input-zones-format"><i class="fa fa-indent"></i> Format</button>
+    <button type="button" class="red-ui-button" id="node-input-zones-legacy" style="margin-left:5px;"><i class="fa fa-list"></i> Legacy</button>
   </div>
 </script>
 
