@@ -1,0 +1,286 @@
+[
+  {
+    "id": "al_tab_1",
+    "type": "tab",
+    "label": "AlarmSystemUltimate - demo base",
+    "disabled": false,
+    "info": "Esempio per il nodo ALARM (Alarm System Ultimate - BETA): armo/disarmo, bypass zone, trigger sensori, eventi e sirena."
+  },
+  {
+    "id": "al_cmt_1",
+    "type": "comment",
+    "z": "al_tab_1",
+    "name": "Topic di controllo = alarm | Topic sirena = siren",
+    "info": "Comandi principali (topic=alarm): arm_away/arm_home/arm_night, disarm, status, bypass/unbypass (con msg.zone). I sensori entrano con msg.topic uguale a quello configurato nelle zone e payload booleano true/false.",
+    "x": 260,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "al_inj_arm_away",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "ARM AWAY (code=1234)",
+    "props": [
+      { "p": "topic", "v": "alarm", "vt": "str" },
+      { "p": "command", "v": "arm_away", "vt": "str" },
+      { "p": "code", "v": "1234", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 160,
+    "y": 140,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_inj_arm_home",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "ARM HOME (code=1234)",
+    "props": [
+      { "p": "topic", "v": "alarm", "vt": "str" },
+      { "p": "command", "v": "arm_home", "vt": "str" },
+      { "p": "code", "v": "1234", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 160,
+    "y": 180,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_inj_disarm",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "DISARM (code=1234)",
+    "props": [
+      { "p": "topic", "v": "alarm", "vt": "str" },
+      { "p": "command", "v": "disarm", "vt": "str" },
+      { "p": "code", "v": "1234", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 160,
+    "y": 220,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_inj_status",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "STATUS",
+    "props": [
+      { "p": "topic", "v": "alarm", "vt": "str" },
+      { "p": "command", "v": "status", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 110,
+    "y": 260,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_inj_bypass_front",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "BYPASS front_door",
+    "props": [
+      { "p": "topic", "v": "alarm", "vt": "str" },
+      { "p": "command", "v": "bypass", "vt": "str" },
+      { "p": "zone", "v": "front_door", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 140,
+    "y": 320,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_inj_unbypass_front",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "UNBYPASS front_door",
+    "props": [
+      { "p": "topic", "v": "alarm", "vt": "str" },
+      { "p": "command", "v": "unbypass", "vt": "str" },
+      { "p": "zone", "v": "front_door", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 360,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_cmt_2",
+    "type": "comment",
+    "z": "al_tab_1",
+    "name": "Sensori (topic = zona) | payload true = trigger | payload false = restore",
+    "info": "La zona front_door è con entry delay e chime quando disarmata. pir_living è attiva solo in away. smoke è fire 24/7 (sempre attiva).",
+    "x": 320,
+    "y": 420,
+    "wires": []
+  },
+  {
+    "id": "al_inj_front_open",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "Front door OPEN (true)",
+    "props": [
+      { "p": "topic", "v": "sensor/frontdoor", "vt": "str" },
+      { "p": "payload", "v": "true", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 170,
+    "y": 500,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_inj_front_close",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "Front door CLOSE (false)",
+    "props": [
+      { "p": "topic", "v": "sensor/frontdoor", "vt": "str" },
+      { "p": "payload", "v": "false", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 180,
+    "y": 540,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_inj_pir",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "PIR living (true)",
+    "props": [
+      { "p": "topic", "v": "sensor/living_pir", "vt": "str" },
+      { "p": "payload", "v": "true", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 600,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_inj_smoke",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "SMOKE (true)",
+    "props": [
+      { "p": "topic", "v": "sensor/smoke", "vt": "str" },
+      { "p": "payload", "v": "true", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 130,
+    "y": 640,
+    "wires": [["al_alarm_1"]]
+  },
+  {
+    "id": "al_alarm_1",
+    "type": "AlarmSystemUltimate",
+    "z": "al_tab_1",
+    "name": "ALARM",
+    "controlTopic": "alarm",
+    "payloadPropName": "payload",
+    "translatorConfig": "",
+    "persistState": true,
+    "requireCodeForArm": true,
+    "requireCodeForDisarm": true,
+    "armCode": "1234",
+    "duressCode": "9999",
+    "blockArmOnViolations": true,
+    "exitDelaySeconds": 10,
+    "entryDelaySeconds": 5,
+    "sirenDurationSeconds": 15,
+    "sirenLatchUntilDisarm": false,
+    "sirenTopic": "siren",
+    "sirenOnPayload": true,
+    "sirenOnPayloadType": "bool",
+    "sirenOffPayload": false,
+    "sirenOffPayloadType": "bool",
+    "emitRestoreEvents": true,
+    "maxLogEntries": 50,
+    "zones": "{\"id\":\"front_door\",\"name\":\"Porta ingresso\",\"topic\":\"sensor/frontdoor\",\"type\":\"perimeter\",\"entry\":true,\"modes\":[\"away\",\"home\",\"night\"],\"bypassable\":true,\"chime\":true}\n{\"id\":\"pir_living\",\"name\":\"PIR soggiorno\",\"topic\":\"sensor/living_pir\",\"type\":\"motion\",\"modes\":[\"away\"],\"entry\":false,\"bypassable\":true,\"cooldownSeconds\":5}\n{\"id\":\"smoke\",\"name\":\"Fumo\",\"topic\":\"sensor/smoke\",\"type\":\"fire\",\"modes\":[],\"entry\":false,\"bypassable\":false}",
+    "x": 450,
+    "y": 280,
+    "wires": [["al_dbg_evt"], ["al_dbg_siren"]]
+  },
+  {
+    "id": "al_dbg_evt",
+    "type": "debug",
+    "z": "al_tab_1",
+    "name": "Events (output 1)",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 680,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "al_dbg_siren",
+    "type": "debug",
+    "z": "al_tab_1",
+    "name": "Siren (output 2)",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 680,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "al_inj_disarm_duress",
+    "type": "inject",
+    "z": "al_tab_1",
+    "name": "DISARM (DURESS 9999)",
+    "props": [
+      { "p": "topic", "v": "alarm", "vt": "str" },
+      { "p": "command", "v": "disarm", "vt": "str" },
+      { "p": "code", "v": "9999", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 160,
+    "y": 400,
+    "wires": [["al_alarm_1"]]
+  }
+]

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-label="Alarm System Ultimate illustration">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ff8080"/>
+      <stop offset="1" stop-color="#ff4d4d"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="500" fill="#0b1220"/>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="70" width="1020" height="360" rx="28" fill="#111a2e" stroke="#263450" stroke-width="2"/>
+  </g>
+
+  <g transform="translate(140 120)">
+    <rect x="0" y="0" width="320" height="260" rx="22" fill="#0f1730" stroke="#2b3b5a" stroke-width="2"/>
+    <text x="22" y="44" fill="#cfe2ff" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="22" font-weight="700">ALARM PANEL</text>
+
+    <g transform="translate(24 70)">
+      <circle cx="16" cy="16" r="10" fill="url(#g)"/>
+      <text x="40" y="22" fill="#d9e6ff" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="16">Mode: Away</text>
+
+      <circle cx="16" cy="56" r="10" fill="#ffd166"/>
+      <text x="40" y="62" fill="#d9e6ff" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="16">Entry delay</text>
+
+      <circle cx="16" cy="96" r="10" fill="#64dfdf"/>
+      <text x="40" y="102" fill="#d9e6ff" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="16">Zones</text>
+
+      <rect x="0" y="126" width="272" height="90" rx="12" fill="#0b1220" stroke="#2b3b5a" stroke-width="2"/>
+      <text x="14" y="156" fill="#cfe2ff" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace" font-size="13">front_door: true</text>
+      <text x="14" y="180" fill="#cfe2ff" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace" font-size="13">pir_living: false</text>
+      <text x="14" y="204" fill="#cfe2ff" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace" font-size="13">smoke: false</text>
+    </g>
+  </g>
+
+  <g transform="translate(520 110)">
+    <path d="M260 0c92 0 168 76 168 168 0 135-120 232-168 260-48-28-168-125-168-260C92 76 168 0 260 0z" fill="url(#g)" opacity="0.95"/>
+    <path d="M260 42c-70 0-126 56-126 126 0 104 84 184 126 208 42-24 126-104 126-208 0-70-56-126-126-126z" fill="#0b1220" opacity="0.25"/>
+
+    <g transform="translate(180 120)">
+      <path d="M80 0c38 0 70 32 70 70v14c0 8-6 14-14 14H24c-8 0-14-6-14-14V70C10 32 42 0 80 0z" fill="#0b1220" opacity="0.55"/>
+      <path d="M80 6c34 0 62 28 62 62v16H18V68C18 34 46 6 80 6z" fill="#ffffff" opacity="0.9"/>
+      <rect x="32" y="92" width="96" height="82" rx="18" fill="#ffffff" opacity="0.9"/>
+      <circle cx="80" cy="194" r="14" fill="#ffffff" opacity="0.9"/>
+    </g>
+
+    <text x="260" y="468" text-anchor="middle" fill="#cfe2ff" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="22" font-weight="700">Alarm System Ultimate</text>
+    <text x="260" y="494" text-anchor="middle" fill="#9fb7e0" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="14">Zones • Entry/Exit • Bypass • Siren</text>
+  </g>
+
+  <g transform="translate(900 140)">
+    <rect x="0" y="0" width="220" height="240" rx="22" fill="#0f1730" stroke="#2b3b5a" stroke-width="2"/>
+    <text x="20" y="42" fill="#cfe2ff" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="18" font-weight="700">SIREN</text>
+
+    <g transform="translate(40 70)">
+      <rect x="40" y="28" width="100" height="92" rx="18" fill="#ffffff" opacity="0.9"/>
+      <path d="M60 28c0-28 40-28 40 0" fill="none" stroke="#ffffff" stroke-width="10" opacity="0.9" stroke-linecap="round"/>
+      <path d="M26 84c-18 0-26 16-26 30 0 18 10 34 26 34" fill="none" stroke="#ffd166" stroke-width="10" stroke-linecap="round"/>
+      <path d="M154 84c18 0 26 16 26 30 0 18-10 34-26 34" fill="none" stroke="#ffd166" stroke-width="10" stroke-linecap="round"/>
+    </g>
+
+    <text x="20" y="210" fill="#9fb7e0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace" font-size="13">topic: siren</text>
+    <text x="20" y="232" fill="#9fb7e0" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace" font-size="13">payload: true/false</text>
+  </g>
+</svg>
+

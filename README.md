@@ -1,11 +1,17 @@
 ![Logo](img/logo.png) 
 
 [![NPM version][npm-version-image]][npm-url]
+
 [![NPM downloads per month][npm-downloads-month-image]][npm-url]
+
 [![NPM downloads total][npm-downloads-total-image]][npm-url]
+
 [![MIT License][license-image]][license-url]
+
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday)
+
 [![youtube][youtube-image]][youtube-url]  
 
 A set of Node-RED enhanced boolean logic and utility nodes, with persistent values after reboot. Compatible also with Homeassistant values. 
@@ -28,7 +34,6 @@ Importable Node-RED example flows are available in the [`examples/`](examples/) 
 
 - Node-RED editor → Menu (☰) → **Import** → **Examples** and select an example from `node-red-contrib-boolean-logic-ultimate`
 
-
 <br/>
 <br/>
 
@@ -37,9 +42,13 @@ Importable Node-RED example flows are available in the [`examples/`](examples/) 
 Other than true/false, all nodes accepts [Homeassistant](https://www.home-assistant.io) output strings.  
 
 You can **even add your own input translation word list**, thanks to the translator-config node.
+
 The translator node can translate an input payload, to a true/false boolean values.<br />
+
 Each row in the text box, represents a translation command. <br/>
+
 There are some default translation's rows, to make the *boolean-logic-ultimate* nodes compatible with Homeassistant as default. <br/>
+
 You can add your own translation row.<br/>
 
 |           | Description                                                                                          |
@@ -47,7 +56,6 @@ You can add your own translation row.<br/>
 | Translate | Add, delete or edit your own translation command. The row's translation command must be **input string:true(or false)**. For example: <code>open:true</code> <code>closed:false</code>. You can also use an expressions to be evaluated, like this <code>{{value>=50}}:true</code> and <code>{{value<50}}:false</code>. In this case, the tranlsator will evaluate (javascript eval) the expression and, if true, returns the choosen value. |
 
 ![alt text](image.png)
-
 
 <br/>
 <br/>
@@ -468,7 +476,7 @@ The railway switcher, redirect the incoming messages to one ot the avaiable outp
 | Property       | Description                                                                                          |
 | -------------- | ---------------------------------------------------------------------------------------------------- |
 | Switcher topic | Whenever the node receives a payload from this **topic**, it redirects the input messages to a choosen output PIN. |
-| Output pins    | Number of output pins (outputs) to show. Default is 5, range is 1..10. |
+| Output pins    | Number of output pins (outputs) to show. Default is 5, range is 1..10.                               |
 | With Input     | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Translator     | Translates the incoming <code>payload</code> value. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
@@ -540,22 +548,21 @@ Copy and paste it into your flow
 
 Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it works.  
 
-
-
 ![image.png](/img/image.png)
 
-| Property         | Description                                                                                          |
-| ---------------- | ---------------------------------------------------------------------------------------------------- |
-| Input            | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Property          | Description                                                                                          |
+| ----------------- | ---------------------------------------------------------------------------------------------------- |
+| Input             | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Measurement noise | Kalman's <code>R</code> parameter.                                                                   |
 | Process noise     | Kalman's <code>Q</code> parameter.                                                                   |
-| Translator Input | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
+| Translator Input  | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
 <br/>
 
 ### Inputs
 
 : reset (any) : by passing msg.reset, the Kalman filter will be reset.
+
 : payload (number) : the payload containing the number. If you've changed the incoming evaluation property in the ***Input*** field, the number to be evaluated must be put in such message's property, instead of the *payload* property. 
 
 <br/>
@@ -566,20 +573,20 @@ Gateway per sensori e dispositivi troppo “chiacchieroni”: limita burst e rim
 
 ### NODE CONFIGURATION
 
-| Property | Description |
-| -------- | ----------- |
-| Mode | Seleziona la logica: *Debounce* (attende quiete), *Throttle* (impone un intervallo minimo), *Window* (massimo N messaggi per finestra temporale). |
-| Wait (ms) | Ritardo di quiete per la modalità debounce. |
-| Emit | Per debounce: scegli tra *Leading* (subito), *Trailing* (ultimo), *Both*. |
-| Interval (ms) | Intervallo minimo tra messaggi in modalità throttle. |
-| Emit trailing | In throttle, inoltra l’ultimo messaggio ricevuto allo scadere dell’intervallo. |
-| Window size (ms) | Larghezza della finestra mobile in modalità window. |
-| Max messages | Numero di messaggi ammessi nella finestra. |
-| On limit | *Drop* scarta i messaggi extra, *Queue last* accoda l’ultimo e lo riproduce appena possibile. |
-| Control topic | Topic dei messaggi di controllo (default `rate`). |
-| With Input | Proprietà del messaggio da monitorare (default `msg.payload`). |
-| Stats every (s) | Ogni quanti secondi emettere un riepilogo statistico (0 = disattivato). |
-| Translator | Nodo translator-config opzionale per adattare le stringhe d’ingresso a true/false. |
+| Property         | Description                                                                                          |
+| ---------------- | ---------------------------------------------------------------------------------------------------- |
+| Mode             | Seleziona la logica: *Debounce* (attende quiete), *Throttle* (impone un intervallo minimo), *Window* (massimo N messaggi per finestra temporale). |
+| Wait (ms)        | Ritardo di quiete per la modalità debounce.                                                          |
+| Emit             | Per debounce: scegli tra *Leading* (subito), *Trailing* (ultimo), *Both*.                            |
+| Interval (ms)    | Intervallo minimo tra messaggi in modalità throttle.                                                 |
+| Emit trailing    | In throttle, inoltra l’ultimo messaggio ricevuto allo scadere dell’intervallo.                       |
+| Window size (ms) | Larghezza della finestra mobile in modalità window.                                                  |
+| Max messages     | Numero di messaggi ammessi nella finestra.                                                           |
+| On limit         | *Drop* scarta i messaggi extra, *Queue last* accoda l’ultimo e lo riproduce appena possibile.        |
+| Control topic    | Topic dei messaggi di controllo (default `rate`).                                                    |
+| With Input       | Proprietà del messaggio da monitorare (default `msg.payload`).                                       |
+| Stats every (s)  | Ogni quanti secondi emettere un riepilogo statistico (0 = disattivato).                              |
+| Translator       | Nodo translator-config opzionale per adattare le stringhe d’ingresso a true/false.                   |
 
 <br/>
 
@@ -605,16 +612,16 @@ The purpose of this node is to replay a programmable sequence of messages in ord
 
 ### NODE CONFIGURATION
 
-| Property | Description |
-| -------- | ----------- |
-| Control topic | Topic used for runtime commands such as start/stop/reset. |
-| Auto start | Starts the sequence automatically after deploy or restart. |
-| Loop sequence | Repeats the sequence when it reaches the end. |
-| Random delays | Enables a random variation of the programmed delays. |
-| Jitter (%) | Maximum percentage of variation applied when random delays are enabled. |
-| With Input | Message property to inspect for inline events (default `payload`). |
-| Translator | Optional translator-config to convert incoming values. |
-| Sequence | One JSON object per line, each containing at least `delay` (ms) plus the properties to output. |
+| Property      | Description                                                                                    |
+| ------------- | ---------------------------------------------------------------------------------------------- |
+| Control topic | Topic used for runtime commands such as start/stop/reset.                                      |
+| Auto start    | Starts the sequence automatically after deploy or restart.                                     |
+| Loop sequence | Repeats the sequence when it reaches the end.                                                  |
+| Random delays | Enables a random variation of the programmed delays.                                           |
+| Jitter (%)    | Maximum percentage of variation applied when random delays are enabled.                        |
+| With Input    | Message property to inspect for inline events (default `payload`).                             |
+| Translator    | Optional translator-config to convert incoming values.                                         |
+| Sequence      | One JSON object per line, each containing at least `delay` (ms) plus the properties to output. |
 
 ### CONTROL MESSAGES (`msg.topic === controlTopic`)
 
@@ -628,24 +635,67 @@ Each event in the sequence outputs a message configured in the JSON line. When r
 
 <br/>
 
+# ALARM SYSTEM ULTIMATE (BETA)
+
+![Alarm System Ultimate](img/alarm-system-ultimate.svg)
+
+This node implements an alarm control panel with multi-mode arming, zones, entry/exit delays, bypass, tamper/fire 24h zones, siren control, status and event log.
+
+Example flow: [`examples/AlarmSystemUltimate.json`](examples/AlarmSystemUltimate.json)
+
+### NODE CONFIGURATION
+
+| Property | Description |
+| --- | --- |
+| Control topic | Topic that receives runtime commands such as arm/disarm/status/bypass. |
+| With Input | Message property evaluated as sensor value (default `payload`). |
+| Persist state | Persists arming mode, bypass list and last log entries across restarts. |
+| Require code for arm/disarm | Enables PIN checks using `msg.code` (or `msg.pin`). |
+| Exit/Entry delay (s) | Global exit/entry delays (each zone can override entry delay). |
+| Siren topic | Topic used on output 2 to turn the siren on/off. |
+| Siren payloads | Values emitted on output 2 for siren on/off (typed). |
+| Siren duration (s) | Auto stop duration (0 = latch until disarm). |
+| Emit restore events | Emits `zone_restore` when a zone returns to false. |
+| Event log size | Max stored log entries in node context. |
+| Zones | One JSON object per line (legacy) or a JSON array (formatted). Use **Format** in the editor to pretty-print. |
+
+### OUTPUTS
+
+- Output 1 (Events): `msg.topic = <controlTopic>/event`, with `msg.event` and `msg.payload` (state + details).
+- Output 2 (Siren): emits siren on/off commands on `sirenTopic` with the configured payloads.
+
+### CONTROL MESSAGES (`msg.topic === controlTopic`)
+
+- Arm: `msg.command = 'arm_away'|'arm_home'|'arm_night'` or `msg.arm = 'away'|'home'|'night'`
+- Disarm: `msg.command = 'disarm'` or `msg.disarm = true`
+- Status: `msg.command = 'status'` or `msg.status = true`
+- Bypass: `msg.command = 'bypass'|'unbypass'` with `msg.zone = '<zone id>'`
+- Panic: `msg.command = 'panic'` or `msg.command = 'panic_silent'`
+- Siren: `msg.command = 'siren_on'|'siren_off'`
+- Reset: `msg.command = 'reset'` or `msg.reset = true`
+
+When codes are enabled, pass `msg.code` (or `msg.pin`). If `duressCode` matches, the node raises a silent duress alarm event.
+
+<br/>
+
 # STAIRCASE LIGHT ULTIMATE
 
 The purpose of this node is to control staircase lighting with a timer, pre-off warning and optional extension on every trigger.
 
 ### NODE CONFIGURATION
 
-| Property | Description |
-| -------- | ----------- |
-| Control topic | Topic that receives manual commands such as `on`, `off`, `extend`. |
-| Duration (s) | Lighting duration for each trigger. |
-| Warning before off | Enables emission of a pre-off warning on output 2. |
-| Warning offset (s) | Seconds before switch-off when the warning is sent. |
-| Restart on trigger | Restarts the timer when a new trigger arrives while active. |
-| Allow off input | Allows a `false` from the main input to switch off immediately. |
-| With Input | Message property evaluated as trigger (default `payload`). |
-| Translator | Optional translator-config for true/false conversion. |
-| On/Off payload | Values emitted on output 1 to turn the light on/off. |
-| Warning payload | Value emitted on output 2 when the warning fires. |
+| Property           | Description                                                        |
+| ------------------ | ------------------------------------------------------------------ |
+| Control topic      | Topic that receives manual commands such as `on`, `off`, `extend`. |
+| Duration (s)       | Lighting duration for each trigger.                                |
+| Warning before off | Enables emission of a pre-off warning on output 2.                 |
+| Warning offset (s) | Seconds before switch-off when the warning is sent.                |
+| Restart on trigger | Restarts the timer when a new trigger arrives while active.        |
+| Allow off input    | Allows a `false` from the main input to switch off immediately.    |
+| With Input         | Message property evaluated as trigger (default `payload`).         |
+| Translator         | Optional translator-config for true/false conversion.              |
+| On/Off payload     | Values emitted on output 1 to turn the light on/off.               |
+| Warning payload    | Value emitted on output 2 when the warning fires.                  |
 
 ### CONTROL MESSAGES (`msg.topic === controlTopic`)
 
@@ -658,14 +708,7 @@ Output 1 delivers the ON/OFF command. Output 2 delivers the warning and includes
 
 <br/>
 
-# DEVELOPMENT
 
-Per eseguire i test automatici:
-
-1. `npm install`
-2. `npm test`
-
-<br/>
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 
