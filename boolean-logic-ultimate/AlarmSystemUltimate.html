@@ -243,43 +243,175 @@
 </script>
 
 <script type="text/markdown" data-help-name="AlarmSystemUltimate">
-<p><b>BETA</b> – This node implements an alarm control panel with advanced features: multi-mode arming, zones, entry/exit delays, bypass, tamper/fire 24h zones, siren control, status and event log.</p>
+<p><b>BETA</b> – Alarm control panel node with multi-mode arming, zones, entry/exit delays, bypass, chime, tamper/fire/24h zones, siren control, status and event log.</p>
 
-**Outputs**
+The node has 2 inputs "in one":
 
-- Output 1 (Events): emits `msg.event` and `msg.payload` describing state changes.
-- Output 2 (Siren): emits siren on/off commands using the configured topic and payloads.
+- **Control messages**: when `msg.topic` equals **Control topic**.
+- **Sensor messages**: any other message, matched to a zone by `msg.topic` and converted to boolean using **With Input** (default `payload`) and the optional **Translator**.
 
-**Zones**
+<br/>
 
-Configure zones as one JSON object per line (legacy) or as a JSON array of objects. Minimal fields:
+|Property|Description|
+|--|--|
+| Control topic | Topic that receives runtime commands (arm/disarm/status/bypass/siren/panic/reset). |
+| With Input | Message property evaluated as sensor value (default `payload`). |
+| Translator | Optional translator-config for true/false conversion (useful for Home Assistant strings). |
+| Persist state | Persists arming mode, bypass list and event log across restarts. |
+| Require code for arm | Requires a valid PIN for arming commands (via `msg.code` or `msg.pin`). If **Code** is empty, commands are allowed. |
+| Require code for disarm | Requires a valid PIN for disarming commands (via `msg.code` or `msg.pin`). If **Code** is empty, commands are allowed. |
+| Code | PIN required to arm/disarm when enabled. |
+| Duress code | If provided and `msg.code` matches, the node raises a silent duress alarm while still executing the command. |
+| Block arm on violations | Prevents arming if any active (true) zone would be armed (excluding bypassed zones). Checked both at arm start and after exit delay. |
+| Exit/Entry delay (s) | Global exit/entry delays (each zone can override entry delay). |
+| Siren topic | Topic used on output 2 to turn the siren on/off (default: `controlTopic + "/siren"`). |
+| Siren ON/OFF payload | Values emitted on output 2 for siren on/off (typed). |
+| Siren duration (s) | Auto stop duration (`0` = latch until disarm). |
+| Latch siren until disarm | Forces siren to remain on until disarm (ignores duration). |
+| Emit restore events | Emits `zone_restore` when a zone returns to false. |
+| Event log size | Max stored log entries in node context (0 disables log). |
+| Zones | Zone definitions. Supports legacy "one JSON object per line" or a JSON array (use **Format** / **Legacy** buttons). |
 
-- `id` (string, optional)
-- `name` (string, optional)
-- `topic` (string) OR `topicPattern` (regex string)
+<br/>
 
-Useful fields:
+## Outputs
 
+**Output 1 (Events)**
+
+- `msg.topic = controlTopic + "/event"`
+- `msg.event` (string) and `msg.payload` (object)
+
+`msg.payload` always contains at least:
+
+- `event`: same as `msg.event`
+- `mode`: `disarmed|away|home|night`
+
+**Output 2 (Siren)**
+
+- `msg.topic = sirenTopic`
+- `msg.payload`: configured siren ON/OFF payload (typed)
+- `msg.event`: `siren_on` / `siren_off`
+- `msg.reason`: why it changed (`manual`, `panic`, `instant`, `entry_timeout`, `timeout`, `disarm`, ...)
+
+<br/>
+
+## Events (`msg.event`)
+
+Arming / state:
+
+- `arming` → `{ mode, seconds, reason }`
+- `armed` → `{ mode, reason }`
+- `disarmed` → `{ reason, duress }`
+- `already_armed` → `{ mode }`
+- `arm_blocked` → `{ mode, violations:[{id,name,type}] }`
+- `status` → `{ state: { mode, arming, entry, alarmActive, silentAlarmActive, sirenActive, alarmZone, bypassedZones, log } }`
+- `reset` → `{}`
+- `denied` → `{ action: "arm"|"disarm", mode? }`
+- `error` → `{ error: "missing_zone"|"unknown_zone"|"zone_not_bypassable", zone? }`
+
+Zones / alarm:
+
+- `entry_delay` → `{ zone:{id,name}, seconds }`
+- `alarm` → `{ kind, zone, silent }` where `kind` can be `instant|entry_timeout|panic|duress|fire|tamper|24h|...`
+- `chime` → `{ zone:{id,name,type} }` (while disarmed)
+- `zone_ignored_exit` → `{ zone:{id,name,type} }` (triggered during exit delay and not allowed)
+- `zone_bypassed_trigger` → `{ zone:{id,name,type} }`
+- `zone_restore` → `{ zone:{id,name,type} }` (when enabled)
+- `siren_on` → `{ reason }` (manual `siren_on` command)
+- `siren_off` → `{ reason }` (manual stop, disarm, timeout, arm, ...)
+
+<br/>
+
+## Control messages (`msg.topic === controlTopic`)
+
+Arm:
+
+- `msg.command = "arm_away"|"arm_home"|"arm_night"`
+- or `msg.arm = "away"|"home"|"night"`
+- or `msg.mode = "away"|"home"|"night"`
+
+Disarm:
+
+- `msg.command = "disarm"` or `msg.disarm = true`
+
+Status snapshot:
+
+- `msg.command = "status"` or `msg.status = true`
+
+Bypass / unbypass (zone id):
+
+- `msg.command = "bypass"` / `msg.command = "unbypass"`
+- or `msg.bypass = true` / `msg.unbypass = true`
+- pass the zone id in `msg.zone` (alias: `msg.zoneId`, `msg.zoneName` - still expects the zone `id`)
+
+Siren:
+
+- `msg.command = "siren_on"|"siren_off"`
+
+Panic:
+
+- `msg.command = "panic"` (audible)
+- `msg.command = "panic_silent"` (silent)
+
+Reset:
+
+- `msg.command = "reset"` or `msg.reset = true` (clears mode, bypass list, log and timers)
+
+Codes:
+
+- pass `msg.code` (or `msg.pin`) when code checks are enabled
+- if `msg.code` equals **Duress code**, the node emits a silent duress alarm while still arming/disarming
+
+<br/>
+
+## Zones
+
+Zones can be configured as:
+
+- **Legacy**: one JSON object per line
+- **Formatted**: a JSON array of objects
+
+Minimal fields:
+
+- `topic` (exact topic, or a prefix ending with `*`) OR `topicPattern` (regex string)
+- `topicPattern` is evaluated as a JavaScript `RegExp` and tested against `msg.topic`
+- `id` is optional (auto-generated if missing)
+
+Common fields:
+
+- `id`: unique identifier used for bypass (`msg.zone`)
+- `name`: label used in events
 - `type`: `perimeter` (default), `motion`, `tamper`, `fire`, `24h`
 - `modes`: `["away","home","night"]` (empty = active in all armed modes)
 - `entry`: `true` to use entry delay, otherwise triggers instantly
 - `entryDelaySeconds`: overrides the global entry delay
-- `bypassable`: `true|false`
-- `chime`: `true` to emit chime event while disarmed
+- `bypassable`: `true|false` (default `true`)
+- `chime`: `true` to emit `chime` event while disarmed
 - `cooldownSeconds`: minimum time between triggers
 - `instantDuringExit`: if true, the zone can trigger during exit delay
 
-**Control topic commands** (when `msg.topic` equals the *Control topic*)
+Notes:
 
-- Arm: `msg.command = "arm_away"|"arm_home"|"arm_night"` or `msg.arm = "away"|"home"|"night"`
-- Disarm: `msg.command = "disarm"` or `msg.disarm = true`
-- Status: `msg.command = "status"` or `msg.status = true`
-- Bypass: `msg.command = "bypass"` / `msg.command = "unbypass"` with `msg.zone = "<zone id>"`
-- Panic: `msg.command = "panic"` or `msg.command = "panic_silent"`
-- Siren: `msg.command = "siren_on"|"siren_off"`
-- Reset (clears state and bypass): `msg.command = "reset"` or `msg.reset = true`
+- `tamper`, `fire` and `24h` zones are considered **always active** (they can alarm even while disarmed).
+- If a zone is bypassed, triggers generate `zone_bypassed_trigger` and do not alarm.
 
-When codes are enabled, pass `msg.code` (or `msg.pin`). If `duressCode` matches, the node raises a silent duress alarm event.
+Example (formatted JSON array):
+
+```json
+[
+  {
+    "id": "front_door",
+    "name": "Front door",
+    "topic": "house/door/front",
+    "type": "perimeter",
+    "modes": ["away", "night"],
+    "entry": true,
+    "entryDelaySeconds": 30,
+    "bypassable": true,
+    "chime": true
+  }
+]
+```
 
 <br/>
 

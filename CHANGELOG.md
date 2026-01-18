@@ -1,8 +1,15 @@
 # node-red-contrib-boolean-logic-ultimate
-[![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday) 
+
+[![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday)
 
 # CHANGELOG
 
+<p>
+<b>Version 1.2.7</b> January 2026<br/>
+- NEW: Alarm System Ultimate (BETA)<br/>
+- Alarm System Ultimate (BETA): added <b>Legacy</b> button near <b>Format</b> to convert zones JSON back to "one object per line".<br/>
+- README: added a zone JSON example for Alarm System Ultimate.</br>
+</p>
 
 <p>
 <b>Version 1.2.6</b> January 2026<br/>

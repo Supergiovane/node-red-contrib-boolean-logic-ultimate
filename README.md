@@ -722,8 +722,6 @@ Each event in the sequence outputs a message configured in the JSON line. When r
 
 # ALARM SYSTEM ULTIMATE (BETA)
 
-![Alarm System Ultimate](img/alarm-system-ultimate.jpg)
-
 This node implements an alarm control panel with multi-mode arming, zones, entry/exit delays, bypass, tamper/fire 24h zones, siren control, status and event log.
 
 Example flow: [`examples/AlarmSystemUltimate.json`](examples/AlarmSystemUltimate.json)
