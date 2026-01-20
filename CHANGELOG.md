@@ -5,10 +5,8 @@
 # CHANGELOG
 
 <p>
-<b>Version 1.2.7</b> January 2026<br/>
-- NEW: Alarm System Ultimate (BETA)<br/>
-- Alarm System Ultimate (BETA): added <b>Legacy</b> button near <b>Format</b> to convert zones JSON back to "one object per line".<br/>
-- README: added a zone JSON example for Alarm System Ultimate.</br>
+<b>Version 1.2.8</b> January 2026<br/>
+- Added youtube videos for the missing nodes and the relative links to the UI<br/>
 </p>
 
 <p>
