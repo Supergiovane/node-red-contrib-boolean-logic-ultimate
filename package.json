@@ -44,7 +44,6 @@
             "KalmanFilterUltimate": "boolean-logic-ultimate/KalmanFilterUltimate.js",
             "RateLimiterUltimate": "boolean-logic-ultimate/RateLimiterUltimate.js",
             "PresenceSimulatorUltimate": "boolean-logic-ultimate/PresenceSimulatorUltimate.js",
-            "AlarmSystemUltimate": "boolean-logic-ultimate/AlarmSystemUltimate.js",
             "StaircaseLightUltimate": "boolean-logic-ultimate/StaircaseLightUltimate.js",
             "translator-config": "boolean-logic-ultimate/translator-config.js"
         }
