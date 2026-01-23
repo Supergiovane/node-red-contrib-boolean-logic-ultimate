@@ -8,7 +8,6 @@ How to import:
 
 ## Available example flows
 
-- `AlarmSystemUltimate.json` — Alarm System Ultimate (BETA)
 - `BlinkerUltimate.json` — BlinkerUltimate
 - `BooleanLogicUltimate.json` — BooleanLogicUltimate
 - `Comparator.json` — Comparator
@@ -27,4 +26,3 @@ How to import:
 - `SumUltimate.json` — SumUltimate
 - `toggleUltimate.json` — toggleUltimate
 - `translator-config.json` — translator-config
-
