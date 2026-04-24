@@ -1,0 +1,109 @@
+[
+  {
+    "id": "hys-flow",
+    "type": "tab",
+    "label": "HysteresisUltimate"
+  },
+  {
+    "id": "hys-node",
+    "type": "HysteresisUltimate",
+    "z": "hys-flow",
+    "name": "Bathroom Humidity",
+    "controlTopic": "hysteresis",
+    "payloadPropName": "payload",
+    "translatorConfig": "",
+    "mode": "high",
+    "onThreshold": 70,
+    "offThreshold": 62,
+    "initialState": false,
+    "emitOnlyOnChange": true,
+    "onPayload": "on",
+    "onPayloadType": "str",
+    "offPayload": "off",
+    "offPayloadType": "str",
+    "x": 520,
+    "y": 200,
+    "wires": [["hys-out"], ["hys-diag"]]
+  },
+  {
+    "id": "hys-in-1",
+    "type": "inject",
+    "z": "hys-flow",
+    "name": "Humidity 68",
+    "props": [
+      { "p": "payload", "v": "68", "vt": "num" },
+      { "p": "topic", "v": "sensor/bathroom/humidity", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 260,
+    "y": 160,
+    "wires": [["hys-node"]]
+  },
+  {
+    "id": "hys-in-2",
+    "type": "inject",
+    "z": "hys-flow",
+    "name": "Humidity 72",
+    "props": [
+      { "p": "payload", "v": "72", "vt": "num" },
+      { "p": "topic", "v": "sensor/bathroom/humidity", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 260,
+    "y": 200,
+    "wires": [["hys-node"]]
+  },
+  {
+    "id": "hys-in-3",
+    "type": "inject",
+    "z": "hys-flow",
+    "name": "Humidity 60",
+    "props": [
+      { "p": "payload", "v": "60", "vt": "num" },
+      { "p": "topic", "v": "sensor/bathroom/humidity", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 260,
+    "y": 240,
+    "wires": [["hys-node"]]
+  },
+  {
+    "id": "hys-out",
+    "type": "debug",
+    "z": "hys-flow",
+    "name": "HA Fan Command",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "x": 780,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "hys-diag",
+    "type": "debug",
+    "z": "hys-flow",
+    "name": "Diagnostics",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "x": 760,
+    "y": 240,
+    "wires": []
+  }
+]

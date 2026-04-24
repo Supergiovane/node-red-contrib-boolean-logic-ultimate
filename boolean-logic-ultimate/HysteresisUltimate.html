@@ -1,0 +1,137 @@
+<script type="text/javascript">
+  RED.nodes.registerType('HysteresisUltimate', {
+    category: 'Boolean Logic Ultimate',
+    color: '#ff8080',
+    defaults: {
+      name: { value: '' },
+      controlTopic: { value: 'hysteresis' },
+      payloadPropName: { value: 'payload', required: false },
+      translatorConfig: { type: 'translator-config', required: false },
+      mode: { value: 'high' },
+      onThreshold: { value: 70, validate: RED.validators.number() },
+      offThreshold: { value: 65, validate: RED.validators.number() },
+      initialState: { value: false },
+      emitOnlyOnChange: { value: true },
+      onPayload: { value: true },
+      onPayloadType: { value: 'bool' },
+      offPayload: { value: false },
+      offPayloadType: { value: 'bool' }
+    },
+    inputs: 1,
+    outputs: 2,
+    outputLabels: ['State output', 'Diagnostics'],
+    icon: 'font-awesome/fa-sliders',
+    label: function () {
+      return this.name || 'Hysteresis';
+    },
+    paletteLabel: function () {
+      return 'Hysteresis';
+    },
+    oneditprepare: function () {
+      const payloadField = $('#node-input-payloadPropName');
+      if (payloadField.val() === '') payloadField.val('payload');
+      payloadField.typedInput({ default: 'msg', types: ['msg'] });
+
+      $('#node-input-onPayload').typedInput({
+        default: this.onPayloadType || 'bool',
+        types: ['str', 'num', 'bool', 'json']
+      });
+      $('#node-input-onPayload').typedInput('type', this.onPayloadType || 'bool');
+
+      $('#node-input-offPayload').typedInput({
+        default: this.offPayloadType || 'bool',
+        types: ['str', 'num', 'bool', 'json']
+      });
+      $('#node-input-offPayload').typedInput('type', this.offPayloadType || 'bool');
+    },
+    oneditsave: function () {
+      this.onPayloadType = $('#node-input-onPayload').typedInput('type');
+      this.offPayloadType = $('#node-input-offPayload').typedInput('type');
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="HysteresisUltimate">
+  <div class="form-row">
+    <b>Hysteresis Ultimate</b>
+    &nbsp;&nbsp;<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp;<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-controlTopic"><i class="fa fa-tag"></i> Control topic</label>
+    <input type="text" id="node-input-controlTopic">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-mode"><i class="fa fa-arrows-v"></i> Mode</label>
+    <select id="node-input-mode">
+      <option value="high">High threshold (ON above)</option>
+      <option value="low">Low threshold (ON below)</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-onThreshold"><i class="fa fa-long-arrow-up"></i> ON threshold</label>
+    <input type="number" id="node-input-onThreshold" step="any">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-offThreshold"><i class="fa fa-long-arrow-down"></i> OFF threshold</label>
+    <input type="number" id="node-input-offThreshold" step="any">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-initialState"><i class="fa fa-power-off"></i> Initial state ON</label>
+    <input type="checkbox" id="node-input-initialState" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-emitOnlyOnChange"><i class="fa fa-filter"></i> Emit only on change</label>
+    <input type="checkbox" id="node-input-emitOnlyOnChange" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
+    <input type="text" id="node-input-payloadPropName">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-translatorConfig"><i class="fa fa-language"></i> Translator</label>
+    <input type="text" id="node-input-translatorConfig">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-onPayload"><i class="fa fa-sign-in"></i> On payload</label>
+    <input type="text" id="node-input-onPayload">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-offPayload"><i class="fa fa-sign-out"></i> Off payload</label>
+    <input type="text" id="node-input-offPayload">
+  </div>
+</script>
+
+<script type="text/markdown" data-help-name="HysteresisUltimate">
+<p>Adds hysteresis to numeric values to avoid rapid ON/OFF bouncing around a threshold.</p>
+
+|Property|Description|
+|--|--|
+| Mode | `high`: ON above threshold, OFF below. `low`: ON below threshold, OFF above. |
+| ON/OFF threshold | The two hysteresis limits. |
+| Emit only on change | Emits output only when state changes. |
+| With Input | Message property to evaluate (default `payload`). |
+| Translator | Optional translator-config. |
+| On/Off payload | Values sent on output 1. |
+
+Control topic messages:
+
+- `msg.onThreshold`, `msg.offThreshold` to update thresholds at runtime.
+- `msg.state = true|false` to force state.
+- `msg.reset = true` to restore initial state.
+- `msg.status = true` to emit current status on output 2.
+</script>

@@ -12,6 +12,7 @@ How to import:
 - `BooleanLogicUltimate.json` — BooleanLogicUltimate
 - `Comparator.json` — Comparator
 - `FilterUltimate.json` — FilterUltimate
+- `HysteresisUltimate.json` — HysteresisUltimate
 - `ImpulseUltimate.json` — ImpulseUltimate
 - `InjectUltimate.json` — InjectUltimate
 - `InterruptFlowUltimate.json` — InterruptFlowUltimate

@@ -720,63 +720,6 @@ Each event in the sequence outputs a message configured in the JSON line. When r
 
 <br/>
 
-# ALARM SYSTEM ULTIMATE (BETA)
-
-This node implements an alarm control panel with multi-mode arming, zones, entry/exit delays, bypass, tamper/fire 24h zones, siren control, status and event log.
-
-Example flow: [`examples/AlarmSystemUltimate.json`](examples/AlarmSystemUltimate.json)
-
-### NODE CONFIGURATION
-
-| Property                    | Description                                                                                                  |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Control topic               | Topic that receives runtime commands such as arm/disarm/status/bypass.                                       |
-| With Input                  | Message property evaluated as sensor value (default `payload`).                                              |
-| Persist state               | Persists arming mode, bypass list and last log entries across restarts.                                      |
-| Require code for arm/disarm | Enables PIN checks using `msg.code` (or `msg.pin`).                                                          |
-| Exit/Entry delay (s)        | Global exit/entry delays (each zone can override entry delay).                                               |
-| Siren topic                 | Topic used on output 2 to turn the siren on/off.                                                             |
-| Siren payloads              | Values emitted on output 2 for siren on/off (typed).                                                         |
-| Siren duration (s)          | Auto stop duration (0 = latch until disarm).                                                                 |
-| Emit restore events         | Emits `zone_restore` when a zone returns to false.                                                           |
-| Event log size              | Max stored log entries in node context.                                                                      |
-| Zones                       | One JSON object per line (legacy) or a JSON array (formatted). Use **Format** in the editor to pretty-print. |
-
-Esempio JSON di una zona:
-
-```json
-{
-  "id": "front_door",
-  "name": "Front Door",
-  "topic": "house/door/front",
-  "type": "perimeter",
-  "modes": ["away", "night"],
-  "entry": true,
-  "entryDelaySeconds": 30,
-  "bypassable": true,
-  "chime": true
-}
-```
-
-### OUTPUTS
-
-- Output 1 (Events): `msg.topic = <controlTopic>/event`, with `msg.event` and `msg.payload` (state + details).
-- Output 2 (Siren): emits siren on/off commands on `sirenTopic` with the configured payloads.
-
-### CONTROL MESSAGES (`msg.topic === controlTopic`)
-
-- Arm: `msg.command = 'arm_away'|'arm_home'|'arm_night'` or `msg.arm = 'away'|'home'|'night'`
-- Disarm: `msg.command = 'disarm'` or `msg.disarm = true`
-- Status: `msg.command = 'status'` or `msg.status = true`
-- Bypass: `msg.command = 'bypass'|'unbypass'` with `msg.zone = '<zone id>'`
-- Panic: `msg.command = 'panic'` or `msg.command = 'panic_silent'`
-- Siren: `msg.command = 'siren_on'|'siren_off'`
-- Reset: `msg.command = 'reset'` or `msg.reset = true`
-
-When codes are enabled, pass `msg.code` (or `msg.pin`). If `duressCode` matches, the node raises a silent duress alarm event.
-
-<br/>
-
 # STAIRCASE LIGHT ULTIMATE
 
 The purpose of this node is to control staircase lighting with a timer, pre-off warning and optional extension on every trigger.
@@ -804,6 +747,36 @@ The purpose of this node is to control staircase lighting with a timer, pre-off 
 - `msg.duration`, `msg.warningEnabled`, `msg.warningOffset` &rarr; adjust runtime settings.
 
 Output 1 delivers the ON/OFF command. Output 2 delivers the warning and includes `msg.remaining` with the seconds left.
+
+<br/>
+
+# HYSTERESIS ULTIMATE
+
+Adds hysteresis to numeric sensor values to avoid rapid ON/OFF bouncing around thresholds.
+
+Example flow: [`examples/HysteresisUltimate.json`](examples/HysteresisUltimate.json)
+
+### NODE CONFIGURATION
+
+| Property            | Description                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Control topic       | Topic that receives runtime commands such as threshold updates and reset.                                   |
+| Mode                | `high` = ON above threshold, OFF below. `low` = ON below threshold, OFF above.                             |
+| ON/OFF threshold    | Hysteresis limits.                                                                                           |
+| Initial state       | Startup output state.                                                                                        |
+| Emit only on change | If enabled, output 1 emits only on state transitions.                                                       |
+| With Input          | Message property evaluated as numeric value (default `payload`).                                            |
+| Translator          | Optional translator-config.                                                                                  |
+| On/Off payload      | Typed payloads sent on output 1.                                                                            |
+
+### CONTROL MESSAGES (`msg.topic === controlTopic`)
+
+- `msg.onThreshold`, `msg.offThreshold` &rarr; update thresholds at runtime.
+- `msg.state = true|false` &rarr; force state.
+- `msg.reset = true` &rarr; restore initial state.
+- `msg.status = true` &rarr; emit current state/thresholds on output 2.
+
+Output 1 emits the command payload (`onPayload`/`offPayload`). Output 2 emits diagnostic events.
 
 <br/>
 

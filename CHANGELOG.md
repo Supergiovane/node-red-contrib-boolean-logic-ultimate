@@ -5,6 +5,12 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.9</b> April 2026<br/>
+
+- NEW: Hysteresis node and aligned package registration/examples docs accordingly.<br/>
+</p>
+
+<p>
 <b>Version 1.2.8</b> January 2026<br/>
 - Added youtube videos for the missing nodes and the relative links to the UI<br/>
 </p>
