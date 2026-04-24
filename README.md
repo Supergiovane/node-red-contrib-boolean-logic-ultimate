@@ -1,11 +1,8 @@
 ![Logo](img/logo.png)
 
 [![NPM version][npm-version-image]][npm-url]
-
 [![NPM downloads per month][npm-downloads-month-image]][npm-url]
-
 [![NPM downloads total][npm-downloads-total-image]][npm-url]
-
 [![MIT License][license-image]][license-url]
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -758,16 +755,16 @@ Example flow: [`examples/HysteresisUltimate.json`](examples/HysteresisUltimate.j
 
 ### NODE CONFIGURATION
 
-| Property            | Description                                                                                                  |
-| ------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Control topic       | Topic that receives runtime commands such as threshold updates and reset.                                   |
-| Mode                | `high` = ON above threshold, OFF below. `low` = ON below threshold, OFF above.                             |
-| ON/OFF threshold    | Hysteresis limits.                                                                                           |
-| Initial state       | Startup output state.                                                                                        |
-| Emit only on change | If enabled, output 1 emits only on state transitions.                                                       |
-| With Input          | Message property evaluated as numeric value (default `payload`).                                            |
-| Translator          | Optional translator-config.                                                                                  |
-| On/Off payload      | Typed payloads sent on output 1.                                                                            |
+| Property            | Description                                                                    |
+| ------------------- | ------------------------------------------------------------------------------ |
+| Control topic       | Topic that receives runtime commands such as threshold updates and reset.      |
+| Mode                | `high` = ON above threshold, OFF below. `low` = ON below threshold, OFF above. |
+| ON/OFF threshold    | Hysteresis limits.                                                             |
+| Initial state       | Startup output state.                                                          |
+| Emit only on change | If enabled, output 1 emits only on state transitions.                          |
+| With Input          | Message property evaluated as numeric value (default `payload`).               |
+| Translator          | Optional translator-config.                                                    |
+| On/Off payload      | Typed payloads sent on output 1.                                               |
 
 ### CONTROL MESSAGES (`msg.topic === controlTopic`)
 
