@@ -656,7 +656,7 @@ Gateway per sensori e dispositivi troppo “chiacchieroni”: limita burst e rim
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Mode             | Seleziona la logica: _Debounce_ (attende quiete), _Throttle_ (impone un intervallo minimo), _Window_ (massimo N messaggi per finestra temporale). |
 | Wait (ms)        | Ritardo di quiete per la modalità debounce.                                                                                                       |
-| Emit             | Per debounce: scegli tra _Leading_ (subito), _Trailing_ (ultimo), _Both_.                                                                         |
+| Emit             | Per debounce: scegli se inviare subito il primo messaggio, solo l’ultimo dopo la pausa, oppure entrambi.                                          |
 | Interval (ms)    | Intervallo minimo tra messaggi in modalità throttle.                                                                                              |
 | Emit trailing    | In throttle, inoltra l’ultimo messaggio ricevuto allo scadere dell’intervallo.                                                                    |
 | Window size (ms) | Larghezza della finestra mobile in modalità window.                                                                                               |
@@ -682,6 +682,37 @@ Gateway per sensori e dispositivi troppo “chiacchieroni”: limita burst e rim
 - `msg.flush = true` &rarr; forza l’emissione immediata del messaggio in attesa.
 - `msg.mode = 'debounce'|'throttle'|'window'` &rarr; cambia modalità runtime e resetta lo stato.
 - `msg.interval`, `msg.wait`, `msg.windowSize`, `msg.maxInWindow` &rarr; aggiorna i parametri corrispondenti.
+
+<br/>
+
+# DEBOUNCER ULTIMATE
+
+Nodo dedicato al solo debounce: utile quando vuoi filtrare rimbalzi o burst rapidi senza portarti dietro le altre modalità del `RateLimiterUltimate`. Può inoltrare il **primo** messaggio, l’**ultimo** oppure **entrambi**, dopo un intervallo di quiete configurabile.
+
+<img src='img/debouncer.png' width='80%'>
+
+Nell'immagine si vede il comportamento tipico: a sinistra arrivano molti messaggi ravvicinati, il nodo aspetta una breve pausa, e a destra lascia passare solo il messaggio utile.
+
+Example flow: [`examples/DebouncerUltimate.json`](examples/DebouncerUltimate.json)
+
+### NODE CONFIGURATION
+
+| Property      | Description                                                                                   |
+| ------------- | --------------------------------------------------------------------------------------------- |
+| Wait (ms)     | Tempo di quiete richiesto prima di chiudere la finestra di debounce.                          |
+| Emit          | Scegli se inviare subito il primo messaggio, solo l’ultimo dopo la pausa, oppure entrambi.    |
+| Control topic | Topic dei messaggi di controllo (default `debouncer`).                                        |
+
+### OUTPUT
+
+- **Output 1**: messaggi inoltrati dopo il debounce.
+
+### CONTROL MESSAGES (`msg.topic === controlTopic`)
+
+- `msg.reset = true` &rarr; cancella timer e messaggio pendente.
+- `msg.flush = true` &rarr; inoltra subito l’ultimo messaggio in attesa.
+- `msg.wait` &rarr; aggiorna il ritardo di debounce a runtime.
+- `msg.emitOn = 'leading'|'trailing'|'both'` &rarr; cambia la modalità di emissione.
 
 <br/>
 

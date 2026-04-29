@@ -1,0 +1,76 @@
+<script type="text/javascript">
+  RED.nodes.registerType('DebouncerUltimate', {
+    category: 'Boolean Logic Ultimate',
+    color: '#ff8080',
+    defaults: {
+      name: { value: '' },
+      wait: { value: 500, validate: RED.validators.number() },
+      emitOn: { value: 'trailing' },
+      controlTopic: { value: 'debouncer' }
+    },
+    inputs: 1,
+    outputs: 1,
+    outputLabels: ['Forward'],
+    icon: 'file-in.png',
+    label: function () {
+      return this.name || 'Debouncer';
+    },
+    paletteLabel: function () {
+      return 'Debouncer';
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="DebouncerUltimate">
+  <div class="form-row">
+    <b>Debouncer Ultimate</b>
+    &nbsp;&nbsp;<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp;<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-wait"><i class="fa fa-hourglass-o"></i> Wait (ms)</label>
+    <input type="number" id="node-input-wait" min="0">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-emitOn"><i class="fa fa-exchange"></i> Emit</label>
+    <select id="node-input-emitOn">
+      <option value="leading">Send first message immediately</option>
+      <option value="trailing">Send only the last message after the pause</option>
+      <option value="both">Send first immediately and last after the pause</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-controlTopic"><i class="fa fa-tag"></i> Control topic</label>
+    <input type="text" id="node-input-controlTopic">
+  </div>
+</script>
+
+<script type="text/markdown" data-help-name="DebouncerUltimate">
+<p>Dedicated debounce node to suppress rapid bursts and forward only the first, last or both messages of a quiet-time window.</p>
+
+<p><img src="/resources/node-red-contrib-boolean-logic-ultimate/img/debouncer.png" alt="Debouncer example" style="max-width:100%; border-radius:6px;" /></p>
+
+|Property|Description|
+|--|--|
+| Wait (ms) | Quiet time before the debounce window closes. |
+| Emit | Choose whether to send the first message immediately, only the last one after the pause, or both. |
+| Control topic | Topic used for runtime commands (default `debouncer`). |
+
+Output:
+
+- Output 1 forwards the debounced message.
+
+Control topic messages:
+
+- `msg.reset = true` clears the timer and pending message.
+- `msg.flush = true` emits the pending message immediately.
+- `msg.wait` updates the debounce time.
+- `msg.emitOn = 'leading'|'trailing'|'both'` changes the emission mode.
+</script>

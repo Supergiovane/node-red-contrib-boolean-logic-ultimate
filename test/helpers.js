@@ -6,6 +6,7 @@ const helper = require('node-red-node-test-helper');
 helper.init(require.resolve('node-red')); // initialise with Node-RED runtime
 
 const nodes = {
+  DebouncerUltimate: require(path.join('..', 'boolean-logic-ultimate', 'DebouncerUltimate.js')),
   RateLimiterUltimate: require(path.join('..', 'boolean-logic-ultimate', 'RateLimiterUltimate.js')),
   PresenceSimulatorUltimate: require(path.join('..', 'boolean-logic-ultimate', 'PresenceSimulatorUltimate.js')),
   RailwaySwitchUltimate: require(path.join('..', 'boolean-logic-ultimate', 'RailwaySwitchUltimate.js')),
@@ -33,6 +34,10 @@ function loadRateLimiter(flow, credentials = {}) {
   return loadNode(nodes.RateLimiterUltimate, flow, credentials);
 }
 
+function loadDebouncer(flow, credentials = {}) {
+  return loadNode(nodes.DebouncerUltimate, flow, credentials);
+}
+
 function loadPresence(flow, credentials = {}) {
   return loadNode(nodes.PresenceSimulatorUltimate, flow, credentials);
 }
@@ -43,6 +48,7 @@ function loadRailwaySwitch(flow, credentials = {}) {
 
 module.exports = {
   helper,
+  loadDebouncer,
   loadRateLimiter,
   loadPresence,
   loadRailwaySwitch,

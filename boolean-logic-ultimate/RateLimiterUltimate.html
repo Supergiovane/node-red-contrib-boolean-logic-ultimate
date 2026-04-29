@@ -104,9 +104,9 @@
   <div class="form-row rate-config-section rate-config-debounce">
     <label for="node-input-emitOn"><i class="fa fa-exchange"></i> Emit</label>
     <select id="node-input-emitOn">
-      <option value="leading">Leading edge</option>
-      <option value="trailing">Trailing edge</option>
-      <option value="both">Both</option>
+      <option value="leading">Send first message immediately</option>
+      <option value="trailing">Send only the last message after the pause</option>
+      <option value="both">Send first immediately and last after the pause</option>
     </select>
   </div>
 
@@ -116,7 +116,7 @@
   </div>
 
   <div class="form-row rate-config-section rate-config-throttle">
-    <label for="node-input-trailing"><i class="fa fa-arrow-circle-right"></i> Emit trailing</label>
+    <label for="node-input-trailing"><i class="fa fa-arrow-circle-right"></i> Also send the last queued message</label>
     <input type="checkbox" id="node-input-trailing" style="width:auto; margin-top:7px;">
   </div>
 
@@ -144,8 +144,8 @@ The purpose of this node is to moderate the frequency of incoming messages.
 
 **Modes**
 
-- **Debounce** – waits for the line to be quiet before forwarding the final message. With *Leading* it emits the first message immediately and blocks the following ones until the delay ends; *Trailing* sends only the last message; *Both* combines both behaviours.
-- **Throttle** – enforces a minimum interval between consecutive messages. When *Emit trailing* is enabled the most recent message is forwarded once the interval has elapsed.
+- **Debounce** – waits for the line to be quiet before forwarding a message. You can choose to send the first message immediately, only the last message after the pause, or both.
+- **Throttle** – enforces a minimum interval between consecutive messages. When *Also send the last queued message* is enabled the most recent message is forwarded once the interval has elapsed.
 - **Window** – limits the number of messages in a moving time window. Extra messages can be dropped or queued to play once a slot becomes available.
 
 **Outputs**

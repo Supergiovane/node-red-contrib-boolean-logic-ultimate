@@ -11,6 +11,7 @@ How to import:
 - `BlinkerUltimate.json` — BlinkerUltimate
 - `BooleanLogicUltimate.json` — BooleanLogicUltimate
 - `Comparator.json` — Comparator
+- `DebouncerUltimate.json` — DebouncerUltimate
 - `FilterUltimate.json` — FilterUltimate
 - `HysteresisUltimate.json` — HysteresisUltimate
 - `ImpulseUltimate.json` — ImpulseUltimate

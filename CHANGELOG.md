@@ -5,6 +5,20 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.11</b> April 2026<br/>
+
+- DebouncerUltimate: simplified the node to a single output, with clearer editor labels for non-technical users.<br/>
+- Updated Debouncer help and README, adding a dedicated explanatory image.<br/>
+</p>
+
+<p>
+<b>Version 1.2.10</b> April 2026<br/>
+
+- NEW: DebouncerUltimate node for dedicated debounce flows with trailing/leading/both emission modes.<br/>
+- Updated README, examples and tests accordingly.<br/>
+</p>
+
+<p>
 <b>Version 1.2.9</b> April 2026<br/>
 
 - NEW: Hysteresis node and aligned package registration/examples docs accordingly.<br/>

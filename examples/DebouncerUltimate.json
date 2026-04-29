@@ -1,0 +1,168 @@
+[
+  {
+    "id": "db_tab_1",
+    "type": "tab",
+    "label": "DebouncerUltimate - burst filter",
+    "disabled": false,
+    "info": "Esempio: filtra burst ravvicinati con il nodo DebouncerUltimate."
+  },
+  {
+    "id": "db_cmt_1",
+    "type": "comment",
+    "z": "db_tab_1",
+    "name": "Burst → Debouncer → Forward",
+    "info": "Clicca BURST per generare messaggi ravvicinati. Cambia la modalità con LEADING/TRAILING/BOTH oppure usa FLUSH/RESET via topic \"debouncer\".",
+    "x": 300,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "db_inj_burst",
+    "type": "inject",
+    "z": "db_tab_1",
+    "name": "BURST (10 msgs)",
+    "props": [
+      { "p": "count", "v": "10", "vt": "num" },
+      { "p": "interval", "v": "50", "vt": "num" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 140,
+    "wires": [["db_fn_burst"]]
+  },
+  {
+    "id": "db_fn_burst",
+    "type": "function",
+    "z": "db_tab_1",
+    "name": "Burst generator",
+    "func": "const count = Number(msg.count || 10);\nconst interval = Number(msg.interval || 50);\nlet i = 0;\n\nconst sendOne = () => {\n  node.send({ topic: 'data', payload: i, index: i, ts: Date.now() });\n  i += 1;\n  if (i < count) {\n    setTimeout(sendOne, interval);\n  }\n};\n\nsendOne();\nreturn null;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 360,
+    "y": 140,
+    "wires": [["db_node_1"]]
+  },
+  {
+    "id": "db_inj_leading",
+    "type": "inject",
+    "z": "db_tab_1",
+    "name": "LEADING (400ms)",
+    "props": [
+      { "p": "topic", "v": "debouncer", "vt": "str" },
+      { "p": "emitOn", "v": "leading", "vt": "str" },
+      { "p": "wait", "v": "400", "vt": "num" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 160,
+    "y": 220,
+    "wires": [["db_node_1"]]
+  },
+  {
+    "id": "db_inj_trailing",
+    "type": "inject",
+    "z": "db_tab_1",
+    "name": "TRAILING (400ms)",
+    "props": [
+      { "p": "topic", "v": "debouncer", "vt": "str" },
+      { "p": "emitOn", "v": "trailing", "vt": "str" },
+      { "p": "wait", "v": "400", "vt": "num" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 170,
+    "y": 260,
+    "wires": [["db_node_1"]]
+  },
+  {
+    "id": "db_inj_both",
+    "type": "inject",
+    "z": "db_tab_1",
+    "name": "BOTH (400ms)",
+    "props": [
+      { "p": "topic", "v": "debouncer", "vt": "str" },
+      { "p": "emitOn", "v": "both", "vt": "str" },
+      { "p": "wait", "v": "400", "vt": "num" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 150,
+    "y": 300,
+    "wires": [["db_node_1"]]
+  },
+  {
+    "id": "db_inj_flush",
+    "type": "inject",
+    "z": "db_tab_1",
+    "name": "FLUSH",
+    "props": [
+      { "p": "topic", "v": "debouncer", "vt": "str" },
+      { "p": "flush", "v": "true", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 120,
+    "y": 340,
+    "wires": [["db_node_1"]]
+  },
+  {
+    "id": "db_inj_reset",
+    "type": "inject",
+    "z": "db_tab_1",
+    "name": "RESET",
+    "props": [
+      { "p": "topic", "v": "debouncer", "vt": "str" },
+      { "p": "reset", "v": "true", "vt": "bool" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 120,
+    "y": 380,
+    "wires": [["db_node_1"]]
+  },
+  {
+    "id": "db_node_1",
+    "type": "DebouncerUltimate",
+    "z": "db_tab_1",
+    "name": "Debouncer",
+    "wait": 400,
+    "emitOn": "trailing",
+    "controlTopic": "debouncer",
+    "x": 590,
+    "y": 240,
+    "wires": [["db_dbg_fwd"]]
+  },
+  {
+    "id": "db_dbg_fwd",
+    "type": "debug",
+    "z": "db_tab_1",
+    "name": "Forward",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 780,
+    "y": 220,
+    "wires": []
+  }
+]
