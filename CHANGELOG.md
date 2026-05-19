@@ -5,6 +5,20 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.13</b> May 2026<br/>
+
+- BooleanLogicUltimate: renamed the editor field label from "Evaluate" to "Input".<br/>
+- Updated BooleanLogic help and README terminology to match the new label.<br/>
+</p>
+
+<p>
+<b>Version 1.2.12</b> May 2026<br/>
+
+- Renamed editor label from "With Input" to "Input" for clearer wording across affected nodes.<br/>
+- Updated the related node help sections and README terminology accordingly.<br/>
+</p>
+
+<p>
 <b>Version 1.2.11</b> April 2026<br/>
 
 - DebouncerUltimate: simplified the node to a single output, with clearer editor labels for non-technical users.<br/>

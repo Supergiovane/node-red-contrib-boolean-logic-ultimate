@@ -87,7 +87,7 @@
   </div>
 
   <div class="form-row rate-config-common">
-    <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
+    <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
     <input type="text" id="node-input-payloadPropName">
   </div>
 
@@ -160,5 +160,5 @@ The purpose of this node is to moderate the frequency of incoming messages.
 - `msg.mode = 'debounce'|'throttle'|'window'` – changes mode at runtime.
 - `msg.interval`, `msg.wait`, `msg.windowSize`, `msg.maxInWindow` – adjust the related thresholds.
 
-The **With Input** field selects which message property to evaluate (default `msg.payload`). When configured, it can be translated through the **translator-config** node for Home Assistant compatibility.
+The **Input** field selects which message property to evaluate (default `msg.payload`). When configured, it can be translated through the **translator-config** node for Home Assistant compatibility.
 </script>

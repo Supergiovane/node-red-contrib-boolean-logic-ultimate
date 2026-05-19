@@ -141,7 +141,7 @@
 		</select>
 	</div>
 	<div class="form-row">
-        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> With Input</label>
+        <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
 		<input type="text" id="node-input-payloadPropName">
     </div>
 	<div class="form-row">
@@ -163,7 +163,7 @@
 |--|--|
 | Switcher topic | Whenever the node receives a payload from this **topic**, it redirects the input messages to a choosen output PIN. |
 | Output pins | Number of output pins to display (1..10). |
-| With Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
+| Input | It's the msg property to be evaluated. *By default, it is "payload", but you can also specify other properties, for example "payload.value"* |
 | Translator | Translates the incoming <code>payload</code> value. This allows the compatibility with, for example, **HomeAssistant** nodes. |
 
 ### Inputs
@@ -178,7 +178,7 @@ Once an output PIN has been choosen, all messages passing through the node will 
 
 Take the example where you choosen such properties:  
 **Switcher topic**: "switcher"  
-**With Input**: "payload"  
+**Input**: "payload"  
 this JSON input message redirects all input messages to the first PIN  
 
 ```json
