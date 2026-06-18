@@ -5,6 +5,13 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.14</b> June 2026<br/>
+
+- NEW: MinMaxLimiterUltimate node, constrains a numeric value between a min and a max (clamp/saturation), e.g. to keep a dimmable lamp away from its extreme values.<br/>
+- Replaced all node icons with native Node-RED icons for consistent, properly centered rendering.<br/>
+</p>
+
+<p>
 <b>Version 1.2.13</b> May 2026<br/>
 
 - BooleanLogicUltimate: renamed the editor field label from "Evaluate" to "Input".<br/>

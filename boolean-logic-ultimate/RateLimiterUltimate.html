@@ -22,7 +22,7 @@
     outputLabels: function (index) {
       return index === 0 ? 'Forward' : 'Diagnostics';
     },
-    icon: 'file-in.png',
+    icon: 'file-in.svg',
     label: function () {
       const mode = (this.mode || 'debounce').charAt(0).toUpperCase() + (this.mode || 'debounce').slice(1);
       return (this.name || 'RateLimiter') + ' (' + mode + ')';

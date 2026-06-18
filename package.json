@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-boolean-logic-ultimate",
-    "version": "1.2.13",
+    "version": "1.2.14",
     "description": "A set of Node-RED enhanced boolean logic and utility nodes, flow interruption, blinker, debouncer, invert, filter, toggle etc.., with persistent values after reboot. Compatible also with Homeassistant values.",
     "author": "Supergiovane (https://github.com/Supergiovane)",
     "dependencies": {
@@ -47,6 +47,7 @@
             "PresenceSimulatorUltimate": "boolean-logic-ultimate/PresenceSimulatorUltimate.js",
             "StaircaseLightUltimate": "boolean-logic-ultimate/StaircaseLightUltimate.js",
             "HysteresisUltimate": "boolean-logic-ultimate/HysteresisUltimate.js",
+            "MinMaxLimiterUltimate": "boolean-logic-ultimate/MinMaxLimiterUltimate.js",
             "translator-config": "boolean-logic-ultimate/translator-config.js"
         }
     },

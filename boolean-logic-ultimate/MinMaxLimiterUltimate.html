@@ -1,0 +1,100 @@
+<script type="text/javascript">
+  RED.nodes.registerType('MinMaxLimiterUltimate', {
+    category: 'Boolean Logic Ultimate',
+    color: '#ff8080',
+    defaults: {
+      name: { value: '' },
+      controlTopic: { value: 'clamp' },
+      payloadPropName: { value: 'payload', required: false },
+      translatorConfig: { type: 'translator-config', required: false },
+      min: { value: 10, validate: RED.validators.number() },
+      max: { value: 90, validate: RED.validators.number() },
+      passInvalid: { value: false }
+    },
+    inputs: 1,
+    outputs: 1,
+    outputLabels: ['Clamped value'],
+    icon: 'range.svg',
+    label: function () {
+      return this.name || 'Min-Max Limiter';
+    },
+    paletteLabel: function () {
+      return 'Min-Max Limiter';
+    },
+    oneditprepare: function () {
+      const payloadField = $('#node-input-payloadPropName');
+      if (payloadField.val() === '') payloadField.val('payload');
+      payloadField.typedInput({ default: 'msg', types: ['msg'] });
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="MinMaxLimiterUltimate">
+  <div class="form-row">
+    <b>Min-Max Limiter</b>
+    &nbsp;&nbsp;<span style="color:red"><i class="fa fa-question-circle"></i>&nbsp;<a target="_blank" href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate"><u>Help online</u></a></span>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-controlTopic"><i class="fa fa-tag"></i> Control topic</label>
+    <input type="text" id="node-input-controlTopic">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-min"><i class="fa fa-long-arrow-down"></i> Min (lower limit)</label>
+    <input type="number" id="node-input-min" step="any">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-max"><i class="fa fa-long-arrow-up"></i> Max (upper limit)</label>
+    <input type="number" id="node-input-max" step="any">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-passInvalid"><i class="fa fa-share"></i> Pass non-numbers</label>
+    <input type="checkbox" id="node-input-passInvalid" style="width:auto; margin-top:7px;">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-payloadPropName"><i class="fa fa-ellipsis-h"></i> Input</label>
+    <input type="text" id="node-input-payloadPropName">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-translatorConfig"><i class="fa fa-language"></i> Translator</label>
+    <input type="text" id="node-input-translatorConfig">
+  </div>
+</script>
+
+<script type="text/markdown" data-help-name="MinMaxLimiterUltimate">
+<p>Constrains a numeric value between a lower and an upper limit (clamp / saturation).
+Useful, for example, to keep a dimmable lamp away from its extreme values.</p>
+
+<p>If the input is below <code>Min</code> it outputs <code>Min</code>; if it is above
+<code>Max</code> it outputs <code>Max</code>; otherwise the value passes through unchanged.</p>
+
+|Property|Description|
+|--|--|
+| Control topic | Topic used to update limits at runtime. |
+| Min | Lower limit. Values below it are raised to this value. |
+| Max | Upper limit. Values above it are lowered to this value. |
+| Pass non-numbers | If enabled, non-numeric inputs are forwarded unchanged instead of being dropped. |
+| Input | Message property to read and write (default `payload`). |
+| Translator | Optional translator-config. |
+
+<p>The output message also carries <code>msg.clamp</code> with
+<code>{ clamped, input, output, min, max }</code>.</p>
+
+<p>Example (Min=10, Max=90): input <code>0</code> &rarr; <code>10</code>,
+input <code>50</code> &rarr; <code>50</code>, input <code>100</code> &rarr; <code>90</code>.</p>
+
+Control topic messages:
+
+- `msg.min` to update the lower limit at runtime.
+- `msg.max` to update the upper limit at runtime.
+</script>
