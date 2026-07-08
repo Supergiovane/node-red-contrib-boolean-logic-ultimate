@@ -5,6 +5,12 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.15</b> Juli 2026<br/>
+
+- Fixed an issue in the Interrupt node, where the topic was set but the payload were undefined.<br/>
+</p>
+
+<p>
 <b>Version 1.2.14</b> June 2026<br/>
 
 - NEW: MinMaxLimiterUltimate node, constrains a numeric value between a min and a max (clamp/saturation), e.g. to keep a dimmable lamp away from its extreme values.<br/>

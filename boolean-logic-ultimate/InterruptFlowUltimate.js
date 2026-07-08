@@ -79,18 +79,13 @@ module.exports = function (RED) {
           config.payloadPropName || "payload"
         );
         // 15/11/2021 inform user about undefined topic or payload
-        if (sPayload === undefined) {
-          setNodeStatus({
-            fill: "red",
-            shape: "dot",
-            text: "Received invalid payload from " + msg.topic || "",
-          });
-          return;
+        if (sPayload !== undefined) {
+          msg.payload = utils.ToBoolean(
+            sPayload,
+            RED.nodes.getNode(config.translatorConfig) // Retrieve the config node. It can be null, but it's handled in utils.js; // 15/11/2021 Convert input to boolean.
+          );
         }
-        msg.payload = utils.ToBoolean(
-          sPayload,
-          RED.nodes.getNode(config.translatorConfig) // Retrieve the config node. It can be null, but it's handled in utils.js; // 15/11/2021 Convert input to boolean.
-        );
+
         //if (msg.payload === undefined) return null;
         if (node.timerAutoToggle !== null) {
           // 28/01/2022 Stop autotoggle
@@ -148,6 +143,13 @@ module.exports = function (RED) {
             fill: "red",
             shape: "dot",
             text: "|| stop (stored last msg)",
+          });
+          return;
+        } else if (msg.payload === undefined) {
+          setNodeStatus({
+            fill: "red",
+            shape: "dot",
+            text: "Received invalid payload from " + msg.topic || "",
           });
           return;
         }
