@@ -1,4 +1,14 @@
-![Logo](img/logo.png)
+<p align="center">
+  <img src="img/logo-supervibe.png" alt="Boolean Logic Ultimate - Max Supervibe" width="380">
+</p>
+
+## Logic and Utilities nodes for your flows
+
+A set of Node-RED enhanced boolean logic and utility nodes, with persistent values after reboot. Compatible also with Homeassistant values.
+
+<br/>
+<br/>
+<br/>
 
 [![NPM version][npm-version-image]][npm-url]
 [![NPM downloads per month][npm-downloads-month-image]][npm-url]
@@ -8,10 +18,9 @@
 [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday)
 [![youtube][youtube-image]][youtube-url]
 
-A set of Node-RED enhanced boolean logic and utility nodes, with persistent values after reboot. Compatible also with Homeassistant values.
-
-<br/>
-<br/>
+<p align="center">
+  <img src="img/readmemain.png" alt="Boolean Logic Ultimate for Node-RED — Max Supervibe" width="70%">
+</p>
 
 ## CHANGELOG
 
@@ -131,7 +140,7 @@ The interrupt flows is able to stop the input messages to exiting the node.
 | Property         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Trigger by topic | Whenever the node receives a payload = false from this topic,it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again. The node will output the current stored message plus an added property "isReplay = true", as soon as it receives a **_msg.play = true_** from this topic. The node will clear the current stored message, as soon as it receives a **_msg.reset = true_** from this topic.                                                                              |
-| Input       | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Input            | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_                                                                                                                                                                                                                                                                                                                                                                                                                |
 | Then             | This property, allow you to auto toggle the selected start state (pass or block) after a timer has elapsed. You can choose from some pre-defined delays. If you have, for example, an Homekit-Bridged nodeset with a thermostat node or security system node in your flow, once node-red restarts, these homekit nodes output a default message to the flow. Just put an InterruptFlow node with a "block at start" behaviour and a toggle delay enabled behind homekit nodes, to temporary stop the chained nodes to receive the unwanted startup message. |
 
 <br/>
@@ -471,7 +480,7 @@ The railway switcher, redirect the incoming messages to one ot the avaiable outp
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | Switcher topic | Whenever the node receives a payload from this **topic**, it redirects the input messages to a choosen output PIN.                           |
 | Output pins    | Number of output pins (outputs) to show. Default is 5, range is 1..10.                                                                       |
-| Input     | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+| Input          | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
 | Translator     | Translates the incoming <code>payload</code> value. This allows the compatibility with, for example, **HomeAssistant** nodes.                |
 
 ### Inputs
@@ -663,7 +672,7 @@ Gateway per sensori e dispositivi troppo “chiacchieroni”: limita burst e rim
 | Max messages     | Numero di messaggi ammessi nella finestra.                                                                                                        |
 | On limit         | _Drop_ scarta i messaggi extra, _Queue last_ accoda l’ultimo e lo riproduce appena possibile.                                                     |
 | Control topic    | Topic dei messaggi di controllo (default `rate`).                                                                                                 |
-| Input       | Proprietà del messaggio da monitorare (default `msg.payload`).                                                                                    |
+| Input            | Proprietà del messaggio da monitorare (default `msg.payload`).                                                                                    |
 | Stats every (s)  | Ogni quanti secondi emettere un riepilogo statistico (0 = disattivato).                                                                           |
 | Translator       | Nodo translator-config opzionale per adattare le stringhe d’ingresso a true/false.                                                                |
 
@@ -697,11 +706,11 @@ Example flow: [`examples/DebouncerUltimate.json`](examples/DebouncerUltimate.jso
 
 ### NODE CONFIGURATION
 
-| Property      | Description                                                                                   |
-| ------------- | --------------------------------------------------------------------------------------------- |
-| Wait (ms)     | Tempo di quiete richiesto prima di chiudere la finestra di debounce.                          |
-| Emit          | Scegli se inviare subito il primo messaggio, solo l’ultimo dopo la pausa, oppure entrambi.    |
-| Control topic | Topic dei messaggi di controllo (default `debouncer`).                                        |
+| Property      | Description                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------ |
+| Wait (ms)     | Tempo di quiete richiesto prima di chiudere la finestra di debounce.                       |
+| Emit          | Scegli se inviare subito il primo messaggio, solo l’ultimo dopo la pausa, oppure entrambi. |
+| Control topic | Topic dei messaggi di controllo (default `debouncer`).                                     |
 
 ### OUTPUT
 
@@ -729,7 +738,7 @@ The purpose of this node is to replay a programmable sequence of messages in ord
 | Loop sequence | Repeats the sequence when it reaches the end.                                                  |
 | Random delays | Enables a random variation of the programmed delays.                                           |
 | Jitter (%)    | Maximum percentage of variation applied when random delays are enabled.                        |
-| Input    | Message property to inspect for inline events (default `payload`).                             |
+| Input         | Message property to inspect for inline events (default `payload`).                             |
 | Translator    | Optional translator-config to convert incoming values.                                         |
 | Sequence      | One JSON object per line, each containing at least `delay` (ms) plus the properties to output. |
 
@@ -759,7 +768,7 @@ The purpose of this node is to control staircase lighting with a timer, pre-off 
 | Warning offset (s) | Seconds before switch-off when the warning is sent.                |
 | Restart on trigger | Restarts the timer when a new trigger arrives while active.        |
 | Allow off input    | Allows a `false` from the main input to switch off immediately.    |
-| Input         | Message property evaluated as trigger (default `payload`).         |
+| Input              | Message property evaluated as trigger (default `payload`).         |
 | Translator         | Optional translator-config for true/false conversion.              |
 | On/Off payload     | Values emitted on output 1 to turn the light on/off.               |
 | Warning payload    | Value emitted on output 2 when the warning fires.                  |
@@ -790,7 +799,7 @@ Example flow: [`examples/HysteresisUltimate.json`](examples/HysteresisUltimate.j
 | ON/OFF threshold    | Hysteresis limits.                                                             |
 | Initial state       | Startup output state.                                                          |
 | Emit only on change | If enabled, output 1 emits only on state transitions.                          |
-| Input          | Message property evaluated as numeric value (default `payload`).               |
+| Input               | Message property evaluated as numeric value (default `payload`).               |
 | Translator          | Optional translator-config.                                                    |
 | On/Off payload      | Typed payloads sent on output 1.                                               |
 
