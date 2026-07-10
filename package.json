@@ -16,10 +16,21 @@
     },
     "keywords": [
         "node-red",
+        "node-red-contrib",
         "boolean",
+        "logic",
         "gate",
         "filter",
-        "logic"
+        "debounce",
+        "toggle",
+        "blinker",
+        "comparator",
+        "hysteresis",
+        "rate-limiter",
+        "kalman",
+        "utility",
+        "home-assistant",
+        "home-automation"
     ],
     "license": "MIT",
     "repository": {
