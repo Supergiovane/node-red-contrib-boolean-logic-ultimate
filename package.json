@@ -4,15 +4,15 @@
     "description": "A set of Node-RED enhanced boolean logic and utility nodes, flow interruption, blinker, debouncer, invert, filter, toggle etc.., with persistent values after reboot. Compatible also with Homeassistant values.",
     "author": "Supergiovane (https://github.com/Supergiovane)",
     "dependencies": {
-        "fs": "0.0.1-security",
-        "path": ">=0.12.7",
-        "kalmanjs": "1.1.0"
+        "fs": "^0.0.1-security",
+        "kalmanjs": "^1.1.0",
+        "path": "^0.12.7"
     },
     "devDependencies": {
-        "chai": "^4.3.10",
-        "mocha": "^10.4.0",
-        "node-red": "^3.1.0",
-        "node-red-node-test-helper": "^0.3.5"
+        "chai": "^6.2.2",
+        "mocha": "^11.7.6",
+        "node-red": "^5.0.1",
+        "node-red-node-test-helper": "^0.3.6"
     },
     "keywords": [
         "node-red",
