@@ -140,18 +140,18 @@ Normal input messages are evaluated using the configured **Input** property. An 
 The following commands are consumed only when `msg.topic` equals **Control topic**:
 
 - `msg.onThreshold`, `msg.offThreshold` to update thresholds at runtime.
-- `msg.state = true|false` to force the state and emit it on output 1.
+- `msg.state = true|false` to force the state and emit it on output 1. While locked, it updates the internal state without emitting on output 1.
 - `msg.reset = true` to restore the configured initial state and emit a `reset` diagnostic.
 - `msg.status = true` to emit current status on output 2.
 
 `msg.permanentLockState` is handled regardless of `msg.topic`:
 
-- `"lock"` suppresses all output until another valid permanent-lock command arrives.
-- `"lockOn"` forces ON and emits the configured **On payload** once, then suppresses all output.
-- `"lockOff"` forces OFF and emits the configured **Off payload** once, then suppresses all output.
+- `"lock"` suppresses state output until another valid permanent-lock command arrives.
+- `"lockOn"` forces ON and emits the configured **On payload** once, then suppresses state output.
+- `"lockOff"` forces OFF and emits the configured **Off payload** once, then suppresses state output.
 - `"unlock"` resumes normal processing. The unlock message itself is consumed.
 
-While locked, normal inputs and control-topic commands are ignored and produce no output.
+While locked, normal input messages are ignored and output 1 remains suppressed. Control-topic commands remain active: thresholds can be updated, `state` and `reset` can change the internal state, and `status`/`reset` diagnostics can still be emitted on output 2.
 
 ### Outputs
 

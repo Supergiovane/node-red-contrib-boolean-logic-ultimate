@@ -103,7 +103,7 @@ module.exports = function (RED) {
       updateStatus(inputValue);
     }
 
-    function handleControl(msg) {
+    function handleControl(msg, suppressStateOutput) {
       let consumed = false;
 
       if (msg.reset === true) {
@@ -136,7 +136,9 @@ module.exports = function (RED) {
 
       if (Object.prototype.hasOwnProperty.call(msg, 'state')) {
         state = Boolean(msg.state);
-        emitState(msg, true, undefined);
+        if (!suppressStateOutput) {
+          emitState(msg, true, undefined);
+        }
         consumed = true;
       }
 
@@ -189,11 +191,15 @@ module.exports = function (RED) {
         return;
       }
 
-      if (permanentLockState !== 'unlock') {
-        return;
+      const isLocked = permanentLockState !== 'unlock';
+
+      if (msg.topic === controlTopic) {
+        if (handleControl(msg, isLocked) || isLocked) {
+          return;
+        }
       }
 
-      if (msg.topic === controlTopic && handleControl(msg)) {
+      if (isLocked) {
         return;
       }
 

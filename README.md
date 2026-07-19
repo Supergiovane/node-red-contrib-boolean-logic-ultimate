@@ -742,7 +742,7 @@ Normal messages are evaluated using the configured **Input** property. Missing o
 ### Control messages (`msg.topic === controlTopic`)
 
 - `msg.onThreshold`, `msg.offThreshold` &rarr; update thresholds at runtime.
-- `msg.state = true|false` &rarr; force the state and emit it on output 1.
+- `msg.state = true|false` &rarr; force the state and emit it on output 1. While locked, it updates the internal state without emitting on output 1.
 - `msg.reset = true` &rarr; restore the initial state and emit a `reset` diagnostic.
 - `msg.status = true` &rarr; emit current state/thresholds on output 2.
 
@@ -750,12 +750,12 @@ Normal messages are evaluated using the configured **Input** property. Missing o
 
 Regardless of `msg.topic`, `msg.permanentLockState` accepts:
 
-- `lock` &rarr; suppress all output until another permanent-lock command arrives.
-- `lockOn` &rarr; force ON, emit the configured ON payload once, then suppress all output.
-- `lockOff` &rarr; force OFF, emit the configured OFF payload once, then suppress all output.
+- `lock` &rarr; suppress state output until another permanent-lock command arrives.
+- `lockOn` &rarr; force ON, emit the configured ON payload once, then suppress state output.
+- `lockOff` &rarr; force OFF, emit the configured OFF payload once, then suppress state output.
 - `unlock` &rarr; resume normal processing (the unlock message itself is consumed).
 
-While locked, normal inputs and control-topic commands are ignored and produce no output.
+While locked, normal input messages are ignored and output 1 remains suppressed. Control-topic commands remain active: thresholds can be updated, `state` and `reset` can change the internal state, and `status`/`reset` diagnostics can still be emitted on output 2.
 
 ### Outputs
 

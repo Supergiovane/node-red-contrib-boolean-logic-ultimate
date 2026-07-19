@@ -81,7 +81,7 @@
     "type": "comment",
     "z": "hys-flow",
     "name": "Permanent output lock commands (independent of msg.topic)",
-    "info": "lock: suppress every output\nlockOn: emit ON once, then suppress every output\nlockOff: emit OFF once, then suppress every output\nunlock: resume normal processing",
+    "info": "lock: suppress state output\nlockOn: emit ON once, then suppress state output\nlockOff: emit OFF once, then suppress state output\nunlock: resume normal processing\n\nControl-topic commands and diagnostics remain active while locked.",
     "x": 310,
     "y": 320,
     "wires": []

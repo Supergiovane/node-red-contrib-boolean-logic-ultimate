@@ -8,6 +8,7 @@
 <b>Version 1.2.17</b> July 2026<br/>
 
 - HysteresisUltimate: added permanent output control through <code>msg.permanentLockState</code>, supporting <code>lock</code>, <code>lockOn</code>, <code>lockOff</code> and <code>unlock</code>.<br/>
+- HysteresisUltimate: control-topic configuration and diagnostics remain available while state output is locked.<br/>
 - Updated the Hysteresis editor help, README documentation, automated tests and importable example flow.<br/>
 - Reorganized the README with a clearer heading structure, installation instructions and a categorized node index.<br/>
 </p>

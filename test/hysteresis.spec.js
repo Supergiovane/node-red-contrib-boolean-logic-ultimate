@@ -119,7 +119,8 @@ describe('HysteresisUltimate node', function () {
 
       hys.receive({ permanentLockState: 'lockOn' });
       hys.receive({ payload: 55 });
-      hys.receive({ topic: 'hysteresis', status: true });
+      hys.receive({ topic: 'hysteresis', onThreshold: 74, status: true });
+      hys.receive({ topic: 'hysteresis', state: false });
       hys.receive({ permanentLockState: 'lockOff' });
       hys.receive({ payload: 75 });
       hys.receive({ permanentLockState: 'lock' });
@@ -130,8 +131,9 @@ describe('HysteresisUltimate node', function () {
       setTimeout(() => {
         try {
           expect(outputPayloads).to.deep.equal(['on', 'off', 'on']);
-          expect(diagnostics).to.have.length(1);
-          expect(diagnostics[0]).to.include({ event: 'state_changed', state: true });
+          expect(diagnostics).to.have.length(2);
+          expect(diagnostics[0]).to.include({ event: 'status', state: true, onThreshold: 74 });
+          expect(diagnostics[1]).to.include({ event: 'state_changed', state: true, onThreshold: 74 });
           done();
         } catch (error) {
           done(error);
