@@ -84,4 +84,59 @@ describe('HysteresisUltimate node', function () {
       hys.receive({ topic: 'sensor', payload: 58 });
     }).catch(done);
   });
+
+  it('supports permanent lock, lockOn, lockOff and unlock commands', function (done) {
+    const flowId = 'hys-lock';
+    const flow = [
+      { id: flowId, type: 'tab', label: 'hys-lock' },
+      {
+        id: 'hys',
+        type: 'HysteresisUltimate',
+        z: flowId,
+        mode: 'high',
+        onThreshold: 70,
+        offThreshold: 60,
+        emitOnlyOnChange: true,
+        onPayload: 'on',
+        onPayloadType: 'str',
+        offPayload: 'off',
+        offPayloadType: 'str',
+        wires: [['out'], ['diag']],
+      },
+      { id: 'out', type: 'helper', z: flowId },
+      { id: 'diag', type: 'helper', z: flowId },
+    ];
+
+    loadHysteresis(flow).then(() => {
+      const hys = helper.getNode('hys');
+      const out = helper.getNode('out');
+      const diag = helper.getNode('diag');
+      const outputPayloads = [];
+      const diagnostics = [];
+
+      out.on('input', (msg) => outputPayloads.push(msg.payload));
+      diag.on('input', (msg) => diagnostics.push(msg.payload));
+
+      hys.receive({ permanentLockState: 'lockOn' });
+      hys.receive({ payload: 55 });
+      hys.receive({ topic: 'hysteresis', status: true });
+      hys.receive({ permanentLockState: 'lockOff' });
+      hys.receive({ payload: 75 });
+      hys.receive({ permanentLockState: 'lock' });
+      hys.receive({ payload: 75 });
+      hys.receive({ permanentLockState: 'unlock' });
+      hys.receive({ payload: 75 });
+
+      setTimeout(() => {
+        try {
+          expect(outputPayloads).to.deep.equal(['on', 'off', 'on']);
+          expect(diagnostics).to.have.length(1);
+          expect(diagnostics[0]).to.include({ event: 'state_changed', state: true });
+          done();
+        } catch (error) {
+          done(error);
+        }
+      }, 50);
+    }).catch(done);
+  });
 });

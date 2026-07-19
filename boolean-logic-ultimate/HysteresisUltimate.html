@@ -121,17 +121,40 @@
 
 |Property|Description|
 |--|--|
-| Mode | `high`: ON above threshold, OFF below. `low`: ON below threshold, OFF above. |
-| ON/OFF threshold | The two hysteresis limits. |
-| Emit only on change | Emits output only when state changes. |
-| Input | Message property to evaluate (default `payload`). |
-| Translator | Optional translator-config. |
-| On/Off payload | Values sent on output 1. |
+| Name | Optional label shown in the flow editor. |
+| Control topic | Topic used for runtime commands. The default is `hysteresis`. It is not required for `permanentLockState`. |
+| Mode | `high`: switch ON when the value is greater than or equal to the ON threshold and OFF when it is less than or equal to the OFF threshold. `low`: switch ON when the value is less than or equal to the ON threshold and OFF when it is greater than or equal to the OFF threshold. Values between the thresholds keep the current state. |
+| ON threshold | Numeric limit that changes the internal state to ON, according to the selected mode. |
+| OFF threshold | Numeric limit that changes the internal state to OFF, according to the selected mode. |
+| Initial state ON | Initial internal state after deployment or restart. It does not emit a message by itself. It is also restored by `msg.reset = true`. |
+| Emit only on change | When enabled, output 1 emits only when the state changes. When disabled, every valid numeric input emits the current ON/OFF state. |
+| Input | Numeric message property to evaluate. The default is `msg.payload`; numbers, booleans and numeric strings are accepted. |
+| Translator | Optional shared translator configuration associated with the input. Hysteresis evaluation uses the numeric value of the selected input property. |
+| On payload | Typed value written to `msg.payload` on output 1 when the state is ON. |
+| Off payload | Typed value written to `msg.payload` on output 1 when the state is OFF. |
 
-Control topic messages:
+### Inputs
+
+Normal input messages are evaluated using the configured **Input** property. An absent or non-numeric value produces an `invalid_input` diagnostic on output 2.
+
+The following commands are consumed only when `msg.topic` equals **Control topic**:
 
 - `msg.onThreshold`, `msg.offThreshold` to update thresholds at runtime.
-- `msg.state = true|false` to force state.
-- `msg.reset = true` to restore initial state.
+- `msg.state = true|false` to force the state and emit it on output 1.
+- `msg.reset = true` to restore the configured initial state and emit a `reset` diagnostic.
 - `msg.status = true` to emit current status on output 2.
+
+`msg.permanentLockState` is handled regardless of `msg.topic`:
+
+- `"lock"` suppresses all output until another valid permanent-lock command arrives.
+- `"lockOn"` forces ON and emits the configured **On payload** once, then suppresses all output.
+- `"lockOff"` forces OFF and emits the configured **Off payload** once, then suppresses all output.
+- `"unlock"` resumes normal processing. The unlock message itself is consumed.
+
+While locked, normal inputs and control-topic commands are ignored and produce no output.
+
+### Outputs
+
+1. **State output**: a clone of the input message with the configured ON/OFF `msg.payload`, `msg.event` (`state_changed` or `state_confirmed`) and `msg.hysteresis`, containing `state`, `changed`, `mode`, input `value`, `onThreshold` and `offThreshold`.
+2. **Diagnostics**: events for state changes, invalid inputs, reset and status. The topic is `<controlTopic>/event`, and `msg.payload` contains the event details.
 </script>

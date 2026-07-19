@@ -5,6 +5,14 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.17</b> July 2026<br/>
+
+- HysteresisUltimate: added permanent output control through <code>msg.permanentLockState</code>, supporting <code>lock</code>, <code>lockOn</code>, <code>lockOff</code> and <code>unlock</code>.<br/>
+- Updated the Hysteresis editor help, README documentation, automated tests and importable example flow.<br/>
+- Reorganized the README with a clearer heading structure, installation instructions and a categorized node index.<br/>
+</p>
+
+<p>
 <b>Version 1.2.16</b> July 2026<br/>
 
 - DOCS: new Max Supervibe README banner and app-icon logo.<br/>

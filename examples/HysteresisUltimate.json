@@ -77,6 +77,80 @@
     "wires": [["hys-node"]]
   },
   {
+    "id": "hys-lock-comment",
+    "type": "comment",
+    "z": "hys-flow",
+    "name": "Permanent output lock commands (independent of msg.topic)",
+    "info": "lock: suppress every output\nlockOn: emit ON once, then suppress every output\nlockOff: emit OFF once, then suppress every output\nunlock: resume normal processing",
+    "x": 310,
+    "y": 320,
+    "wires": []
+  },
+  {
+    "id": "hys-lock",
+    "type": "inject",
+    "z": "hys-flow",
+    "name": "Lock without output",
+    "props": [
+      { "p": "permanentLockState", "v": "lock", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 230,
+    "y": 360,
+    "wires": [["hys-node"]]
+  },
+  {
+    "id": "hys-lock-on",
+    "type": "inject",
+    "z": "hys-flow",
+    "name": "Force ON and lock",
+    "props": [
+      { "p": "permanentLockState", "v": "lockOn", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 230,
+    "y": 400,
+    "wires": [["hys-node"]]
+  },
+  {
+    "id": "hys-lock-off",
+    "type": "inject",
+    "z": "hys-flow",
+    "name": "Force OFF and lock",
+    "props": [
+      { "p": "permanentLockState", "v": "lockOff", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 230,
+    "y": 440,
+    "wires": [["hys-node"]]
+  },
+  {
+    "id": "hys-unlock",
+    "type": "inject",
+    "z": "hys-flow",
+    "name": "Unlock",
+    "props": [
+      { "p": "permanentLockState", "v": "unlock", "vt": "str" }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 200,
+    "y": 480,
+    "wires": [["hys-node"]]
+  },
+  {
     "id": "hys-out",
     "type": "debug",
     "z": "hys-flow",

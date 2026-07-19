@@ -2,13 +2,9 @@
   <img src="img/logo-supervibe.png" alt="Boolean Logic Ultimate - Max Supervibe" width="380">
 </p>
 
-## Logic and Utilities nodes for your flows
+# Boolean Logic Ultimate
 
-A set of Node-RED enhanced boolean logic and utility nodes, with persistent values after reboot. Compatible also with Homeassistant values.
-
-<br/>
-<br/>
-<br/>
+A collection of enhanced logic and utility nodes for Node-RED. It supports persistent values after reboot and conversion of common Home Assistant values.
 
 [![NPM version][npm-version-image]][npm-url]
 [![NPM downloads per month][npm-downloads-month-image]][npm-url]
@@ -22,14 +18,35 @@ A set of Node-RED enhanced boolean logic and utility nodes, with persistent valu
   <img src="img/readmemain.png" alt="Boolean Logic Ultimate for Node-RED — Max Supervibe" width="70%">
 </p>
 
-## CHANGELOG
+## Getting started
 
-- See <a href="https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/blob/master/CHANGELOG.md">here the changelog</a>
+Install the package from the Node-RED palette manager or run this command in your Node-RED user directory:
 
-<br/>
-<br/>
+```shell
+npm install node-red-contrib-boolean-logic-ultimate
+```
 
-# EXAMPLES
+Importable flows are available from the Node-RED editor under **Menu (☰) → Import → Examples**, or directly in the [`examples/`](examples/) folder. See the [examples overview](examples/README.md) for the complete list.
+
+## Documentation
+
+| Logic and routing | Timing and flow | Values and simulation |
+| ----------------- | --------------- | --------------------- |
+| [Boolean Logic](#boolean-logic) | [Interrupt Flows Ultimate](#interrupt-flows-ultimate) | [Translator node](#translator-node) |
+| [Invert Ultimate](#invert-ultimate) | [Blinker Ultimate](#blinker-ultimate) | [Simple Output Ultimate](#simple-output-ultimate) |
+| [Filter Ultimate](#filter-ultimate) | [Impulse Ultimate](#impulse-ultimate) | [Inject Ultimate](#inject-ultimate) |
+| [Hysteresis Ultimate](#hysteresis-ultimate) | [Rate Limiter Ultimate](#rate-limiter-ultimate) | [Status Ultimate](#status-ultimate) |
+| [Railway Switch Ultimate](#railway-switch-ultimate) | [Debouncer Ultimate](#debouncer-ultimate) | [Math Ultimate](#math-ultimate) |
+| [Toggle Ultimate](#toggle-ultimate) | [Staircase Light Ultimate](#staircase-light-ultimate) | [Kalman Filter Ultimate](#kalman-filter-ultimate) |
+|  |  | [Presence Simulator Ultimate](#presence-simulator-ultimate) |
+
+Each node section contains its configuration, accepted input messages, outputs and runtime commands where applicable.
+
+## Changelog
+
+- See the project [changelog](CHANGELOG.md) for release details.
+
+## Examples
 
 Importable Node-RED example flows are available in the [`examples/`](examples/) folder (one JSON per node). See [`examples/README.md`](examples/README.md) for a quick overview.
 
@@ -37,12 +54,9 @@ Importable Node-RED example flows are available in the [`examples/`](examples/) 
 
 - Node-RED editor → Menu (☰) → **Import** → **Examples** and select an example from `node-red-contrib-boolean-logic-ultimate`
 
-<br/>
-<br/>
+## Translator node
 
-# TRANSLATOR NODE
-
-Other than true/false, all nodes accepts [Homeassistant](https://www.home-assistant.io) output strings.
+In addition to true/false, the nodes accept common [Home Assistant](https://www.home-assistant.io) state strings.
 
 You can **even add your own input translation word list**, thanks to the translator-config node.
 
@@ -50,20 +64,17 @@ The translator node can translate an input payload, to a true/false boolean valu
 
 Each row in the text box, represents a translation command. <br/>
 
-There are some default translation's rows, to make the _boolean-logic-ultimate_ nodes compatible with Homeassistant as default. <br/>
+Default translation rows make the _boolean-logic-ultimate_ nodes compatible with common Home Assistant states. <br/>
 
 You can add your own translation row.<br/>
 
 |           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Translate | Add, delete or edit your own translation command. The row's translation command must be **input string:true(or false)**. For example: <code>open:true</code> <code>closed:false</code>. You can also use an expressions to be evaluated, like this <code>{{value>=50}}:true</code> and <code>{{value<50}}:false</code>. In this case, the tranlsator will evaluate (javascript eval) the expression and, if true, returns the choosen value. |
+| Translate | Add, delete or edit a translation command. Each row must use the format **input string:true(or false)**, for example <code>open:true</code> or <code>closed:false</code>. Expressions such as <code>{{value>=50}}:true</code> are also supported; when the expression evaluates to true, the translator returns the selected value. |
 
 ![alt text](image.png)
 
-<br/>
-<br/>
-
-# BOOLEAN LOGIC
+## Boolean Logic
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl1.png' width='60%'>
 
@@ -103,7 +114,7 @@ You can also set the default values of the topic inputs.<br/>
 
 The node can convert arbitrary input values to true/false. It supports Homeassistant string to boolean conversion as well. For enabling auto conversion, please be sure to disable **Reject non boolean (true/false) input values** <br/>
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -125,17 +136,11 @@ The node can convert arbitrary input values to true/false. It supports Homeassis
 | msg.reset = true | Resets all saved input values to undefined                                                                                                                                                                                                               |
 | msg.inputcount   | Changes the inputs count property. For example, <b>msg.inputcount = 3</b> Whenever you lower the inputcount from a higher number to a lower one, for example from 3 to 2, it's suggested to do a <b>msg.reset=true</b> to reset all stored input values. |
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
-# INTERRUPT FLOWS ULTIMATE
+## Interrupt Flows Ultimate
 
 The interrupt flows is able to stop the input messages to exiting the node.
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -147,13 +152,13 @@ The interrupt flows is able to stop the input messages to exiting the node.
 
 **INPUT MSG WITH "TRIGGER" TOPIC**
 
-Pass <code>msg.payload = true</code> to allow messages to pass through</br>
+Pass <code>msg.payload = true</code> to allow messages to pass through<br/>
 
-Pass <code>msg.payload = false</code> to prevent messages from passing through</br>
+Pass <code>msg.payload = false</code> to prevent messages from passing through<br/>
 
-Pass <code>msg.play = true</code> from a message having the "trigger" topic, to replay the last stored message</br>
+Pass <code>msg.play = true</code> from a message having the "trigger" topic, to replay the last stored message<br/>
 
-Pass <code>msg.reset = true</code> from a message having the "trigger" topic, to clear the last stored message</br>
+Pass <code>msg.reset = true</code> from a message having the "trigger" topic, to clear the last stored message<br/>
 
 <code>
 // Assume you set the "trigger by topic" field to "trigger" 
@@ -169,7 +174,7 @@ msg.topic = "trigger"
 msg.reset = true;
 </code>
 
-</br>
+<br/>
 
 See the example below.<br/>
 
@@ -195,19 +200,13 @@ This allow to save the state of a node and then replay it back whenever you want
 </code>
 </details>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
-# INVERT ULTIMATE
+## Invert Ultimate
 
 Outputs the inverted input. For example true -> false<br />
 
 The input message is preserved and passed to the output, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property | Description                                                                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -215,13 +214,7 @@ The input message is preserved and passed to the output, changing only the topic
 
 <br/>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
-# FILTER ULTIMATE
+## Filter Ultimate
 
 This node has 2 outputs.<br />
 
@@ -231,7 +224,7 @@ If the input payload is false, the node will send nothing on output 1 and <code>
 
 The input message is preserved and passed to the output, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property | Description                                                                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -239,15 +232,9 @@ The input message is preserved and passed to the output, changing only the topic
 
 <br/>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+## Blinker Ultimate
 
-# BLINKER ULTIMATE
-
-The pourpose of this node is to blink a led or something.<br />
+This node blinks an LED or another device.<br />
 
 output1 : outputs the value true/false<br/>
 
@@ -255,7 +242,7 @@ output2 : outputs the inverted value false/true<br/>
 
 <br/>
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property | Description                                                                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -263,11 +250,11 @@ output2 : outputs the inverted value false/true<br/>
 
 <br/>
 
-Pass <code>msg.payload = true</code> to start blinking</br>
+Pass <code>msg.payload = true</code> to start blinking<br/>
 
-Pass <code>msg.payload = false</code> to stop blinking</br>
+Pass <code>msg.payload = false</code> to stop blinking<br/>
 
-Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
+Pass <code>msg.interval = 2000</code> to change the blinking interval<br/>
 
 - output1 stop behavior : when the blinker receives the stop message, you can select the behavior of the output1<br/>
 - output2 stop behavior : when the blinker receives the stop message, you can select the behavior of the output2<br/>
@@ -280,19 +267,13 @@ Pass <code>msg.interval = 2000</code> to change the blinking interval</br>
 </code>
 </details>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+## Simple Output Ultimate
 
-# SIMPLE OUTPUT ULTIMATE
-
-The pourpose of this node is to send a message with payload TRUE on the first output and FALSE on second output, independently from the msg input.<br />
+This node sends a message with payload TRUE on the first output and FALSE on the second output, independently of the input message.<br />
 
 This is useful if you need to simply send a true or false payload.
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property | Description                                                                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -308,15 +289,9 @@ This is useful if you need to simply send a true or false payload.
 </code>
 </details>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+## Inject Ultimate
 
-# INJECT ULTIMATE
-
-The pourpose of this node is to send a message with payload TRUE on the first output, FALSE on second output and a TOGGLE (true/false) on the third output, by pressing the pushbutton.<br />
+This node sends TRUE on the first output, FALSE on the second output and a toggled true/false value on the third output when its button is pressed.<br />
 
 This is useful if you need to simply test your flow.
 
@@ -328,15 +303,9 @@ This is useful if you need to simply test your flow.
 </code>
 </details>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+## Status Ultimate
 
-# STATUS ULTIMATE
-
-The pourpose of this node is to show a status of the passingthrough message.<br />
+This node displays the value of a passing message as its Node-RED status.<br />
 
 **Show msg.**
 
@@ -349,15 +318,9 @@ The pourpose of this node is to show a status of the passingthrough message.<br 
 [{"id":"8c1648bf.58e6","type":"StatusUltimate","z":"5c2de561.6a0de4","name":"Status","property":"testobject.color","x":90,"y":180,"wires":[["b96cd259.3f8398"]]},{"id":"3beb9c6.90d1e64","type":"function","z":"5c2de561.6a0de4","name":"Dummy msg","func":"msg.payload = \"The payload is \" + msg.payload;\nmsg.myproperty = \"This is my custom property\";\nmsg.testobject = {len : 100, color : \"blue\"};\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":230,"y":100,"wires":[["8c1648bf.58e6"]]},{"id":"84080b79.df3f38","type":"debug","z":"5c2de561.6a0de4","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","statusVal":"","statusType":"auto","x":710,"y":180,"wires":[]},{"id":"b534d2ec.635398","type":"InjectUltimate","z":"5c2de561.6a0de4","name":"Inject","topic":"1","curVal":true,"x":90,"y":100,"wires":[[],[],["3beb9c6.90d1e64"]]},{"id":"9745c77a.0361b","type":"comment","z":"5c2de561.6a0de4","name":"View the status of a message passing through the StatusUltimate node","info":"","x":270,"y":40,"wires":[]},{"id":"b96cd259.3f8398","type":"StatusUltimate","z":"5c2de561.6a0de4","name":"Status","property":"payload","x":230,"y":180,"wires":[["ac2b784b.b44a48"]]},{"id":"ac2b784b.b44a48","type":"StatusUltimate","z":"5c2de561.6a0de4","name":"Status","property":"myproperty","x":450,"y":180,"wires":[["84080b79.df3f38"]]}]
 </code>
 </details>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+## Impulse Ultimate
 
-# IMPULSE ULTIMATE
-
-The pourpose of this node is to send a sequence of pulsed commands to for example, open a garage door or to command an appliance requiring a set of timed commands.<br />
+This node sends a timed sequence of pulsed commands, for example to open a garage door or control an appliance.<br />
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Impulse.png' width='60%'>
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
@@ -366,7 +329,7 @@ The pourpose of this node is to send a sequence of pulsed commands to for exampl
 </code>
 </details>
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property | Description                                                                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -388,23 +351,17 @@ Restart the sequence from the beginning. Use **_restart_** alone, without **:** 
 comment. For example: **_// This opens the garage_**. The comment are ignored, so you can write what you want.<br />
 <br />
 
-Pass <code>msg.payload = true</code> to the node to start the sequence</br>
+Pass <code>msg.payload = true</code> to the node to start the sequence<br/>
 
-Pass <code>msg.payload = false</code> to the node to stop the running sequence</br>
+Pass <code>msg.payload = false</code> to the node to stop the running sequence<br/>
 
 <br />
 
 - Output: the node outputs a message you specified in the command textbox<br/>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+## Math Ultimate
 
-# MATH ULTIMATE
-
-The pourpose of this node is to do maths on the incoming values. Each incoming message MUST HAVE OWN TOPIC.<br />
+This node performs calculations on incoming values. Each incoming message must have its own topic.<br />
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/sum.png' width='60%'>
 <details><summary>CLICK HERE, copy and paste it into your flow</summary>
@@ -413,7 +370,7 @@ The pourpose of this node is to do maths on the incoming values. Each incoming m
 </code>
 </details>
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property | Description                                                                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -439,18 +396,11 @@ resets the values to zero.
 }
 </pre>
 
-br/>
+## Toggle Ultimate
 
-<br/>
-<br/>
-<br/>
-<br/>
+This node toggles between true and false whenever an inbound message arrives.<br />
 
-# TOGGLE ULTIMATE
-
-The pourpose of this node is to toggle between true/false, everytime an inboud message arrives.<br />
-
-### NODE CONFIGURATION
+### Configuration
 
 | Property | Description                                                                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -460,21 +410,15 @@ The pourpose of this node is to toggle between true/false, everytime an inboud m
 
 **INPUT**<br />
 
-Any message that arrives on input, will be passwd through to the output with the payload toggled between true and false.
+Every input message is passed to the output with its payload toggled between true and false.
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+## Railway Switch Ultimate
 
-# RAILWAY SWITCH ULTIMATE
-
-The railway switcher, redirect the incoming messages to one ot the avaiable output pins, just like a railway jinction switch.
+The railway switch redirects incoming messages to one of the available outputs, like a railway junction.
 
 <img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/railroadSwitchScambio.png' width='80%'>
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property       | Description                                                                                                                                  |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -528,7 +472,7 @@ this JSON input message redirects all input messages to the third PIN, and so on
 }
 ```
 
-</br>
+<br/>
 
 See the example below.<br/>
 
@@ -625,14 +569,9 @@ Copy and paste it into your flow
 ];
 ```
 
-<br/>
-<br/>
-<br/>
-<br/>
+## Kalman Filter Ultimate
 
-# KALMAN FILTER ULTIMATE
-
-## Outputs the Kalman filtered input.
+Outputs the Kalman-filtered input.
 
 Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it works.
 
@@ -653,13 +592,11 @@ Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it
 
 : payload (number) : the payload containing the number. If you've changed the incoming evaluation property in the **_Input_** field, the number to be evaluated must be put in such message's property, instead of the _payload_ property.
 
-<br/>
-
-# RATE LIMITER ULTIMATE
+## Rate Limiter Ultimate
 
 Gateway per sensori e dispositivi troppo “chiacchieroni”: limita burst e rimbalzi con modalità **Debounce**, **Throttle** e **Window**. Lo stato del nodo riporta sempre modalità corrente, contatori di messaggi inoltrati e bloccati.
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property         | Description                                                                                                                                       |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -678,23 +615,21 @@ Gateway per sensori e dispositivi troppo “chiacchieroni”: limita burst e rim
 
 <br/>
 
-### OUTPUTS
+### Outputs
 
 - **Output 1**: messaggi inoltrati, invariati.
 - **Output 2**: diagnostica (`{mode, reason, passed, dropped, msg, propertyValue}`) e statistiche periodiche su `controlTopic/stats`.
 
 <br/>
 
-### CONTROL MESSAGES (`msg.topic === controlTopic`)
+### Control messages (`msg.topic === controlTopic`)
 
 - `msg.reset = true` &rarr; azzera contatori, accoda azzerata e timer cancellati.
 - `msg.flush = true` &rarr; forza l’emissione immediata del messaggio in attesa.
 - `msg.mode = 'debounce'|'throttle'|'window'` &rarr; cambia modalità runtime e resetta lo stato.
 - `msg.interval`, `msg.wait`, `msg.windowSize`, `msg.maxInWindow` &rarr; aggiorna i parametri corrispondenti.
 
-<br/>
-
-# DEBOUNCER ULTIMATE
+## Debouncer Ultimate
 
 Nodo dedicato al solo debounce: utile quando vuoi filtrare rimbalzi o burst rapidi senza portarti dietro le altre modalità del `RateLimiterUltimate`. Può inoltrare il **primo** messaggio, l’**ultimo** oppure **entrambi**, dopo un intervallo di quiete configurabile.
 
@@ -704,7 +639,7 @@ Nell'immagine si vede il comportamento tipico: a sinistra arrivano molti messagg
 
 Example flow: [`examples/DebouncerUltimate.json`](examples/DebouncerUltimate.json)
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property      | Description                                                                                |
 | ------------- | ------------------------------------------------------------------------------------------ |
@@ -712,24 +647,22 @@ Example flow: [`examples/DebouncerUltimate.json`](examples/DebouncerUltimate.jso
 | Emit          | Scegli se inviare subito il primo messaggio, solo l’ultimo dopo la pausa, oppure entrambi. |
 | Control topic | Topic dei messaggi di controllo (default `debouncer`).                                     |
 
-### OUTPUT
+### Outputs
 
 - **Output 1**: messaggi inoltrati dopo il debounce.
 
-### CONTROL MESSAGES (`msg.topic === controlTopic`)
+### Control messages (`msg.topic === controlTopic`)
 
 - `msg.reset = true` &rarr; cancella timer e messaggio pendente.
 - `msg.flush = true` &rarr; inoltra subito l’ultimo messaggio in attesa.
 - `msg.wait` &rarr; aggiorna il ritardo di debounce a runtime.
 - `msg.emitOn = 'leading'|'trailing'|'both'` &rarr; cambia la modalità di emissione.
 
-<br/>
-
-# PRESENCE SIMULATOR ULTIMATE
+## Presence Simulator Ultimate
 
 The purpose of this node is to replay a programmable sequence of messages in order to simulate occupancy when you are away.
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property      | Description                                                                                    |
 | ------------- | ---------------------------------------------------------------------------------------------- |
@@ -742,7 +675,7 @@ The purpose of this node is to replay a programmable sequence of messages in ord
 | Translator    | Optional translator-config to convert incoming values.                                         |
 | Sequence      | One JSON object per line, each containing at least `delay` (ms) plus the properties to output. |
 
-### CONTROL MESSAGES (`msg.topic === controlTopic`)
+### Control messages (`msg.topic === controlTopic`)
 
 - `msg.command = 'start'` / `msg.start = true` &rarr; begin playback.
 - `msg.command = 'stop'` / `msg.stop = true` &rarr; halt playback.
@@ -752,13 +685,11 @@ The purpose of this node is to replay a programmable sequence of messages in ord
 
 Each event in the sequence outputs a message configured in the JSON line. When random delays are enabled, the effective delay is varied within the configured jitter.
 
-<br/>
-
-# STAIRCASE LIGHT ULTIMATE
+## Staircase Light Ultimate
 
 The purpose of this node is to control staircase lighting with a timer, pre-off warning and optional extension on every trigger.
 
-### NODE CONFIGURATION
+### Configuration
 
 | Property           | Description                                                        |
 | ------------------ | ------------------------------------------------------------------ |
@@ -773,7 +704,7 @@ The purpose of this node is to control staircase lighting with a timer, pre-off 
 | On/Off payload     | Values emitted on output 1 to turn the light on/off.               |
 | Warning payload    | Value emitted on output 2 when the warning fires.                  |
 
-### CONTROL MESSAGES (`msg.topic === controlTopic`)
+### Control messages (`msg.topic === controlTopic`)
 
 - `msg.command = 'on'` / `msg.start = true` &rarr; start the timer and turn on the light.
 - `msg.command = 'off'` / `msg.stop = true` &rarr; switch off immediately.
@@ -782,35 +713,57 @@ The purpose of this node is to control staircase lighting with a timer, pre-off 
 
 Output 1 delivers the ON/OFF command. Output 2 delivers the warning and includes `msg.remaining` with the seconds left.
 
-<br/>
-
-# HYSTERESIS ULTIMATE
+## Hysteresis Ultimate
 
 Adds hysteresis to numeric sensor values to avoid rapid ON/OFF bouncing around thresholds.
 
 Example flow: [`examples/HysteresisUltimate.json`](examples/HysteresisUltimate.json)
 
-### NODE CONFIGURATION
+### Configuration
 
-| Property            | Description                                                                    |
-| ------------------- | ------------------------------------------------------------------------------ |
-| Control topic       | Topic that receives runtime commands such as threshold updates and reset.      |
-| Mode                | `high` = ON above threshold, OFF below. `low` = ON below threshold, OFF above. |
-| ON/OFF threshold    | Hysteresis limits.                                                             |
-| Initial state       | Startup output state.                                                          |
-| Emit only on change | If enabled, output 1 emits only on state transitions.                          |
-| Input               | Message property evaluated as numeric value (default `payload`).               |
-| Translator          | Optional translator-config.                                                    |
-| On/Off payload      | Typed payloads sent on output 1.                                               |
+| Property            | Description |
+| ------------------- | ----------- |
+| Name                | Optional label shown in the flow editor. |
+| Control topic       | Topic used for runtime commands (default `hysteresis`). It is not required for `permanentLockState`. |
+| Mode                | `high`: ON at or above the ON threshold and OFF at or below the OFF threshold. `low`: ON at or below the ON threshold and OFF at or above the OFF threshold. Values between the thresholds retain the current state. |
+| ON threshold        | Numeric limit that changes the internal state to ON according to the selected mode. |
+| OFF threshold       | Numeric limit that changes the internal state to OFF according to the selected mode. |
+| Initial state ON    | Initial internal state after deployment or restart. It does not emit at startup and is restored by `msg.reset = true`. |
+| Emit only on change | When enabled, output 1 emits only on transitions. When disabled, every valid numeric input emits the current state. |
+| Input               | Message property evaluated as a numeric value (default `msg.payload`). Numbers, booleans and numeric strings are accepted. |
+| Translator          | Optional shared translator configuration associated with the input. Hysteresis evaluation uses the numeric value of the selected input property. |
+| On payload          | Typed value assigned to `msg.payload` on output 1 while the state is ON. |
+| Off payload         | Typed value assigned to `msg.payload` on output 1 while the state is OFF. |
 
-### CONTROL MESSAGES (`msg.topic === controlTopic`)
+### Input messages
+
+Normal messages are evaluated using the configured **Input** property. Missing or non-numeric values generate an `invalid_input` diagnostic on output 2.
+
+### Control messages (`msg.topic === controlTopic`)
 
 - `msg.onThreshold`, `msg.offThreshold` &rarr; update thresholds at runtime.
-- `msg.state = true|false` &rarr; force state.
-- `msg.reset = true` &rarr; restore initial state.
+- `msg.state = true|false` &rarr; force the state and emit it on output 1.
+- `msg.reset = true` &rarr; restore the initial state and emit a `reset` diagnostic.
 - `msg.status = true` &rarr; emit current state/thresholds on output 2.
 
-Output 1 emits the command payload (`onPayload`/`offPayload`). Output 2 emits diagnostic events.
+### Permanent output lock
+
+Regardless of `msg.topic`, `msg.permanentLockState` accepts:
+
+- `lock` &rarr; suppress all output until another permanent-lock command arrives.
+- `lockOn` &rarr; force ON, emit the configured ON payload once, then suppress all output.
+- `lockOff` &rarr; force OFF, emit the configured OFF payload once, then suppress all output.
+- `unlock` &rarr; resume normal processing (the unlock message itself is consumed).
+
+While locked, normal inputs and control-topic commands are ignored and produce no output.
+
+### Outputs
+
+1. **State output** emits a clone of the input message with:
+   - the configured `onPayload` or `offPayload` in `msg.payload`;
+   - `msg.event` set to `state_changed` or `state_confirmed`;
+   - `msg.hysteresis` containing `state`, `changed`, `mode`, input `value`, `onThreshold` and `offThreshold`.
+2. **Diagnostics** emits state-change, invalid-input, reset and status events. It sets `msg.topic` to `<controlTopic>/event` and places the event details in `msg.payload`.
 
 <br/>
 

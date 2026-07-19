@@ -18,6 +18,7 @@ module.exports = function (RED) {
     let onThreshold = Number(config.onThreshold);
     let offThreshold = Number(config.offThreshold);
     let state = Boolean(config.initialState);
+    let permanentLockState = 'unlock';
 
     if (!Number.isFinite(onThreshold)) onThreshold = 70;
     if (!Number.isFinite(offThreshold)) offThreshold = 65;
@@ -47,10 +48,11 @@ module.exports = function (RED) {
     function updateStatus(lastValue) {
       const direction = mode === 'low' ? 'LOW' : 'HIGH';
       const valueText = lastValue === undefined ? '-' : Number(lastValue).toFixed(2);
+      const lockText = permanentLockState === 'unlock' ? '' : ` ${permanentLockState}`;
       setNodeStatus({
         fill: state ? 'green' : 'grey',
         shape: state ? 'dot' : 'ring',
-        text: `${direction} ${valueText} on:${onThreshold} off:${offThreshold}`,
+        text: `${direction} ${valueText} on:${onThreshold} off:${offThreshold}${lockText}`,
       });
     }
 
@@ -156,7 +158,41 @@ module.exports = function (RED) {
       return consumed;
     }
 
+    function handlePermanentLock(msg) {
+      if (!Object.prototype.hasOwnProperty.call(msg, 'permanentLockState')) {
+        return false;
+      }
+
+      const command = msg.permanentLockState;
+      if (!['unlock', 'lock', 'lockOff', 'lockOn'].includes(command)) {
+        return false;
+      }
+
+      if (command === 'unlock') {
+        permanentLockState = 'unlock';
+        updateStatus();
+        return true;
+      }
+
+      permanentLockState = command;
+      if (command === 'lockOn' || command === 'lockOff') {
+        state = command === 'lockOn';
+        emitState(msg, true, undefined);
+      } else {
+        updateStatus();
+      }
+      return true;
+    }
+
     node.on('input', (msg) => {
+      if (handlePermanentLock(msg)) {
+        return;
+      }
+
+      if (permanentLockState !== 'unlock') {
+        return;
+      }
+
       if (msg.topic === controlTopic && handleControl(msg)) {
         return;
       }
