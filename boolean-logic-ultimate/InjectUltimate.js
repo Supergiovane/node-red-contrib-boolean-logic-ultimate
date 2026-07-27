@@ -6,8 +6,8 @@ module.exports = function (RED) {
 		this.config = config;
 		var node = this;
 		node.curVal = true;
-		node.topic = config.topic || "Inject";
-		node.outputJSON = (config.outputJSON === undefined || config.outputJSON === '') ? '{ \n\t"payload":"hello",\n\t"topic":"1"\n}' : config.outputJSON;
+		node.topic = config.topic || node.id.substring(0, 6);
+		node.outputJSON = (config.outputJSON === undefined || config.outputJSON === '') ? '{ \n\t"payload":false,\n\t"topic":' + JSON.stringify(node.topic) + '\n}' : config.outputJSON;
 		setNodeStatus({ fill: "grey", shape: "dot", text: "Waiting" });
 
 

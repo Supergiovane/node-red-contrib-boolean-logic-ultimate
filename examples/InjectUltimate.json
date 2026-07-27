@@ -21,9 +21,9 @@
     "type": "InjectUltimate",
     "z": "iju_tab_1",
     "name": "Inject",
-    "topic": "1",
+    "topic": "iju_no",
     "curVal": true,
-    "outputJSON": "{\\n\\t\"payload\":\"hello\",\\n\\t\"topic\":\"1\"\\n}",
+    "outputJSON": "{\n\t\"payload\":false,\n\t\"topic\":\"iju_no\"\n}",
     "x": 170,
     "y": 160,
     "wires": [["iju_dbg_true"], ["iju_dbg_false"], ["iju_dbg_toggle"], ["iju_dbg_json"]]
@@ -97,4 +97,3 @@
     "wires": []
   }
 ]
-

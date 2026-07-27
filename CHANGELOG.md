@@ -5,6 +5,14 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.18</b> July 2026<br/>
+
+- InjectUltimate: the default JSON output now uses <code>false</code> as payload.<br/>
+- InjectUltimate: the UI topic and JSON topic now share the first six characters of the Node-RED-generated node ID.<br/>
+- Updated the InjectUltimate automated test and importable example flow.<br/>
+</p>
+
+<p>
 <b>Version 1.2.17</b> July 2026<br/>
 
 - HysteresisUltimate: added permanent output control through <code>msg.permanentLockState</code>, supporting <code>lock</code>, <code>lockOn</code>, <code>lockOff</code> and <code>unlock</code>.<br/>

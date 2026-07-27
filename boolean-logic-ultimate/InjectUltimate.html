@@ -1,4 +1,8 @@
 <script type="text/javascript">
+    function getInjectUltimateDefaultTopic(nodeId) {
+        return nodeId.substring(0, 6);
+    }
+
     RED.nodes.registerType('InjectUltimate', {
         category: 'common',
         color: '#ff8080',
@@ -7,12 +11,12 @@
                 value: "Inject",
             },
             topic: {
-                value: "1",
+                value: "",
             },
             curVal: {
                 value: true,
             },
-            outputJSON: { value: '{ \n\t"payload":"hello",\n\t"topic":"1"\n}' },
+            outputJSON: { value: '' },
         },
         inputs: 0,
         outputs: 4,
@@ -54,10 +58,24 @@
             function () {
                 return this.name + " " + this.topic;
             },
+        onadd: function () {
+            if (this.topic === undefined || this.topic === '') {
+                this.topic = getInjectUltimateDefaultTopic(this.id);
+            }
+            if (this.outputJSON === undefined || this.outputJSON === '') {
+                this.outputJSON = '{ \n\t"payload":false,\n\t"topic":' + JSON.stringify(this.topic) + '\n}';
+            }
+        },
         oneditprepare: function () {
             var node = this;
 
-            if (node.outputJSON === undefined || node.outputJSON === '') node.outputJSON = '{ \n\t"payload":"hello",\n\t"topic":"1"\n}';
+            if (node.topic === undefined || node.topic === '') {
+                node.topic = getInjectUltimateDefaultTopic(node.id);
+                $("#node-input-topic").val(node.topic);
+            }
+            if (node.outputJSON === undefined || node.outputJSON === '') {
+                node.outputJSON = '{ \n\t"payload":false,\n\t"topic":' + JSON.stringify(node.topic) + '\n}';
+            }
             node.editor = RED.editor.createEditor({
                 id: 'node-input-editoroutputJSON',
                 mode: 'ace/mode/json',
