@@ -10,6 +10,7 @@ module.exports = function (RED) {
 		node.stopbehaviorPIN1 = node.stopbehaviorPIN1 == "0" ? false : true;
 		node.stopbehaviorPIN2 = config.stopbehaviorPIN2 === undefined ? 0 : config.stopbehaviorPIN2;
 		node.stopbehaviorPIN2 = node.stopbehaviorPIN2 == "0" ? false : true;
+		node.topic = "";
 
 		function setNodeStatus({ fill, shape, text }) {
 			let dDate = new Date();
@@ -27,6 +28,7 @@ module.exports = function (RED) {
 		}
 
 		node.on('input', function (msg) {
+			node.topic = msg.topic || "";
 
 			if (msg.hasOwnProperty("interval")) {
 				try {
@@ -56,7 +58,7 @@ module.exports = function (RED) {
 					if (node.tBlinker !== null) clearInterval(node.tBlinker);
 					node.isBlinking = false;
 					setNodeStatus({ fill: "red", shape: "dot", text: "|| Off" });
-					node.send([{ payload: node.stopbehaviorPIN1 }, { payload: node.stopbehaviorPIN2 }]);
+					node.send([{ topic: node.topic, payload: node.stopbehaviorPIN1 }, { topic: node.topic, payload: node.stopbehaviorPIN2 }]);
 					node.curPayload = node.stopbehaviorPIN1;
 				}
 			}
@@ -66,7 +68,7 @@ module.exports = function (RED) {
 		node.on('close', function (removed, done) {
 			if (node.tBlinker !== null) clearInterval(node.tBlinker);
 			node.isBlinking = false;
-			node.send([{ payload: node.stopbehaviorPIN1 }, { payload: node.stopbehaviorPIN2 }]);
+			node.send([{ topic: node.topic, payload: node.stopbehaviorPIN1 }, { topic: node.topic, payload: node.stopbehaviorPIN2 }]);
 			node.curPayload = node.stopbehaviorPIN1;
 			done();
 		});
@@ -74,7 +76,7 @@ module.exports = function (RED) {
 
 		function handleTimer() {
 			node.curPayload = !node.curPayload;
-			node.send([{ payload: node.curPayload }, { payload: !node.curPayload }]);
+			node.send([{ topic: node.topic, payload: node.curPayload }, { topic: node.topic, payload: !node.curPayload }]);
 		}
 	}
 

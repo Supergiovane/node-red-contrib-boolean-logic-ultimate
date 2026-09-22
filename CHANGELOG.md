@@ -5,6 +5,11 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.19</b> Sept 2026<br/>
+
+- Blinker: The node sends now the input msg topic as well.<br/>
+
+<p>
 <b>Version 1.2.18</b> July 2026<br/>
 
 - InjectUltimate: the default JSON output now uses <code>false</code> as payload.<br/>
