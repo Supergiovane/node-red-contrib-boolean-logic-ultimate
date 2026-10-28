@@ -375,13 +375,16 @@ This node performs calculations on incoming values. Each incoming message must h
 | Property | Description                                                                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | Input    | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+| Delay | Waits for the selected time after the last incoming message before emitting the result. Every new message restarts the wait, so values arriving almost at the same time produce a single, up-to-date result. _No Delay (default) emits the result immediately at every incoming message._ |
+
+The node status shows the number of topics currently used in the calculation.
 
 <br/>
 
 **INPUT**<br />
 
 <br /><b>msg.reset</b><br />
-resets the values to zero.
+resets the values to zero and discards any pending delayed output.
 
 <br />
 

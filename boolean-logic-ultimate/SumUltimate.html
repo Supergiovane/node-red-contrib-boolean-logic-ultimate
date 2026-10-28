@@ -12,7 +12,8 @@
             math: {
                 value: "sum"
             },
-            subtractstartfrom: { value: "" }
+            subtractstartfrom: { value: "" },
+            delay: { value: "0" }
         },
         inputs: 1,
         outputs: 1,
@@ -65,6 +66,25 @@
         <label for="node-input-subtractstartfrom"><i class="icon-tag"></i> Subtract from</label>
         <input type="text" id="node-input-subtractstartfrom" placeholder="See the help.">
     </div>
+    <div class="form-row">
+        <label for="node-input-delay"><i class="fa fa-clock-o"></i> Delay</label>
+        <select id="node-input-delay">
+            <option value="0">No Delay (Default)</option>
+            <option value="50">50 ms</option>
+            <option value="100">100 ms</option>
+            <option value="200">200 ms</option>
+            <option value="300">300 ms</option>
+            <option value="500">500 ms</option>
+            <option value="750">750 ms</option>
+            <option value="1000">1 second</option>
+            <option value="1500">1.5 seconds</option>
+            <option value="2000">2 seconds</option>
+            <option value="3000">3 seconds</option>
+            <option value="5000">5 seconds</option>
+            <option value="7500">7.5 seconds</option>
+            <option value="10000">10 seconds</option>
+        </select>
+    </div>
 </script>
 
 <script type="text/markdown" data-help-name="SumUltimate">
@@ -74,13 +94,14 @@
 |--|--|
 | Input | It's the msg property to be evaluated. *By default, it is *payload*, but you can also specify other properties, for example "payload.value"* |
 | Operation | Operation to be performed. |
+| Delay | Waits for the selected time after the last incoming message before emitting the result. Every new message restarts the wait, so when multiple values arrive almost at the same time, only one result is emitted, calculated with all the updated values. Select **No Delay** to emit the result immediately at every incoming message (default). |
 | Subtract from | Only visible when the *operation* is **subtract**. It's the *msg.topic value* of the message containing the payload from wich the node starts subtracting. For example, if the incoming msg has ***msg.topic = 'startNumber'***, you must write only **startNumber** in the *Subtract from* field. |
 
 <br/>
 
 ### Inputs
 
-: reset (any) : by passing msg.reset, the node will reset all values and sarts from scratch.
+: reset (any) : by passing msg.reset, the node will reset all values and starts from scratch. Any pending delayed output is discarded.
 : topic (string) : the topic identifying the incoming message. Each incoming msg, must have a different topic.
 : payload (number) : the payload containing the number. If you've changed the incoming evaluation property in the ***Input*** field, the number to be evaluated must be put in such message's property, instead of the *payload* property. 
 

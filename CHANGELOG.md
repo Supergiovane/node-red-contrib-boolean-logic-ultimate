@@ -5,6 +5,14 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.20</b> October 2026<br/>
+
+- Math (SumUltimate): new <i>Delay</i> option (from No Delay up to 10 seconds), to emit a single result after the incoming values settle, instead of one result per incoming message. See issue #99.<br/>
+- Math (SumUltimate): the node status now shows the number of topics used in the calculation.<br/>
+- Math (SumUltimate): invalid or undefined input values no longer emit a message.<br/>
+</p>
+
+<p>
 <b>Version 1.2.19</b> Sept 2026<br/>
 
 - Blinker: The node sends now the input msg topic as well.<br/>

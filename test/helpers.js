@@ -10,6 +10,7 @@ const nodes = {
   RateLimiterUltimate: require(path.join('..', 'boolean-logic-ultimate', 'RateLimiterUltimate.js')),
   PresenceSimulatorUltimate: require(path.join('..', 'boolean-logic-ultimate', 'PresenceSimulatorUltimate.js')),
   RailwaySwitchUltimate: require(path.join('..', 'boolean-logic-ultimate', 'RailwaySwitchUltimate.js')),
+  SumUltimate: require(path.join('..', 'boolean-logic-ultimate', 'SumUltimate.js')),
 };
 
 function loadNode(nodeDef, flow, credentials = {}) {
@@ -46,10 +47,15 @@ function loadRailwaySwitch(flow, credentials = {}) {
   return loadNode(nodes.RailwaySwitchUltimate, flow, credentials);
 }
 
+function loadSum(flow, credentials = {}) {
+  return loadNode(nodes.SumUltimate, flow, credentials);
+}
+
 module.exports = {
   helper,
   loadDebouncer,
   loadRateLimiter,
   loadPresence,
   loadRailwaySwitch,
+  loadSum,
 };
