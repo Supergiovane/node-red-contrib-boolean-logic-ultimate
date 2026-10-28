@@ -372,19 +372,28 @@ This node performs calculations on incoming values. Each incoming message must h
 
 ### Configuration
 
-| Property | Description                                                                                                                                  |
-| -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| Input    | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
-| Delay | Waits for the selected time after the last incoming message before emitting the result. Every new message restarts the wait, so values arriving almost at the same time produce a single, up-to-date result. _No Delay (default) emits the result immediately at every incoming message._ |
+| Property      | Description |
+| ------------- | ----------- |
+| Topic         | The topic of the output message. _If empty, the output message keeps the topic of the last incoming message._ |
+| Input         | The msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+| Operation     | Operation to be performed: **Sum**, **Multiply** or **Subtract**. |
+| Subtract from | Only visible when the operation is **Subtract**. It's the _msg.topic_ of the message containing the number from which the node starts subtracting all the others (for example **startNumber**). Until such message arrives, the node doesn't emit anything. |
+| Delay         | Waits for the selected time (from _No Delay_ up to 10 seconds) after the last incoming message before emitting the result. Every new message restarts the wait, so values arriving almost at the same time produce a single, up-to-date result. _No Delay (default) emits the result immediately at every incoming message._ |
 
-The node status shows the number of topics currently used in the calculation.
+The node status shows the operation, the last result and the number of topics currently used in the calculation (for example _sum 6 (topics 3)_), so you can check that no unwanted topics are part of the calculation.
 
 <br/>
 
 **INPUT**<br />
 
+<br /><b>msg.topic</b><br />
+identifies the incoming value. Each value must have a different topic. A message with an already known topic replaces the previous value.
+
+<br /><b>msg.payload</b><br />
+the number to be evaluated (or the property set in the <i>Input</i> field). Values that are not numbers are discarded and no message is emitted.
+
 <br /><b>msg.reset</b><br />
-resets the values to zero and discards any pending delayed output.
+resets all the stored values and discards any pending delayed output.
 
 <br />
 
@@ -393,8 +402,8 @@ resets the values to zero and discards any pending delayed output.
 <pre>
 {
   "payload": 30, // This is the math result
-  "topic": "MyMath", // Node  Topic
-  "average": 15, // This is the AVERAGE, in case of SUM
+  "topic": "MyMath", // Node Topic
+  "average": 15, // This is the result divided by the number of topics
   "measurements": 2 // This is the number of topics that have been evaluated
 }
 </pre>

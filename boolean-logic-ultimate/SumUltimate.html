@@ -88,22 +88,34 @@
 </script>
 
 <script type="text/markdown" data-help-name="SumUltimate">
-<p>The pourpose of this node is to do maths on the incoming values. Each incoming message MUST HAVE OWN TOPIC, that means, each inbound **msg.topic** must be **different**.</p>
+<p>This node performs maths on the incoming values. Each incoming message MUST HAVE ITS OWN TOPIC, that means each inbound **msg.topic** must be **different**. The node stores the last value received for every topic and calculates the result on all the stored values.</p>
 
 |Property|Description|
 |--|--|
-| Input | It's the msg property to be evaluated. *By default, it is *payload*, but you can also specify other properties, for example "payload.value"* |
-| Operation | Operation to be performed. |
-| Delay | Waits for the selected time after the last incoming message before emitting the result. Every new message restarts the wait, so when multiple values arrive almost at the same time, only one result is emitted, calculated with all the updated values. Select **No Delay** to emit the result immediately at every incoming message (default). |
-| Subtract from | Only visible when the *operation* is **subtract**. It's the *msg.topic value* of the message containing the payload from wich the node starts subtracting. For example, if the incoming msg has ***msg.topic = 'startNumber'***, you must write only **startNumber** in the *Subtract from* field. |
+| Topic | The topic of the output message. If empty, the output message keeps the topic of the last incoming message. |
+| Input | The msg property to be evaluated. *By default it is **payload**, but you can also specify other properties, for example "payload.value".* |
+| Operation | Operation to be performed: **Sum**, **Multiply** or **Subtract**. |
+| Subtract from | Only visible when the *operation* is **Subtract**. It's the *msg.topic* value of the message containing the number from which the node starts subtracting all the others. For example, if the incoming msg has ***msg.topic = 'startNumber'***, write only **startNumber** in the *Subtract from* field. Until such message arrives, the node doesn't emit anything. |
+| Delay | Waits for the selected time after the last incoming message before emitting the result. Every new message restarts the wait, so when multiple values arrive almost at the same time, only one result is emitted, calculated with all the updated values. Select **No Delay** (default) to emit the result immediately at every incoming message. |
 
 <br/>
 
 ### Inputs
 
-: reset (any) : by passing msg.reset, the node will reset all values and starts from scratch. Any pending delayed output is discarded.
-: topic (string) : the topic identifying the incoming message. Each incoming msg, must have a different topic.
-: payload (number) : the payload containing the number. If you've changed the incoming evaluation property in the ***Input*** field, the number to be evaluated must be put in such message's property, instead of the *payload* property. 
+: reset (any) : by passing msg.reset, the node resets all the stored values and starts from scratch. Any pending delayed output is discarded.
+: topic (string) : the topic identifying the incoming value. Each value to be used in the calculation must have a different topic. A message with an already known topic replaces the previous value.
+: payload (number) : the number to be evaluated. If you've changed the property in the ***Input*** field, the number must be put in such message's property, instead of *payload*. Values that are not numbers are discarded and no message is emitted.
+
+### Outputs
+
+: payload (number) : the result of the operation.
+: average (number) : the result divided by the number of topics.
+: measurements (number) : the number of topics used in the calculation.
+: topic (string) : the *Topic* set in the node configuration, or the topic of the last incoming message.
+
+### Node status
+
+The node status shows the operation, the last result and the number of topics currently used in the calculation, for example *sum 6 (topics 3)*. While a delay is running, it shows *Waiting ...ms*. It's useful to check that no unwanted topics are part of the calculation.
 
 ### Example of "subtract"
 
