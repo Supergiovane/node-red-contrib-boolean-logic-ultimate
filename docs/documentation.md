@@ -1,0 +1,790 @@
+<p align="center">
+  <img src="../img/logo-supervibe.png" alt="Boolean Logic Ultimate - Max Supervibe" width="380">
+</p>
+
+# Boolean Logic Ultimate
+
+A collection of enhanced logic and utility nodes for Node-RED. It supports persistent values after reboot and conversion of common Home Assistant values.
+
+[![NPM version][npm-version-image]][npm-url]
+[![NPM downloads per month][npm-downloads-month-image]][npm-url]
+[![NPM downloads total][npm-downloads-total-image]][npm-url]
+[![MIT License][license-image]][license-url]
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat-square)](https://www.paypal.me/techtoday)
+[![youtube][youtube-image]][youtube-url]
+[![Website](https://img.shields.io/badge/Website-maxsupervibe.com-0d4c70)](https://www.maxsupervibe.com)
+
+<p align="center">
+  <img src="../img/readmemain.png" alt="Boolean Logic Ultimate for Node-RED — Max Supervibe" width="70%">
+</p>
+
+## Getting started
+
+Install the package from the Node-RED palette manager or run this command in your Node-RED user directory:
+
+```shell
+npm install node-red-contrib-boolean-logic-ultimate
+```
+
+Importable flows are available from the Node-RED editor under **Menu (☰) → Import → Examples**, or directly in the [`examples/`](examples/) folder. See the [examples overview](../examples/README.md) for the complete list.
+
+## Documentation
+
+| Logic and routing | Timing and flow | Values and simulation |
+| ----------------- | --------------- | --------------------- |
+| [Boolean Logic](#boolean-logic) | [Interrupt Flows Ultimate](#interrupt-flows-ultimate) | [Translator node](#translator-node) |
+| [Invert Ultimate](#invert-ultimate) | [Blinker Ultimate](#blinker-ultimate) | [Simple Output Ultimate](#simple-output-ultimate) |
+| [Filter Ultimate](#filter-ultimate) | [Impulse Ultimate](#impulse-ultimate) | [Inject Ultimate](#inject-ultimate) |
+| [Hysteresis Ultimate](#hysteresis-ultimate) | [Rate Limiter Ultimate](#rate-limiter-ultimate) | [Status Ultimate](#status-ultimate) |
+| [Railway Switch Ultimate](#railway-switch-ultimate) | [Debouncer Ultimate](#debouncer-ultimate) | [Math Ultimate](#math-ultimate) |
+| [Toggle Ultimate](#toggle-ultimate) | [Staircase Light Ultimate](#staircase-light-ultimate) | [Kalman Filter Ultimate](#kalman-filter-ultimate) |
+|  |  | [Presence Simulator Ultimate](#presence-simulator-ultimate) |
+
+Each node section contains its configuration, accepted input messages, outputs and runtime commands where applicable.
+
+## Changelog
+
+- See the project [changelog](../CHANGELOG.md) for release details.
+
+## Examples
+
+Importable Node-RED example flows are available in the [`examples/`](examples/) folder (one JSON per node). See [`examples/README.md`](examples/README.md) for a quick overview.
+
+**How to import**
+
+- Node-RED editor → Menu (☰) → **Import** → **Examples** and select an example from `node-red-contrib-boolean-logic-ultimate`
+
+## Translator node
+
+In addition to true/false, the nodes accept common [Home Assistant](https://www.home-assistant.io) state strings.
+
+You can **even add your own input translation word list**, thanks to the translator-config node.
+
+The translator node can translate an input payload, to a true/false boolean values.<br />
+
+Each row in the text box, represents a translation command. <br/>
+
+Default translation rows make the _boolean-logic-ultimate_ nodes compatible with common Home Assistant states. <br/>
+
+You can add your own translation row.<br/>
+
+|           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Translate | Add, delete or edit a translation command. Each row must use the format **input string:true(or false)**, for example <code>open:true</code> or <code>closed:false</code>. Expressions such as <code>{{value>=50}}:true</code> are also supported; when the expression evaluates to true, the translator returns the selected value. |
+
+![alt text](../image.png)
+
+## Boolean Logic
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl1.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"1a90a718.5c0409","type":"BooleanLogicUltimate","z":"adb2ee5c.0bf6e","name":"","filtertrue":"both","persist":true,"sInitializeWith":"WaitForPayload","triggertopic":"trigger","outputtriggeredby":"all","inputCount":2,"topic":"result","x":380,"y":160,"wires":[["5f9fbfcc.d2c34"],[],[]]},{"id":"81ef6fec.5d413","type":"inject","z":"adb2ee5c.0bf6e","name":"Night","topic":"Dark","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":170,"y":180,"wires":[["1a90a718.5c0409"]]},{"id":"e0d5d620.966478","type":"inject","z":"adb2ee5c.0bf6e","name":"Daylight","topic":"Dark","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":160,"y":140,"wires":[["1a90a718.5c0409"]]},{"id":"1c2f8e73.2c22ba","type":"inject","z":"adb2ee5c.0bf6e","name":"Motion detect true","topic":"Motion","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":130,"y":240,"wires":[["1a90a718.5c0409"]]},{"id":"5f9fbfcc.d2c34","type":"debug","z":"adb2ee5c.0bf6e","name":"Garden Light","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":580,"y":160,"wires":[]},{"id":"201baa3d.7c63ae","type":"inject","z":"adb2ee5c.0bf6e","name":"Motion detect false","topic":"Motion","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":130,"y":280,"wires":[["1a90a718.5c0409"]]},{"id":"b65f4ff4.bfe2c8","type":"comment","z":"adb2ee5c.0bf6e","name":"Motion sensor turns on lights, when it's dark. The light turns off itself at day","info":"","x":290,"y":100,"wires":[]}]
+</code>
+</details>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/bl2.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"53a10a7a.cf1894","type":"BooleanLogicUltimate","z":"a76c6a12.37379","name":"","filtertrue":"onlytrue","persist":true,"sInitializeWith":"true","triggertopic":"Pushbutton","outputtriggeredby":"onlyonetopic","inputCount":2,"topic":"result","x":340,"y":220,"wires":[["cd9244ea.471b78"],[],[]]},{"id":"9318320b.670af8","type":"inject","z":"a76c6a12.37379","name":"","topic":"Pushbutton","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":120,"y":220,"wires":[["53a10a7a.cf1894"]]},{"id":"20a981b9.552b4e","type":"inject","z":"a76c6a12.37379","name":"","topic":"IsNight","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":320,"wires":[["53a10a7a.cf1894"]]},{"id":"da0dff55.d7888","type":"inject","z":"a76c6a12.37379","name":"","topic":"IsNight","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":110,"y":360,"wires":[["53a10a7a.cf1894"]]},{"id":"7129d101.1fb7d8","type":"comment","z":"a76c6a12.37379","name":"Pushbutton to switch on light stairs, only if it's night.","info":"","x":210,"y":180,"wires":[]},{"id":"cd9244ea.471b78","type":"debug","z":"a76c6a12.37379","name":"Temporized Stairs Lightbulb","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","x":580,"y":220,"wires":[]},{"id":"ad5a62a1.7ad81","type":"comment","z":"a76c6a12.37379","name":"Brightness sensor","info":"","x":110,"y":280,"wires":[]}]
+</code>
+</details>
+
+The node performs Boolean logic on the incoming payloads.<br/>
+
+The node expects a fixed number of topics (configured in the settings) on which it will operate. It will only output a value
+
+when it has seen the expected number of topics. If it ever sees more than the configured number of topics it will log a message then reset its state and start over.<br/>
+
+The input message is preserved and passed to the output, changing only the topic and the payload.
+
+The node performs some checks on the incoming boolean payloads and outputs all results at the same time, as follow:<br/>
+
+- Output "AND": true or false<br/>
+- Output "OR": true or false<br/>
+- Output "XOR": true or false<br/>
+
+If you need **_"NAND"_** or **_"NOR"_** gate, just put an **InvertUltimate** node respectively after the "AND" or "OR" output.
+
+The node can have a persistent input: the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload.<br/>
+
+You can also set the default values of the topic inputs.<br/>
+
+The node can convert arbitrary input values to true/false. It supports Homeassistant string to boolean conversion as well. For enabling auto conversion, please be sure to disable **Reject non boolean (true/false) input values** <br/>
+
+### Configuration
+
+| Property                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Inputs count                                 | Set the number of different topics to be evaluated. The node will output a message to the flow, after this number of _different_ topics arrives. _Remember: each input topic must be different. For example, if you set this field to 3, the node expects 3 different topics._                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Input                                        | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Filter output                                | **Output both 'true' and 'false'** results: Standard behaviour, the node will output <b>true</b> and <b>false</b> whenever it receives an input and calculate the boolean logics as output. **Output only 'true'** results: whenever the node receives an input, it outputs a payload <b>true</b> only if the result of the logic is true. <b>False</b> results are filtered out.                                                                                                                                                                                                                                                                                                                            |
+| Trigger mode                                 | **All topics**: standard behaviour, the node will evaluate each input topic and ouputs the values. At each input change, it will output a msg on the flow. **Single topic + eval other inputs**: the node evaluates all the input topics, but only whenever it receives a msg input with the **specified topic**, it outputs a msg to the flow.                                                                                                                                                                                                                                                                                                                                                              |
+| If input states are undefined                | Every time you create a node or modify the node, all inputs are set to undefined. This means that the node will wait the arrive of all topics (for example 3 topics, if you've selected 3 topics in the option), before it can output a payload. This can be a problem if your logic must be operative as soon as you deploy the flow. To overcome this problem, you can "initialize" all the undefined inputs with True or False. **Leave undefined**: Standard behaviour, the node will wait all the "undefined" topics to arrive, then starts a flow with the result. **True or False**: The node is immediately operative, by force the initialization of the "undefined" inputs with "true" or "false". |
+| Remember latest input values after reboot    | If checked, the input values are retained after a node-red reboot. That means, that if you reboot your node-red, you don't need to wait all inputs to arrive and initialize the node, before the node can output a payload. Every time you modify the node's config, <b>the retained values are cleared</b>.                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Reject non boolean (true/false) input values | If checked, the node will accept only boolean true/false values. Otherwise, it will try to convert the payload value to a logic true/false boolean.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Delay evaluation (ms)                        | Delays the evaluation until this time (in milliseconds) is elapsed. Each time a message or "topic trigger message" (see **Trigger mode**) arrives, the delay is restarted. This option is useful for debouncing pourposes or simply for adding some delay. For example, you can turn on a light if the room is occupied for a long time, allowing people to fast transit repeatedly, without the need of turning the light on. Another example, if you have many sensors changing state rapidly, you can wait until these sensor reach a quiet state, then evaluate the inputs.                                                                                                                              |
+
+<br/>
+
+**INPUT MSG TO THE NODE**
+
+| Input msg        | Description                                                                                                                                                                                                                                              |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| msg.reset = true | Resets all saved input values to undefined                                                                                                                                                                                                               |
+| msg.inputcount   | Changes the inputs count property. For example, <b>msg.inputcount = 3</b> Whenever you lower the inputcount from a higher number to a lower one, for example from 3 to 2, it's suggested to do a <b>msg.reset=true</b> to reset all stored input values. |
+
+## Interrupt Flows Ultimate
+
+The interrupt flows is able to stop the input messages to exiting the node.
+
+### Configuration
+
+| Property         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Trigger by topic | Whenever the node receives a payload = false from this topic,it stops output messages to the flow. As soon it receives payload = true from this topic, the output messages start to flow out again. The node will output the current stored message plus an added property "isReplay = true", as soon as it receives a **_msg.play = true_** from this topic. The node will clear the current stored message, as soon as it receives a **_msg.reset = true_** from this topic.                                                                              |
+| Input            | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Then             | This property, allow you to auto toggle the selected start state (pass or block) after a timer has elapsed. You can choose from some pre-defined delays. If you have, for example, an Homekit-Bridged nodeset with a thermostat node or security system node in your flow, once node-red restarts, these homekit nodes output a default message to the flow. Just put an InterruptFlow node with a "block at start" behaviour and a toggle delay enabled behind homekit nodes, to temporary stop the chained nodes to receive the unwanted startup message. |
+
+<br/>
+
+**INPUT MSG WITH "TRIGGER" TOPIC**
+
+Pass <code>msg.payload = true</code> to allow messages to pass through<br/>
+
+Pass <code>msg.payload = false</code> to prevent messages from passing through<br/>
+
+Pass <code>msg.play = true</code> from a message having the "trigger" topic, to replay the last stored message<br/>
+
+Pass <code>msg.reset = true</code> from a message having the "trigger" topic, to clear the last stored message<br/>
+
+<code>
+// Assume you set the "trigger by topic" field to "trigger" 
+// This code replays the last message and adds the property msg.isReplay = true to the output message.
+msg.topic = "trigger"
+msg.play = true;
+</code>
+
+<code>
+// Assume you set the "trigger by topic" field to "trigger" 
+// This code clears the last stored message
+msg.topic = "trigger"
+msg.reset = true;
+</code>
+
+<br/>
+
+See the example below.<br/>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/if0.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"1fd91f1f.c1fae9","type":"InterruptFlowUltimate","z":"96f56ceb91657677","name":"Interrupt Flow","triggertopic":"IsNight","initializewith":"1","autoToggle":"0","x":420,"y":200,"wires":[["b9844c7f.0f306"]]},{"id":"eaa32462.398808","type":"comment","z":"96f56ceb91657677","name":"Motion sensor to switch on stairs light, only if it's night, using flow interruption","info":"","x":350,"y":160,"wires":[]},{"id":"10787f38.edfe81","type":"inject","z":"96f56ceb91657677","name":"","repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"IsNight","payload":"true","payloadType":"bool","x":170,"y":300,"wires":[["1fd91f1f.c1fae9"]]},{"id":"a6092a15.1c592","type":"inject","z":"96f56ceb91657677","name":"","repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"IsNight","payload":"false","payloadType":"bool","x":170,"y":340,"wires":[["1fd91f1f.c1fae9"]]},{"id":"21ba9c30.02abbc","type":"comment","z":"96f56ceb91657677","name":"Brightness sensor","info":"","x":170,"y":260,"wires":[]},{"id":"af131ae5.a1bfb8","type":"inject","z":"96f56ceb91657677","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"MotionSensor","payload":"true","payloadType":"bool","x":190,"y":200,"wires":[["1fd91f1f.c1fae9"]]},{"id":"b9844c7f.0f306","type":"debug","z":"96f56ceb91657677","name":"Temporized Stairs Lightbulb","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","x":660,"y":200,"wires":[]},{"id":"a5305f8bef578897","type":"comment","z":"96f56ceb91657677","name":"Temporary stop the flow, with Toggle","info":"","x":220,"y":440,"wires":[]},{"id":"ffc9d3b9d17bc07b","type":"InterruptFlowUltimate","z":"96f56ceb91657677","name":"Interrupt Flow with toggle","triggertopic":"trigger","initializewith":"0","autoToggle":"20","x":400,"y":480,"wires":[["14a72f83f29bb347"]]},{"id":"398548646f66c457","type":"inject","z":"96f56ceb91657677","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"1","crontab":"","once":true,"onceDelay":0.1,"topic":"","payloadType":"date","x":170,"y":480,"wires":[["ffc9d3b9d17bc07b"]]},{"id":"14a72f83f29bb347","type":"debug","z":"96f56ceb91657677","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":630,"y":480,"wires":[]}]
+</code>
+</details>
+
+<br/>
+
+In this other example, you can see the property "play" in action. This property allow you to replay the last previously stored message.<br/>
+
+This allow to save the state of a node and then replay it back whenever you want.<br/>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/if1.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"9839dd47.81b2c8","type":"InterruptFlowUltimate","z":"1337569a6adbb2e3","name":"Interrupt Flow","triggertopic":"trigger","initializewith":"1","autoToggle":"0","x":580,"y":300,"wires":[["d371d690.1e2fe8"]]},{"id":"568deb73.394fb4","type":"comment","z":"1337569a6adbb2e3","name":"1) Push buttons to change values","info":"","x":190,"y":140,"wires":[]},{"id":"e1c9f10a.0ba518","type":"inject","z":"1337569a6adbb2e3","name":"ALLOW","repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"trigger","payload":"true","payloadType":"bool","x":130,"y":360,"wires":[["9839dd47.81b2c8"]]},{"id":"82ba24f9.0f0bd8","type":"inject","z":"1337569a6adbb2e3","name":"INTERRUPT","repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"trigger","payload":"false","payloadType":"bool","x":150,"y":320,"wires":[["9839dd47.81b2c8"]]},{"id":"23ba4f9c.86de9","type":"comment","z":"1337569a6adbb2e3","name":"2) Push INTERRUPT, then try again to change value (1)","info":"","x":260,"y":280,"wires":[]},{"id":"24671ef2.4519e2","type":"inject","z":"1337569a6adbb2e3","name":"","repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"true","payloadType":"bool","x":130,"y":180,"wires":[["9839dd47.81b2c8"]]},{"id":"d371d690.1e2fe8","type":"debug","z":"1337569a6adbb2e3","name":"Debug","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","x":750,"y":300,"wires":[]},{"id":"409ec415.735d74","type":"inject","z":"1337569a6adbb2e3","name":"REPLAY","repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"trigger","payload":"","payloadType":"str","x":140,"y":460,"wires":[["6653ed0.7186014"]]},{"id":"6653ed0.7186014","type":"change","z":"1337569a6adbb2e3","name":"Play","rules":[{"t":"set","p":"play","pt":"msg","to":"true","tot":"bool"}],"action":"","property":"","from":"","to":"","reg":false,"x":270,"y":460,"wires":[["9839dd47.81b2c8"]]},{"id":"e957a069.0ac458","type":"inject","z":"1337569a6adbb2e3","name":"","repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"false","payloadType":"bool","x":130,"y":220,"wires":[["9839dd47.81b2c8"]]},{"id":"8f0af608.8fb45","type":"comment","z":"1337569a6adbb2e3","name":"3) Replay last message stored by the node","info":"","x":220,"y":420,"wires":[]},{"id":"46e6f455.0023ac","type":"comment","z":"1337569a6adbb2e3","name":"You can use Interruptflow, to save the state of a node, and then replay the last state as you want.","info":"","x":390,"y":100,"wires":[]}]
+</code>
+</details>
+
+## Invert Ultimate
+
+Outputs the inverted input. For example true -> false<br />
+
+The input message is preserved and passed to the output, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
+
+### Configuration
+
+| Property | Description                                                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Input    | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+
+<br/>
+
+## Filter Ultimate
+
+This node has 2 outputs.<br />
+
+If the input payload is true, the node will send <code>true</code> on output 1 and nothing on output 2<br />
+
+If the input payload is false, the node will send nothing on output 1 and <code>false</code> on output 2<br />
+
+The input message is preserved and passed to the output, changing only the topic and the payload. If the input message has it's own topic, it'll be preserved as well.<br/>
+
+### Configuration
+
+| Property | Description                                                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Input    | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+
+<br/>
+
+## Blinker Ultimate
+
+This node blinks an LED or another device.<br />
+
+output1 : outputs the value true/false<br/>
+
+output2 : outputs the inverted value false/true<br/>
+
+<br/>
+
+### Configuration
+
+| Property | Description                                                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Input    | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+
+<br/>
+
+Pass <code>msg.payload = true</code> to start blinking<br/>
+
+Pass <code>msg.payload = false</code> to stop blinking<br/>
+
+Pass <code>msg.interval = 2000</code> to change the blinking interval<br/>
+
+- output1 stop behavior : when the blinker receives the stop message, you can select the behavior of the output1<br/>
+- output2 stop behavior : when the blinker receives the stop message, you can select the behavior of the output2<br/>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/blinker.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"33d76f42.58e088","type":"BlinkerUltimate","z":"c3456bd7.8ee9d8","name":"Blinker","blinkfrequency":"500","x":260,"y":340,"wires":[["ad7488b.2a1d9f8"]]},{"id":"ac0d404f.70cc","type":"inject","z":"c3456bd7.8ee9d8","name":"","topic":"","payload":"true","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":90,"y":320,"wires":[["33d76f42.58e088"]]},{"id":"bfdc64c6.06e2d","type":"inject","z":"c3456bd7.8ee9d8","name":"","topic":"","payload":"false","payloadType":"bool","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":90,"y":360,"wires":[["33d76f42.58e088"]]},{"id":"ad7488b.2a1d9f8","type":"debug","z":"c3456bd7.8ee9d8","name":"Led","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","x":410,"y":340,"wires":[]},{"id":"865e29f9.4d1e98","type":"comment","z":"c3456bd7.8ee9d8","name":"Blink a signalling led","info":"","x":110,"y":280,"wires":[]}]
+</code>
+</details>
+
+## Simple Output Ultimate
+
+This node sends a message with payload TRUE on the first output and FALSE on the second output, independently of the input message.<br />
+
+This is useful if you need to simply send a true or false payload.
+
+### Configuration
+
+| Property | Description                                                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Input    | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+
+<br/>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/SimpleOutput.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"e1149e22.c9b298","type":"inject","z":"81a64dae.012c18","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":100,"y":820,"wires":[["6a419c72.5a4e7c"]]},{"id":"6a419c72.5a4e7c","type":"SimpleOutputUltimate","z":"81a64dae.012c18","name":"T/F","x":290,"y":820,"wires":[["8ba3f611.26beb8"],["b469193b.950598"]]},{"id":"8ba3f611.26beb8","type":"debug","z":"81a64dae.012c18","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":530,"y":800,"wires":[]},{"id":"b469193b.950598","type":"debug","z":"81a64dae.012c18","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":530,"y":840,"wires":[]},{"id":"2451f593.04e62a","type":"comment","z":"81a64dae.012c18","name":"Whatever the input is, output msg with payload TRUE on first and FALSE on second output.","info":"","x":330,"y":760,"wires":[]}]
+</code>
+</details>
+
+## Inject Ultimate
+
+This node sends TRUE on the first output, FALSE on the second output and a toggled true/false value on the third output when its button is pressed.<br />
+
+This is useful if you need to simply test your flow.
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Inject.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"13faaec9.cd80b9","type":"InjectUltimate","z":"81a64dae.012c18","name":"True","x":110,"y":1000,"wires":[["6557d19.c71abb"],[],[]]},{"id":"6557d19.c71abb","type":"debug","z":"81a64dae.012c18","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":370,"y":1080,"wires":[]},{"id":"569b3820.b056e8","type":"InjectUltimate","z":"81a64dae.012c18","name":"False","x":110,"y":1080,"wires":[[],["6557d19.c71abb"],[]]},{"id":"189399f.c384f66","type":"InjectUltimate","z":"81a64dae.012c18","name":"Toggle","x":110,"y":1160,"wires":[[],[],["6557d19.c71abb"]]},{"id":"56119644.8c4bf8","type":"comment","z":"81a64dae.012c18","name":"Inject Ultimate. Simple and efficient.","info":"","x":180,"y":940,"wires":[]}]
+</code>
+</details>
+
+## Status Ultimate
+
+This node displays the value of a passing message as its Node-RED status.<br />
+
+**Show msg.**
+
+- Write here the property you want to get the status from. For example, "payload", "mycar.color", etc.
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Status.png' width='60%'>
+
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"8c1648bf.58e6","type":"StatusUltimate","z":"5c2de561.6a0de4","name":"Status","property":"testobject.color","x":90,"y":180,"wires":[["b96cd259.3f8398"]]},{"id":"3beb9c6.90d1e64","type":"function","z":"5c2de561.6a0de4","name":"Dummy msg","func":"msg.payload = \"The payload is \" + msg.payload;\nmsg.myproperty = \"This is my custom property\";\nmsg.testobject = {len : 100, color : \"blue\"};\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":230,"y":100,"wires":[["8c1648bf.58e6"]]},{"id":"84080b79.df3f38","type":"debug","z":"5c2de561.6a0de4","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","statusVal":"","statusType":"auto","x":710,"y":180,"wires":[]},{"id":"b534d2ec.635398","type":"InjectUltimate","z":"5c2de561.6a0de4","name":"Inject","topic":"1","curVal":true,"x":90,"y":100,"wires":[[],[],["3beb9c6.90d1e64"]]},{"id":"9745c77a.0361b","type":"comment","z":"5c2de561.6a0de4","name":"View the status of a message passing through the StatusUltimate node","info":"","x":270,"y":40,"wires":[]},{"id":"b96cd259.3f8398","type":"StatusUltimate","z":"5c2de561.6a0de4","name":"Status","property":"payload","x":230,"y":180,"wires":[["ac2b784b.b44a48"]]},{"id":"ac2b784b.b44a48","type":"StatusUltimate","z":"5c2de561.6a0de4","name":"Status","property":"myproperty","x":450,"y":180,"wires":[["84080b79.df3f38"]]}]
+</code>
+</details>
+## Impulse Ultimate
+
+This node sends a timed sequence of pulsed commands, for example to open a garage door or control an appliance.<br />
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/Impulse.png' width='60%'>
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"6fc25e59990d5955","type":"ImpulseUltimate","z":"5ed79f4a958a1f20","name":"Turn on the fan at level 1","commandText":"// Turn on the fan (must be sent as first command ever\n// even if the fan is already off)\nsend:true\nwait:300\nsend:false\nwait:3000\n// Reset the fan\nsend:true\nwait:2000\nsend:false\nwait:3000\n// Speed 1\nsend:true\nwait:300\nsend:false","x":410,"y":140,"wires":[["7a2ea180e17e513c"]]},{"id":"0d7de5c606ecaf92","type":"InjectUltimate","z":"5ed79f4a958a1f20","name":"START THE FAN","topic":"1","curVal":true,"x":130,"y":120,"wires":[["6fc25e59990d5955"],[],[]]},{"id":"7a2ea180e17e513c","type":"debug","z":"5ed79f4a958a1f20","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","statusVal":"","statusType":"auto","x":620,"y":140,"wires":[]},{"id":"333733dffda4dc56","type":"InjectUltimate","z":"5ed79f4a958a1f20","name":"BLOCK SCRIPT","topic":"1","curVal":true,"x":130,"y":200,"wires":[[],["6fc25e59990d5955"],[]]},{"id":"cdae7e4bc0835e4f","type":"comment","z":"5ed79f4a958a1f20","name":"This example turns on a \"LucePlan Blow\" fan and set it's speed to 1","info":"","x":260,"y":60,"wires":[]}]
+</code>
+</details>
+
+### Configuration
+
+| Property | Description                                                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Input    | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+
+<br/>
+
+**Avaiable Commands**<br />
+
+Commands are to be wrote in the format: command:value. For example **_send:200_**, **_wait:2000_**. Each row represents a command.<br />
+
+<br /><b>send</b><br />
+sends a value. For example: **_send:true_** or **_send:100_** or **_send:Hello_**<br />
+<br /><b>wait</b><br />
+wait for specified time (in milliseconds). For example **_wait:500_** waits for 500 milliseconds<br />
+<br /><b>restart</b><br />
+Restart the sequence from the beginning. Use **_restart_** alone, without **:** and extra value. For example **_restart_** <br />
+<br /><b>//</b><br />
+comment. For example: **_// This opens the garage_**. The comment are ignored, so you can write what you want.<br />
+<br />
+
+Pass <code>msg.payload = true</code> to the node to start the sequence<br/>
+
+Pass <code>msg.payload = false</code> to the node to stop the running sequence<br/>
+
+<br />
+
+- Output: the node outputs a message you specified in the command textbox<br/>
+
+## Math Ultimate
+
+This node performs calculations on incoming values. Each incoming message must have its own topic.<br />
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/sum.png' width='60%'>
+<details><summary>CLICK HERE, copy and paste it into your flow</summary>
+<code>
+[{"id":"05b6ce0cb476abd5","type":"SumUltimate","z":"2bf641f4b8742755","name":"Multiply","property":"payload","math":"multiply","x":400,"y":180,"wires":[["567aa6a9719e463e"]]},{"id":"6744e01b88d820b9","type":"inject","z":"2bf641f4b8742755","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"Wh Washing machine","payload":"10","payloadType":"num","x":190,"y":180,"wires":[["05b6ce0cb476abd5"]]},{"id":"75823dbc7db78c3c","type":"inject","z":"2bf641f4b8742755","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"Cost per KWh","payload":"20","payloadType":"num","x":160,"y":220,"wires":[["05b6ce0cb476abd5"]]},{"id":"567aa6a9719e463e","type":"debug","z":"2bf641f4b8742755","name":"Result","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":530,"y":180,"wires":[]},{"id":"1793931ba218bc1d","type":"inject","z":"2bf641f4b8742755","name":"Reset","props":[{"p":"reset","v":"","vt":"date"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","x":130,"y":260,"wires":[["05b6ce0cb476abd5"]]},{"id":"0b3277af03f546d4","type":"comment","z":"2bf641f4b8742755","name":"Getting results, (Sum, Multiply etc...) from the MATH node.","info":"","x":270,"y":140,"wires":[]}]
+</code>
+</details>
+
+### Configuration
+
+| Property      | Description |
+| ------------- | ----------- |
+| Topic         | The topic of the output message. _If empty, the output message keeps the topic of the last incoming message._ |
+| Input         | The msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+| Operation     | Operation to be performed: **Sum**, **Multiply** or **Subtract**. |
+| Subtract from | Only visible when the operation is **Subtract**. It's the _msg.topic_ of the message containing the number from which the node starts subtracting all the others (for example **startNumber**). Until such message arrives, the node doesn't emit anything. |
+| Delay         | Waits for the selected time (from _No Delay_ up to 10 seconds) after the last incoming message before emitting the result. Every new message restarts the wait, so values arriving almost at the same time produce a single, up-to-date result. _No Delay (default) emits the result immediately at every incoming message._ |
+
+The node status shows the operation, the last result and the number of topics currently used in the calculation (for example _sum 6 (topics 3)_), so you can check that no unwanted topics are part of the calculation.
+
+<br/>
+
+**INPUT**<br />
+
+<br /><b>msg.topic</b><br />
+identifies the incoming value. Each value must have a different topic. A message with an already known topic replaces the previous value.
+
+<br /><b>msg.payload</b><br />
+the number to be evaluated (or the property set in the <i>Input</i> field). Values that are not numbers are discarded and no message is emitted.
+
+<br /><b>msg.reset</b><br />
+resets all the stored values and discards any pending delayed output.
+
+<br />
+
+- Output: the node outputs a message as follows:<br/>
+
+<pre>
+{
+  "payload": 30, // This is the math result
+  "topic": "MyMath", // Node Topic
+  "average": 15, // This is the result divided by the number of topics
+  "measurements": 2 // This is the number of topics that have been evaluated
+}
+</pre>
+
+## Toggle Ultimate
+
+This node toggles between true and false whenever an inbound message arrives.<br />
+
+### Configuration
+
+| Property | Description                                                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Input    | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+
+<br/>
+
+**INPUT**<br />
+
+Every input message is passed to the output with its payload toggled between true and false.
+
+## Railway Switch Ultimate
+
+The railway switch redirects incoming messages to one of the available outputs, like a railway junction.
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/railroadSwitchScambio.png' width='80%'>
+
+### Configuration
+
+| Property       | Description                                                                                                                                  |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Switcher topic | Whenever the node receives a payload from this **topic**, it redirects the input messages to a choosen output PIN.                           |
+| Output pins    | Number of output pins (outputs) to show. Default is 5, range is 1..10.                                                                       |
+| Input          | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+| Translator     | Translates the incoming <code>payload</code> value. This allows the compatibility with, for example, **HomeAssistant** nodes.                |
+
+### Inputs
+
+The _Switcher topic_ controls where the railway switch must be switched, between the output PINs.
+
+Once an output PIN has been choosen, all messages passing through the node will be deviated to te choosen output PIN.
+
+: topic (string|number) : this is the topic of the switcher message.
+
+: payload (number|boolean) : this is the ouput PIN selector, base 0 (0 is the first output PIN). Valid range is <code>0..(outputs-1)</code>.
+
+### JSON switcher message
+
+Take the example where you choosen such properties:
+
+**Switcher topic**: "switcher"
+
+**Input**: "payload"
+
+this JSON input message redirects all input messages to the first PIN
+
+```json
+{
+  "topic": "switcher",
+  "payload": 0
+}
+```
+
+this JSON input message redirects all input messages to the second PIN
+
+```json
+{
+  "topic": "switcher",
+  "payload": 1
+}
+```
+
+this JSON input message redirects all input messages to the third PIN, and so on...
+
+```json
+{
+  "topic": "switcher",
+  "payload": 2
+}
+```
+
+<br/>
+
+See the example below.<br/>
+
+<img src='https://raw.githubusercontent.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/img/railwaySwitch.png' width='60%'>
+
+Copy and paste it into your flow
+
+```javascript
+[
+  {
+    id: "8243309f7c926112",
+    type: "RailwaySwitchUltimate",
+    z: "aa3efc585a6c7b9b",
+    name: "Railway Switch",
+    triggertopic: "switcher",
+    outputs: 5,
+    initializewith: "3",
+    payloadPropName: "payload",
+    translatorConfig: "",
+    x: 350,
+    y: 260,
+    wires: [["7f5a2c19a9ef64c8"], ["5a35a650b225d910"], [], [], []],
+  },
+  {
+    id: "d7bbc077bc20f4ea",
+    type: "InjectUltimate",
+    z: "aa3efc585a6c7b9b",
+    name: "Junction switcher to Rail 0",
+    topic: "",
+    curVal: true,
+    outputJSON: '{ \n\t"payload":0,\n\t"topic":"switcher"\n}',
+    x: 350,
+    y: 80,
+    wires: [[], [], [], ["8243309f7c926112"]],
+  },
+  {
+    id: "5656d0c2ba66ed5e",
+    type: "InjectUltimate",
+    z: "aa3efc585a6c7b9b",
+    name: "Junction switcher to Rail 1",
+    topic: "",
+    curVal: true,
+    outputJSON: '{ \n\t"payload":"1",\n\t"topic":"switcher"\n}',
+    x: 350,
+    y: 160,
+    wires: [[], [], [], ["8243309f7c926112"]],
+  },
+  {
+    id: "2253336fa8374c78",
+    type: "InjectUltimate",
+    z: "aa3efc585a6c7b9b",
+    name: "Train",
+    topic: "",
+    curVal: true,
+    outputJSON: '{ \n\t"payload":"hello",\n\t"topic":"I\'m a train!"\n}',
+    x: 110,
+    y: 280,
+    wires: [["8243309f7c926112"], [], [], []],
+  },
+  {
+    id: "7f5a2c19a9ef64c8",
+    type: "debug",
+    z: "aa3efc585a6c7b9b",
+    name: "Rail 0",
+    active: true,
+    tosidebar: true,
+    console: false,
+    tostatus: true,
+    complete: "payload",
+    targetType: "msg",
+    statusVal: "payload",
+    statusType: "auto",
+    x: 590,
+    y: 260,
+    wires: [],
+  },
+  {
+    id: "5a35a650b225d910",
+    type: "debug",
+    z: "aa3efc585a6c7b9b",
+    name: "Rail 1",
+    active: true,
+    tosidebar: true,
+    console: false,
+    tostatus: true,
+    complete: "payload",
+    targetType: "msg",
+    statusVal: "payload",
+    statusType: "auto",
+    x: 590,
+    y: 300,
+    wires: [],
+  },
+];
+```
+
+## Kalman Filter Ultimate
+
+Outputs the Kalman-filtered input.
+
+Please refer to [this](https://github.com/wouterbulten/kalmanjs) link, on how it works.
+
+![image.png](/img/image.png)
+
+| Property          | Description                                                                                                                                  |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Input             | It's the msg property to be evaluated. _By default, it is "payload", but you can also specify other properties, for example "payload.value"_ |
+| Measurement noise | Kalman's <code>R</code> parameter.                                                                                                           |
+| Process noise     | Kalman's <code>Q</code> parameter.                                                                                                           |
+| Translator Input  | Translates the incoming <code>payload</code> value, to true/false. This allows the compatibility with, for example, **HomeAssistant** nodes. |
+
+<br/>
+
+### Inputs
+
+: reset (any) : by passing msg.reset, the Kalman filter will be reset.
+
+: payload (number) : the payload containing the number. If you've changed the incoming evaluation property in the **_Input_** field, the number to be evaluated must be put in such message's property, instead of the _payload_ property.
+
+## Rate Limiter Ultimate
+
+Gateway per sensori e dispositivi troppo “chiacchieroni”: limita burst e rimbalzi con modalità **Debounce**, **Throttle** e **Window**. Lo stato del nodo riporta sempre modalità corrente, contatori di messaggi inoltrati e bloccati.
+
+### Configuration
+
+| Property         | Description                                                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mode             | Seleziona la logica: _Debounce_ (attende quiete), _Throttle_ (impone un intervallo minimo), _Window_ (massimo N messaggi per finestra temporale). |
+| Wait (ms)        | Ritardo di quiete per la modalità debounce.                                                                                                       |
+| Emit             | Per debounce: scegli se inviare subito il primo messaggio, solo l’ultimo dopo la pausa, oppure entrambi.                                          |
+| Interval (ms)    | Intervallo minimo tra messaggi in modalità throttle.                                                                                              |
+| Emit trailing    | In throttle, inoltra l’ultimo messaggio ricevuto allo scadere dell’intervallo.                                                                    |
+| Window size (ms) | Larghezza della finestra mobile in modalità window.                                                                                               |
+| Max messages     | Numero di messaggi ammessi nella finestra.                                                                                                        |
+| On limit         | _Drop_ scarta i messaggi extra, _Queue last_ accoda l’ultimo e lo riproduce appena possibile.                                                     |
+| Control topic    | Topic dei messaggi di controllo (default `rate`).                                                                                                 |
+| Input            | Proprietà del messaggio da monitorare (default `msg.payload`).                                                                                    |
+| Stats every (s)  | Ogni quanti secondi emettere un riepilogo statistico (0 = disattivato).                                                                           |
+| Translator       | Nodo translator-config opzionale per adattare le stringhe d’ingresso a true/false.                                                                |
+
+<br/>
+
+### Outputs
+
+- **Output 1**: messaggi inoltrati, invariati.
+- **Output 2**: diagnostica (`{mode, reason, passed, dropped, msg, propertyValue}`) e statistiche periodiche su `controlTopic/stats`.
+
+<br/>
+
+### Control messages (`msg.topic === controlTopic`)
+
+- `msg.reset = true` &rarr; azzera contatori, accoda azzerata e timer cancellati.
+- `msg.flush = true` &rarr; forza l’emissione immediata del messaggio in attesa.
+- `msg.mode = 'debounce'|'throttle'|'window'` &rarr; cambia modalità runtime e resetta lo stato.
+- `msg.interval`, `msg.wait`, `msg.windowSize`, `msg.maxInWindow` &rarr; aggiorna i parametri corrispondenti.
+
+## Debouncer Ultimate
+
+Nodo dedicato al solo debounce: utile quando vuoi filtrare rimbalzi o burst rapidi senza portarti dietro le altre modalità del `RateLimiterUltimate`. Può inoltrare il **primo** messaggio, l’**ultimo** oppure **entrambi**, dopo un intervallo di quiete configurabile.
+
+<img src='../img/debouncer.png' width='80%'>
+
+Nell'immagine si vede il comportamento tipico: a sinistra arrivano molti messaggi ravvicinati, il nodo aspetta una breve pausa, e a destra lascia passare solo il messaggio utile.
+
+Example flow: [`examples/DebouncerUltimate.json`](examples/DebouncerUltimate.json)
+
+### Configuration
+
+| Property      | Description                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------ |
+| Wait (ms)     | Tempo di quiete richiesto prima di chiudere la finestra di debounce.                       |
+| Emit          | Scegli se inviare subito il primo messaggio, solo l’ultimo dopo la pausa, oppure entrambi. |
+| Control topic | Topic dei messaggi di controllo (default `debouncer`).                                     |
+
+### Outputs
+
+- **Output 1**: messaggi inoltrati dopo il debounce.
+
+### Control messages (`msg.topic === controlTopic`)
+
+- `msg.reset = true` &rarr; cancella timer e messaggio pendente.
+- `msg.flush = true` &rarr; inoltra subito l’ultimo messaggio in attesa.
+- `msg.wait` &rarr; aggiorna il ritardo di debounce a runtime.
+- `msg.emitOn = 'leading'|'trailing'|'both'` &rarr; cambia la modalità di emissione.
+
+## Presence Simulator Ultimate
+
+The purpose of this node is to replay a programmable sequence of messages in order to simulate occupancy when you are away.
+
+### Configuration
+
+| Property      | Description                                                                                    |
+| ------------- | ---------------------------------------------------------------------------------------------- |
+| Control topic | Topic used for runtime commands such as start/stop/reset.                                      |
+| Auto start    | Starts the sequence automatically after deploy or restart.                                     |
+| Loop sequence | Repeats the sequence when it reaches the end.                                                  |
+| Random delays | Enables a random variation of the programmed delays.                                           |
+| Jitter (%)    | Maximum percentage of variation applied when random delays are enabled.                        |
+| Input         | Message property to inspect for inline events (default `payload`).                             |
+| Translator    | Optional translator-config to convert incoming values.                                         |
+| Sequence      | One JSON object per line, each containing at least `delay` (ms) plus the properties to output. |
+
+### Control messages (`msg.topic === controlTopic`)
+
+- `msg.command = 'start'` / `msg.start = true` &rarr; begin playback.
+- `msg.command = 'stop'` / `msg.stop = true` &rarr; halt playback.
+- `msg.reset = true` &rarr; reset counters and start position.
+- `msg.sequence = [...]` &rarr; load a new sequence at runtime.
+- `msg.loop`, `msg.randomize`, `msg.jitter` &rarr; update the corresponding options.
+
+Each event in the sequence outputs a message configured in the JSON line. When random delays are enabled, the effective delay is varied within the configured jitter.
+
+## Staircase Light Ultimate
+
+The purpose of this node is to control staircase lighting with a timer, pre-off warning and optional extension on every trigger.
+
+### Configuration
+
+| Property           | Description                                                        |
+| ------------------ | ------------------------------------------------------------------ |
+| Control topic      | Topic that receives manual commands such as `on`, `off`, `extend`. |
+| Duration (s)       | Lighting duration for each trigger.                                |
+| Warning before off | Enables emission of a pre-off warning on output 2.                 |
+| Warning offset (s) | Seconds before switch-off when the warning is sent.                |
+| Restart on trigger | Restarts the timer when a new trigger arrives while active.        |
+| Allow off input    | Allows a `false` from the main input to switch off immediately.    |
+| Input              | Message property evaluated as trigger (default `payload`).         |
+| Translator         | Optional translator-config for true/false conversion.              |
+| On/Off payload     | Values emitted on output 1 to turn the light on/off.               |
+| Warning payload    | Value emitted on output 2 when the warning fires.                  |
+
+### Control messages (`msg.topic === controlTopic`)
+
+- `msg.command = 'on'` / `msg.start = true` &rarr; start the timer and turn on the light.
+- `msg.command = 'off'` / `msg.stop = true` &rarr; switch off immediately.
+- `msg.command = 'extend'` / `msg.extend = true` &rarr; refresh the timer while keeping the light on.
+- `msg.duration`, `msg.warningEnabled`, `msg.warningOffset` &rarr; adjust runtime settings.
+
+Output 1 delivers the ON/OFF command. Output 2 delivers the warning and includes `msg.remaining` with the seconds left.
+
+## Hysteresis Ultimate
+
+Adds hysteresis to numeric sensor values to avoid rapid ON/OFF bouncing around thresholds.
+
+Example flow: [`examples/HysteresisUltimate.json`](examples/HysteresisUltimate.json)
+
+### Configuration
+
+| Property            | Description |
+| ------------------- | ----------- |
+| Name                | Optional label shown in the flow editor. |
+| Control topic       | Topic used for runtime commands (default `hysteresis`). It is not required for `permanentLockState`. |
+| Mode                | `high`: ON at or above the ON threshold and OFF at or below the OFF threshold. `low`: ON at or below the ON threshold and OFF at or above the OFF threshold. Values between the thresholds retain the current state. |
+| ON threshold        | Numeric limit that changes the internal state to ON according to the selected mode. |
+| OFF threshold       | Numeric limit that changes the internal state to OFF according to the selected mode. |
+| Initial state ON    | Initial internal state after deployment or restart. It does not emit at startup and is restored by `msg.reset = true`. |
+| Emit only on change | When enabled, output 1 emits only on transitions. When disabled, every valid numeric input emits the current state. |
+| Input               | Message property evaluated as a numeric value (default `msg.payload`). Numbers, booleans and numeric strings are accepted. |
+| Translator          | Optional shared translator configuration associated with the input. Hysteresis evaluation uses the numeric value of the selected input property. |
+| On payload          | Typed value assigned to `msg.payload` on output 1 while the state is ON. |
+| Off payload         | Typed value assigned to `msg.payload` on output 1 while the state is OFF. |
+
+### Input messages
+
+Normal messages are evaluated using the configured **Input** property. Missing or non-numeric values generate an `invalid_input` diagnostic on output 2.
+
+### Control messages (`msg.topic === controlTopic`)
+
+- `msg.onThreshold`, `msg.offThreshold` &rarr; update thresholds at runtime.
+- `msg.state = true|false` &rarr; force the state and emit it on output 1. While locked, it updates the internal state without emitting on output 1.
+- `msg.reset = true` &rarr; restore the initial state and emit a `reset` diagnostic.
+- `msg.status = true` &rarr; emit current state/thresholds on output 2.
+
+### Permanent output lock
+
+Regardless of `msg.topic`, `msg.permanentLockState` accepts:
+
+- `lock` &rarr; suppress state output until another permanent-lock command arrives.
+- `lockOn` &rarr; force ON, emit the configured ON payload once, then suppress state output.
+- `lockOff` &rarr; force OFF, emit the configured OFF payload once, then suppress state output.
+- `unlock` &rarr; resume normal processing (the unlock message itself is consumed).
+
+While locked, normal input messages are ignored and output 1 remains suppressed. Control-topic commands remain active: thresholds can be updated, `state` and `reset` can change the internal state, and `status`/`reset` diagnostics can still be emitted on output 2.
+
+### Outputs
+
+1. **State output** emits a clone of the input message with:
+   - the configured `onPayload` or `offPayload` in `msg.payload`;
+   - `msg.event` set to `state_changed` or `state_confirmed`;
+   - `msg.hysteresis` containing `state`, `changed`, `mode`, input `value`, `onThreshold` and `offThreshold`.
+2. **Diagnostics** emits state-change, invalid-input, reset and status events. It sets `msg.topic` to `<controlTopic>/event` and places the event details in `msg.payload`.
+
+<br/>
+
+[license-image]: https://img.shields.io/badge/license-MIT-blue.svg
+[license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE
+[npm-url]: https://npmjs.org/package/node-red-contrib-boolean-logic-ultimate
+[npm-version-image]: https://img.shields.io/npm/v/node-red-contrib-boolean-logic-ultimate.svg
+[npm-downloads-month-image]: https://img.shields.io/npm/dm/node-red-contrib-boolean-logic-ultimate.svg
+[npm-downloads-total-image]: https://img.shields.io/npm/dt/node-red-contrib-boolean-logic-ultimate.svg
+[youtube-image]: https://img.shields.io/badge/Visit%20me-youtube-red
+[youtube-url]: https://youtube.com/playlist?list=PL9Yh1bjbLAYoRH4IyQB7EL5srHAihiKpy
