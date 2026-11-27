@@ -5,6 +5,11 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.21</b> November 2026<br/>
+- DOCS: README and documentation links now point to www.maxsupervibe.com.<br/>
+- CHANGE: dependency updates (serialize-javascript, mocha, proxy-addr, i18next, node-red).<br/>
+</p>
+<p>
 <b>Version 1.2.20</b> October 2026<br/>
 
 - Math (SumUltimate): new <i>Delay</i> option (from No Delay up to 10 seconds), to emit a single result after the incoming values settle, instead of one result per incoming message. See issue #99.<br/>
