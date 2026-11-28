@@ -30,6 +30,15 @@ module.exports = function (RED) {
         ? 0
         : Math.max(0, Math.min(node.outputCount - 1, initialPin)); // Railway selector
 
+    // Read-only publication to Cerebrum Ultimate (optional, named nodes only).
+    try {
+      require("./lib/cerebrum-logic.js").publishLogicNode(node, {
+        kind: "selector",
+        meaning: "number of the output (0.." + (node.outputCount - 1) + ") the messages are routed to",
+        read: () => String(node.railIndex),
+      });
+    } catch (error) { /* Cerebrum must never break the flow */ }
+
     function setNodeStatus({ fill, shape, text }) {
       let dDate = new Date();
       node.status({

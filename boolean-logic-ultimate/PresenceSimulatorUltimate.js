@@ -29,6 +29,15 @@ module.exports = function (RED) {
     let scheduledTimer = null;
     let emittedCount = 0;
 
+    // Read-only publication to Cerebrum Ultimate (optional, named nodes only).
+    try {
+      require('./lib/cerebrum-logic.js').publishLogicNode(node, {
+        kind: 'presence_simulator',
+        meaning: 'running: the presence simulation is replaying its pattern; stopped: it is off',
+        read: () => (running ? 'running' : 'stopped'),
+      });
+    } catch (error) { /* Cerebrum must never break the flow */ }
+
     function parsePatterns(text) {
       const events = [];
       if (!text) {

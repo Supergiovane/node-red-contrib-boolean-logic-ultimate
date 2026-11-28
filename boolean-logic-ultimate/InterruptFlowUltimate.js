@@ -17,6 +17,14 @@ module.exports = function (RED) {
     node.autoToggle =
       config.autoToggle === undefined ? 0 : parseInt(config.autoToggle); // Auto toggle the selected "initializewith" after a while (useful for homekit bridged, that sends junk after start)
     node.timerAutoToggle = null;
+    // Read-only publication to Cerebrum Ultimate (optional, named nodes only).
+    try {
+      require("./lib/cerebrum-logic.js").publishLogicNode(node, {
+        kind: "flow_gate",
+        meaning: "passing: messages flow through; blocked: messages are stopped",
+        read: () => (node.bInviaMessaggio ? "passing" : "blocked"),
+      });
+    } catch (error) { /* Cerebrum must never break the flow */ }
 
     function setNodeStatus({ fill, shape, text }) {
       let dDate = new Date();

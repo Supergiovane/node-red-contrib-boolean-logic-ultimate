@@ -32,6 +32,15 @@ module.exports = function (RED) {
     let lastTriggerMsg = null;
     let cycleCount = 0;
 
+    // Read-only publication to Cerebrum Ultimate (optional, named nodes only).
+    try {
+      require('./lib/cerebrum-logic.js').publishLogicNode(node, {
+        kind: 'staircase_light',
+        meaning: 'on: the timed light is on; off: it is off',
+        read: () => (active ? 'on' : 'off'),
+      });
+    } catch (error) { /* Cerebrum must never break the flow */ }
+
     function toMilliseconds(value, defaultSeconds) {
       const seconds = Number(value);
       if (Number.isFinite(seconds) && seconds > 0) {

@@ -11,6 +11,14 @@ module.exports = function (RED) {
 		node.stopbehaviorPIN2 = config.stopbehaviorPIN2 === undefined ? 0 : config.stopbehaviorPIN2;
 		node.stopbehaviorPIN2 = node.stopbehaviorPIN2 == "0" ? false : true;
 		node.topic = "";
+		// Read-only publication to Cerebrum Ultimate (optional, named nodes only).
+		try {
+			require("./lib/cerebrum-logic.js").publishLogicNode(node, {
+				kind: "blinker",
+				meaning: "blinking: the outputs alternate; stopped: the blinker is off",
+				read: () => (node.isBlinking ? "blinking" : "stopped")
+			});
+		} catch (error) { /* Cerebrum must never break the flow */ }
 
 		function setNodeStatus({ fill, shape, text }) {
 			let dDate = new Date();

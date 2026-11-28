@@ -780,6 +780,12 @@ While locked, normal input messages are ignored and output 1 remains suppressed.
 
 <br/>
 
+## Cerebrum Ultimate
+
+When **Cerebrum Ultimate** is installed in the same Node-RED, the Boolean Logic nodes that hold a state are published to it automatically, read-only: **Interrupt Flow** (passing or blocked), **Presence Simulator** (running or stopped), **Staircase Light** (on or off), **Blinker** (blinking or stopped) and **Railway Switch** (the selected output). Only nodes with a name are published, so give a clear name ("Night notifications", "Holiday presence") to the ones you want Cerebrum to know. Cerebrum can use their states in chat, in its history and as triggers of JavaScript routines, and MCP clients such as Claude can read them through the Cerebrum MCP server. Nothing can be switched or changed from Cerebrum through this link, and without Cerebrum nothing changes. See the [Cerebrum Ultimate documentation](https://www.maxsupervibe.com/docs/cerebrum-ultimate/).
+
+<br/>
+
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/Supergiovane/node-red-contrib-boolean-logic-ultimate/master/LICENSE
 [npm-url]: https://npmjs.org/package/node-red-contrib-boolean-logic-ultimate
