@@ -5,6 +5,10 @@
 # CHANGELOG
 
 <p>
+<b>Version 1.2.22</b> November 2026<br/>
+- NEW: Cerebrum Ultimate integration. When Cerebrum Ultimate is installed in the same Node-RED, the named Interrupt Flow, Presence Simulator, Staircase Light, Blinker and Railway Switch nodes publish their state to it, read-only. MCP clients can read them through the Cerebrum MCP server. See the <a href="https://www.maxsupervibe.com/docs/cerebrum-ultimate/">Cerebrum Ultimate documentation</a>.<br/>
+</p>
+<p>
 <b>Version 1.2.21</b> November 2026<br/>
 - DOCS: README and documentation links now point to www.maxsupervibe.com.<br/>
 - CHANGE: dependency updates (serialize-javascript, mocha, proxy-addr, i18next, node-red).<br/>
